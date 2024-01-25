@@ -1,0 +1,8 @@
+[
+  { "id": 1, "name": "은행이", "type": "코리안 숏헤어", "gender": "여아", "age": 12, "weight": 12 },
+  { "id": 2, "name": "해피", "type": "말티즈", "gender": "여아", "age": 8, "weight": 6 },
+  { "id": 3, "name": "체리", "type": "말티즈", "gender": "남아", "age": 9, "weight": 5 },
+  { "id": 4, "name": "뚜비", "type": "푸들", "gender": "여아", "age": 2, "weight": 3 },
+  { "id": 5, "name": "나나", "type": "치와와", "gender": "남아", "age": 18, "weight": 10 },
+  { "id": 6, "name": "뽀", "type": "차우차우", "gender": "여아", "age": 13, "weight": 15 }
+]
