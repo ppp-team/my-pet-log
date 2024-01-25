@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { usePagination, PaginationItemType } from "@nextui-org/react";
 import { container, ul, li, button, activeButton } from "./styles.css";
