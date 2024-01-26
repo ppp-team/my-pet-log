@@ -6,17 +6,27 @@ globalStyle(".swiper", {
 });
 
 globalStyle(".swiper-slide", {
-  textAlign: "center",
-  fontSize: "18px",
-  background: "#fff",
+  width: "30.5rem",
+  height: "12.1rem",
+
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
 });
 
 globalStyle(".swiper-slide img", {
-  display: "block",
   width: "100%",
   height: "100%",
+
+  display: "block",
   objectFit: "cover",
+});
+
+globalStyle(".swiper-pagination", {
+  position: "static",
+});
+
+globalStyle(".petadd", {
+  borderRadius: "10px",
+  backgroundColor: "#d3d3d3",
 });

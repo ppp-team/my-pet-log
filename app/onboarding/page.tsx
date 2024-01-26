@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import "@/app/globals.css";
-import Pagination from "./_components/Pagination";
+import Pagination from "@/components/Pagination";
 
 const Page = () => {
   return (

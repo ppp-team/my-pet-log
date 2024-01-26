@@ -20,7 +20,8 @@
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "swiper": "^11.0.5"
+    "swiper": "^11.0.5",
+    "vanilla-calendar-pro": "^2.9.2"
   },
   "devDependencies": {
     "@types/node": "^20",
