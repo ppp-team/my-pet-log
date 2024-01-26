@@ -1,29 +1,20 @@
 import { style } from "@vanilla-extract/css";
 
-export const container = style({
+export const paginationButtons = style({
   display: "flex",
-  flexDirection: "column",
-  gap: "2rem",
+  justifyContent: "center",
+  marginTop: "10px",
 });
 
-export const ul = style({
-  display: "flex",
-  gap: "2rem",
-  alignItems: "center",
-});
-
-export const li = style({
-  width: "4rem",
-  height: "4rem",
-});
-
-export const button = style({
-  width: "100%",
-  height: "100%",
-  backgroundColor: "lightgray",
+export const paginationButton = style({
+  width: "30px",
+  height: "30px",
+  border: "2px solid #ccc",
   borderRadius: "50%",
+  margin: "0 5px",
+  backgroundColor: "#fff",
 });
 
-export const activeButton = style({
-  backgroundColor: "black",
+export const activePaginationButton = style({
+  backgroundColor: "#ccc",
 });
