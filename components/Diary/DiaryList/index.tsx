@@ -61,7 +61,7 @@ const Diary = ({ diary }: { diary: DiaryData }) => {
 };
 
 const DiaryList = () => {
-  const [data, setData] = useState("data");
+  const [data, setData] = useState();
 
   if (!data) return <EmptyDiaryList />;
   return (
