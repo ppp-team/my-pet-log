@@ -1,7 +1,7 @@
 "use client";
 
 import DiaryList from "@/components/Diary/DiaryList";
-import SelectPet from "@/components/SelectPet";
+import SelectPet from "@/components/@common/SelectPet";
 import { currentPetAtom } from "@/states/atom";
 import { useAtom } from "jotai";
 

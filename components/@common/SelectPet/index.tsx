@@ -1,4 +1,4 @@
-import * as styles from "@/components/SelectPet/style.css";
+import * as styles from "@/components/@common/SelectPet/style.css";
 import { currentPetAtom } from "@/states/atom";
 import { useAtom } from "jotai";
 import Image from "next/image";
