@@ -1,13 +1,9 @@
 import { NextPage } from "next";
 import "@/app/globals.css";
-import * as styles from "./page.css";
+import ParticipatePetGroup from "@/components/ParticipatePetGroupModal/PariticipatePetCroupModal";
 
 const ParticipatePetGroupPage: NextPage = () => {
-  return (
-    <main className={styles.backDropContainer}>
-      <section className={styles.modalContainer}>펫 그룹 참여 모달 페이지</section>
-    </main>
-  );
+  return <ParticipatePetGroup />;
 };
 
 export default ParticipatePetGroupPage;
