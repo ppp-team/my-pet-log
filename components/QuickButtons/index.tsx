@@ -4,6 +4,9 @@ import * as styles from "./style.css";
 const QuickButtons = () => {
   return (
     <>
+      <button className={styles.button}>테스트</button>
+      <button className={styles.button}>테스트</button>
+      <button className={styles.button}>테스트</button>
       <button className={styles.button}>사료</button>
       <button className={styles.button}>간식 / 영양제</button>
       <button className={styles.button}>산책</button>
