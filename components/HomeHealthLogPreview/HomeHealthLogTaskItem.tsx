@@ -4,11 +4,11 @@ export type TaskType = {
   assignee: string;
 };
 
-interface HealthLogTaskItemProps {
+interface HomeHealthLogTaskItemProps {
   taskItem: TaskType;
 }
 
-const HealthLogTaskItem = ({ taskItem }: HealthLogTaskItemProps) => {
+const HomeHealthLogTaskItem = ({ taskItem }: HomeHealthLogTaskItemProps) => {
   return (
     <li>
       <span>{taskItem.title}</span>
@@ -18,4 +18,4 @@ const HealthLogTaskItem = ({ taskItem }: HealthLogTaskItemProps) => {
   );
 };
 
-export default HealthLogTaskItem;
+export default HomeHealthLogTaskItem;

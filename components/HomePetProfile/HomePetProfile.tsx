@@ -1,11 +1,11 @@
 import Image from "next/image";
 import sampleImageSrc from "@/public/next.svg";
 
-interface PetProfileProps {
+interface HomePetProfileProps {
   imageSrc?: string;
 }
 
-const PetProfile = ({ imageSrc }: PetProfileProps) => {
+const HomePetProfile = ({ imageSrc }: HomePetProfileProps) => {
   return (
     <div>
       <Image src={imageSrc || sampleImageSrc} alt="동물 프로필 이미지" />
@@ -15,4 +15,4 @@ const PetProfile = ({ imageSrc }: PetProfileProps) => {
   );
 };
 
-export default PetProfile;
+export default HomePetProfile;

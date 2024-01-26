@@ -1,4 +1,4 @@
-import HealthLogTaskList from "../HealthLogTaskList/HealthLogTaskList";
+import HealthLogTaskList from "./HomeHealthLogTaskList";
 
 const sampleList = [
   {
@@ -33,7 +33,7 @@ const sampleList = [
   },
 ];
 
-const HealthLogPreview = () => {
+const HomeHeathLogPreview = () => {
   return (
     <>
       <p>⭐️ 나나의 스케줄을 잊지 마세요!</p>
@@ -48,4 +48,4 @@ const HealthLogPreview = () => {
     </>
   );
 };
-export default HealthLogPreview;
+export default HomeHeathLogPreview;
