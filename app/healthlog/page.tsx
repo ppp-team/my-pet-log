@@ -1,9 +1,9 @@
 "use client";
 
-import VanillaCalendar from "@/app/healthlog/_components/VanillaCalendar";
-import QuickButtons from "@/app/healthlog/_components/QuickButtons";
-import EmptyLog from "@/app/healthlog/_components/EmptyLog";
-import HealthLogList from "@/app/healthlog/_components/HealthLogList";
+import VanillaCalendar from "@/components/VanillaCalendar";
+import QuickButtons from "@/components/QuickButtons";
+import EmptyHealthLog from "@/components/EmptyHealthLog";
+import HealthLogList from "@/components/HealthLogList";
 
 const Page = () => {
   return (
@@ -12,7 +12,7 @@ const Page = () => {
       <VanillaCalendar />
       <QuickButtons />
       {/* 항목 없을 경우 */}
-      <EmptyLog />
+      <EmptyHealthLog />
       {/* 항목 있을 경우 */}
       <HealthLogList />
     </>

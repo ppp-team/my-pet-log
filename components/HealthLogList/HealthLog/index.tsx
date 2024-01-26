@@ -1,5 +1,4 @@
-import "@/app/globals.css";
-import * as styles from "@/app/healthlog/_components/HealthLogList/HealthLog/style.css";
+import * as styles from "./style.css";
 
 const HealthLog = () => {
   return (

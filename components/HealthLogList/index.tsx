@@ -1,4 +1,4 @@
-import HealthLog from "@/app/healthlog/_components/HealthLogList/HealthLog";
+import HealthLog from "@/components/HealthLogList/HealthLog";
 
 const HealthLogList = () => {
   return (

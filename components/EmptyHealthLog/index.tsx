@@ -1,7 +1,7 @@
 import Link from "next/link";
-import * as styles from "@/app/healthlog/_components/EmptyLog/style.css";
+import * as styles from "./style.css";
 
-const EmptyLog = () => {
+const EmptyHealthLog = () => {
   return (
     <>
       <div className={styles.container}>
@@ -15,4 +15,4 @@ const EmptyLog = () => {
   );
 };
 
-export default EmptyLog;
+export default EmptyHealthLog;

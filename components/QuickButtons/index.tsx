@@ -1,5 +1,5 @@
 import Link from "next/link";
-import * as styles from "@/app/healthlog/_components/QuickButtons/style.css";
+import * as styles from "./style.css";
 
 const QuickButtons = () => {
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import "@/app/globals.css";
+import "@/styles/global.css";
 
 const Page = () => {
   return (
