@@ -26,3 +26,9 @@ globalStyle("a", {
 
   color: "black",
 });
+
+globalStyle("button", {
+  backgroundColor: "transparent",
+  border: "none",
+  cursor: "pointer",
+});

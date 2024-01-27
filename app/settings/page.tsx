@@ -1,19 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import Logout from "@/components/Logout";
 import MyProfile from "@/components/MyProfile";
 import MyPet from "@/components/MypetCarousel";
 import * as styles from "@/app/settings/page.css";
 
 const Page = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.title}>마이 펫 관리하기</div>
@@ -35,12 +27,10 @@ const Page = () => {
         <Link className={styles.list} href="/notice">
           공지사항
         </Link>
-        <div className={styles.logout} onClick={toggleModal}>
+        <Link className={styles.logout} href="/logout">
           로그아웃
-        </div>
+        </Link>
       </div>
-
-      {isModalOpen && <Logout />}
     </div>
   );
 };
