@@ -12,3 +12,11 @@ globalStyle("html, body", {
   maxWidth: "100vw",
   maxHeight: "100vh",
 });
+
+globalStyle("a", {
+  textDecoration: "none",
+
+  outline: "none",
+
+  color: "black",
+});
