@@ -5,7 +5,7 @@ import * as styles from "./page.css";
 import VanillaCalendar from "@/components/VanillaCalendar";
 import QuickButtons from "@/components/QuickButtons";
 import EmptyHealthLog from "@/components/EmptyHealthLog";
-import HealthLogList from "@/components/HealthLogList";
+import HealthLogList from "@/components/@common/HealthLogTaskList";
 
 const Page = () => {
   const today = new Date().toISOString().split("T")[0];
