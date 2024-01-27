@@ -1,5 +1,5 @@
 import Logout from "@/components/Logout";
-import Modal from "@/hooks/Modal";
+import Modal from "@/components/@common/Modal";
 
 const Page = () => {
   return (
