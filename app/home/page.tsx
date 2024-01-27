@@ -5,10 +5,10 @@ import HomePetProfile from "@/components/HomePetProfile/HomePetProfile";
 
 const HomePage: NextPage = () => {
   return (
-    <section className={styles.container}>
+    <main className={styles.container}>
       <HomePetProfile />
       <HomeHeathLogPreview />
-    </section>
+    </main>
   );
 };
 export default HomePage;
