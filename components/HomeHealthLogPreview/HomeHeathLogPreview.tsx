@@ -39,10 +39,10 @@ const HomeHeathLogPreview = () => {
       <p>⭐️ 나나의 스케줄을 잊지 마세요!</p>
       <ul>
         {sampleList.map((dateInfo, index) => (
-          <>
+          <div key={index}>
             <p>{dateInfo.date}</p>
-            <HealthLogTaskList taskList={dateInfo.list} key={index} />
-          </>
+            <HealthLogTaskList taskList={dateInfo.list} />
+          </div>
         ))}
       </ul>
     </>
