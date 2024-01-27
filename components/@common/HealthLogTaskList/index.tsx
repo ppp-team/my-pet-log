@@ -1,7 +1,6 @@
 import HealthLogTaskItem from "@/components/@common/HealthLogTaskList/HealthLogTaskItem";
 import * as styles from "./style.css";
 
-// mock-up
 const sampleList = [
   {
     date: "2024년 1월 27일 토요일",
@@ -51,7 +50,7 @@ const sampleList = [
   },
 ];
 
-const HealthLogTaskList = () => {
+const HealthLogTaskList = ({ pageType }: { pageType: string }) => {
   return (
     <ul>
       {sampleList.map((dateInfo, index) => (
@@ -59,7 +58,7 @@ const HealthLogTaskList = () => {
           <p className={styles.date}>{dateInfo.date}</p>
           <ul>
             {dateInfo.list.map((taskItem, taskIndex) => (
-              <HealthLogTaskItem taskItem={taskItem} key={taskIndex} />
+              <HealthLogTaskItem taskItem={taskItem} key={taskIndex} pageType={pageType} />
             ))}
           </ul>
         </div>
