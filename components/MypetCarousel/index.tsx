@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "@/components/MypetCarousel/style.css";
 import { Pagination, Autoplay } from "swiper/modules";
-import "@/app/globals.css";
+import "@/styles/global.css";
 import mockData from "./mockdata.json";
 import Card from "@/components/MypetCarousel/Card";
 
@@ -26,9 +26,9 @@ const MyPet = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
-        {mockData.map((slide, index) => (
-          <SwiperSlide key={slide.id}>
-            <Card slide={slide} backgroundColor={backgroundColors[index % backgroundColors.length]} />
+        {mockData.map((card, index) => (
+          <SwiperSlide key={card.id}>
+            <Card card={card} backgroundColor={backgroundColors[index % backgroundColors.length]} />
           </SwiperSlide>
         ))}
         <SwiperSlide className="petadd">반려동물 추가 +</SwiperSlide>
