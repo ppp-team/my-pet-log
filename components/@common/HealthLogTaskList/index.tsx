@@ -1,4 +1,5 @@
 import HealthLogTaskItem from "@/components/@common/HealthLogTaskList/HealthLogTaskItem";
+import * as styles from "./style.css";
 
 // mock-up
 const sampleList = [
@@ -25,7 +26,7 @@ const sampleList = [
       },
       {
         type: "직접 입력",
-        subtype: "친구랑 멍냥카페",
+        subtype: "친구랑 홍대 멍냥카페",
         datetime: "2024-01-27T19:30",
         isComplete: true,
         isImportant: false,
@@ -42,7 +43,7 @@ const sampleList = [
         subtype: "병원 진료",
         datetime: "2024-01-29T19:30",
         isComplete: false,
-        isImportant: false,
+        isImportant: true,
         managerId: "슬",
         memo: "",
       },
@@ -55,7 +56,7 @@ const HealthLogTaskList = () => {
     <ul>
       {sampleList.map((dateInfo, index) => (
         <div key={index}>
-          <p>{dateInfo.date}</p>
+          <p className={styles.date}>{dateInfo.date}</p>
           <ul>
             {dateInfo.list.map((taskItem, taskIndex) => (
               <HealthLogTaskItem taskItem={taskItem} key={taskIndex} />

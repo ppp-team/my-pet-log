@@ -22,15 +22,24 @@ const HealthLogTaskItem = ({ taskItem }: HealthLogTaskItemProps) => {
     setIsChecked(event.target.checked);
   };
 
+  const extractTime = (datetime) => {
+    const time = new Date(datetime).toLocaleTimeString("ko-KR", {
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    return time;
+  };
+
   return (
     <>
       <li className={styles.container}>
         <span>
           <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
         </span>
-        <span>{taskItem.isImportant}</span>
-        <span>{taskItem.type}</span>
-        <span>{taskItem.datetime}</span>
+        <span>{taskItem.isImportant && "⭐️"}</span>
+        <span>{taskItem.type === "직접 입력" ? taskItem.subtype : taskItem.type}</span>
+        <span>{extractTime(taskItem.datetime)}</span>
         <span>{taskItem.managerId}</span>
       </li>
     </>

@@ -43,7 +43,6 @@ const Page = () => {
         </div>
         <div>
           {/* 항목 있을 경우 */}
-          <p className={styles.date}>{selectedDate}</p>
           <HealthLogList />
         </div>
       </div>

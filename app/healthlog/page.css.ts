@@ -37,12 +37,3 @@ export const quickButtonsContainer = style({
   overflowX: "auto",
   margin: "1rem 0",
 });
-
-export const date = style({
-  padding: "1rem 0",
-
-  backgroundColor: "lightgoldenrodyellow",
-
-  fontSize: "1.4rem",
-  color: "gray",
-});
