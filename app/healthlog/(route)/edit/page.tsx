@@ -1,53 +1,63 @@
 "use client";
 
-import "@/styles/global.css";
+import { useForm } from "react-hook-form";
+import * as styles from "./page.css";
 
 const Page = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    // 폼 제출 로직
+  };
+
   return (
     <>
-      <h3>건강수첩 작성하기</h3>
-      <form>
-        <div>
-          <label>건강 기록일</label>
-          <input type="date"></input>
-        </div>
-        <div>
-          <label>시간</label>
-          <input type="time"></input>
-        </div>
-        <div>
-          <label>담당자 선택</label>
-          <input></input>
-        </div>
-        <div>
-          <label>대분류</label>
-          <div>
-            <button>사료</button>
-            <button>간식 / 영양제</button>
-            <button>산책</button>
-            <button>건강</button>
-            <button>위생 / 미용</button>
-            <button>직접 입력</button>
+      <div className={styles.container}>
+        <p className={styles.title}>건강수첩 작성하기</p>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems}>
+          <div className={styles.item}>
+            <label>건강 기록일</label>
+            <input type="date" {...register("recordDate")} />
           </div>
-        </div>
-        <div>
-          <div>
-            <label>세부사항</label>
-            <input></input>
+          <div className={styles.item}>
+            <label>시간</label>
+            <input type="time" {...register("time")} />
           </div>
-          <div>
+          <div className={styles.item}>
+            <label>담당자 선택</label>
+            <input {...register("manager")} />
+          </div>
+          <div className={styles.item}>
+            <label>주요 항목(type)</label>
+            <button type="button"> 사료 + </button>
+            <button type="button"> 건강 + </button>
+            <button type="button"> 산책 + </button>
+            <button type="button"> 간식/영양제 + </button>
+            <button type="button"> 위생/미용 + </button>
+            <button type="button"> 직접 입력 + </button>
+          </div>
+          <div className={styles.item}>
+            <label>세부 사항/장소/타이틀(subtype)</label>
+            <input {...register("subtype")} />
+          </div>
+          <div className={styles.item}>
             <label>메모</label>
-            <textarea></textarea>
+            <textarea {...register("memo")}></textarea>
+          </div>
+          <div className={styles.item}>
+            <label>중요 체크</label>
+            <input type="checkbox" {...register("isImportant")} />
           </div>
           <div>
-            <label>중요 체크</label>
-            <input type="checkbox"></input>
+            <button type="submit">저장</button>
           </div>
-        </div>
-        <div>
-          <button>저장</button>
-        </div>
-      </form>
+        </form>
+      </div>
     </>
   );
 };
