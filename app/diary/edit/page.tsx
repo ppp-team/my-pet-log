@@ -57,7 +57,9 @@ const EditPage = () => {
           {watch("content") ? <p className={styles.p}>{watch("content")?.length}/ 500</p> : <p className={styles.p}>0/ 500</p>}
         </div>
 
-        <button type="submit">작성하기</button>
+        <button className={styles.button} type="submit">
+          작성하기
+        </button>
       </form>
     </div>
   );

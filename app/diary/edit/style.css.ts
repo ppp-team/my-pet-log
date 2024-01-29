@@ -25,7 +25,7 @@ export const input = style({
   marginBottom: "0.5rem",
   padding: "0.8rem 1rem",
 
-  borderRadius: "0.8rem",
+  borderRadius: "8px",
   border: "1px solid #d9d9d9",
 
   wordWrap: "break-word",
@@ -52,4 +52,16 @@ export const p = style({
 export const label = style({
   fontSize: "1.2rem",
   fontWeight: "600",
+});
+
+export const button = style({
+  padding: "1rem",
+
+  fontSize: "1.4rem",
+  fontWeight: "500",
+  color: "white",
+
+  backgroundColor: "orange",
+
+  borderRadius: "8px",
 });
