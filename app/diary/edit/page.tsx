@@ -39,10 +39,10 @@ const EditPage = () => {
           {watch("title") ? <p className={styles.p}>{watch("title")?.length}/ 15</p> : <p className={styles.p}>0/ 15</p>}
         </div>
 
-        <label className={styles.label}>날짜</label>
-        <div>
-          <input type="date" {...register("date")} />
-          <input type="time" />
+        <div className={styles.inputWrapper}>
+          <label className={styles.label}>날짜</label>
+          <input type="date" {...register("date")} className={styles.input} />
+          <input type="time" {...register("time")} className={styles.input} />
         </div>
 
         <ImageInput register={register} />
