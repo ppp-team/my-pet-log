@@ -26,8 +26,8 @@ const MyPet = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
-        {mockData.map((card, index) => (
-          <SwiperSlide key={card.id}>
+        {mockData.data.map((card, index) => (
+          <SwiperSlide key={card.petId}>
             <Card card={card} backgroundColor={backgroundColors[index % backgroundColors.length]} />
           </SwiperSlide>
         ))}
