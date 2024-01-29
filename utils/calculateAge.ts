@@ -27,7 +27,7 @@ const calculateAge = (birthDate: string): string => {
     if (today.getDate() < birth.getDate()) {
       months--;
     }
-    return months > 0 ? `${months}개월` : "1개월 미만";
+    return months > 0 ? `생후 ${months}개월` : "생후 1개월 미만";
   }
 
   // 그렇지 않으면 나이로 표시
