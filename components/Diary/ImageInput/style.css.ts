@@ -26,3 +26,14 @@ export const input = style({
   opacity: 0,
   zIndex: 1,
 });
+
+export const closeIcon = style({
+  width: "2rem",
+  height: "2rem",
+
+  position: "absolute",
+  right: "-0.8rem",
+  top: "-0.8rem",
+
+  cursor: "pointer",
+});
