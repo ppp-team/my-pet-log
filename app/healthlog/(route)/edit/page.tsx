@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./page.css";
+import SearchLocation from "@/components/SearchLocation";
 
 interface SubmitData {
   // 폼 필드 속성 타입 추가
@@ -11,11 +12,12 @@ interface SubmitData {
 const Page = () => {
   const [visibleSubtype, setVisibleSubtype] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm();
 
   const handleTypeButtonClick = (subtype: string) => {
@@ -87,6 +89,7 @@ const Page = () => {
               {visibleSubtype === "WALK" && (
                 <div className={styles.item}>
                   <label>장소</label>
+                  <SearchLocation appKey={myKey} />
                 </div>
               )}
               {visibleSubtype === "CUSTOM" && (

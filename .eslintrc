@@ -4,7 +4,7 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
@@ -13,6 +13,7 @@
     "no-unused-vars": "warn",
     "no-duplicate-imports": "warn",
     "@typescript-eslint/ban-types": "warn",
-    "@typescript-eslint/no-unused-vars": "warn"
-  }
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
+  },
 }
