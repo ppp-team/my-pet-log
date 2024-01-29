@@ -13,15 +13,15 @@ export const button = style({
 export const paginationButtons = style({
   display: "flex",
   justifyContent: "center",
-  margin: "10px auto 25px ",
+  margin: "1rem auto 2.5rem ",
 });
 
 export const nextButton = style({
-  width: "10px",
-  height: "10px",
+  width: "1rem",
+  height: "1rem",
   border: "1px solid #ccc",
   borderRadius: "50%",
-  margin: "0 5px",
+  margin: "0 0.5rem",
   backgroundColor: "#fff",
 });
 
