@@ -24,7 +24,6 @@ const ParticipatePetGroupForm = () => {
 
   const onSubmit = (data) => {
     const dataWithoutSpaces = removeSpaces(data?.code);
-    console.log("dataWithoutSpaces", dataWithoutSpaces);
 
     // 빈 값 검사
     if (!dataWithoutSpaces) {
