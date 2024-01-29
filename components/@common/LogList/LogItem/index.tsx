@@ -13,12 +13,12 @@ export type TaskType = {
   memo: string;
 };
 
-interface HealthLogTaskItemProps {
+interface LogItemProps {
   taskItem: TaskType;
   pageType: string;
 }
 
-const HealthLogTaskItem = ({ taskItem, pageType }: HealthLogTaskItemProps) => {
+const LogItem = ({ taskItem, pageType }: LogItemProps) => {
   const [isChecked, setIsChecked] = useState(taskItem.isComplete);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,4 +51,4 @@ const HealthLogTaskItem = ({ taskItem, pageType }: HealthLogTaskItemProps) => {
   );
 };
 
-export default HealthLogTaskItem;
+export default LogItem;

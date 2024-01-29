@@ -1,14 +1,20 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./page.css";
 
 const Page = () => {
+  const [showDetails, setShowDetails] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const handleTypeButtonClick = () => {
+    setShowDetails(true);
+  };
 
   const onSubmit = (data) => {
     console.log(data);
@@ -34,25 +40,41 @@ const Page = () => {
           </div>
           <div className={styles.item}>
             <label>주요 항목(type)</label>
-            <button type="button"> 사료 + </button>
-            <button type="button"> 건강 + </button>
-            <button type="button"> 산책 + </button>
-            <button type="button"> 간식/영양제 + </button>
-            <button type="button"> 위생/미용 + </button>
-            <button type="button"> 직접 입력 + </button>
+            <button type="button" onClick={handleTypeButtonClick}>
+              사료 +
+            </button>
+            <button type="button" onClick={handleTypeButtonClick}>
+              건강 +
+            </button>
+            <button type="button" onClick={handleTypeButtonClick}>
+              산책 +
+            </button>
+            <button type="button" onClick={handleTypeButtonClick}>
+              간식/영양제 +
+            </button>
+            <button type="button" onClick={handleTypeButtonClick}>
+              위생/미용 +
+            </button>
+            <button type="button" onClick={handleTypeButtonClick}>
+              직접 입력 +
+            </button>
           </div>
-          <div className={styles.item}>
-            <label>세부 사항/장소/타이틀(subtype)</label>
-            <input {...register("subtype")} />
-          </div>
-          <div className={styles.item}>
-            <label>메모</label>
-            <textarea {...register("memo")}></textarea>
-          </div>
-          <div className={styles.item}>
-            <label>중요 체크</label>
-            <input type="checkbox" {...register("isImportant")} />
-          </div>
+          {showDetails && (
+            <>
+              <div className={styles.item}>
+                <label>세부 사항/장소/타이틀(subtype)</label>
+                <input {...register("subtype")} />
+              </div>
+              <div className={styles.item}>
+                <label>메모</label>
+                <textarea {...register("memo")}></textarea>
+              </div>
+              <div className={styles.item}>
+                <label>중요 체크</label>
+                <input type="checkbox" {...register("isImportant")} />
+              </div>
+            </>
+          )}
           <div>
             <button type="submit">저장</button>
           </div>

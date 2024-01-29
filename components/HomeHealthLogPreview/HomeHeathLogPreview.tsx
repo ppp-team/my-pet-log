@@ -1,4 +1,4 @@
-import HealthLogTaskList from "../@common/HealthLogTaskList";
+import HealthLogTaskList from "../@common/LogList";
 
 const HomeHeathLogPreview = () => {
   return (
