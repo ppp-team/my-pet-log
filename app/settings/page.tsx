@@ -11,7 +11,7 @@ const Page = () => {
       <div className={styles.title}>마이 펫 관리하기</div>
       <MyPet />
       <div className={styles.title}>마이 프로필 관리하기</div>
-      <Link href="/myprofile">
+      <Link href="/profile">
         <MyProfile />
       </Link>
       <div className={styles.listContainer}>
