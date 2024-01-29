@@ -1,5 +1,11 @@
 import { globalStyle } from "@vanilla-extract/css";
 
+globalStyle(":root", {
+  vars: {
+    "--swiper-theme-color": "#d934f7",
+  },
+});
+
 globalStyle("*", {
   boxSizing: "border-box",
   fontFamily: "Pretendard",
@@ -19,4 +25,10 @@ globalStyle("a", {
   outline: "none",
 
   color: "black",
+});
+
+globalStyle("button", {
+  backgroundColor: "transparent",
+  border: "none",
+  cursor: "pointer",
 });

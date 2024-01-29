@@ -1,9 +1,8 @@
 import { NextPage } from "next";
-import "@/app/globals.css";
-import ParticipatePetGroup from "@/components/ParticipatePetGroupModal/PariticipatePetCroupModal";
+import ParticipatePetGroupModal from "@/components/ParticipatePetGroupModal/ParticipatePetGroupModal";
 
 const ParticipatePetGroupPage: NextPage = () => {
-  return <ParticipatePetGroup />;
+  return <ParticipatePetGroupModal />;
 };
 
 export default ParticipatePetGroupPage;

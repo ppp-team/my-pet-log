@@ -13,8 +13,8 @@ export const profileImg = style({
   marginRight: "1rem",
 
   borderRadius: "50%",
-  backgroundColor: "#ddd",
   fontSize: "3rem",
+  backgroundSize: "contain",
 });
 
 export const userInfo = style({});
