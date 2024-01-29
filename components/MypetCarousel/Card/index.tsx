@@ -1,6 +1,9 @@
 import * as styles from "@/components/MypetCarousel/Card/style.css";
+import EditIcon from "@/assets/edit-petcard.svg";
+import InviteIcon from "@/assets/invite-petcard.svg";
 
 interface PetInfo {
+  imgUrl: string;
   name: string;
   type: string;
   gender: string;
@@ -9,20 +12,30 @@ interface PetInfo {
 }
 
 interface CardProps {
-  slide: PetInfo;
+  card: PetInfo;
   backgroundColor: string;
 }
 
-const Card = ({ slide, backgroundColor }: CardProps) => {
+const Card = ({ card, backgroundColor }: CardProps) => {
   return (
     <div className={styles.container} style={{ background: backgroundColor }}>
-      <h3>{slide.name}</h3>
-      <p>
-        {slide.type} - {slide.gender}
-      </p>
-      <p>
-        나이: {slide.age}, 몸무게: {slide.weight}kg
-      </p>
+      <div
+        className={styles.profile}
+        style={{
+          backgroundImage: `url(${card.imgUrl})`,
+        }}
+      />
+      <div className={styles.petInfo}>
+        <p>{card.name}</p>
+        <p>{card.type}</p>
+        <p>
+          {card.gender} {card.age}살 {card.weight}kg
+        </p>
+      </div>
+      <div className={styles.iconsContainer}>
+        <EditIcon />
+        <InviteIcon />
+      </div>
     </div>
   );
 };

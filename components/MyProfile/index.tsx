@@ -1,12 +1,18 @@
 import * as styles from "@/components/MyProfile/style.css";
+import data from "./mockData.json";
 
 const MyProfile = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.profileImg}></div>
+      <div
+        className={styles.profileImg}
+        style={{
+          backgroundImage: `url(${data.imgUrl})`,
+        }}
+      />
       <div className={styles.userInfo}>
-        <div className={styles.nickname}>내 닉네임</div>
-        <div className={styles.email}>pet-lover@gmail.com</div>
+        <p className={styles.nickname}>{data.nickname}</p>
+        <p className={styles.email}>{data.email}</p>
       </div>
     </div>
   );
