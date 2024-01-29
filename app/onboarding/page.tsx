@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import "@/app/globals.css";
+import "@/styles/global.css";
 import * as styles from "@/app/onboarding/page.css";
 import Onboarding from "@/components/Onboarding";
 
