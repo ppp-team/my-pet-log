@@ -13,7 +13,6 @@ const ImageInput = ({ register }: { register: UseFormRegister<FieldValues> }) =>
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    console.log(images);
     if (files)
       for (let i = 0; i < files?.length; i++) {
         if (images.filter((v) => v.name === files[i].name).length > 0) {
@@ -30,7 +29,7 @@ const ImageInput = ({ register }: { register: UseFormRegister<FieldValues> }) =>
   };
   return (
     <>
-      <label>이미지</label>
+      <label className={styles.label}>이미지</label>
       <div className={styles.container}>
         <div className={styles.wrapper}>
           <input className={styles.input} type="file" multiple accept="image/*" {...register("image")} onChange={handleImageChange} />
@@ -44,6 +43,7 @@ const ImageInput = ({ register }: { register: UseFormRegister<FieldValues> }) =>
             );
           })}
       </div>
+      <p className={styles.p}>이미지 최대 10개 중 {images.length}개</p>
     </>
   );
 };

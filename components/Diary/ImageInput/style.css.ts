@@ -6,8 +6,8 @@ export const container = style({
 });
 
 export const wrapper = style({
-  width: "7rem",
-  height: "7rem",
+  minWidth: "7rem",
+  minHeight: "7rem",
 
   backgroundColor: "#f5f5f5d9",
   backgroundSize: "cover",
@@ -36,4 +36,14 @@ export const closeIcon = style({
   top: "-0.8rem",
 
   cursor: "pointer",
+});
+
+export const p = style({
+  color: "gray",
+  fontSize: "0.8rem",
+});
+
+export const label = style({
+  fontSize: "1.2rem",
+  fontWeight: "600",
 });
