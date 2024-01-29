@@ -2,11 +2,15 @@ import { style } from "@vanilla-extract/css";
 
 export const container = style({
   display: "flex",
+  flexWrap: "wrap",
   gap: "1rem",
+
+  width: "100%",
+  height: "100%",
 });
 
 export const wrapper = style({
-  minWidth: "7rem",
+  minWidth: "30%",
   minHeight: "7rem",
 
   backgroundColor: "#f5f5f5d9",
@@ -46,4 +50,15 @@ export const p = style({
 export const label = style({
   fontSize: "1.2rem",
   fontWeight: "600",
+});
+
+export const error = style({
+  width: "20rem",
+  height: "15rem",
+
+  padding: "2rem",
+
+  backgroundColor: "white",
+
+  borderRadius: "7px",
 });
