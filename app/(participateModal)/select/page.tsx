@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import "@/app/globals.css";
 import * as styles from "./page.css";
 import Link from "next/link";
 
