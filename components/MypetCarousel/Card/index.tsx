@@ -33,7 +33,7 @@ const Card = ({ card, backgroundColor }: CardProps) => {
         <p>{card.name}</p>
         <p>{card.type}</p>
         <p>
-          {card.gender} {age}살 {card.weight}kg
+          {card.gender} {age} {card.weight}kg
         </p>
       </div>
       <div className={styles.iconsContainer}>
