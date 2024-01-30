@@ -11,8 +11,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body>
-        <QueryProvider>{children}</QueryProvider>
-        <div id="portal"></div> {/* 모달을 위한 요소 */}
+        <QueryProvider>
+          {children}
+          <div id="portal"></div>
+        </QueryProvider>
       </body>
     </html>
   );
