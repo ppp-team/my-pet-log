@@ -9,15 +9,8 @@ const EditPage = () => {
     register,
     control,
     formState: { errors },
-    setError,
     watch,
-    clearErrors,
-  } = useForm({ mode: "onBlur" });
-
-  //   useEffect(() => {
-  //     console.log("a");
-  //     watch("title") == "워치" ? setError("title", { message: "watch를 onChange처럼 쓰기" }, { shouldFocus: true }) : clearErrors("title");
-  //   }, [watch("title")]);
+  } = useForm({ mode: "onChange" });
 
   const isTitleExist = (fieldValue: string) => {
     return fieldValue === "중복제목" ? true : false;
