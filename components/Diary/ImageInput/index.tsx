@@ -35,7 +35,7 @@ const ImageInput = ({ register }: { register: UseFormRegister<FieldValues> }) =>
     setPreviewImage((prev) => prev.filter((v) => v.name !== name));
   };
   return (
-    <>
+    <div className={styles.root}>
       <label className={styles.label}>이미지</label>
       <div className={styles.container}>
         <div className={styles.wrapper}>
@@ -58,7 +58,7 @@ const ImageInput = ({ register }: { register: UseFormRegister<FieldValues> }) =>
           </div>
         </Modal>
       )}
-    </>
+    </div>
   );
 };
 

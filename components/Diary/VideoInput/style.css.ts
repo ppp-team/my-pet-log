@@ -4,6 +4,7 @@ export const root = style({
   display: "flex",
   flexDirection: "column",
 });
+
 export const container = style({
   display: "flex",
   flexWrap: "wrap",
@@ -17,25 +18,21 @@ export const container = style({
 });
 
 export const wrapper = style({
-  width: "30%",
-  maxWidth: "7rem",
-  minHeight: "7rem",
+  width: "7rem",
+  height: "7rem",
 
   backgroundColor: "#f5f5f5d9",
-  backgroundSize: "cover",
-  position: "relative",
-  backgroundPosition: "center",
 
   borderRadius: "6px",
 });
 
 export const input = style({
-  width: "100%",
-  height: "100%",
+  width: "7rem",
+  height: "7rem",
 
   position: "absolute",
   cursor: "pointer",
-  opacity: 0,
+  opacity: 1,
   zIndex: 1,
 });
 

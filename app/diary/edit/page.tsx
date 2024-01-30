@@ -7,6 +7,7 @@ import VanillaCalendar from "@/components/VanillaCalendar";
 import * as styles from "./style.css";
 import { Options } from "vanilla-calendar-pro";
 import { useRef } from "react";
+import VideoInput from "@/components/Diary/VideoInput";
 
 const EditPage = () => {
   const {
@@ -21,7 +22,6 @@ const EditPage = () => {
 
   const dateRef = useRef<HTMLDivElement>(null);
   const timeRef = useRef<HTMLDivElement>(null);
-
   const options: Options = {
     settings: {
       selected: {
@@ -83,8 +83,7 @@ const EditPage = () => {
 
         <ImageInput register={register} />
 
-        <label>동영상</label>
-        <input type="file" accept="video/*" {...register("video")} />
+        <VideoInput register={register} />
 
         <div className={styles.inputWrapper}>
           <label htmlFor="content" className={styles.label}>
