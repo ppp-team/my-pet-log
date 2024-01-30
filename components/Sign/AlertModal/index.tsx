@@ -7,7 +7,7 @@ interface AlertProps {
 const AlertModal = ({ onClick }: AlertProps) => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.contents}>{"정말 삭제하시겠습니까?"}</div>
+      <div className={styles.contents}>{"가입이 완료되었습니다!"}</div>
       <div className={styles.buttonWrapper}>
         <button className={styles.styledButton} onClick={onClick}>
           확인

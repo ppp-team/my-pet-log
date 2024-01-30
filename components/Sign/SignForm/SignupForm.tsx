@@ -3,11 +3,12 @@ import Input from "@/components/Sign/SignInput/Input";
 import PasswordInput from "@/components/Sign/SignInput/PasswordInput";
 import { ERROR_MESSAGE, NICKNAME_RULES, SIGNUP_PASSWORD_RULES, PLACEHOLDER } from "@/constatnts/inputConstant";
 import { useModal } from "@/hooks/useModal";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import * as styles from "./styles.css";
 import SubmitButton from "@/components/Sign/SubmitButton/index";
 import Modal from "@/components/@common/Modal";
+import AlertModal from "@/components/Sign/AlertModal";
 
 const SignUpForm = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
@@ -15,23 +16,14 @@ const SignUpForm = () => {
     defaultValues: { email: "", nickname: "", password: "", confirmPassword: "" },
     mode: "onBlur",
   });
-  // const router = useRouter();
+  const router = useRouter();
 
-  // const handleCloseModal = () => {
-  //   closeModalFunc();
-  //   router.push("/login");
-  // };
+  const handleCloseModal = () => {
+    closeModalFunc();
+    router.push("/login");
+  };
 
-  const handleSignUp = async (data) => {
-    // 실제 회원가입 로직을 호출하고, 성공 시 openModalFunc()를 호출하는 부분
-
-    // const res = await postSignUp(data);
-    // if (res.success) {
-    //   openModalFunc();
-    // } else {
-    //   setError("email", { message: res.errorMessage }); // 에러가 발생한 경우
-    // }
-
+  const handleSignUp = () => {
     openModalFunc();
   };
 
@@ -58,14 +50,6 @@ const SignUpForm = () => {
           }}
           render={({ field, fieldState }) => (
             <Input label="이메일" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
-          )}
-        />
-        <Controller
-          control={control}
-          name="nickname"
-          rules={NICKNAME_RULES}
-          render={({ field, fieldState }) => (
-            <Input label="닉네임" {...field} placeholder={PLACEHOLDER.nickname} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <Controller
@@ -98,6 +82,11 @@ const SignUpForm = () => {
           <SubmitButton disabled={!formState.isValid} type={"회원가입"} />
         </div>
       </form>
+      {isModalOpen && (
+        <Modal>
+          <AlertModal onClick={handleCloseModal}></AlertModal>
+        </Modal>
+      )}
     </>
   );
 };
