@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useModal } from "@/hooks/useModal";
 import ParticipatePetGroupModal from "@/components/Participate/ParticipatePetGroupModal";
 import Modal from "@/components/@common/Modal";
+import FooterNavigationBar from "@/components/Layout/Mobile/FooterNavigationBar/FooterNavigationBar";
 
 const SelectCreateJoinPage: NextPage = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
@@ -26,6 +27,7 @@ const SelectCreateJoinPage: NextPage = () => {
           <ParticipatePetGroupModal onClickClose={closeModalFunc} />
         </Modal>
       )}
+      <FooterNavigationBar /> {/* 개발을 위한 임시 렌더링 */}
     </main>
   );
 };
