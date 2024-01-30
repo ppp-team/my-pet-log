@@ -18,10 +18,10 @@ const SelectCreateJoinPage: NextPage = () => {
       <Link className={styles.linkCreate} href="/create/petgroup">
         확인
       </Link>
-      <button className={styles.linkParticipate} onClick={() => openModalFunc("participate")}>
+      <button className={styles.linkParticipate} onClick={openModalFunc}>
         공동 집사로 초대 받으셨나요?
       </button>
-      {isModalOpen === "participate" && (
+      {isModalOpen && (
         <Modal>
           <ParticipatePetGroupModal onClickClose={closeModalFunc} />
         </Modal>
