@@ -1,7 +1,9 @@
 const today = new Date();
 
 export const getPrettyToday = () => {
-  return today.toISOString().split("T")[0];
+  const month = today.getMonth() + 1 < 10 ? `0${today.getMonth() + 1}` : today.getMonth();
+  const day = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate();
+  return `${today.getFullYear()}-${month}-${day}`;
 };
 
 export const getPrettyTime = () => {
