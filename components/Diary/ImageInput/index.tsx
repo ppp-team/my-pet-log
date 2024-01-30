@@ -44,7 +44,7 @@ const ImageInput = ({ register }: { register: UseFormRegister<FieldValues> }) =>
         {previewImage &&
           previewImage.map((image) => {
             return (
-              <div key={image.name} className={styles.wrapper} style={{ backgroundImage: `url(${image.url})` }}>
+              <div draggable={true} key={image.name} className={styles.wrapper} style={{ backgroundImage: `url(${image.url})` }}>
                 <IoIosCloseCircle className={styles.closeIcon} onClick={() => deleteImage(image.name)} />
               </div>
             );

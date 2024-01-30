@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import * as styles from "./style.css";
-import EditIcon from "@/assets/edit.svg";
-import Image from "next/image";
 import ImageInput from "@/components/Diary/ImageInput";
-import { watch } from "fs";
+import { useForm } from "react-hook-form";
+import { getPrettyTime, getPrettyToday } from "@/utils/getPrettyToday";
+import VanillaCalendar from "@/components/VanillaCalendar";
+import * as styles from "./style.css";
+import { Options } from "vanilla-calendar-pro";
+import { useRef } from "react";
 
 const EditPage = () => {
   const {
@@ -22,6 +22,31 @@ const EditPage = () => {
   //   const handleSubmit: SubmitHandler<any> = (data: any) => {
   //     console.log(data);
   //   };
+
+  const dateRef = useRef<HTMLDivElement>(null);
+  const timeRef = useRef<HTMLDivElement>(null);
+
+  const options: Options = {
+    settings: {
+      selected: {
+        dates: [getPrettyToday()],
+        time: getPrettyTime(),
+      },
+      selection: {
+        time: true,
+      },
+    },
+    actions: {
+      changeTime(e, self) {
+        if (timeRef.current) timeRef.current.innerText = ` ${self.selectedTime}`;
+      },
+      clickDay(e, self) {
+        if (!self.selectedDates[0]) return;
+        if (dateRef.current) dateRef.current.innerText = `${self.selectedDates[0]}`;
+      },
+    },
+  };
+
   return (
     <div className={styles.container}>
       <form
@@ -41,8 +66,18 @@ const EditPage = () => {
 
         <div className={styles.inputWrapper}>
           <label className={styles.label}>날짜</label>
-          <input type="date" {...register("date")} className={styles.input} />
-          <input type="time" {...register("time")} className={styles.input} />
+          {/* <input type="date" {...register("date")} className={styles.input} />
+          <input type="time" {...register("time")} className={styles.input} /> */}
+
+          <div style={{ display: "flex", gap: "1rem" }}>
+            <div className={styles.input} ref={dateRef}>
+              {getPrettyToday()}
+            </div>
+            <div className={styles.input} ref={timeRef}>
+              {getPrettyTime()}
+            </div>
+          </div>
+          <VanillaCalendar config={options} />
         </div>
 
         <ImageInput register={register} />
