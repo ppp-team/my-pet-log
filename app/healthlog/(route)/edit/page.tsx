@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./page.css";
-import SearchLocation from "@/components/SearchLocation";
+import SearchLocation from "@/components/Healthlog/SearchLocation";
 
 interface SubmitData {
   // 폼 필드 속성 타입 추가
