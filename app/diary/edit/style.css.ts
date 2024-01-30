@@ -65,3 +65,8 @@ export const button = style({
 
   borderRadius: "8px",
 });
+
+export const error = style({
+  color: "red",
+  fontSize: "0.8rem",
+});
