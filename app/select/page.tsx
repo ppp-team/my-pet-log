@@ -5,6 +5,7 @@ import * as styles from "./page.css";
 import Link from "next/link";
 import { useModal } from "@/hooks/useModal";
 import ParticipatePetGroupModal from "@/components/Participate/ParticipatePetGroupModal";
+import Modal from "@/components/@common/Modal";
 
 const SelectCreateJoinPage: NextPage = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
@@ -20,7 +21,11 @@ const SelectCreateJoinPage: NextPage = () => {
       <button className={styles.linkParticipate} onClick={() => openModalFunc("participate")}>
         공동 집사로 초대 받으셨나요?
       </button>
-      {isModalOpen === "participate" && <ParticipatePetGroupModal onClickClose={() => closeModalFunc()} />}
+      {isModalOpen === "participate" && (
+        <Modal>
+          <ParticipatePetGroupModal onClickClose={closeModalFunc} />
+        </Modal>
+      )}
     </main>
   );
 };
