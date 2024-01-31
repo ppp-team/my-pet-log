@@ -1,13 +1,12 @@
 "use client";
 
+import DateInput from "@/components/Diary/DateInput";
 import ImageInput from "@/components/Diary/ImageInput";
-import { Form, useForm } from "react-hook-form";
-import { getPrettyTime, getPrettyToday } from "@/utils/getPrettyToday";
-import VanillaCalendar from "@/components/VanillaCalendar";
-import * as styles from "./style.css";
-import { Options } from "vanilla-calendar-pro";
-import { useRef } from "react";
 import VideoInput from "@/components/Diary/VideoInput";
+import { Form, useForm } from "react-hook-form";
+import * as styles from "./style.css";
+
+const MAX_LENGTH = { title: 15, content: 500 };
 
 const EditPage = () => {
   const {
@@ -20,29 +19,6 @@ const EditPage = () => {
     watch,
     clearErrors,
   } = useForm({ mode: "onChange" });
-
-  const dateRef = useRef<HTMLDivElement>(null);
-  const timeRef = useRef<HTMLDivElement>(null);
-  const options: Options = {
-    settings: {
-      selected: {
-        dates: [getPrettyToday()],
-        time: getPrettyTime(),
-      },
-      selection: {
-        time: true,
-      },
-    },
-    actions: {
-      changeTime(e, self) {
-        if (timeRef.current) timeRef.current.innerText = ` ${self.selectedTime}`;
-      },
-      clickDay(e, self) {
-        if (!self.selectedDates[0]) return;
-        if (dateRef.current) dateRef.current.innerText = `${self.selectedDates[0]}`;
-      },
-    },
-  };
 
   return (
     <div className={styles.container}>
@@ -58,32 +34,23 @@ const EditPage = () => {
             제목 *
           </label>
           <input
-            {...register("title", { required: "제목을 입력해주세요.", maxLength: { value: 15, message: "최대 15자까지 작성할 수 있습니다." } })}
-            maxLength={15}
+            {...register("title", { required: "제목을 입력해주세요.", maxLength: { value: MAX_LENGTH.title, message: `최대 ${MAX_LENGTH.title}자까지 작성할 수 있습니다.` } })}
+            maxLength={MAX_LENGTH.title}
             id="title"
             className={styles.input}
           />
-          {watch("title") ? <p className={styles.p}>{watch("title")?.length}/ 15</p> : <p className={styles.p}>0/ 15</p>}
+          {watch("title") ? (
+            <p className={styles.p}>
+              {watch("title")?.length}/ {MAX_LENGTH.title}
+            </p>
+          ) : (
+            <p className={styles.p}>0/ {MAX_LENGTH.title}</p>
+          )}
           {errors["title"] && <p className={styles.error}>{errors["title"].message?.toString()}</p>}
         </div>
 
-        <div className={styles.inputWrapper}>
-          <label className={styles.label}>날짜</label>
-          {/* <input type="date" {...register("date")} className={styles.input} />
-          <input type="time" {...register("time")} className={styles.input} /> */}
-          <div style={{ display: "flex", gap: "1rem" }}>
-            <div className={styles.input} ref={dateRef}>
-              {getPrettyToday()}
-            </div>
-            <div className={styles.input} ref={timeRef} suppressHydrationWarning>
-              {getPrettyTime()}
-            </div>
-          </div>
-          <VanillaCalendar config={options} />
-        </div>
-
+        <DateInput register={register} setValue={setValue} />
         <ImageInput register={register} setValue={setValue} />
-
         <VideoInput register={register} setValue={setValue} />
 
         <div className={styles.inputWrapper}>
@@ -91,13 +58,22 @@ const EditPage = () => {
             내용 *
           </label>
           <textarea
-            {...register("content", { required: "내용을 입력해주세요.", maxLength: { value: 500, message: "최대 500자까지 작성할 수 있습니다." } })}
-            maxLength={500}
+            {...register("content", {
+              required: "내용을 입력해주세요.",
+              maxLength: { value: MAX_LENGTH.content, message: `최대 ${MAX_LENGTH.content}자까지 작성할 수 있습니다.` },
+            })}
+            maxLength={MAX_LENGTH.content}
             id="content"
             className={styles.input}
             style={{ height: "10rem" }}
           />
-          {watch("content") ? <p className={styles.p}>{watch("content")?.length}/ 500</p> : <p className={styles.p}>0/ 500</p>}
+          {watch("content") ? (
+            <p className={styles.p}>
+              {watch("content")?.length}/ {MAX_LENGTH.content}
+            </p>
+          ) : (
+            <p className={styles.p}>0/ {MAX_LENGTH.content}</p>
+          )}
           {errors["content"] && <p className={styles.error}>{errors["content"].message?.toString()}</p>}
         </div>
 

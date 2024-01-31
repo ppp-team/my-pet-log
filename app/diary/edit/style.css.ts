@@ -28,11 +28,6 @@ export const input = style({
   borderRadius: "8px",
   border: "1px solid #d9d9d9",
 
-  wordWrap: "break-word",
-  wordBreak: "break-all",
-
-  resize: "none",
-
   ":focus": {
     outline: "none",
     border: "1px solid orange",

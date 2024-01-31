@@ -1,11 +1,11 @@
+import { InputProps } from "@/components/Diary/ImageInput";
+import * as inputStyles from "@/components/Diary/ImageInput/style.css";
 import { useState } from "react";
-import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
 import * as styles from "./style.css";
-import * as inputStyles from "@/components/Diary/ImageInput/style.css";
 
-const VideoInput = ({ register, setValue }: { register: UseFormRegister<FieldValues>; setValue: UseFormSetValue<FieldValues> }) => {
+const VideoInput = ({ register, setValue }: InputProps) => {
   const [previewVideo, setPreviewVideo] = useState("");
 
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {

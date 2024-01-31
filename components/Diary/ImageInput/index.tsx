@@ -12,7 +12,12 @@ interface PreviewImage {
 }
 const MAX_IMAGES = 10;
 
-const ImageInput = ({ register, setValue }: { register: UseFormRegister<FieldValues>; setValue: UseFormSetValue<FieldValues> }) => {
+export interface InputProps {
+  register: UseFormRegister<FieldValues>;
+  setValue: UseFormSetValue<FieldValues>;
+}
+
+const ImageInput = ({ register, setValue }: InputProps) => {
   const [images, setImages] = useState<File[]>([]);
   const [previewImage, setPreviewImage] = useState<PreviewImage[]>([]);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
