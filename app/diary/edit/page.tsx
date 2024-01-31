@@ -82,7 +82,7 @@ const EditPage = () => {
           <VanillaCalendar config={options} />
         </div>
 
-        <ImageInput register={register} />
+        <ImageInput register={register} setValue={setValue} />
 
         <VideoInput register={register} setValue={setValue} />
 

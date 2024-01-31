@@ -16,7 +16,24 @@ export const container = style({
   marginBottom: "0.5rem",
 });
 
-export const wrapper = style({
+export const input = style({
+  width: "7rem",
+  height: "7rem",
+
+  backgroundColor: "var(--LightOrange)",
+
+  position: "relative",
+
+  cursor: "pointer",
+
+  borderRadius: "7px",
+});
+
+export const disabledInput = style({
+  cursor: "not-allowed",
+});
+
+export const preview = style({
   width: "30%",
   maxWidth: "7rem",
   minHeight: "7rem",
@@ -26,22 +43,25 @@ export const wrapper = style({
   position: "relative",
   backgroundPosition: "center",
 
-  borderRadius: "6px",
+  borderRadius: "7px",
 });
 
-export const input = style({
-  width: "100%",
-  height: "100%",
+export const addIcon = style({
+  color: "#FF8743",
+  width: "2rem",
+  height: "2rem",
 
   position: "absolute",
-  cursor: "pointer",
-  opacity: 0,
-  zIndex: 1,
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%,-50%)",
 });
 
 export const closeIcon = style({
   width: "2rem",
   height: "2rem",
+
+  color: "#FF8743",
 
   position: "absolute",
   right: "-0.8rem",

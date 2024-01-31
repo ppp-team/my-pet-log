@@ -4,7 +4,7 @@ globalStyle(":root", {
   vars: {
     "--swiper-theme-color": "#d934f7",
 
-    "--MainOranage": "#FF8743",
+    "--MainOrange": "#FF8743",
     "--LightOrange": "#FFE1D0",
   },
 });

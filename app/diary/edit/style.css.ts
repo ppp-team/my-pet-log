@@ -61,7 +61,7 @@ export const button = style({
   fontWeight: "500",
   color: "white",
 
-  backgroundColor: "orange",
+  backgroundColor: "var(--MainOrange)",
 
   borderRadius: "8px",
 });

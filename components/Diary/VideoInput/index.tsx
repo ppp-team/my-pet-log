@@ -3,6 +3,7 @@ import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
 import * as styles from "./style.css";
+import * as inputStyles from "@/components/Diary/ImageInput/style.css";
 
 const VideoInput = ({ register, setValue }: { register: UseFormRegister<FieldValues>; setValue: UseFormSetValue<FieldValues> }) => {
   const [previewVideo, setPreviewVideo] = useState("");
@@ -18,21 +19,21 @@ const VideoInput = ({ register, setValue }: { register: UseFormRegister<FieldVal
     setValue("video", null);
   };
   return (
-    <div className={styles.root}>
-      <label className={styles.label}>동영상</label>
-      <div className={styles.container}>
-        <label htmlFor="video" className={styles.input}>
-          <AiOutlineVideoCameraAdd className={styles.addIcon} width={80} height={80} />
+    <div className={inputStyles.root}>
+      <label className={inputStyles.label}>동영상</label>
+      <div className={inputStyles.container}>
+        <label htmlFor="video" className={inputStyles.input}>
+          <AiOutlineVideoCameraAdd className={inputStyles.addIcon} width={80} height={80} />
         </label>
         <input id="video" style={{ display: "none" }} type="file" accept="video/*" {...register("video")} onChange={handleVideoChange} />
         {previewVideo && (
           <div style={{ position: "relative", width: "7rem", height: "7rem" }}>
             <video className={styles.video} src={previewVideo} autoPlay />
-            <IoIosCloseCircle className={styles.closeIcon} onClick={deleteVideo} />
+            <IoIosCloseCircle className={inputStyles.closeIcon} onClick={deleteVideo} />
           </div>
         )}
       </div>
-      <p className={styles.p}>동영상 최대 1개 (5MB 제한) </p>
+      <p className={inputStyles.p}>동영상 최대 1개 (5MB 제한) </p>
     </div>
   );
 };
