@@ -13,8 +13,8 @@ import AlertModal from "@/components/Sign/AlertModal";
 const SignUpForm = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const { control, handleSubmit, watch, setError, formState } = useForm({
-    defaultValues: { email: "", nickname: "", password: "", confirmPassword: "" },
-    mode: "onBlur",
+    defaultValues: { email: "", password: "", confirmPassword: "" },
+    mode: "onTouched",
   });
   const router = useRouter();
 
