@@ -46,7 +46,7 @@ const DIARY_CODE = "456";
 
 const Diary = ({ diary }: { diary: DiaryData }) => {
   return (
-    <Link href={`/diary/card/${DIARY_CODE}`}>
+    <Link href={`/diary/detail/${DIARY_CODE}`}>
       <div className={styles.diaryContainer}>
         <div className={styles.headerInfo}>
           <div>{diary.user}</div>
