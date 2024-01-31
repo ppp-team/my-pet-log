@@ -14,3 +14,11 @@ export const nav = style({
   height: "6.3rem",
   backgroundColor: "white",
 });
+
+export const link = style({
+  height: "6.3rem",
+  width: "100%",
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+});

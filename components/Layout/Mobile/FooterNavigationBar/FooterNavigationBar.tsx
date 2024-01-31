@@ -13,7 +13,7 @@ const FooterNavigationBar = () => {
     <footer className={styles.footer}>
       <nav className={styles.nav}>
         {FOOTER_NAVIGATION_LIST.map((menu) => (
-          <Link key={menu.id} href={menu.href}>
+          <Link className={styles.link} key={menu.id} href={menu.href}>
             {menu.name}
           </Link>
         ))}
