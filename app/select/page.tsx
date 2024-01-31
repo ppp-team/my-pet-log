@@ -7,6 +7,8 @@ import { useModal } from "@/hooks/useModal";
 import ParticipatePetGroupModal from "@/components/Participate/ParticipatePetGroupModal";
 import Modal from "@/components/@common/Modal";
 import FooterNavigationBar from "@/components/Layout/Mobile/FooterNavigationBar/FooterNavigationBar";
+import HeaderLogo from "@/components/Layout/Mobile/HeaderLogo/HeaderLogo";
+import HeaderPetGroup from "@/components/Layout/Mobile/HeaderPetGroup/HeaderPetGroup";
 
 const SelectCreateJoinPage: NextPage = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
@@ -27,7 +29,9 @@ const SelectCreateJoinPage: NextPage = () => {
           <ParticipatePetGroupModal onClickClose={closeModalFunc} />
         </Modal>
       )}
-      <FooterNavigationBar /> {/* 개발을 위한 임시 렌더링 */}
+      <FooterNavigationBar /> {/* 개발용 임시 렌더링 */}
+      <HeaderLogo /> {/* 개발용 임시 렌더링 */}
+      <HeaderPetGroup /> {/* 개발용 임시 렌더링 */}
     </main>
   );
 };
