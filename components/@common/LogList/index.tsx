@@ -1,4 +1,4 @@
-import HealthLogTaskItem from "@/components/@common/HealthLogTaskList/HealthLogTaskItem";
+import LogItem from "@/components/@common/LogList/LogItem";
 import * as styles from "./style.css";
 
 const sampleList = [
@@ -50,7 +50,7 @@ const sampleList = [
   },
 ];
 
-const HealthLogTaskList = ({ pageType }: { pageType: string }) => {
+const LogList = ({ pageType }: { pageType: string }) => {
   return (
     <ul>
       {sampleList.map((dateInfo, index) => (
@@ -58,7 +58,7 @@ const HealthLogTaskList = ({ pageType }: { pageType: string }) => {
           <p className={styles.date}>{dateInfo.date}</p>
           <ul>
             {dateInfo.list.map((taskItem, taskIndex) => (
-              <HealthLogTaskItem taskItem={taskItem} key={taskIndex} pageType={pageType} />
+              <LogItem taskItem={taskItem} key={taskIndex} pageType={pageType} />
             ))}
           </ul>
         </div>
@@ -67,4 +67,4 @@ const HealthLogTaskList = ({ pageType }: { pageType: string }) => {
   );
 };
 
-export default HealthLogTaskList;
+export default LogList;

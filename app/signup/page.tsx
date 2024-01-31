@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import SignButton from "@/components/commons/buttons/SignButton";
+import SignButton from "@/components/@common/SignButton";
 
 const page = () => {
   return (
