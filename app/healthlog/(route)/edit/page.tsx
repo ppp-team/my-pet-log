@@ -12,7 +12,6 @@ interface SubmitData {
 const Page = () => {
   const [visibleSubtype, setVisibleSubtype] = useState("");
   const [selectedType, setSelectedType] = useState("");
-  const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
 
   const {
     register,
@@ -71,7 +70,7 @@ const Page = () => {
               ))}
             </div>
           </div>
-          {visibleSubtype && <SubtypeDetail visibleSubtype={visibleSubtype} myKey={myKey} register={register} />}
+          {visibleSubtype && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} />}
           <div>
             <button className={styles.submitButton} type="submit">
               저장

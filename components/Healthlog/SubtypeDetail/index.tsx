@@ -2,7 +2,9 @@ import React from "react";
 import SearchLocation from "@/components/Healthlog/SearchLocation";
 import * as styles from "./style.css";
 
-const SubtypeDetail = ({ visibleSubtype, myKey, register }) => {
+const SubtypeDetail = ({ visibleSubtype, register }) => {
+  const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
+
   return (
     <>
       {visibleSubtype === "WALK" && (
