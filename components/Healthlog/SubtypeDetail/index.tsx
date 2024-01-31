@@ -1,8 +1,14 @@
 import React from "react";
 import SearchLocation from "@/components/Healthlog/SearchLocation";
 import * as styles from "./style.css";
+import { UseFormRegister } from "react-hook-form";
 
-const SubtypeDetail = ({ visibleSubtype, register }) => {
+interface SubtypeDetailProps {
+  visibleSubtype: string;
+  register: UseFormRegister<any>;
+}
+
+const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register }) => {
   const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
 
   return (
