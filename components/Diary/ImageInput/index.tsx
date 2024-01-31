@@ -19,7 +19,7 @@ export interface InputProps {
 
 const ImageInput = ({ register, setValue }: InputProps) => {
   const [images, setImages] = useState<File[]>([]);
-  const [previewImage, setPreviewImage] = useState<PreviewImage[]>([]);
+  const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,13 +33,13 @@ const ImageInput = ({ register, setValue }: InputProps) => {
       if (images.filter((v) => v.name === files[i].name).length > 0) break; //같은 이미지는 무시함
 
       setImages((prev) => [...prev, files[i]]);
-      setPreviewImage((prev) => [...prev, { name: files[i].name, url: URL.createObjectURL(files[i]) }]);
+      setPreviewImages((prev) => [...prev, { name: files[i].name, url: URL.createObjectURL(files[i]) }]);
     }
   };
 
   const deleteImage = (name: string) => {
     setImages((prev) => prev.filter((v) => v.name !== name));
-    setPreviewImage((prev) => prev.filter((v) => v.name !== name));
+    setPreviewImages((prev) => prev.filter((v) => v.name !== name));
     setValue("image", null);
   };
   return (
@@ -60,8 +60,8 @@ const ImageInput = ({ register, setValue }: InputProps) => {
           disabled={images.length >= MAX_IMAGES}
         />
 
-        {previewImage &&
-          previewImage.map((image) => {
+        {previewImages &&
+          previewImages.map((image) => {
             return (
               <div draggable={true} key={image.name} className={styles.preview} style={{ backgroundImage: `url(${image.url})` }}>
                 <IoIosCloseCircle className={styles.closeIcon} onClick={() => deleteImage(image.name)} />
