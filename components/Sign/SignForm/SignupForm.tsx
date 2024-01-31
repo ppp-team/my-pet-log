@@ -1,7 +1,7 @@
 "use client";
 import Input from "@/components/Sign/SignInput/Input";
 import PasswordInput from "@/components/Sign/SignInput/PasswordInput";
-import { ERROR_MESSAGE, NICKNAME_RULES, SIGNUP_PASSWORD_RULES, PLACEHOLDER } from "@/constatnts/inputConstant";
+import { ERROR_MESSAGE, SIGNUP_PASSWORD_RULES, PLACEHOLDER } from "@/constatnts/inputConstant";
 import { useModal } from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
@@ -34,7 +34,7 @@ const SignUpForm = () => {
         onSubmit={handleSubmit(handleSignUp)}
 
         // onSubmit={handleSubmit(async (data) => {
-        //   const res = await postUsers({ email: data.email, password: data.password, nickname: data.nickname });
+        //   const res = await postUsers({ email: data.email, password: data.password });
         //   if (res !== null) {
         //     return openModalFunc();
         //   }
