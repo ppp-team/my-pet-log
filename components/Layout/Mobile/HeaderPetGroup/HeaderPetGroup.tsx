@@ -6,7 +6,7 @@ import { PetGroupType } from "@/components/types/petGroup";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import EditIconUrl from "@/assets/edit.svg?url";
+import sampleImageSrc from "@/assets/edit.svg?url";
 
 const PetGroupSampleList: PetGroupType[] = [
   {
@@ -23,7 +23,7 @@ const PetGroupSampleList: PetGroupType[] = [
     weight: "5.5",
     registNumber: "",
     repStatus: "Y",
-    petImageUrl: EditIconUrl,
+    petImageUrl: sampleImageSrc,
   },
   {
     petId: "2",
@@ -39,7 +39,7 @@ const PetGroupSampleList: PetGroupType[] = [
     weight: "5.5",
     registNumber: "",
     repStatus: "Y",
-    petImageUrl: EditIconUrl,
+    petImageUrl: sampleImageSrc,
   },
   {
     petId: "3",
@@ -55,7 +55,7 @@ const PetGroupSampleList: PetGroupType[] = [
     weight: "5.5",
     registNumber: "",
     repStatus: "Y",
-    petImageUrl: EditIconUrl,
+    petImageUrl: sampleImageSrc,
   },
 ];
 
@@ -68,7 +68,7 @@ type dropdownMenuItemType = {
 const SETTING_BUTTON: dropdownMenuItemType = {
   id: "settings",
   name: "동물 관리",
-  imageUrl: EditIconUrl,
+  imageUrl: sampleImageSrc,
 };
 
 const HeaderPetGroup = () => {
@@ -92,9 +92,9 @@ const HeaderPetGroup = () => {
       <Dropdown placement="bottom-start">
         <DropdownTrigger>
           <div className={styles.currentPetGroupContainer}>
-            <Image className={styles.petGroupIcon} src={EditIconUrl} alt="현재 선택된 동물 프로필 이미지" width={40} height={40} />
+            <Image className={styles.petGroupIcon} src={sampleImageSrc} alt="현재 선택된 동물 프로필 이미지" width={40} height={40} />
             <>{"해피"}</>
-            <Image src={EditIconUrl} alt="드롭다운 토글 버튼 이미지" width={40} height={40} />
+            <Image src={sampleImageSrc} alt="드롭다운 토글 버튼 이미지" width={40} height={40} />
           </div>
         </DropdownTrigger>
         <DropdownMenu aria-label="dropDownMenuList" items={dropDownMenuList} onAction={(key) => onClickDropdownMenu(`${key}`)}>
@@ -109,7 +109,7 @@ const HeaderPetGroup = () => {
         </DropdownMenu>
       </Dropdown>
       {/* <Link href=''> */}
-      <Image src={EditIconUrl} alt="유저 프로필 이미지" width={40} height={40} />
+      <Image src={sampleImageSrc} alt="유저 프로필 이미지" width={40} height={40} />
       {/* </Link> */}
     </header>
   );
