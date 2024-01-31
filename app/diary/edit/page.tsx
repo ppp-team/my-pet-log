@@ -16,6 +16,7 @@ const EditPage = () => {
     formState: { errors },
     setError,
     getValues,
+    setValue,
     watch,
     clearErrors,
   } = useForm({ mode: "onChange" });
@@ -83,7 +84,7 @@ const EditPage = () => {
 
         <ImageInput register={register} />
 
-        <VideoInput register={register} />
+        <VideoInput register={register} setValue={setValue} />
 
         <div className={styles.inputWrapper}>
           <label htmlFor="content" className={styles.label}>

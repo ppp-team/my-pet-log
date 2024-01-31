@@ -17,12 +17,11 @@ export const container = style({
   marginBottom: "0.5rem",
 });
 
-export const wrapper = style({
+export const video = style({
   width: "7rem",
   height: "7rem",
 
-  backgroundColor: "#f5f5f5d9",
-
+  border: "1px solid orange",
   borderRadius: "6px",
 });
 
@@ -30,15 +29,19 @@ export const input = style({
   width: "7rem",
   height: "7rem",
 
-  position: "absolute",
+  backgroundColor: "var(--LightOrange)",
+
+  position: "relative",
   cursor: "pointer",
-  opacity: 1,
-  zIndex: 1,
+
+  borderRadius: "7px",
 });
 
 export const closeIcon = style({
   width: "2rem",
   height: "2rem",
+
+  color: "#FF8743",
 
   position: "absolute",
   right: "-0.8rem",
@@ -57,13 +60,24 @@ export const label = style({
   fontWeight: "600",
 });
 
-export const error = style({
-  width: "20rem",
-  height: "15rem",
+// export const error = style({
+//   width: "20rem",
+//   height: "15rem",
 
-  padding: "2rem",
+//   padding: "2rem",
 
-  backgroundColor: "white",
+//   backgroundColor: "white",
 
-  borderRadius: "7px",
+//   borderRadius: "7px",
+// });
+
+export const addIcon = style({
+  color: "#FF8743",
+  width: "2.4rem",
+  height: "2.4rem",
+
+  position: "absolute",
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%,-50%)",
 });
