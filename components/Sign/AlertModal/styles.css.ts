@@ -34,4 +34,6 @@ export const styledButton = style({
   backgroundColor: "white",
   color: "black",
   fontWeight: 500,
+  width: "12rem",
+  padding: "1.4rem 0",
 });

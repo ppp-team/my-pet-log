@@ -49,7 +49,7 @@ const SignUpForm = () => {
             pattern: { value: /\S+@\S+\.\S+/, message: ERROR_MESSAGE.emailInvalid },
           }}
           render={({ field, fieldState }) => (
-            <Input label="이메일" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <Input label="이메일*" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <Controller
@@ -57,7 +57,7 @@ const SignUpForm = () => {
           name="password"
           rules={SIGNUP_PASSWORD_RULES}
           render={({ field, fieldState }) => (
-            <PasswordInput label="비밀번호" {...field} placeholder={PLACEHOLDER.signUpPassword} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <PasswordInput label="비밀번호*" {...field} placeholder={PLACEHOLDER.signUpPassword} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <Controller
@@ -75,7 +75,7 @@ const SignUpForm = () => {
             },
           }}
           render={({ field, fieldState }) => (
-            <PasswordInput label="비밀번호 확인" {...field} placeholder={PLACEHOLDER.signUpPassword} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <PasswordInput label="비밀번호 확인*" {...field} placeholder={PLACEHOLDER.signUpPassword} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <div className={styles.buttonWrapper}>

@@ -41,7 +41,7 @@ const SignInForm = () => {
           name="email"
           rules={EMAIL_RULES}
           render={({ field, fieldState }) => (
-            <Input label="이메일" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <Input label="이메일*" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <Controller
@@ -49,7 +49,7 @@ const SignInForm = () => {
           name="password"
           rules={SIGNIN_PASSWORD_RULES}
           render={({ field, fieldState }) => (
-            <PasswordInput label="비밀번호" {...field} placeholder={PLACEHOLDER.password} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <PasswordInput label="비밀번호*" {...field} placeholder={PLACEHOLDER.password} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <div className={styles.buttonWrapper}>
