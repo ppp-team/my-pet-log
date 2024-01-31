@@ -37,7 +37,7 @@ export const typeButton = style({
   width: "11.4rem",
   height: "8rem",
 
-  margin: "0 0.5rem",
+  margin: "0.5rem",
 
   borderRadius: "10px",
   backgroundColor: "lightgray",
