@@ -1,7 +1,11 @@
+"use client";
+
 import * as styles from "./HeaderPetGroup.css";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar } from "@nextui-org/react";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { PetGroupType } from "@/components/types/petGroup";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import EditIconUrl from "@/assets/edit.svg?url";
 
 const PetGroupSampleList: PetGroupType[] = [
@@ -62,12 +66,13 @@ type dropdownMenuItemType = {
 };
 
 const SETTING_BUTTON: dropdownMenuItemType = {
-  id: "setting",
+  id: "settings",
   name: "동물 관리",
   imageUrl: EditIconUrl,
 };
 
 const HeaderPetGroup = () => {
+  const router = useRouter();
   const parsedPetGroupList = PetGroupSampleList.map((item) => {
     return {
       id: item.petId,
@@ -77,6 +82,10 @@ const HeaderPetGroup = () => {
   });
 
   const dropDownMenuList: dropdownMenuItemType[] = [...parsedPetGroupList, SETTING_BUTTON];
+
+  const onClickDropdownMenu = (id: string) => {
+    id === SETTING_BUTTON.id ? router.push(id) : alert(id);
+  };
 
   return (
     <header className={styles.header}>
@@ -88,7 +97,7 @@ const HeaderPetGroup = () => {
             <Image src={EditIconUrl} alt="드롭다운 토글 버튼 이미지" width={40} height={40} />
           </div>
         </DropdownTrigger>
-        <DropdownMenu aria-label="dropDownMenuList" items={dropDownMenuList}>
+        <DropdownMenu aria-label="dropDownMenuList" items={dropDownMenuList} onAction={(key) => onClickDropdownMenu(`${key}`)}>
           {(item: dropdownMenuItemType) => (
             <DropdownItem key={item.id} variant="flat">
               <span className={styles.dropdownItemContainer}>
@@ -99,9 +108,9 @@ const HeaderPetGroup = () => {
           )}
         </DropdownMenu>
       </Dropdown>
-      <button>
-        <Image src={EditIconUrl} alt="유저 프로필 이미지" width={40} height={40} />
-      </button>
+      {/* <Link href=''> */}
+      <Image src={EditIconUrl} alt="유저 프로필 이미지" width={40} height={40} />
+      {/* </Link> */}
     </header>
   );
 };
