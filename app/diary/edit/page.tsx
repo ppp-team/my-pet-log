@@ -6,6 +6,7 @@ import * as styles from "./style.css";
 import EditIcon from "@/assets/edit.svg";
 import Image from "next/image";
 import ImageInput from "@/components/Diary/ImageInput";
+import { watch } from "fs";
 
 const EditPage = () => {
   const {
@@ -14,6 +15,7 @@ const EditPage = () => {
     formState: { errors },
     setError,
     getValues,
+    watch,
     clearErrors,
   } = useForm({ mode: "onBlur" });
 
@@ -25,23 +27,39 @@ const EditPage = () => {
       <form
         className={styles.form}
         onSubmit={(e) => {
+          // console.log(getValues("image"));
           e.preventDefault();
         }}
       >
-        <label>제목</label>
-        <input {...register("title")} />
-        <label>날짜</label>
-        <div>
-          <input type="date" {...register("date")} />
-          <input type="time" />
+        <div className={styles.inputWrapper}>
+          <label htmlFor="title" className={styles.label}>
+            제목
+          </label>
+          <input {...register("title")} maxLength={15} id="title" className={styles.input} />
+          {watch("title") ? <p className={styles.p}>{watch("title")?.length}/ 15</p> : <p className={styles.p}>0/ 15</p>}
+        </div>
+
+        <div className={styles.inputWrapper}>
+          <label className={styles.label}>날짜</label>
+          <input type="date" {...register("date")} className={styles.input} />
+          <input type="time" {...register("time")} className={styles.input} />
         </div>
 
         <ImageInput register={register} />
+
         <label>동영상</label>
         <input type="file" accept="video/*" {...register("video")} />
-        <label>내용</label>
-        <input {...register("content")} />
-        <button type="submit">작성하기</button>
+        <div className={styles.inputWrapper}>
+          <label htmlFor="content" className={styles.label}>
+            내용
+          </label>
+          <textarea {...register("content")} maxLength={500} id="content" className={styles.input} style={{ height: "10rem" }} />
+          {watch("content") ? <p className={styles.p}>{watch("content")?.length}/ 500</p> : <p className={styles.p}>0/ 500</p>}
+        </div>
+
+        <button className={styles.button} type="submit">
+          작성하기
+        </button>
       </form>
     </div>
   );
