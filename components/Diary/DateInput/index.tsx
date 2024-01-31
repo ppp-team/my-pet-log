@@ -2,9 +2,13 @@ import * as styles from "@/app/diary/edit/style.css";
 import { InputProps } from "@/components/Diary/ImageInput";
 import VanillaCalendar from "@/components/VanillaCalendar";
 import { getPrettyTime, getPrettyToday } from "@/utils/getPrettyToday";
+import { useEffect, useRef, useState } from "react";
 import { Options } from "vanilla-calendar-pro";
 
 const DateInput = ({ register, setValue }: InputProps) => {
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
   const options: Options = {
     settings: {
       selected: {
@@ -30,11 +34,11 @@ const DateInput = ({ register, setValue }: InputProps) => {
   return (
     <div className={styles.inputWrapper}>
       <label className={styles.label}>날짜</label>
-      <div style={{ display: "flex", gap: "1rem" }}>
+      <div style={{ display: "flex", gap: "1rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
         <input className={styles.input} value={getPrettyToday()} readOnly {...register("date")} />
         <input className={styles.input} value={getPrettyTime()} suppressHydrationWarning readOnly {...register("time")} />
       </div>
-      <VanillaCalendar config={options} />
+      {isCalendarOpen && <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%" }} />}
     </div>
   );
 };
