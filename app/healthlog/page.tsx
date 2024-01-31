@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import LogList from "@/components/@common/LogList";
+import EmptyHealthLog from "@/components/Healthlog/EmptyHealthLog";
+import QuickButtons from "@/components/Healthlog/QuickButtons";
+import VanillaCalendar from "@/components/Healthlog/VanillaCalendar";
+import { useState } from "react";
 import * as styles from "./page.css";
-import VanillaCalendar from "@/components/VanillaCalendar";
-import QuickButtons from "@/components/QuickButtons";
-import EmptyHealthLog from "@/components/EmptyHealthLog";
-import HealthLogList from "@/components/@common/LogList";
 
 const Page = () => {
   const today = new Date().toISOString().split("T")[0];
@@ -43,7 +43,7 @@ const Page = () => {
         </div>
         <div>
           {/* 항목 있을 경우 */}
-          <HealthLogList />
+          <LogList pageType="healthlog" />
         </div>
       </div>
     </>
