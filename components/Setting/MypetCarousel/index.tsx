@@ -1,11 +1,11 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import "@/components/MypetCarousel/style.css";
+import "@/components/Setting/MypetCarousel/style.css";
 import { Pagination, Autoplay } from "swiper/modules";
 import "@/styles/global.css";
 import mockData from "./mockdata.json";
-import Card from "@/components/MypetCarousel/Card";
+import Card from "@/components/Setting/MypetCarousel/Card";
 
 const MyPet = () => {
   const backgroundColors = ["#d9d9d9", "#aabbcc", "#ddeeff", "#ccddaa", "#bbaaee"];

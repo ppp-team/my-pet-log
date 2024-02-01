@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import MyProfile from "@/components/MyProfile";
-import MyPet from "@/components/MypetCarousel";
+import MyProfile from "@/components/Setting/MyProfile";
+import MyPet from "@/components/Setting/MypetCarousel";
 import * as styles from "@/app/settings/page.css";
 
 const Page = () => {
@@ -11,7 +11,7 @@ const Page = () => {
       <div className={styles.title}>마이 펫 관리하기</div>
       <MyPet />
       <div className={styles.title}>마이 프로필 관리하기</div>
-      <Link href="/myprofile">
+      <Link href="/profile">
         <MyProfile />
       </Link>
       <div className={styles.listContainer}>

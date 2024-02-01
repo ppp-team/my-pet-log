@@ -1,7 +1,7 @@
 "use client";
 import Input from "@/components/Sign/SignInput/Input";
 import PasswordInput from "@/components/Sign/SignInput/PasswordInput";
-import { ERROR_MESSAGE, NICKNAME_RULES, SIGNUP_PASSWORD_RULES, PLACEHOLDER } from "@/constatnts/inputConstant";
+import { ERROR_MESSAGE, SIGNUP_PASSWORD_RULES, PLACEHOLDER } from "@/constants/inputConstant";
 import { useModal } from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
@@ -13,8 +13,8 @@ import AlertModal from "@/components/Sign/AlertModal";
 const SignUpForm = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const { control, handleSubmit, watch, setError, formState } = useForm({
-    defaultValues: { email: "", nickname: "", password: "", confirmPassword: "" },
-    mode: "onBlur",
+    defaultValues: { email: "", password: "", confirmPassword: "" },
+    mode: "onTouched",
   });
   const router = useRouter();
 
@@ -34,7 +34,7 @@ const SignUpForm = () => {
         onSubmit={handleSubmit(handleSignUp)}
 
         // onSubmit={handleSubmit(async (data) => {
-        //   const res = await postUsers({ email: data.email, password: data.password, nickname: data.nickname });
+        //   const res = await postUsers({ email: data.email, password: data.password });
         //   if (res !== null) {
         //     return openModalFunc();
         //   }
@@ -49,7 +49,7 @@ const SignUpForm = () => {
             pattern: { value: /\S+@\S+\.\S+/, message: ERROR_MESSAGE.emailInvalid },
           }}
           render={({ field, fieldState }) => (
-            <Input label="이메일" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <Input label="이메일*" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <Controller
@@ -57,7 +57,7 @@ const SignUpForm = () => {
           name="password"
           rules={SIGNUP_PASSWORD_RULES}
           render={({ field, fieldState }) => (
-            <PasswordInput label="비밀번호" {...field} placeholder={PLACEHOLDER.signUpPassword} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <PasswordInput label="비밀번호*" {...field} placeholder={PLACEHOLDER.signUpPassword} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <Controller
@@ -75,7 +75,7 @@ const SignUpForm = () => {
             },
           }}
           render={({ field, fieldState }) => (
-            <PasswordInput label="비밀번호 확인" {...field} placeholder={PLACEHOLDER.signUpPassword} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <PasswordInput label="비밀번호 확인*" {...field} placeholder={PLACEHOLDER.signUpPassword} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <div className={styles.buttonWrapper}>

@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { Z_INDEX } from "@/styles/zindex.css";
 
 export const wrapper = style({
   width: "100%",
@@ -13,7 +14,7 @@ export const wrapper = style({
   alignItems: "center",
 
   backgroundColor: "rgba(0, 0, 0, 0.5)",
-  zIndex: "10", //추후 수정
+  zIndex: Z_INDEX.Modal,
 });
 
 export const container = style({

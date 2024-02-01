@@ -3,7 +3,7 @@
 import LogList from "@/components/@common/LogList";
 import EmptyHealthLog from "@/components/Healthlog/EmptyHealthLog";
 import QuickButtons from "@/components/Healthlog/QuickButtons";
-import VanillaCalendar from "@/components/Healthlog/VanillaCalendar";
+import VanillaCalendar from "@/components/@common/VanillaCalendar";
 import { useState } from "react";
 import * as styles from "./page.css";
 

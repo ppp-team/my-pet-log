@@ -7,4 +7,5 @@ export const signButton = style({
   margin: "0.5",
   cursor: "pointer",
   userSelect: "none",
+  textAlign: "center",
 });
