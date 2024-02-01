@@ -9,17 +9,22 @@ export const item = style({
 
 export const inputBox = style({
   width: "100%",
-  height: "4rem",
+  height: "3rem",
 
   padding: "1rem",
 
   borderRadius: "10px",
-  border: "1px solid #818181",
+  border: "1px solid #d9d9d9",
+
+  ":focus": {
+    outline: "none",
+    border: "1px solid orange",
+  },
 });
 
 export const textBox = style({
   width: "100%",
-  height: "8rem",
+  height: "6rem",
 
   padding: "1rem",
 

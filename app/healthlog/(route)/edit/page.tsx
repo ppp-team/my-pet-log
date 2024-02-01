@@ -1,7 +1,8 @@
 "use client";
 
-import SubtypeDetail from "@/components/Healthlog/SubtypeDetail";
 import DateInput from "@/components/@common/DateInput";
+import SelectMateDropdown from "@/components/Healthlog/SelectMateDropdown";
+import SubtypeDetail from "@/components/Healthlog/SubtypeDetail";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./page.css";
@@ -49,8 +50,8 @@ const Page = () => {
             <DateInput register={register} setValue={setValue} />
           </div>
           <div className={styles.item}>
-            <label>담당자 선택</label>
-            <input className={styles.inputBox} {...register("manager")} />
+            <label>담당 메이트</label>
+            <SelectMateDropdown />
           </div>
           <div className={styles.item}>
             <label>주요 항목</label>
