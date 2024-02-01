@@ -1,6 +1,7 @@
 "use client";
 
 import SubtypeDetail from "@/components/Healthlog/SubtypeDetail";
+import DateInput from "@/components/@common/DateInput";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./page.css";
@@ -16,6 +17,7 @@ const Page = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     // formState: { errors },
   } = useForm();
 
@@ -44,12 +46,7 @@ const Page = () => {
         <p className={styles.title}>건강수첩 작성하기</p>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems}>
           <div className={styles.item}>
-            <label>건강 기록일</label>
-            <input className={styles.inputBox} type="date" {...register("recordDate")} />
-          </div>
-          <div className={styles.item}>
-            <label>시간</label>
-            <input className={styles.inputBox} type="time" {...register("time")} />
+            <DateInput register={register} setValue={setValue} />
           </div>
           <div className={styles.item}>
             <label>담당자 선택</label>

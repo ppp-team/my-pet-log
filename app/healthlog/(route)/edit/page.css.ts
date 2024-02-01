@@ -40,7 +40,7 @@ export const typeButton = style({
   margin: "0.5rem",
 
   borderRadius: "10px",
-  backgroundColor: "lightgray",
+  backgroundColor: "#d9d9d9",
 });
 
 export const typeButtonSelected = style({
@@ -49,12 +49,17 @@ export const typeButtonSelected = style({
 
 export const inputBox = style({
   width: "100%",
-  height: "4rem",
+  height: "3rem",
 
   padding: "1rem",
 
   borderRadius: "10px",
-  border: "1px solid #818181",
+  border: "1px solid #d9d9d9",
+
+  ":focus": {
+    outline: "none",
+    border: "1px solid orange",
+  },
 });
 
 export const textBox = style({
@@ -64,25 +69,7 @@ export const textBox = style({
   padding: "1rem",
 
   borderRadius: "10px",
-  border: "1px solid #818181",
-});
-
-export const checkBox = style({
-  width: "2rem",
-  height: "2rem",
-
-  border: "1px solid #818181",
-});
-
-export const postcodeFinder = style({
-  width: "100%",
-  height: "30rem",
-
-  display: "none",
-  border: "1px solid",
-
-  margin: "0.5rem 0",
-  position: "relative",
+  border: "1px solid #d9d9d9",
 });
 
 export const submitButton = style({

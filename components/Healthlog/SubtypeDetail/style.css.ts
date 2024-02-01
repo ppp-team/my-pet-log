@@ -24,12 +24,17 @@ export const textBox = style({
   padding: "1rem",
 
   borderRadius: "10px",
-  border: "1px solid #818181",
+  border: "1px solid #d9d9d9",
+
+  ":focus": {
+    outline: "none",
+    border: "1px solid orange",
+  },
 });
 
 export const checkBox = style({
   width: "2rem",
   height: "2rem",
 
-  border: "1px solid #818181",
+  border: "1px solid #d9d9d9",
 });
