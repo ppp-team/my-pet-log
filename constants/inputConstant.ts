@@ -31,6 +31,9 @@ export const ERROR_MESSAGE = {
   currentEqualNewPassword: "현재 비밀번호와 동일합니다. 다른 비밀번호로 변경해주세요.",
   newPasswordRequired: "새 비밀번호를 입력해 주세요.",
   confirmNewPasswordRequired: "새 비밀번호 확인을 입력해 주세요.",
+
+  invitedCodeRequired: "초대코드를 입력해 주세요.",
+  invitedCodeInvalid: "유효하지 않은 코드입니다. 확인 후 다시 시도해 주세요.",
 };
 
 export const EMAIL_RULES = {

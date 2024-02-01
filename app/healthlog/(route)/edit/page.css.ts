@@ -32,3 +32,63 @@ export const item = style({
 
   gap: "1rem",
 });
+
+export const typeButton = style({
+  width: "11.4rem",
+  height: "8rem",
+
+  margin: "0.5rem",
+
+  borderRadius: "10px",
+  backgroundColor: "lightgray",
+});
+
+export const typeButtonSelected = style({
+  backgroundColor: "orange",
+});
+
+export const inputBox = style({
+  width: "100%",
+  height: "4rem",
+
+  padding: "1rem",
+
+  borderRadius: "10px",
+  border: "1px solid #818181",
+});
+
+export const textBox = style({
+  width: "100%",
+  height: "8rem",
+
+  padding: "1rem",
+
+  borderRadius: "10px",
+  border: "1px solid #818181",
+});
+
+export const checkBox = style({
+  width: "2rem",
+  height: "2rem",
+
+  border: "1px solid #818181",
+});
+
+export const postcodeFinder = style({
+  width: "100%",
+  height: "30rem",
+
+  display: "none",
+  border: "1px solid",
+
+  margin: "0.5rem 0",
+  position: "relative",
+});
+
+export const submitButton = style({
+  width: "23.6rem",
+  height: "3.6rem",
+
+  borderRadius: "50px",
+  backgroundColor: "orange",
+});

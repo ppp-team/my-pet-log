@@ -3,6 +3,9 @@ import { globalStyle } from "@vanilla-extract/css";
 globalStyle(":root", {
   vars: {
     "--swiper-theme-color": "#d934f7",
+
+    "--MainOrange": "#FF8743",
+    "--LightOrange": "#FFE1D0",
   },
 });
 
@@ -24,7 +27,7 @@ globalStyle("a", {
 
   outline: "none",
 
-  color: "black",
+  color: "inherit",
 });
 
 globalStyle("button", {
