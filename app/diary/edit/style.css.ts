@@ -28,11 +28,6 @@ export const input = style({
   borderRadius: "8px",
   border: "1px solid #d9d9d9",
 
-  wordWrap: "break-word",
-  wordBreak: "break-all",
-
-  resize: "none",
-
   ":focus": {
     outline: "none",
     border: "1px solid orange",
@@ -61,7 +56,12 @@ export const button = style({
   fontWeight: "500",
   color: "white",
 
-  backgroundColor: "orange",
+  backgroundColor: "var(--MainOrange)",
 
   borderRadius: "8px",
+});
+
+export const error = style({
+  color: "red",
+  fontSize: "0.8rem",
 });

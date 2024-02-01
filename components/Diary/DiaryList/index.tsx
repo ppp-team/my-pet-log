@@ -46,14 +46,14 @@ const DIARY_CODE = "456";
 
 const Diary = ({ diary }: { diary: DiaryData }) => {
   return (
-    <Link href={`/diary/card/${DIARY_CODE}`}>
+    <Link href={`/diary/detail/${DIARY_CODE}`}>
       <div className={styles.diaryContainer}>
         <div className={styles.headerInfo}>
           <div>{diary.user}</div>
-          <span>{diary.title}</span>
+          <p>{diary.title}</p>
           <p>{diary.content}</p>
         </div>
-        <span>{diary.commentsNum}</span>
+        <p>{diary.commentsNum}</p>
         {diary.image && <div className={styles.diaryImage} style={{ backgroundImage: `url(${diary.image})` }} />}
       </div>
     </Link>
@@ -61,7 +61,7 @@ const Diary = ({ diary }: { diary: DiaryData }) => {
 };
 
 const DiaryList = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState("data");
 
   if (!data) return <EmptyDiaryList />;
   return (
@@ -69,7 +69,7 @@ const DiaryList = () => {
       <input />
       <section className={styles.container}>
         <div className={styles.wrapper}>
-          <span>2024.12.24</span>
+          <p>2024.12.24</p>
           {DIARY_DATA.map((diary, idx) => {
             return <Diary diary={diary} key={idx} />;
           })}

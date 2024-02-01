@@ -55,7 +55,7 @@ const SelectPet = ({ type }: { type: string }) => {
           <br />
           {type}를 작성해볼까요?
         </h3>
-        <span>공동 집사로 초대받으셨나요?</span>
+        <p>공동 집사로 초대받으셨나요?</p>
         <div className={styles.petList}>
           {PET_DATA.map((pet) => pet && <Pet pet={pet} key={pet.id} />)}
           <div className={styles.plusButton}>
