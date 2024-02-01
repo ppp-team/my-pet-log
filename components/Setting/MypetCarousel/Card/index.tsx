@@ -1,4 +1,4 @@
-import * as styles from "@/components/MypetCarousel/Card/style.css";
+import * as styles from "@/components/Setting/MypetCarousel/Card/style.css";
 import EditIcon from "@/assets/edit-petcard.svg";
 import InviteIcon from "@/assets/invite-petcard.svg";
 

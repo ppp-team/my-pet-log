@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import MyProfile from "@/components/MyProfile";
-import MyPet from "@/components/MypetCarousel";
+import MyProfile from "@/components/Setting/MyProfile";
+import MyPet from "@/components/Setting/MypetCarousel";
 import * as styles from "@/app/settings/page.css";
 
 const Page = () => {
