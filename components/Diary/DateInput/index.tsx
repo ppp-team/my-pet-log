@@ -1,6 +1,6 @@
 import * as styles from "@/app/diary/edit/style.css";
 import { InputProps } from "@/components/Diary/ImageInput";
-import VanillaCalendar from "@/components/VanillaCalendar";
+import VanillaCalendar from "@/components/@common/VanillaCalendar";
 import { getPrettyTime, getPrettyToday } from "@/utils/getPrettyToday";
 import { useEffect, useRef, useState } from "react";
 import { Options } from "vanilla-calendar-pro";
