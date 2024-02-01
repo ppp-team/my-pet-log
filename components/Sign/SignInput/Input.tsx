@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FocusEventHandler, HTMLInputTypeAttribute } from "react";
+import { ChangeEventHandler, FocusEventHandler, HTMLInputTypeAttribute, forwardRef } from "react";
 import * as styles from "./styles.css";
 
 interface InputProps {
@@ -13,11 +13,12 @@ interface InputProps {
   onBlur?: FocusEventHandler<HTMLInputElement>;
 }
 
-const Input = ({ label, type, value, hasError = false, errorText, onChange, onBlur, placeholder, disabled }: InputProps) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ label, type, value, hasError = false, errorText, onChange, onBlur, placeholder, disabled }, ref) => {
   return (
     <div className={styles.inputBox}>
       <label className={styles.label}>{label}</label>
       <input
+        ref={ref}
         type={type}
         value={value}
         onChange={onChange}
@@ -29,6 +30,8 @@ const Input = ({ label, type, value, hasError = false, errorText, onChange, onBl
       {hasError && <p className={styles.error}>{errorText}</p>}
     </div>
   );
-};
+});
+
+Input.displayName = "Input";
 
 export default Input;

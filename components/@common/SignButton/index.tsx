@@ -1,5 +1,5 @@
 import React from "react";
-import { signButton } from "./style.css";
+import * as styles from "./style.css";
 
 interface SignButtonProps {
   type: "kakao" | "google" | "email";
@@ -24,9 +24,9 @@ const SignButton = ({ type, action }: SignButtonProps) => {
   }
 
   return (
-    <div>
-      <div className={signButton}>{message}</div>
-    </div>
+    <>
+      <div className={styles.signButton}>{message}</div>
+    </>
   );
 };
 

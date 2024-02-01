@@ -10,7 +10,7 @@ import SubmitButton from "@/components/Sign/SubmitButton/index";
 const SignInForm = () => {
   const { control, handleSubmit, setError, formState } = useForm({
     defaultValues: { email: "", password: "" },
-    mode: "onBlur",
+    mode: "onTouched",
   });
   const router = useRouter();
 
@@ -20,6 +20,8 @@ const SignInForm = () => {
         className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
+          //임시로 폼 제출시 즉시 home으로 이동
+          router.push("/");
         }}
 
         //API연결하는 로직입니다
@@ -39,7 +41,7 @@ const SignInForm = () => {
           name="email"
           rules={EMAIL_RULES}
           render={({ field, fieldState }) => (
-            <Input label="이메일" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <Input label="이메일*" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <Controller
@@ -47,7 +49,7 @@ const SignInForm = () => {
           name="password"
           rules={SIGNIN_PASSWORD_RULES}
           render={({ field, fieldState }) => (
-            <PasswordInput label="비밀번호" {...field} placeholder={PLACEHOLDER.password} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <PasswordInput label="비밀번호*" {...field} placeholder={PLACEHOLDER.password} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <div className={styles.buttonWrapper}>
