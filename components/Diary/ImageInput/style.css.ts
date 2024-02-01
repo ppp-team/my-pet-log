@@ -4,13 +4,18 @@ export const root = style({
   display: "flex",
   flexDirection: "column",
 });
+
 export const container = style({
   display: "flex",
-  flexWrap: "wrap",
+  alignItems: "center",
+
   gap: "1rem",
 
-  width: "100%",
-  height: "100%",
+  width: "100vw",
+  height: "10rem",
+
+  overflowX: "auto",
+  overflowY: "hidden",
 
   marginTop: "0.8rem",
   marginBottom: "0.5rem",
@@ -19,6 +24,8 @@ export const container = style({
 export const input = style({
   width: "7rem",
   height: "7rem",
+
+  flexShrink: 0,
 
   backgroundColor: "var(--LightOrange)",
 
@@ -34,8 +41,7 @@ export const disabledInput = style({
 });
 
 export const preview = style({
-  width: "30%",
-  maxWidth: "7rem",
+  width: "7rem",
   minHeight: "7rem",
 
   backgroundColor: "#f5f5f5d9",
