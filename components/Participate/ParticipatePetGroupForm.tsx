@@ -1,6 +1,6 @@
 "use client";
 
-import { ERROR_MESSAGE } from "@/constatnts/inputConstant";
+import { ERROR_MESSAGE } from "@/constants/inputConstant";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

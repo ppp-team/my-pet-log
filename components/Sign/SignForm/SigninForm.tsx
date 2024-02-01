@@ -1,7 +1,7 @@
 "use client";
 import PasswordInput from "@/components/Sign/SignInput/PasswordInput";
 import Input from "@/components/Sign/SignInput/Input";
-import { EMAIL_RULES, ERROR_MESSAGE, PLACEHOLDER, SIGNIN_PASSWORD_RULES } from "@/constatnts/inputConstant";
+import { EMAIL_RULES, ERROR_MESSAGE, PLACEHOLDER, SIGNIN_PASSWORD_RULES } from "@/constants/inputConstant";
 import * as styles from "./styles.css";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
