@@ -2,13 +2,10 @@
 
 import { useForm } from "react-hook-form";
 import { FormEvent } from "react";
-import { ERROR_MESSAGE } from "@/constatnts/inputConstant";
 import Image from "next/image";
 import sampleImageSrc from "@/assets/edit.svg?url";
-
-const removeSpaces = (str: string) => {
-  return str.replace(/\s/g, "");
-};
+import { ERROR_MESSAGE } from "@/constants/inputConstant";
+import removeSpaces from "@/utils/removeSpaces";
 
 interface IForm {
   invitedCode: string;
@@ -21,7 +18,7 @@ const ParticipatePetGroupForm = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<IForm>({ mode: "onChange" });
+  } = useForm<IForm>({ mode: "onTouched" });
 
   const onSubmit = (data: any) => {
     console.log("onSubmit", data);
@@ -40,7 +37,7 @@ const ParticipatePetGroupForm = () => {
       {errors?.invitedCode?.message && (
         <div>
           <Image src={sampleImageSrc} alt="주의 아이콘 이미지" width={30} height={30} />
-          <p>{errors.invitedCode.message}</p>
+          <span>{errors.invitedCode.message}</span>
         </div>
       )}
 
