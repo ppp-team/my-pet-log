@@ -1,15 +1,21 @@
-import React from "react";
 import SearchLocation from "@/components/Healthlog/SearchLocation";
-import * as styles from "./style.css";
+import { subtypeOptions } from "@/public/data/subtypeOptions";
+import React, { useState } from "react";
 import { UseFormRegister } from "react-hook-form";
+import * as styles from "./style.css";
 
 interface SubtypeDetailProps {
-  visibleSubtype: string;
+  visibleSubtype: keyof typeof subtypeOptions | "CUSTOM" | "WALK";
   register: UseFormRegister<any>;
 }
 
 const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register }) => {
+  const [selectedOption, setSelectedOption] = useState("");
   const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value);
+  };
 
   return (
     <div className={styles.container}>
@@ -25,10 +31,17 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register 
           <input className={styles.inputBox} {...register("subtype")} />
         </div>
       )}
-      {visibleSubtype !== "WALK" && visibleSubtype !== "CUSTOM" && (
+      {["FEED", "HEALTH", "TREAT", "GROOMING"].includes(visibleSubtype) && (
         <div className={styles.inputWrapper}>
           <label>세부 사항</label>
-          <input className={styles.inputBox} {...register("subtype")} />
+          <select className={styles.selectBox} onChange={handleSelectChange} value={selectedOption}>
+            {subtypeOptions[visibleSubtype as keyof typeof subtypeOptions].map((option: string, index: number) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          {selectedOption === "직접 입력" && <input className={styles.inputBox} {...register("subtype")} />}
         </div>
       )}
       <div className={styles.inputWrapper}>

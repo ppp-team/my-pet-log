@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
 import DateInput from "@/components/@common/DateInput";
 import SelectMateDropdown from "@/components/Healthlog/SelectMateDropdown";
 import SubtypeDetail from "@/components/Healthlog/SubtypeDetail";
+import { subtypeOptions } from "@/public/data/subtypeOptions";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./page.css";
 
@@ -12,9 +13,9 @@ interface SubmitData {
 }
 
 const Page = () => {
-  const [visibleSubtype, setVisibleSubtype] = useState("");
+  const [visibleSubtype, setVisibleSubtype] = useState<keyof typeof subtypeOptions | "CUSTOM" | "WALK" | null>(null);
+  const [selectedType, setSelectedType] = useState<keyof typeof subtypeOptions | "CUSTOM" | "WALK" | null>(null);
   const [activeButtonGroup, setActiveButtonGroup] = useState("");
-  const [selectedType, setSelectedType] = useState("");
   const topSubtypeRef = useRef<HTMLDivElement>(null);
   const bottomSubtypeRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +26,7 @@ const Page = () => {
     // formState: { errors },
   } = useForm();
 
-  const buttonTypes = [
+  const buttonTypes: { type: keyof typeof subtypeOptions | "CUSTOM" | "WALK"; label: string }[] = [
     { type: "FEED", label: "사료 +" },
     { type: "HEALTH", label: "건강 +" },
     { type: "WALK", label: "산책 +" },
@@ -34,9 +35,9 @@ const Page = () => {
     { type: "CUSTOM", label: "직접 입력 +" },
   ];
 
-  const handleTypeButtonClick = (subtype: string, group: string) => {
+  const handleTypeButtonClick = (subtype: keyof typeof subtypeOptions | "CUSTOM" | "WALK", group: string) => {
     if (visibleSubtype === subtype && activeButtonGroup === group) {
-      setVisibleSubtype("");
+      setVisibleSubtype(null);
       setActiveButtonGroup("");
     } else {
       setVisibleSubtype(subtype);
@@ -50,14 +51,26 @@ const Page = () => {
   };
 
   useEffect(() => {
+    setValue("memo", "");
+    setValue("subtype", "");
+    setValue("isImportant", false);
+  }, [visibleSubtype, setValue]);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (topSubtypeRef.current && !topSubtypeRef.current.contains(event.target as Node) && activeButtonGroup === "top") {
-        setVisibleSubtype("");
-        setActiveButtonGroup("");
-      }
-      if (bottomSubtypeRef.current && !bottomSubtypeRef.current.contains(event.target as Node) && activeButtonGroup === "bottom") {
-        setVisibleSubtype("");
-        setActiveButtonGroup("");
+      if (event.target instanceof HTMLElement) {
+        if (event.target.id === "submit-button") {
+          return;
+        }
+
+        if (topSubtypeRef.current && !topSubtypeRef.current.contains(event.target) && activeButtonGroup === "top") {
+          setVisibleSubtype(null);
+          setActiveButtonGroup("");
+        }
+        if (bottomSubtypeRef.current && !bottomSubtypeRef.current.contains(event.target) && activeButtonGroup === "bottom") {
+          setVisibleSubtype(null);
+          setActiveButtonGroup("");
+        }
       }
     };
 
@@ -89,7 +102,7 @@ const Page = () => {
                   className={`${styles.typeButton} ${selectedType === type ? styles.typeButtonSelected : ""}`}
                   type="button"
                   onClick={() => {
-                    handleTypeButtonClick(type, "top");
+                    handleTypeButtonClick(type as keyof typeof subtypeOptions | "CUSTOM" | "WALK", "top");
                     setSelectedType(type);
                   }}
                 >
@@ -120,7 +133,7 @@ const Page = () => {
           </div>
 
           <div>
-            <button className={styles.submitButton} type="submit">
+            <button className={styles.submitButton} type="submit" id="submit-button">
               저장
             </button>
           </div>

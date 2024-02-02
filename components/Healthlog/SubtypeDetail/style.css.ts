@@ -35,6 +35,16 @@ export const inputBox = style({
   },
 });
 
+export const selectBox = style({
+  width: "100%",
+  height: "3rem",
+
+  padding: "0 1rem",
+
+  borderRadius: "10px",
+  border: "1px solid #d9d9d9",
+});
+
 export const textBox = style({
   width: "100%",
   height: "6rem",
