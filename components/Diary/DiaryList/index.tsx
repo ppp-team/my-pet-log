@@ -5,6 +5,8 @@ import Link from "next/link";
 import SearchIconURL from "@/assets/search.svg?url";
 import CommentIconURL from "@/assets/message.svg?url";
 import Image from "next/image";
+import WriteIconURL from "@/assets/write.svg?url";
+import { useRouter } from "next/navigation";
 
 const DIARY_LIST_DATA = [
   {
@@ -83,7 +85,8 @@ const Diary = ({ diary }: { diary: DiaryData }) => {
 };
 
 const DiaryList = () => {
-  const [data, setData] = useState("");
+  const [data, setData] = useState("해피");
+  const router = useRouter();
 
   if (!data) return <EmptyDiaryList />;
   return (
@@ -105,6 +108,7 @@ const DiaryList = () => {
           );
         })}
       </section>
+      <Image src={WriteIconURL} alt="write icon" width={60} height={60} className={styles.writeIcon} onClick={() => router.push("/diary/edit")} />
     </div>
   );
 };

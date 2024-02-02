@@ -105,3 +105,11 @@ export const description = style({
 
   marginTop: "0.6rem",
 });
+
+export const writeIcon = style({
+  position: "fixed",
+  bottom: "1.3rem",
+  right: "1.9rem",
+
+  cursor: "pointer",
+});
