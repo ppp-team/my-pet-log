@@ -99,7 +99,7 @@ const MobileHeaderPetGroup = () => {
         </DropdownTrigger>
         <DropdownMenu aria-label="dropDownMenuList" items={dropDownMenuList} onAction={(key) => onClickDropdownMenu(`${key}`)}>
           {(item: dropdownMenuItemType) => (
-            <DropdownItem key={item.id} variant="flat">
+            <DropdownItem key={item.id} variant="flat" textValue={item.name}>
               <span className={styles.dropdownItemContainer}>
                 <Image src={item.imageUrl} alt={`${item.name} 버튼 이미지`} width={20} height={20} />
                 <p>{item.name}</p>
