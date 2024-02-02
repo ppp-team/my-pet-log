@@ -1,6 +1,6 @@
 "use client";
 
-import * as styles from "./HeaderPetGroup.css";
+import * as styles from "./MobileHeaderPetGroup.css";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { PetGroupType } from "@/components/types/petGroup";
 import { useRouter } from "next/navigation";
@@ -71,7 +71,7 @@ const SETTING_BUTTON: dropdownMenuItemType = {
   imageUrl: sampleImageSrc,
 };
 
-const HeaderPetGroup = () => {
+const MobileHeaderPetGroup = () => {
   const router = useRouter();
   const parsedPetGroupList = PetGroupSampleList.map((item) => {
     return {
@@ -115,4 +115,4 @@ const HeaderPetGroup = () => {
   );
 };
 
-export default HeaderPetGroup;
+export default MobileHeaderPetGroup;
