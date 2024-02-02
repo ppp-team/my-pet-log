@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-export default function AccountLayout({ children }: { children: React.ReactNode }) {
+export default function PetmateLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
@@ -11,13 +11,13 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
       <nav>
         <ul>
           <li>
-            <Link className={`link ${pathname === "/profile" ? "active" : ""}`} href="/profile">
-              프로필 설정
+            <Link className={`link ${pathname === "/member" ? "active" : ""}`} href="/member">
+              펫메이트 그룹 관리
             </Link>
           </li>
           <li>
-            <Link className={`link ${pathname === "/password" ? "active" : ""}`} href="/password">
-              비밀번호 변경
+            <Link className={`link ${pathname === "/invitation" ? "active" : ""}`} href="/invitation">
+              펫메이트 초대 내역
             </Link>
           </li>
         </ul>
