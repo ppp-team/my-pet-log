@@ -12,18 +12,15 @@ export const container = style({
   gap: "1rem",
 
   width: "100vw",
-  height: "10rem",
+  height: "11.3rem",
 
   overflowX: "auto",
   overflowY: "hidden",
-
-  marginTop: "0.8rem",
-  marginBottom: "0.5rem",
 });
 
 export const input = style({
-  width: "7rem",
-  height: "7rem",
+  width: "10rem",
+  height: "10rem",
 
   flexShrink: 0,
 
@@ -33,7 +30,7 @@ export const input = style({
 
   cursor: "pointer",
 
-  borderRadius: "7px",
+  borderRadius: "10px",
 });
 
 export const disabledInput = style({
@@ -41,20 +38,20 @@ export const disabledInput = style({
 });
 
 export const preview = style({
-  width: "7rem",
-  minHeight: "7rem",
+  width: "10rem",
+  minHeight: "10rem",
 
   backgroundSize: "cover",
   position: "relative",
   backgroundPosition: "center",
 
-  borderRadius: "7px",
+  borderRadius: "10px",
 });
 
 export const addIcon = style({
   color: "#FF8743",
-  width: "2rem",
-  height: "2rem",
+  width: "2.4rem",
+  height: "2.4rem",
 
   position: "absolute",
   left: "50%",
@@ -63,8 +60,8 @@ export const addIcon = style({
 });
 
 export const closeIcon = style({
-  width: "2rem",
-  height: "2rem",
+  width: "2.3rem",
+  height: "2.3rem",
 
   color: "#FF8743",
 
@@ -76,12 +73,13 @@ export const closeIcon = style({
 });
 
 export const p = style({
-  color: "gray",
-  fontSize: "0.8rem",
+  color: "#818181",
+  fontSize: "1.2rem",
+  fontWeight: "500",
 });
 
 export const label = style({
-  fontSize: "1.2rem",
+  fontSize: "1.6rem",
   fontWeight: "600",
 });
 

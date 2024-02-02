@@ -27,7 +27,7 @@ const VideoInput = ({ register, setValue }: InputProps) => {
         </label>
         <input id="video" style={{ display: "none" }} type="file" accept="video/*" {...register("video")} onChange={handleVideoChange} />
         {previewVideo && (
-          <div style={{ position: "relative", width: "7rem", height: "7rem" }}>
+          <div style={{ position: "relative", width: "10rem", height: "10rem" }}>
             <video className={styles.video} src={previewVideo} autoPlay />
             <IoIosCloseCircle className={inputStyles.closeIcon} onClick={deleteVideo} />
           </div>
