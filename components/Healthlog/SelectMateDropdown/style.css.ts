@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import dropdownIconSrc from "@/assets/drop-down-icon.svg?url";
 
-export const inputContainer = style({
+export const inputBox = style({
   width: "100%",
   height: "4rem",
 

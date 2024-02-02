@@ -74,7 +74,7 @@ const SelectMateDropdown = () => {
 
   return (
     <div ref={dropdownRef}>
-      <input className={styles.inputContainer} value={selectedMate} onChange={handleInputChange} onClick={() => setShowDropdown(true)} />
+      <input className={styles.inputBox} value={selectedMate} onChange={handleInputChange} onClick={() => setShowDropdown(true)} />
       {showDropdown && (
         <ul className={styles.dropdownList}>
           {filteredList.map((mate) => (

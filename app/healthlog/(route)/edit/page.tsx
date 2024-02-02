@@ -46,14 +46,14 @@ const Page = () => {
       <div className={styles.container}>
         <p className={styles.title}>건강수첩 작성하기</p>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems}>
-          <div className={styles.item}>
+          <div className={styles.inputWrapper}>
             <DateInput register={register} setValue={setValue} />
           </div>
-          <div className={styles.item}>
+          <div className={styles.inputWrapper}>
             <label>담당 메이트</label>
             <SelectMateDropdown />
           </div>
-          <div className={styles.item}>
+          <div className={styles.inputWrapper}>
             <label>주요 항목</label>
             <div>
               {buttonTypes.map(({ type, label }) => (
@@ -74,6 +74,7 @@ const Page = () => {
               저장
             </button>
           </div>
+          {/* 기록 추가 플로팅 버튼 */}
         </form>
       </div>
     </>

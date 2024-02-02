@@ -14,13 +14,3 @@ export const container = style({
   fontWeight: "700",
   color: "gray",
 });
-
-export const plusButton = style({
-  width: "5rem",
-  height: "5rem",
-
-  border: "none",
-  borderRadius: "100%",
-
-  backgroundColor: "lightgray",
-});

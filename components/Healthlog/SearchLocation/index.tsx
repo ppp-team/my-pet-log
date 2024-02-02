@@ -82,12 +82,12 @@ const SearchLocation = ({ appKey }: SearchLocationProps) => {
 
   return (
     <div className={styles.container}>
-      <input className={styles.inputBox} type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="검색어를 입력하세요" />
+      <input className={styles.inputWrapper} type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="검색어를 입력하세요" />
       <button className={styles.searchButton} onClick={searchPlaces}>
         검색
       </button>
       <div id="map" style={{ width: "100%", height: "30rem" }} />
-      <input className={styles.inputBox} type="text" value={selectedPlace} placeholder={"산책 장소"} readOnly />
+      <input className={styles.inputWrapper} type="text" value={selectedPlace} placeholder={"산책 장소"} readOnly />
     </div>
   );
 };

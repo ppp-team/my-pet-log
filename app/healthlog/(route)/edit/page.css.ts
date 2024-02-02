@@ -26,7 +26,7 @@ export const formItems = style({
   fontWeight: "700",
 });
 
-export const item = style({
+export const inputWrapper = style({
   display: "flex",
   flexDirection: "column",
 
@@ -45,21 +45,6 @@ export const typeButton = style({
 
 export const typeButtonSelected = style({
   backgroundColor: "orange",
-});
-
-export const inputBox = style({
-  width: "100%",
-  height: "3rem",
-
-  padding: "1rem",
-
-  borderRadius: "10px",
-  border: "1px solid #d9d9d9",
-
-  ":focus": {
-    outline: "none",
-    border: "1px solid orange",
-  },
 });
 
 export const textBox = style({

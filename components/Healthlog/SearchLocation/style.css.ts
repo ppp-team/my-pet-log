@@ -7,7 +7,7 @@ export const container = style({
   gap: "0.5rem",
 });
 
-export const inputBox = style({
+export const inputWrapper = style({
   width: "100%",
   height: "3rem",
 
