@@ -35,3 +35,7 @@ globalStyle("button", {
   border: "none",
   cursor: "pointer",
 });
+
+globalStyle("li", {
+  listStyleType: "none",
+});
