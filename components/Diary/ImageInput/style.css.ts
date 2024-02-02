@@ -44,7 +44,6 @@ export const preview = style({
   width: "7rem",
   minHeight: "7rem",
 
-  backgroundColor: "#f5f5f5d9",
   backgroundSize: "cover",
   position: "relative",
   backgroundPosition: "center",
