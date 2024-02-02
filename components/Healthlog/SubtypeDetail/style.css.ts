@@ -1,5 +1,18 @@
 import { style } from "@vanilla-extract/css";
 
+export const container = style({
+  width: "100%",
+
+  padding: "1.8rem",
+  gap: "1rem",
+
+  display: "flex",
+  flexDirection: "column",
+
+  borderRadius: "10px",
+  backgroundColor: "orange",
+});
+
 export const inputWrapper = style({
   display: "flex",
   flexDirection: "column",

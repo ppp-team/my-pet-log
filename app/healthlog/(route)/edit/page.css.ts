@@ -27,17 +27,24 @@ export const formItems = style({
 });
 
 export const inputWrapper = style({
+  width: "100%",
+
   display: "flex",
   flexDirection: "column",
 
   gap: "1rem",
 });
 
-export const typeButton = style({
-  width: "11.4rem",
-  height: "8rem",
+export const buttonGroup = style({
+  display: "flex",
+  justifyContent: "space-between",
 
-  margin: "0.5rem",
+  gap: "0.8rem",
+});
+
+export const typeButton = style({
+  width: "100%",
+  height: "8rem",
 
   borderRadius: "10px",
   backgroundColor: "#d9d9d9",

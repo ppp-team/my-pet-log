@@ -12,7 +12,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register 
   const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
 
   return (
-    <>
+    <div className={styles.container}>
       {visibleSubtype === "WALK" && (
         <div className={styles.inputWrapper}>
           <label>장소</label>
@@ -39,7 +39,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register 
         <label>중요 체크</label>
         <input className={styles.checkBox} type="checkbox" {...register("isImportant")} />
       </div>
-    </>
+    </div>
   );
 };
 

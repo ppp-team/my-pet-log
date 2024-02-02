@@ -1,5 +1,10 @@
 import { style } from "@vanilla-extract/css";
 import dropdownIconSrc from "@/assets/drop-down-icon.svg?url";
+import { Z_INDEX } from "@/styles/zindex.css";
+
+export const container = style({
+  position: "relative",
+});
 
 export const inputBox = style({
   width: "100%",
@@ -22,6 +27,7 @@ export const inputBox = style({
 export const dropdownList = style({
   width: "100%",
 
+  position: "absolute",
   padding: "0 1rem",
 
   display: "flex",
@@ -32,6 +38,7 @@ export const dropdownList = style({
   borderRadius: "10px",
 
   listStyle: "none",
+  zIndex: Z_INDEX.SelectMateDropdown_dropdownList,
 });
 
 export const dropdownItem = style({

@@ -73,7 +73,7 @@ const SelectMateDropdown = () => {
   };
 
   return (
-    <div ref={dropdownRef}>
+    <div ref={dropdownRef} className={styles.container}>
       <input className={styles.inputBox} value={selectedMate} onChange={handleInputChange} onClick={() => setShowDropdown(true)} />
       {showDropdown && (
         <ul className={styles.dropdownList}>

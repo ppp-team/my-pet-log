@@ -33,8 +33,8 @@ export const inputWrapper = style({
 
 export const searchButton = style({
   width: "8rem",
-  height: "3.6rem",
+  height: "3rem",
 
   borderRadius: "50px",
-  backgroundColor: "orange",
+  backgroundColor: "white",
 });

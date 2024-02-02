@@ -1,9 +1,9 @@
 "use client";
 
+import React, { useState, useRef, useEffect } from "react";
 import DateInput from "@/components/@common/DateInput";
 import SelectMateDropdown from "@/components/Healthlog/SelectMateDropdown";
 import SubtypeDetail from "@/components/Healthlog/SubtypeDetail";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./page.css";
 
@@ -13,7 +13,10 @@ interface SubmitData {
 
 const Page = () => {
   const [visibleSubtype, setVisibleSubtype] = useState("");
+  const [activeButtonGroup, setActiveButtonGroup] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const topSubtypeRef = useRef<HTMLDivElement>(null);
+  const bottomSubtypeRef = useRef<HTMLDivElement>(null);
 
   const {
     register,
@@ -31,15 +34,38 @@ const Page = () => {
     { type: "CUSTOM", label: "직접 입력 +" },
   ];
 
-  const handleTypeButtonClick = (subtype: string) => {
-    setVisibleSubtype(subtype);
-    setSelectedType(subtype);
+  const handleTypeButtonClick = (subtype: string, group: string) => {
+    if (visibleSubtype === subtype && activeButtonGroup === group) {
+      setVisibleSubtype("");
+      setActiveButtonGroup("");
+    } else {
+      setVisibleSubtype(subtype);
+      setActiveButtonGroup(group);
+    }
   };
 
   const onSubmit = (submitData: SubmitData) => {
     console.log(submitData);
     // 폼 제출 로직
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (topSubtypeRef.current && !topSubtypeRef.current.contains(event.target as Node) && activeButtonGroup === "top") {
+        setVisibleSubtype("");
+        setActiveButtonGroup("");
+      }
+      if (bottomSubtypeRef.current && !bottomSubtypeRef.current.contains(event.target as Node) && activeButtonGroup === "bottom") {
+        setVisibleSubtype("");
+        setActiveButtonGroup("");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [activeButtonGroup]);
 
   return (
     <>
@@ -53,28 +79,51 @@ const Page = () => {
             <label>담당 메이트</label>
             <SelectMateDropdown />
           </div>
+
           <div className={styles.inputWrapper}>
             <label>주요 항목</label>
-            <div>
-              {buttonTypes.map(({ type, label }) => (
+            <div className={styles.buttonGroup}>
+              {buttonTypes.slice(0, 3).map(({ type, label }) => (
                 <button
                   key={type}
                   className={`${styles.typeButton} ${selectedType === type ? styles.typeButtonSelected : ""}`}
                   type="button"
-                  onClick={() => handleTypeButtonClick(type)}
+                  onClick={() => {
+                    handleTypeButtonClick(type, "top");
+                    setSelectedType(type);
+                  }}
                 >
                   {label}
                 </button>
               ))}
             </div>
+            <div ref={topSubtypeRef}>{visibleSubtype && activeButtonGroup === "top" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} />}</div>
           </div>
-          {visibleSubtype && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} />}
+
+          <div className={styles.inputWrapper}>
+            <div className={styles.buttonGroup}>
+              {buttonTypes.slice(3).map(({ type, label }) => (
+                <button
+                  key={type}
+                  className={`${styles.typeButton} ${selectedType === type ? styles.typeButtonSelected : ""}`}
+                  type="button"
+                  onClick={() => {
+                    handleTypeButtonClick(type, "bottom");
+                    setSelectedType(type);
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div ref={bottomSubtypeRef}>{visibleSubtype && activeButtonGroup === "bottom" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} />}</div>
+          </div>
+
           <div>
             <button className={styles.submitButton} type="submit">
               저장
             </button>
           </div>
-          {/* 기록 추가 플로팅 버튼 */}
         </form>
       </div>
     </>
