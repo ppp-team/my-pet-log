@@ -1,4 +1,4 @@
-export const pageHeaderTypes = {
+export const pagesWithHeader = {
   logo: ["/settings"],
   petGroup: ["/home"],
 };
