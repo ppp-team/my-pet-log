@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FormEvent } from "react";
 import Image from "next/image";
 import sampleImageSrc from "@/assets/edit.svg?url";
-import { ERROR_MESSAGE, PLACEHOLDER } from "@/constants/inputConstant";
+import { CONFIRM_MESSAGE, ERROR_MESSAGE, PLACEHOLDER } from "@/constants/inputConstant";
 import removeSpaces from "@/utils/removeSpaces";
 
 interface IForm {
@@ -87,10 +87,15 @@ const CreateUserProfilePage: NextPage = () => {
               중복확인
             </button>
           </div>
-          {errors?.nickname?.message && (
+          {errors?.nickname?.message ? (
             <div>
               <Image src={sampleImageSrc} alt="주의 아이콘 이미지" width={30} height={30} />
               <span>{errors.nickname.message}</span>
+            </div>
+          ) : (
+            <div>
+              <Image src={sampleImageSrc} alt="완료 아이콘 이미지" width={30} height={30} />
+              <span>{CONFIRM_MESSAGE.nicknameValid}</span>
             </div>
           )}
         </fieldset>

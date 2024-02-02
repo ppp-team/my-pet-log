@@ -37,6 +37,10 @@ export const ERROR_MESSAGE = {
   invitedCodeInvalid: "유효하지 않은 코드입니다. 확인 후 다시 시도해 주세요.",
 };
 
+export const CONFIRM_MESSAGE = {
+  nicknameValid: "적합한 닉네임입니다.",
+};
+
 export const EMAIL_RULES = {
   required: ERROR_MESSAGE.emailRequired,
   pattern: { value: /\S+@\S+\.\S+/, message: ERROR_MESSAGE.emailInvalid },
