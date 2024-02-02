@@ -1,4 +1,4 @@
-import * as styles from "@/components/MyProfile/style.css";
+import * as styles from "./style.css";
 import data from "./mockData.json";
 
 const MyProfile = () => {

@@ -1,7 +1,7 @@
 "use client";
 import Input from "@/components/Sign/SignInput/Input";
 import PasswordInput from "@/components/Sign/SignInput/PasswordInput";
-import { ERROR_MESSAGE, SIGNUP_PASSWORD_RULES, PLACEHOLDER } from "@/constatnts/inputConstant";
+import { ERROR_MESSAGE, SIGNUP_PASSWORD_RULES, PLACEHOLDER } from "@/constants/inputConstant";
 import { useModal } from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
