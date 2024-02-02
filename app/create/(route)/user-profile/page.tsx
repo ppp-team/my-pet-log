@@ -71,9 +71,11 @@ const CreateUserProfilePage: NextPage = () => {
         </fieldset>
 
         <fieldset>
+          <label>이메일</label>
           <input type="text" placeholder={"email@email.com"} readOnly />
         </fieldset>
         <fieldset>
+          <label>닉네임*</label>
           <div>
             <input
               type="text"
