@@ -1,7 +1,8 @@
-import PlusIcon from "@/assets/PlusIcon";
+import AddIcon from "@/assets/add.svg?url";
 import * as styles from "@/components/@common/SelectPet/style.css";
 import { currentPetAtom } from "@/states/atom";
 import { useAtom } from "jotai";
+import Image from "next/image";
 
 const PET_DATA = [
   { id: 1, name: "해피", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Golde33443.jpg/560px-Golde33443.jpg", gender: "남아", type: "말티즈" },
@@ -59,7 +60,7 @@ const SelectPet = ({ type }: { type: string }) => {
         <div className={styles.petList}>
           {PET_DATA.map((pet) => pet && <Pet pet={pet} key={pet.id} />)}
           <div className={styles.plusButton}>
-            <PlusIcon color={"blue"} width={"20"} />
+            <Image src={AddIcon} alt="add icon" width={16} height={16} />
           </div>
         </div>
       </div>
