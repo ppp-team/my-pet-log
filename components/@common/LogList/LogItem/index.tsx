@@ -2,6 +2,8 @@
 
 import * as styles from "./style.css";
 import React, { useState } from "react";
+import starIconSrc from "@/assets/important-star-icon.svg?url";
+import Image from "next/image";
 
 export type TasksType = {
   logId: number;
@@ -31,15 +33,23 @@ const LogItem = ({ taskItem, pageType }: LogItemProps) => {
   return (
     <>
       <li className={styles.container}>
-        {pageType !== "home" && (
-          <span>
-            <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-          </span>
-        )}
-        <span>{taskItem.isImportant && "⭐️"}</span>
-        <span>{taskItem.taskName}</span>
-        <span>{taskItem.time}</span>
-        <span>{taskItem.manager.nickname}</span>
+        <div className={styles.leftPart}>
+          {pageType !== "home" && (
+            <span>
+              <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
+            </span>
+          )}
+          <div className={styles.taskAndTimeBox}>
+            <div className={styles.checkStar}>
+              <span>{taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt={"중요 표시"} />}</span>
+              <span className={styles.taskName}>{taskItem.taskName}</span>
+            </div>
+            <span className={styles.time}>{taskItem.time}</span>
+          </div>
+        </div>
+        <div className={styles.manager}>
+          <span>{taskItem.manager.nickname}</span>
+        </div>
       </li>
     </>
   );
