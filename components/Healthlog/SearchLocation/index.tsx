@@ -21,7 +21,6 @@ type Status = "OK" | "ZERO_RESULT" | "ERROR";
 
 const SearchLocation = ({ appKey }: SearchLocationProps) => {
   const [inputText, setInputText] = useState<string>("");
-  const [selectedPlace, setSelectedPlace] = useState<string>("");
 
   useEffect(() => {
     // 카카오 맵 스크립트 로딩
@@ -31,13 +30,13 @@ const SearchLocation = ({ appKey }: SearchLocationProps) => {
     document.head.appendChild(script);
 
     script.onload = () => {
-      kakao.maps.load(() => {
+      window.kakao.maps.load(() => {
         const container = document.getElementById("map");
         const options = {
-          center: new kakao.maps.LatLng(37.566826, 126.9786567),
+          center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
           level: 3,
         };
-        new kakao.maps.Map(container, options);
+        new window.kakao.maps.Map(container, options);
       });
     };
 
@@ -47,21 +46,21 @@ const SearchLocation = ({ appKey }: SearchLocationProps) => {
   }, [appKey]);
 
   const searchPlaces = () => {
-    kakao.maps.load(() => {
+    window.kakao.maps.load(() => {
       const mapContainer = document.getElementById("map");
       const options = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567),
+        center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
         level: 3,
       };
-      const map = new kakao.maps.Map(mapContainer, options);
-      const ps = new kakao.maps.services.Places();
+      const map = new window.kakao.maps.Map(mapContainer, options);
+      const ps = new window.kakao.maps.services.Places();
 
       ps.keywordSearch(inputText, (data: Place[], status: Status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          const bounds = new kakao.maps.LatLngBounds();
+        if (status === window.kakao.maps.services.Status.OK) {
+          const bounds = new window.kakao.maps.LatLngBounds();
           for (let i = 0; i < data.length; i++) {
             displayMarker(data[i], map);
-            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+            bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
           }
           map.setBounds(bounds);
         }
@@ -70,24 +69,25 @@ const SearchLocation = ({ appKey }: SearchLocationProps) => {
   };
 
   const displayMarker = (place: Place, map: any) => {
-    const marker = new kakao.maps.Marker({
+    const marker = new window.kakao.maps.Marker({
       map: map,
-      position: new kakao.maps.LatLng(place.y, place.x),
+      position: new window.kakao.maps.LatLng(place.y, place.x),
     });
 
-    kakao.maps.event.addListener(marker, "click", () => {
-      setSelectedPlace(place.place_name);
+    window.kakao.maps.event.addListener(marker, "click", () => {
+      setInputText(place.place_name);
     });
   };
 
   return (
     <div className={styles.container}>
-      <input className={styles.inputBox} type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="검색어를 입력하세요" />
-      <button className={styles.searchButton} onClick={searchPlaces}>
-        검색
-      </button>
+      <div className={styles.searchContainer}>
+        <input className={styles.inputWrapper} type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="장소를 검색해보세요" />
+        <button className={styles.searchButton} onClick={searchPlaces}>
+          검색
+        </button>
+      </div>
       <div id="map" style={{ width: "100%", height: "30rem" }} />
-      <input className={styles.inputBox} type="text" value={selectedPlace} placeholder={"산책 장소"} readOnly />
     </div>
   );
 };
