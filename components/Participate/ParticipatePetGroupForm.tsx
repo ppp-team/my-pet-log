@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { FormEvent } from "react";
-import { ERROR_MESSAGE } from "@/constatnts/inputConstant";
+import { ERROR_MESSAGE } from "@/constants/inputConstant";
 import Image from "next/image";
 import sampleImageSrc from "@/assets/edit.svg?url";
 
