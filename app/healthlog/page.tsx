@@ -1,15 +1,21 @@
 "use client";
 
 import LogList from "@/components/@common/LogList";
+import VanillaCalendar from "@/components/@common/VanillaCalendar";
 import EmptyHealthLog from "@/components/Healthlog/EmptyHealthLog";
 import QuickButtons from "@/components/Healthlog/QuickButtons";
-import VanillaCalendar from "@/components/@common/VanillaCalendar";
+import { currentPetAtom } from "@/states/atom";
+import { useAtom } from "jotai";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import * as styles from "./page.css";
 
 const Page = () => {
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
+  const [currentPet, setCurrentPet] = useAtom(currentPetAtom); //추후에 localStorage로 바꿔야할듯
+
+  // if (!currentPet) return redirect("/healthlog/select");
 
   return (
     <>
