@@ -36,6 +36,6 @@ globalStyle("button", {
   cursor: "pointer",
 });
 
-globalStyle("li", {
-  listStyleType: "none",
+globalStyle("li, dt, dd", {
+  listStyle: "none",
 });

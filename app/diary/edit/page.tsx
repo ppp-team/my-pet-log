@@ -1,6 +1,6 @@
 "use client";
 
-import DateInput from "@/components/Diary/DateInput";
+import DateInput from "@/components/@common/DateInput";
 import ImageInput from "@/components/Diary/ImageInput";
 import VideoInput from "@/components/Diary/VideoInput";
 import { useForm } from "react-hook-form";
