@@ -13,6 +13,7 @@ const EditPage = () => {
     register,
     formState: { errors },
     setValue,
+    getValues,
     watch,
     handleSubmit,
   } = useForm({ mode: "onChange" });
@@ -40,7 +41,7 @@ const EditPage = () => {
           {errors["title"] && <p className={styles.error}>{errors["title"].message?.toString()}</p>}
         </div>
 
-        <DateInput register={register} setValue={setValue} />
+        <DateInput register={register} setValue={setValue} getValue={getValues} />
         <ImageInput register={register} setValue={setValue} />
         <VideoInput register={register} setValue={setValue} />
 

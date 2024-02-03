@@ -23,6 +23,7 @@ const Page = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     // formState: { errors },
   } = useForm();
 
@@ -86,7 +87,7 @@ const Page = () => {
         <p className={styles.title}>건강수첩 작성하기</p>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems}>
           <div className={styles.inputWrapper}>
-            <DateInput register={register} setValue={setValue} />
+            <DateInput register={register} setValue={setValue} getValue={getValues} />
           </div>
           <div className={styles.inputWrapper}>
             <label>담당 메이트</label>
