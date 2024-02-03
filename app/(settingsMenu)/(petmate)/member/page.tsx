@@ -1,7 +1,20 @@
+"use client";
+
+import SimpleModal from "@/components/@common/SimpleModal";
 import mockData from "./mockData.json";
 import * as styles from "./style.css";
+import { useModal } from "@/hooks/useModal";
 
 const Page = () => {
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+
+  // 확인 버튼 누를 시
+  const handleConfirm = () => {
+    closeModalFunc();
+
+    //멤버 삭제되는 로직
+  };
+
   return (
     <main className={styles.container}>
       {mockData.data.map((member) => (
@@ -17,9 +30,12 @@ const Page = () => {
               {member.nickname} {member.guardianRole === "leader" ? "(나)" : ""}
             </p>
           </div>
-          <button className={styles.deleteButton}>{member.guardianRole === "leader" ? "탈퇴하기" : "삭제"}</button>
+          <button className={styles.deleteButton} onClick={openModalFunc}>
+            {member.guardianRole === "leader" ? "탈퇴하기" : "삭제"}
+          </button>
         </section>
       ))}
+      {isModalOpen && <SimpleModal text="그룹 생성자의 경우 탈퇴는 관리자에게 문의해주세요." buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
     </main>
   );
 };
