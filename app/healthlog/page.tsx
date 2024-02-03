@@ -2,7 +2,6 @@
 
 import LogList from "@/components/@common/LogList";
 import VanillaCalendar from "@/components/@common/VanillaCalendar";
-import EmptyHealthLog from "@/components/Healthlog/EmptyHealthLog";
 import QuickButtons from "@/components/Healthlog/QuickButtons";
 import { currentPetAtom } from "@/states/atom";
 import { useAtom } from "jotai";
@@ -44,13 +43,9 @@ const Page = () => {
           <QuickButtons />
         </div>
         <div>
-          {/* 항목 없을 경우 */}
-          <EmptyHealthLog />
+          <LogList selectedDate={selectedDate} pageType="healthlog" />
         </div>
-        <div>
-          {/* 항목 있을 경우 */}
-          <LogList pageType="healthlog" />
-        </div>
+        {/* 글쓰기 플로팅 버튼 추가 */}
       </div>
     </>
   );
