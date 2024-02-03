@@ -167,4 +167,41 @@ export const commentLikeButton = style({
   fontSize: "1.4rem",
 });
 
-export const commentInput = style({ display: "flex" });
+export const commentInputContainer = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "0.9rem",
+
+  position: "sticky",
+  bottom: 0,
+
+  padding: "1rem 1.6rem",
+
+  backgroundColor: "white",
+});
+
+export const commentInput = style({
+  width: "100%",
+  height: "4rem",
+
+  padding: "1.2rem 1.5rem",
+
+  borderRadius: "20px",
+  border: "none",
+
+  backgroundColor: " #F4F4F4",
+
+  ":focus": {
+    outline: "none",
+  },
+});
+
+export const sendIcon = style({
+  position: "absolute",
+  right: "0.7rem",
+  top: "50%",
+
+  transform: "translate(-50%,-50%)",
+
+  cursor: "pointer",
+});

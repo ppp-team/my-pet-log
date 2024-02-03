@@ -10,6 +10,7 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import * as styles from "./style.css";
 import "./swiper.css";
+import SendIcon from "@/assets/send.svg?url";
 
 const COMMENT_DATA = [
   {
@@ -119,7 +120,7 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
 };
 
 const DiaryDetailPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
 
   return (
     <>
@@ -167,8 +168,14 @@ const DiaryDetailPage = () => {
           {COMMENT_DATA.map((comment) => (
             <Comment comment={comment} key={comment.commentId} />
           ))}
+          <div className={styles.commentInputContainer}>
+            <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
+            <div style={{ width: "100%", position: "relative" }}>
+              <input placeholder="댓글을 남겨주세요" className={styles.commentInput} />
+              <Image src={SendIcon} alt="send icon" width={20} height={20} className={styles.sendIcon} />
+            </div>
+          </div>
         </section>
-        <div className={styles.commentInput}></div>
       </div>
     </>
   );
