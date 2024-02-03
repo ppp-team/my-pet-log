@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
+  width: "100%",
   height: "6.6rem",
 
   display: "flex",
@@ -51,4 +52,39 @@ export const manager = style({
 
   backgroundColor: "#FFE1D0",
   color: "#FF8743",
+});
+
+export const swipeButtons = style({
+  display: "flex",
+});
+
+export const editButton = style({
+  width: "6.6rem",
+  height: "6.6rem",
+
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
+  backgroundColor: "#8E8E93",
+  color: "white",
+  fontSize: "1.4rem",
+});
+
+export const deleteButton = style({
+  width: "6.6rem",
+  height: "6.6rem",
+
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
+  backgroundColor: "#FF3B30",
+  color: "white",
+  fontSize: "1.4rem",
+});
+
+export const swipeArea = style({
+  display: "flex",
+  overflow: "hidden",
 });
