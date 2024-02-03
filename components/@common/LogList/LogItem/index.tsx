@@ -1,9 +1,11 @@
 "use client";
 
-import * as styles from "./style.css";
-import React, { useState } from "react";
 import starIconSrc from "@/assets/important-star-icon.svg?url";
+import LogDetail from "@/components/Healthlog/LogDetail";
 import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
+import * as styles from "./style.css";
 
 export type TasksType = {
   logId: number;
@@ -21,10 +23,13 @@ export type TasksType = {
 interface LogItemProps {
   taskItem: TasksType;
   pageType: string;
+  onDelete: () => void; // 로직 보완
 }
 
-const LogItem = ({ taskItem, pageType }: LogItemProps) => {
+const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogItemProps) => {
   const [isChecked, setIsChecked] = useState(taskItem.isComplete);
+  const [showDetails, setShowDetails] = useState(false);
+
   const [startX, setStartX] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
@@ -66,31 +71,42 @@ const LogItem = ({ taskItem, pageType }: LogItemProps) => {
     transition: "transform 0.5s ease",
   };
 
+  const toggleDetails = () => {
+    setShowDetails(!showDetails);
+  };
+
   return (
-    <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={listItemStyle} className={styles.swipeArea}>
-      <li className={styles.container}>
-        <div className={styles.leftPart}>
-          {pageType !== "home" && (
-            <span>
-              <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-            </span>
-          )}
-          <div className={styles.taskAndTimeBox}>
-            <div className={styles.checkStar}>
-              <span>{taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt={"중요 표시"} />}</span>
-              <span className={styles.taskName}>{taskItem.taskName}</span>
+    <div className={styles.swipeArea}>
+      <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={listItemStyle} className={styles.container}>
+        <li className={styles.listContainer} onClick={toggleDetails}>
+          <div className={styles.leftPart}>
+            {pageType !== "home" && <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />}
+            <div className={styles.taskAndTimeBox}>
+              <div className={styles.checkStar}>
+                {taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt={"중요 표시"} />}
+                <span className={styles.taskName}>{taskItem.taskName}</span>
+              </div>
+              <span className={styles.time}>{taskItem.time}</span>
             </div>
-            <span className={styles.time}>{taskItem.time}</span>
           </div>
-        </div>
-        <div className={styles.manager}>
-          <span>{taskItem.manager.nickname}</span>
-        </div>
-      </li>
-      {currentTranslate === -swipeButtonsWidth && (
-        <div className={styles.swipeButtons}>
-          <div className={styles.editButton}>수정</div>
-          <div className={styles.deleteButton}>삭제</div>
+          <div className={styles.manager}>
+            <span>{taskItem.manager.nickname}</span>
+          </div>
+        </li>
+        {currentTranslate === -swipeButtonsWidth && (
+          <div className={styles.swipeButtons}>
+            <Link href="/healthlog/edit">
+              <button className={styles.editButton}>수정</button>
+            </Link>
+            <button className={styles.deleteButton} onClick={() => onDelete()}>
+              삭제
+            </button>
+          </div>
+        )}
+      </div>
+      {showDetails && (
+        <div className={styles.logDetailContainer}>
+          <LogDetail />
         </div>
       )}
     </div>

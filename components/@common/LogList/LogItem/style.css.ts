@@ -1,7 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
-  width: "100%",
   height: "6.6rem",
 
   display: "flex",
@@ -12,6 +11,15 @@ export const container = style({
   gap: "0.5rem",
 
   fontSize: "1.2rem",
+});
+
+export const listContainer = style({
+  width: "100%",
+  height: "6.6rem",
+
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
 
   borderBottom: "1px solid #c2c2c2",
 });
@@ -86,5 +94,11 @@ export const deleteButton = style({
 
 export const swipeArea = style({
   display: "flex",
-  overflow: "hidden",
+  flexDirection: "column",
+  overflow: "visible",
+  // position: "relative",
+});
+
+export const logDetailContainer = style({
+  margin: "1rem 1.6rem",
 });
