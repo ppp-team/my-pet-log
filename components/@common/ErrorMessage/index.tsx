@@ -1,5 +1,3 @@
-"use client";
-
 import * as styles from "./style.css";
 import WarningIcon from "@/assets/circle-warning.svg?url";
 import Image from "next/image";
