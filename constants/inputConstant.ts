@@ -5,8 +5,8 @@ export const PLACEHOLDER = {
   signUpPassword: "영문, 숫자를 조합해 8자 이상 입력해 주세요.",
   confirmPassword: "비밀번호를 한 번 더 입력해 주세요.",
   currentPassword: "현재 비밀번호 입력",
-  newPassword: "새 비밀번호 입력",
-  confirmNewPassword: "새 비밀번호 확인 입력",
+  newPassword: "변경 비밀번호 입력",
+  confirmNewPassword: "변경 비밀번호 확인 입력",
 };
 
 export const ERROR_MESSAGE = {

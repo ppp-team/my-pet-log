@@ -2,6 +2,8 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { CURRENT_PASSWORD_RULES, ERROR_MESSAGE, NEW_PASSWORD_RULES, PLACEHOLDER } from "@/constants/inputConstant";
+import * as styles from "@/app/(settingsMenu)/(account)/password/page.css";
+import ErrorMessage from "@/components/@common/ErrorMessage";
 
 interface IFormInput {
   password: string;
@@ -31,26 +33,43 @@ const Page = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<IFormInput>({ mode: "onChange" });
+  } = useForm<IFormInput>({ mode: "onTouched" });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
   const newPassword = watch("newPassword");
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>비밀번호</label>
-      <input {...register("password", CURRENT_PASSWORD_RULES)} type="password" placeholder={PLACEHOLDER.currentPassword} />
-      {errors.password && <span>{errors.password.message}</span>}
+    <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+      <label className={styles.label}>비밀번호*</label>
+      <input
+        className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
+        {...register("password", CURRENT_PASSWORD_RULES)}
+        type="password"
+        placeholder={PLACEHOLDER.currentPassword}
+      />
+      {errors.password && <ErrorMessage message={errors.password.message} />}
 
-      <label>새 비밀번호</label>
-      <input {...register("newPassword", NEW_PASSWORD_RULES)} type="password" placeholder={PLACEHOLDER.newPassword} />
-      {errors.newPassword && <span>{errors.newPassword.message}</span>}
+      <label className={styles.label}>변경 비밀번호*</label>
+      <input
+        className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
+        {...register("newPassword", NEW_PASSWORD_RULES)}
+        type="password"
+        placeholder={PLACEHOLDER.newPassword}
+      />
+      {errors.newPassword && <ErrorMessage message={errors.newPassword.message} />}
 
-      <label>새 비밀번호 확인</label>
-      <input {...register("newPasswordCheck", newPasswordCheckRules(newPassword))} type="password" placeholder={PLACEHOLDER.confirmNewPassword} />
-      {errors.newPasswordCheck && <span>{errors.newPasswordCheck.message}</span>}
+      <label className={styles.label}>변경 비밀번호 확인*</label>
+      <input
+        className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
+        {...register("newPasswordCheck", newPasswordCheckRules(newPassword))}
+        type="password"
+        placeholder={PLACEHOLDER.confirmNewPassword}
+      />
+      {errors.newPasswordCheck && <ErrorMessage message={errors.newPasswordCheck.message} />}
 
-      <button type="submit">확인</button>
+      <button className={styles.button} type="submit">
+        작성완료
+      </button>
     </form>
   );
 };
