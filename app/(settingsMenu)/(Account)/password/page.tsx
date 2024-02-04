@@ -49,7 +49,7 @@ const Page = () => {
       />
       {errors.password && <ErrorMessage message={errors.password.message} />}
 
-      <label className={styles.label}>변경 비밀번호*</label>
+      <label className={styles.label}>새 비밀번호*</label>
       <input
         className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
         {...register("newPassword", NEW_PASSWORD_RULES)}
@@ -58,7 +58,7 @@ const Page = () => {
       />
       {errors.newPassword && <ErrorMessage message={errors.newPassword.message} />}
 
-      <label className={styles.label}>변경 비밀번호 확인*</label>
+      <label className={styles.label}>새 비밀번호 확인*</label>
       <input
         className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
         {...register("newPasswordCheck", newPasswordCheckRules(newPassword))}
