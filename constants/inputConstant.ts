@@ -25,6 +25,7 @@ export const ERROR_MESSAGE = {
 
   nicknameRequired: "닉네임을 입력해 주세요.",
   nicknameInvalid: "닉네임은 10자를 초과할 수 없습니다.",
+  nicknameDuplicate: "이미 사용중인 닉네임입니다.",
 
   currentPasswordRequired: "현재 비밀번호를 입력해 주세요.",
   currentPasswordDifferent: "현재 비밀번호와 다릅니다. 다시 입력해주세요.",
@@ -34,6 +35,10 @@ export const ERROR_MESSAGE = {
 
   invitedCodeRequired: "초대코드를 입력해 주세요.",
   invitedCodeInvalid: "유효하지 않은 코드입니다. 확인 후 다시 시도해 주세요.",
+};
+
+export const CONFIRM_MESSAGE = {
+  nicknameValid: "적합한 닉네임입니다.",
 };
 
 export const EMAIL_RULES = {

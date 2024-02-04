@@ -5,33 +5,60 @@ export const root = style({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  gap: "2rem",
+  gap: "5rem",
 
-  marginTop: "5rem",
+  padding: "4.8rem",
 });
 
-export const petList = style({ display: "flex", flexDirection: "column", gap: "0.5rem" });
+export const h3 = style({
+  fontSize: "1.6rem",
+  fontWeight: "700",
+  textAlign: "center",
+});
 
-export const plusButton = style({ borderRadius: "10px", backgroundColor: "#d2d8fb", padding: "1rem 2rem", cursor: "pointer" });
+export const p = style({
+  color: "#818181",
+  fontSize: "1.6rem",
+  textDecorationLine: "underline",
+
+  cursor: "pointer",
+});
+export const petList = style({ display: "flex", flexDirection: "column", gap: "1rem" });
+
+export const addButton = style({ backgroundColor: "var(--MainOrange)", borderRadius: "50%", width: "3.3rem", height: "3.3rem", position: "relative" });
 
 export const container = style({
-  borderRadius: "10px",
-  backgroundColor: "#d2d8fb",
+  minWidth: "29.4rem",
+  height: "11.2rem",
+
   display: "flex",
   alignItems: "center",
-  gap: "1rem",
+  gap: "1.3rem",
+
+  borderRadius: "10px",
+
+  backgroundColor: "var(--LightOrange)",
 
   padding: "1rem 2rem",
 
   cursor: "pointer",
+
+  boxShadow: " 0px 2px 4px 2px rgba(164, 164, 164, 0.25)",
 });
 
 export const profile = style({
-  width: "4rem",
-  height: "4rem",
+  minWidth: "8rem",
+  height: "8rem",
 
-  borderRadius: "44px",
+  borderRadius: "50%",
+  border: "2px solid var(--MainOrange)",
 
-  // backgroundImage:`url("")`,
-  backgroundSize: "contain",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+});
+
+export const text = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.8rem",
 });

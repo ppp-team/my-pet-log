@@ -1,9 +1,9 @@
 "use client";
 
-import DateInput from "@/components/Diary/DateInput";
+import DateInput from "@/components/@common/DateInput";
 import ImageInput from "@/components/Diary/ImageInput";
 import VideoInput from "@/components/Diary/VideoInput";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
 
 const MAX_LENGTH = { title: 15, content: 500 };
@@ -11,27 +11,18 @@ const MAX_LENGTH = { title: 15, content: 500 };
 const EditPage = () => {
   const {
     register,
-    control,
     formState: { errors },
-    setError,
-    getValues,
     setValue,
     watch,
-    clearErrors,
+    handleSubmit,
   } = useForm({ mode: "onChange" });
 
   return (
     <div className={styles.container}>
-      <Form
-        className={styles.form}
-        onSubmit={(data) => {
-          console.log(data);
-        }}
-        control={control}
-      >
+      <form className={styles.form} onSubmit={handleSubmit((data) => console.log(data))}>
         <div className={styles.inputWrapper}>
           <label htmlFor="title" className={styles.label}>
-            제목 *
+            일기 제목 *
           </label>
           <input
             {...register("title", { required: "제목을 입력해주세요.", maxLength: { value: MAX_LENGTH.title, message: `최대 ${MAX_LENGTH.title}자까지 작성할 수 있습니다.` } })}
@@ -78,7 +69,7 @@ const EditPage = () => {
         </div>
 
         <button className={styles.button}>작성하기</button>
-      </Form>
+      </form>
     </div>
   );
 };

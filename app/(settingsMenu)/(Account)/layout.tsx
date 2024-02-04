@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function AccountLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <nav>
         <ul>
           <li>
-            <Link className={`link ${pathname === "/about" ? "active" : ""}`} href="/profile">
+            <Link className={`link ${pathname === "/profile" ? "active" : ""}`} href="/profile">
               프로필 설정
             </Link>
           </li>

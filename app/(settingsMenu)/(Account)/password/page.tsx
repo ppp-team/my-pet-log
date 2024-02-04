@@ -1,6 +1,6 @@
 "use client";
 
-import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { CURRENT_PASSWORD_RULES, ERROR_MESSAGE, NEW_PASSWORD_RULES, PLACEHOLDER } from "@/constants/inputConstant";
 
 interface IFormInput {
@@ -27,42 +27,27 @@ const validatePasswordMatch = (value: string, newPassword: string) => {
 
 const Page = () => {
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  } = useForm<IFormInput>({ mode: "onChange" });
 
+  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
   const newPassword = watch("newPassword");
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="password">비밀번호</label>
-      <Controller
-        control={control}
-        name="password"
-        rules={CURRENT_PASSWORD_RULES}
-        render={({ field }) => <input {...field} type="password" placeholder={PLACEHOLDER.currentPassword} />}
-      ></Controller>
+      <label>비밀번호</label>
+      <input {...register("password", CURRENT_PASSWORD_RULES)} type="password" placeholder={PLACEHOLDER.currentPassword} />
       {errors.password && <span>{errors.password.message}</span>}
 
-      <label htmlFor="newPassword">새 비밀번호</label>
-      <Controller
-        control={control}
-        name="newPassword"
-        rules={NEW_PASSWORD_RULES}
-        render={({ field }) => <input {...field} type="password" placeholder={PLACEHOLDER.newPassword} />}
-      ></Controller>
+      <label>새 비밀번호</label>
+      <input {...register("newPassword", NEW_PASSWORD_RULES)} type="password" placeholder={PLACEHOLDER.newPassword} />
       {errors.newPassword && <span>{errors.newPassword.message}</span>}
 
-      <label htmlFor="newPasswordCheck">새 비밀번호 확인</label>
-      <Controller
-        control={control}
-        name="newPasswordCheck"
-        rules={newPasswordCheckRules(newPassword)}
-        render={({ field }) => <input {...field} type="password" placeholder={PLACEHOLDER.confirmNewPassword} />}
-      ></Controller>
+      <label>새 비밀번호 확인</label>
+      <input {...register("newPasswordCheck", newPasswordCheckRules(newPassword))} type="password" placeholder={PLACEHOLDER.confirmNewPassword} />
       {errors.newPasswordCheck && <span>{errors.newPasswordCheck.message}</span>}
 
       <button type="submit">확인</button>

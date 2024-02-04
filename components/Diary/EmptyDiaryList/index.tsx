@@ -1,15 +1,22 @@
-import PlusIcon from "@/assets/PlusIcon";
+import AddIcon from "@/assets/add.svg?url";
+import Image from "next/image";
 import Link from "next/link";
+import * as styles from "./style.css";
+
 const EmptyDiaryList = () => {
   return (
     <>
-      <span>
-        아직 일기가 없어요.
-        <br />첫 일기를 작성해보세요!
-      </span>
-      <Link href={"/diary/edit"}>
-        <PlusIcon color="black" width="20" />
-      </Link>
+      <div className={styles.root}>
+        <p className={styles.p}>
+          아직 일기가 없어요.
+          <br />첫 일기를 작성해보세요!
+        </p>
+        <Link href={"/diary/edit"}>
+          <div className={styles.button}>
+            <Image src={AddIcon} alt="add icon" width={36} height={36} className={styles.addIcon} />
+          </div>
+        </Link>
+      </div>
     </>
   );
 };

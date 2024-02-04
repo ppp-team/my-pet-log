@@ -26,35 +26,32 @@ export const formItems = style({
   fontWeight: "700",
 });
 
-export const item = style({
+export const inputWrapper = style({
+  width: "100%",
+
   display: "flex",
   flexDirection: "column",
 
   gap: "1rem",
 });
 
+export const buttonGroup = style({
+  display: "flex",
+  justifyContent: "space-between",
+
+  gap: "0.8rem",
+});
+
 export const typeButton = style({
-  width: "11.4rem",
+  width: "100%",
   height: "8rem",
 
-  margin: "0.5rem",
-
   borderRadius: "10px",
-  backgroundColor: "lightgray",
+  backgroundColor: "#d9d9d9",
 });
 
 export const typeButtonSelected = style({
   backgroundColor: "orange",
-});
-
-export const inputBox = style({
-  width: "100%",
-  height: "4rem",
-
-  padding: "1rem",
-
-  borderRadius: "10px",
-  border: "1px solid #818181",
 });
 
 export const textBox = style({
@@ -64,25 +61,7 @@ export const textBox = style({
   padding: "1rem",
 
   borderRadius: "10px",
-  border: "1px solid #818181",
-});
-
-export const checkBox = style({
-  width: "2rem",
-  height: "2rem",
-
-  border: "1px solid #818181",
-});
-
-export const postcodeFinder = style({
-  width: "100%",
-  height: "30rem",
-
-  display: "none",
-  border: "1px solid",
-
-  margin: "0.5rem 0",
-  position: "relative",
+  border: "1px solid #d9d9d9",
 });
 
 export const submitButton = style({
