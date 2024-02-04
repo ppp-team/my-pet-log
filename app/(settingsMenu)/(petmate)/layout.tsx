@@ -1,15 +1,12 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import * as styles from "./layout.css";
-import CloseIcon from "@/assets/invite-petcard.svg?url"; //추후 수정
-import Image from "next/image";
 import TitleHeader from "@/components/@common/TitleHeader";
 
 export default function PetmateLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router = useRouter();
 
   return (
     <section>
