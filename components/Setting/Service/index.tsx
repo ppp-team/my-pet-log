@@ -4,6 +4,9 @@ import { ExtendedRecordMap } from "notion-types";
 import { NotionRenderer } from "react-notion-x";
 import { useEffect, useState } from "react";
 import pageInfoMap, { PageInfo } from "@/components/Setting/Service/PageInfo";
+import * as styles from "@/components/Setting/Service/style.css";
+import CloseIcon from "@/assets/close.svg";
+import { useRouter } from "next/navigation";
 
 const notionDomain = "https://hissing-route-336.notion.site";
 
@@ -16,6 +19,7 @@ interface NotionResultProps {
 interface ServiceProps {
   recordMap: ExtendedRecordMap;
   pageType: "faq" | "ask" | "notice";
+  redirectPath: string;
 }
 
 const NotionResult: React.FC<NotionResultProps> = ({ rootPageId, previewImagesEnabled, recordMap }) => {
@@ -47,9 +51,16 @@ const NotionResult: React.FC<NotionResultProps> = ({ rootPageId, previewImagesEn
 
 const Service: React.FC<ServiceProps> = ({ pageType, recordMap }) => {
   const pageInfo: PageInfo = pageInfoMap[pageType];
+  const router = useRouter();
+
   return (
     <>
-      <h1>{pageInfo.title}</h1>
+      <header className={styles.titleWrapper}>
+        <h1 className={styles.title}>{pageInfo.title}</h1>
+        <div className={styles.IconWrapper} onClick={() => router.back()}>
+          <CloseIcon className={styles.Icon} alt="close icon" />
+        </div>
+      </header>
       <div>
         <NotionResult recordMap={recordMap} previewImagesEnabled={false} rootDomain={""} rootPageId={pageInfo.pageId} />
       </div>
