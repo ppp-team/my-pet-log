@@ -9,9 +9,9 @@ const Page = async () => {
   const recordMap = await notion.getPage(pageId);
 
   return (
-    <div>
+    <section>
       <Service pageType="notice" recordMap={recordMap} />
-    </div>
+    </section>
   );
 };
 
