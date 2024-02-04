@@ -5,7 +5,7 @@ import pageInfoMap from "@/components/Setting/Service/PageInfo";
 const Page = async () => {
   const notion = new NotionAPI();
 
-  const { pageId } = pageInfoMap.faq; // Use "qna" directly
+  const { pageId } = pageInfoMap.faq;
   const recordMap = await notion.getPage(pageId);
 
   return (

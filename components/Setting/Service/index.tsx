@@ -46,7 +46,7 @@ const NotionResult: React.FC<NotionResultProps> = ({ rootPageId, previewImagesEn
 };
 
 const Service: React.FC<ServiceProps> = ({ pageType, recordMap }) => {
-  const pageInfo: PageInfo = pageInfoMap[pageType] || { title: "", pageId: "" };
+  const pageInfo: PageInfo = pageInfoMap[pageType];
   return (
     <>
       <h1>{pageInfo.title}</h1>
