@@ -2,13 +2,13 @@
 
 import moment from "moment";
 
-export const getTimeAgo = (invitedAt: string): string => {
-  if (!invitedAt) {
+export const getTimeAgo = (timeAt: string): string => {
+  if (!timeAt) {
     return "";
   }
 
   const today = moment();
-  const postingDate = moment(invitedAt, "YYYY-MM-DD HH:mm:ss");
+  const postingDate = moment(timeAt, "YYYY-MM-DD HH:mm:ss");
   const dayDiff = postingDate.diff(today, "days");
   const hourDiff = postingDate.diff(today, "hours");
   const minutesDiff = postingDate.diff(today, "minutes");
