@@ -1,32 +1,39 @@
 "use client";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ExtendedRecordMap } from "notion-types";
 import { NotionRenderer } from "react-notion-x";
+import { useEffect, useState } from "react";
+import pageInfoMap, { PageInfo } from "@/components/Setting/Service/PageInfo";
 
-interface NotionPageProps {
-  recordMap: ExtendedRecordMap;
-  previewImagesEnabled: boolean;
+const notionDomain = "https://hissing-route-336.notion.site";
+
+interface NotionResultProps {
   rootPageId: string;
   rootDomain: string;
+  previewImagesEnabled: boolean;
+  recordMap: ExtendedRecordMap;
 }
-
 interface ServiceProps {
   recordMap: ExtendedRecordMap;
-  rootDomain: string;
-  previewImagesEnabled: boolean;
+  pageType: "faq" | "ask" | "notice";
 }
 
-export const NotionResult = ({ recordMap, previewImagesEnabled, rootPageId, rootDomain }: NotionPageProps) => {
-  if (!recordMap) {
+const NotionResult: React.FC<NotionResultProps> = ({ rootPageId, previewImagesEnabled, recordMap }) => {
+  const [loadedRecordMap, setLoadedRecordMap] = useState<ExtendedRecordMap | null>(null);
+
+  useEffect(() => {
+    setLoadedRecordMap(recordMap);
+  }, [recordMap]);
+
+  if (!loadedRecordMap) {
     return null;
   }
 
   return (
     <>
       <NotionRenderer
-        recordMap={recordMap}
-        rootDomain={rootDomain}
+        recordMap={loadedRecordMap}
+        rootDomain={notionDomain}
         rootPageId={rootPageId}
         fullPage={false}
         previewImages={previewImagesEnabled}
@@ -38,18 +45,14 @@ export const NotionResult = ({ recordMap, previewImagesEnabled, rootPageId, root
   );
 };
 
-const Service: React.FC<ServiceProps> = ({ recordMap, pageId }) => {
+const Service: React.FC<ServiceProps> = ({ pageType, recordMap }) => {
+  const pageInfo: PageInfo = pageInfoMap[pageType] || { title: "", pageId: "" };
   return (
     <>
-      <h1>FQA</h1>
+      <h1>{pageInfo.title}</h1>
       <div>
-        <NotionResult recordMap={recordMap} previewImagesEnabled={false} rootPageId={""} rootDomain={""} />
+        <NotionResult recordMap={recordMap} previewImagesEnabled={false} rootDomain={""} rootPageId={pageInfo.pageId} />
       </div>
-      <div>
-        <button>카카오톡 문의</button>
-        <button>이메일로 문의</button>
-      </div>
-      <p>현재 페이지의 노션 주소: {`https://hissing-route-336.notion.site/${pageId}`}</p>
     </>
   );
 };
