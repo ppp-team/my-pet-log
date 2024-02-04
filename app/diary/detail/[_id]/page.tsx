@@ -21,7 +21,7 @@ const COMMENT_DATA = [
     writer: {
       id: "thdefn5519",
       nickname: "하이",
-      isCurrentUser: true,
+      isCurrentUser: false,
     },
     taggedUsers: [
       {
@@ -103,7 +103,7 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
             <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>
               {comment.writer.nickname} <span style={{ color: " #A4A4A4", fontWeight: "400" }}>{comment.createdAt}</span>
             </p>
-            <Image src={KebabIcon} alt="kebab icon" width={24} height={24} />
+            {comment.writer.isCurrentUser && <Image src={KebabIcon} alt="kebab icon" width={24} height={24} />}
           </div>
           <p className={styles.commentContent}>{comment.content}</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -131,7 +131,7 @@ const DiaryDetailPage = () => {
           </p>
           <h3 style={{ fontSize: "1.8rem", fontWeight: "600" }}>{DATA.title}</h3>
           <p style={{ fontSize: "1.4rem", color: "#9A9A9A" }}>{DATA.date}</p>
-          <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} />
+          {DATA.writer.isCurrentUser && <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} />}
         </section>
 
         <section className={styles.main}>
