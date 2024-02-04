@@ -31,3 +31,8 @@ export const Icon = style({
 
   cursor: "pointer",
 });
+
+export const mainWrapper = style({
+  padding: "1rem",
+  fontSize: "1.6rem",
+});

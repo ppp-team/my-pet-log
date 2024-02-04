@@ -19,7 +19,6 @@ interface NotionResultProps {
 interface ServiceProps {
   recordMap: ExtendedRecordMap;
   pageType: "faq" | "ask" | "notice";
-  redirectPath: string;
 }
 
 const NotionResult: React.FC<NotionResultProps> = ({ rootPageId, previewImagesEnabled, recordMap }) => {
@@ -61,9 +60,9 @@ const Service: React.FC<ServiceProps> = ({ pageType, recordMap }) => {
           <CloseIcon className={styles.Icon} alt="close icon" />
         </div>
       </header>
-      <div>
+      <main className={styles.mainWrapper}>
         <NotionResult recordMap={recordMap} previewImagesEnabled={false} rootDomain={""} rootPageId={pageInfo.pageId} />
-      </div>
+      </main>
     </>
   );
 };
