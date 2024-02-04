@@ -1,9 +1,11 @@
 "use client";
 
+import * as styles from "./ParticipatePetGroupWithCodeForm.css";
+import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { useForm } from "react-hook-form";
 import { FormEvent } from "react";
 import Image from "next/image";
-import sampleImageSrc from "@/assets/edit.svg?url";
+import cautionIconSrc from "@/assets/caution.svg?url";
 import { ERROR_MESSAGE, PLACEHOLDER } from "@/constants/inputConstant";
 import removeSpaces from "@/utils/removeSpaces";
 
@@ -17,17 +19,21 @@ const ParticipatePetGroupWithCodeForm = () => {
     register,
     handleSubmit,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<IForm>({ mode: "onTouched" });
 
   const onSubmit = (data: any) => {
-    console.log("onSubmit", data);
+    // 초대 코드 invalid 에러메세지 테스트
+    if (data.receivedInvitationCode === "failed") setError("receivedInvitationCode", { type: "invalid", message: ERROR_MESSAGE.receivedInvitationCodeInvalid });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>초대 코드</label>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <label className={styles.subtitle}>초대 코드</label>
       <input
+        className={styles.receivedInvitationCodeInput}
+        style={assignInlineVars({ [styles.borderColor]: errors?.receivedInvitationCode ? "#FF3B30" : "#818181" })}
         type="text"
         placeholder={PLACEHOLDER.receivedInvitationCode}
         {...register("receivedInvitationCode", {
@@ -35,14 +41,14 @@ const ParticipatePetGroupWithCodeForm = () => {
           onChange: (e: FormEvent<HTMLInputElement>) => setValue("receivedInvitationCode", removeSpaces(e.currentTarget.value)),
         })}
       />
-      {errors?.receivedInvitationCode?.message && (
-        <div>
-          <Image src={sampleImageSrc} alt="주의 아이콘 이미지" width={30} height={30} />
-          <span>{errors.receivedInvitationCode.message}</span>
-        </div>
-      )}
+      <div className={styles.errorMessageContainer} style={assignInlineVars({ [styles.errorMessageVisibility]: errors?.receivedInvitationCode ? "visible" : "hidden" })}>
+        <Image src={cautionIconSrc} alt="주의 아이콘 이미지" width={13} height={13} />
+        <span className={styles.errorMessage}>{errors?.receivedInvitationCode?.message || ""}</span>
+      </div>
 
-      <button type="submit">등록</button>
+      <button className={styles.button} type="submit">
+        등록
+      </button>
     </form>
   );
 };
