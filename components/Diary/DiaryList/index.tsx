@@ -85,7 +85,7 @@ const Diary = ({ diary }: { diary: DiaryData }) => {
 };
 
 const DiaryList = () => {
-  const [data, setData] = useState("해피");
+  const [data, setData] = useState("");
   const router = useRouter();
 
   if (!data) return <EmptyDiaryList />;
