@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import * as styles from "./layout.css";
-import CloseIcon from "@/assets/invite-petcard.svg?url"; //추후 수정
+import CloseIcon from "@/assets/close.svg?url"; //추후 수정
 import Image from "next/image";
 
 export default function PetmateLayout({ children }: { children: React.ReactNode }) {
