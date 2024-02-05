@@ -1,6 +1,6 @@
 "use client";
 
-import SimpleModal from "@/components/@common/SimpleModal";
+import Modal from "@/components/@common/Modal";
 import mockData from "./mockData.json";
 import * as styles from "./style.css";
 import { useModal } from "@/hooks/useModal";
@@ -35,7 +35,7 @@ const Page = () => {
           </button>
         </section>
       ))}
-      {isModalOpen && <SimpleModal text="그룹 생성자의 경우 탈퇴는 관리자에게 문의해주세요." buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
+      {isModalOpen && <Modal text="그룹 생성자의 경우 탈퇴는 관리자에게 문의해주세요." buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
     </main>
   );
 };
