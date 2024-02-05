@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import * as styles from "./styles.css";
 import SubmitButton from "@/components/Sign/SubmitButton/index";
-import Modal from "@/components/@common/Modal";
+import ModalContainer from "@/components/@common/ModalContainer";
 import AlertModal from "@/components/Sign/AlertModal";
 
 const SignUpForm = () => {
@@ -83,9 +83,9 @@ const SignUpForm = () => {
         </div>
       </form>
       {isModalOpen && (
-        <Modal>
+        <ModalContainer>
           <AlertModal onClick={handleCloseModal}></AlertModal>
-        </Modal>
+        </ModalContainer>
       )}
     </>
   );

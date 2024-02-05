@@ -1,25 +1,45 @@
 import { style } from "@vanilla-extract/css";
-import { Z_INDEX } from "@/styles/zindex.css";
-
-export const wrapper = style({
-  width: "100%",
-  height: "100%",
-
-  position: "fixed",
-  top: "0",
-  left: "0",
-
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-  zIndex: Z_INDEX.Modal,
-});
 
 export const container = style({
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translateX(-50%) translateY(-50%)",
+  width: "28rem",
+  height: "18.3rem",
+
+  padding: "2rem",
+
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  alignItems: "center",
+
+  backgroundColor: "#fff",
+  borderRadius: "10px",
+});
+
+export const iconWrapper = style({
+  width: "100%",
+
+  display: "flex",
+  justifyContent: "flex-end",
+
+  cursor: "pointer",
+});
+
+export const text = style({
+  color: "#000",
+  textAlign: "center",
+  fontSize: "16px",
+  fontWeight: "500",
+});
+
+export const button = style({
+  width: "100%",
+
+  padding: "0.9rem 0",
+
+  color: "#F2F2F2",
+  textAlign: "center",
+  fontSize: "1.6rem",
+  fontWeight: "600",
+  backgroundColor: "orange",
+  borderRadius: "10px",
 });
