@@ -1,6 +1,6 @@
 "use client";
 
-import LogItem, { TasksType } from "@/components/Healthlog/LogList/LogItem";
+import LogItem, { TasksType } from "@/components/@common/LogList/LogItem";
 import Modal from "@/components/@common/Modal";
 import { useModal } from "@/hooks/useModal";
 import { useState } from "react";

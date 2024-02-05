@@ -1,7 +1,7 @@
 "use client";
 
 import VanillaCalendar from "@/components/@common/VanillaCalendar";
-import LogList from "@/components/Healthlog/LogList";
+import LogList from "@/components/@common/LogList";
 import LogWriteButton from "@/components/Healthlog/LogWriteButton";
 import QuickButtons from "@/components/Healthlog/QuickButtons";
 import { currentPetAtom } from "@/states/atom";

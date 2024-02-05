@@ -10,7 +10,8 @@ export const container = style({
   flexDirection: "column",
 
   borderRadius: "10px",
-  backgroundColor: "orange",
+  backgroundColor: "var(--MainOrange)",
+  color: "var(--White)",
 });
 
 export const inputWrapper = style({
@@ -27,11 +28,11 @@ export const inputBox = style({
   padding: "1rem",
 
   borderRadius: "10px",
-  border: "1px solid #d9d9d9",
+  border: "1.5px solid var(--White)",
 
   ":focus": {
     outline: "none",
-    border: "1px solid orange",
+    border: "1.5px solid var(--MainOrange)",
   },
 });
 
@@ -42,7 +43,7 @@ export const selectBox = style({
   padding: "0 1rem",
 
   borderRadius: "10px",
-  border: "1px solid #d9d9d9",
+  border: "1.5px solid var(--White)",
 });
 
 export const textBox = style({
@@ -52,17 +53,12 @@ export const textBox = style({
   padding: "1rem",
 
   borderRadius: "10px",
-  border: "1px solid #d9d9d9",
-
-  ":focus": {
-    outline: "none",
-    border: "1px solid orange",
-  },
+  border: "1.5px solid var(--White)",
 });
 
 export const checkBox = style({
   width: "2rem",
   height: "2rem",
 
-  border: "1px solid #d9d9d9",
+  border: "1.5px solid var(--White)",
 });
