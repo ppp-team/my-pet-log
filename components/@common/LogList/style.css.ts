@@ -1,10 +1,11 @@
 import { style } from "@vanilla-extract/css";
 
 export const date = style({
-  padding: "1rem 0",
+  width: "100%",
 
-  backgroundColor: "lightgoldenrodyellow",
+  padding: "2.4rem 1.6rem 0 1.6rem",
 
-  fontSize: "1.4rem",
-  color: "gray",
+  fontSize: "1.6rem",
+  fontWeight: "500",
+  color: "#818181",
 });

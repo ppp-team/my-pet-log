@@ -1,53 +1,115 @@
 "use client";
 
-import * as styles from "./style.css";
+import starIconSrc from "@/assets/important-star-icon.svg?url";
+import LogDetail from "@/components/Healthlog/LogDetail";
+import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
+import * as styles from "./style.css";
 
-export type TaskType = {
-  type: string;
-  subtype: string;
-  datetime: string;
+export type TasksType = {
+  logId: number;
   isComplete: boolean;
   isImportant: boolean;
-  managerId: string;
-  memo: string;
+  taskName: string;
+  time: string;
+  manager: {
+    id: string;
+    nickname: string;
+    isCurrentUser: boolean;
+  };
 };
 
 interface LogItemProps {
-  taskItem: TaskType;
+  taskItem: TasksType;
   pageType: string;
+  onDelete: () => void; // 로직 보완
 }
 
-const LogItem = ({ taskItem, pageType }: LogItemProps) => {
+const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogItemProps) => {
   const [isChecked, setIsChecked] = useState(taskItem.isComplete);
+  const [showDetails, setShowDetails] = useState(false);
+
+  const [startX, setStartX] = useState(0);
+  const [currentTranslate, setCurrentTranslate] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
+  const swipeButtonsWidth = 66;
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
   };
 
-  const extractTime = (datetime: string) => {
-    const time = new Date(datetime).toLocaleTimeString("ko-KR", {
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    return time;
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    setStartX(event.touches[0].clientX);
+    setIsSwiping(true);
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (isSwiping) {
+      const currentX = event.touches[0].clientX;
+      const swipingDistance = startX - currentX;
+
+      if (swipingDistance > 0) {
+        setCurrentTranslate(Math.max(-swipeButtonsWidth, -swipingDistance));
+      } else if (swipingDistance < 0 && currentTranslate !== 0) {
+        setCurrentTranslate(Math.min(0, -swipingDistance + currentTranslate));
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsSwiping(false);
+    if (currentTranslate <= -swipeButtonsWidth / 2) {
+      setCurrentTranslate(-swipeButtonsWidth);
+    } else {
+      setCurrentTranslate(0);
+    }
+  };
+
+  const listItemStyle = {
+    transform: `translateX(${currentTranslate}px)`,
+    transition: "transform 0.5s ease",
+  };
+
+  const toggleDetails = () => {
+    setShowDetails(!showDetails);
   };
 
   return (
-    <>
-      <li className={styles.container}>
-        {pageType !== "home" && (
-          <span>
-            <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-          </span>
+    <div className={styles.swipeArea}>
+      <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={listItemStyle} className={styles.container}>
+        <li className={styles.listContainer} onClick={toggleDetails}>
+          <div className={styles.leftPart}>
+            {pageType !== "home" && <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />}
+            <div className={styles.taskAndTimeBox}>
+              <div className={styles.checkStar}>
+                {taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt={"중요 표시"} />}
+                <span className={styles.taskName}>{taskItem.taskName}</span>
+              </div>
+              <span className={styles.time}>{taskItem.time}</span>
+            </div>
+          </div>
+          <div className={styles.manager}>
+            <span>{taskItem.manager.nickname}</span>
+          </div>
+        </li>
+        {currentTranslate === -swipeButtonsWidth && (
+          <div className={styles.swipeButtons}>
+            <Link href="/healthlog/edit">
+              <button className={styles.editButton}>수정</button>
+            </Link>
+            <button className={styles.deleteButton} onClick={() => onDelete()}>
+              삭제
+            </button>
+          </div>
         )}
-        <span>{taskItem.isImportant && "⭐️"}</span>
-        <span>{taskItem.type === "직접 입력" ? taskItem.subtype : taskItem.type}</span>
-        <span>{extractTime(taskItem.datetime)}</span>
-        <span>{taskItem.managerId}</span>
-      </li>
-    </>
+      </div>
+      {showDetails && (
+        <div className={styles.logDetailContainer}>
+          <LogDetail />
+        </div>
+      )}
+    </div>
   );
 };
 

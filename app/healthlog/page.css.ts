@@ -3,28 +3,31 @@ import { style } from "@vanilla-extract/css";
 export const container = style({
   width: "100%",
 
-  padding: "10.4rem 1.6rem 8.3rem",
+  paddingTop: "2.4rem",
 
   display: "flex",
   flexDirection: "column",
 });
 
 export const title = style({
-  margin: "2.2rem auto",
+  margin: "0 auto",
 
   fontSize: "1.6rem",
   fontWeight: "700",
 });
 
 export const calendarBox = style({
-  width: "100%",
-  height: "28rem",
+  height: "30rem",
+
+  margin: "2.4rem 1.6rem",
 
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
 
-  backgroundColor: "lightgoldenrodyellow",
+  border: "1px solid #d9d9d9",
+  borderRadius: "10px",
+  boxShadow: "0px 2px 4px 2px rgba(164, 164, 164, 0.25)",
 });
 
 export const calendar = style({

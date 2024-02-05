@@ -1,15 +1,20 @@
 "use client";
 
 import LogList from "@/components/@common/LogList";
-import EmptyHealthLog from "@/components/Healthlog/EmptyHealthLog";
-import QuickButtons from "@/components/Healthlog/QuickButtons";
 import VanillaCalendar from "@/components/@common/VanillaCalendar";
+import QuickButtons from "@/components/Healthlog/QuickButtons";
+import { currentPetAtom } from "@/states/atom";
+import { useAtom } from "jotai";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import * as styles from "./page.css";
 
 const Page = () => {
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
+  const [currentPet, setCurrentPet] = useAtom(currentPetAtom); //추후에 localStorage로 바꿔야할듯
+
+  // if (!currentPet) return redirect("/healthlog/select");
 
   return (
     <>
@@ -38,13 +43,9 @@ const Page = () => {
           <QuickButtons />
         </div>
         <div>
-          {/* 항목 없을 경우 */}
-          <EmptyHealthLog />
+          <LogList selectedDate={selectedDate} pageType="healthlog" />
         </div>
-        <div>
-          {/* 항목 있을 경우 */}
-          <LogList pageType="healthlog" />
-        </div>
+        {/* 글쓰기 플로팅 버튼 추가 */}
       </div>
     </>
   );
