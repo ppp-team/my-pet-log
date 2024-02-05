@@ -1,7 +1,7 @@
 "use client";
 
 import LogItem, { TasksType } from "@/components/@common/LogList/LogItem";
-import SimpleModal from "@/components/@common/SimpleModal";
+import Modal from "@/components/@common/Modal";
 import { useModal } from "@/hooks/useModal";
 import { useState } from "react";
 import { sampleLogList } from "./sampleLogList";
@@ -38,7 +38,7 @@ const LogList = ({ pageType }: { pageType: string }) => {
           </div>
         ))}
       </ul>
-      {isModalOpen && <SimpleModal text="정말 삭제하시겠습니까?" buttonText="확인" onClick={confirmDelete} onClose={closeModalFunc} />}
+      {isModalOpen && <Modal text="정말 삭제하시겠습니까?" buttonText="확인" onClick={confirmDelete} onClose={closeModalFunc} />}
     </>
   );
 };

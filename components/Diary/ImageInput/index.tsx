@@ -3,7 +3,7 @@ import * as styles from "./style.css";
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { IoIosCloseCircle } from "react-icons/io";
 import { useModal } from "@/hooks/useModal";
-import Modal from "@/components/@common/Modal";
+import ModalContainer from "@/components/@common/ModalContainer";
 import { LuImagePlus, LuImageOff } from "react-icons/lu";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 
@@ -99,11 +99,11 @@ const ImageInput = ({ register, setValue }: InputProps) => {
           이미지 최대 {MAX_IMAGES}개 중 {images.length}개
         </p>
         {isModalOpen && (
-          <Modal>
+          <ModalContainer>
             <div className={styles.error}>
               최대 이미지 수 {MAX_IMAGES}개를 초과했습니다.<button onClick={closeModalFunc}>닫기</button>
             </div>
-          </Modal>
+          </ModalContainer>
         )}
       </div>
     </>
