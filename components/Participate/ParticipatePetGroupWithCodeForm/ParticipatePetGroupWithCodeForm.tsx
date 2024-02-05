@@ -24,8 +24,10 @@ const ParticipatePetGroupWithCodeForm = () => {
   } = useForm<IForm>({ mode: "onTouched" });
 
   const onSubmit = (data: any) => {
+    const removedSpacesReceivedInvitationCode = removeSpaces(data.receivedInvitationCode);
+
     // 초대 코드 invalid 에러메세지 테스트
-    if (data.receivedInvitationCode === "failed") setError("receivedInvitationCode", { type: "invalid", message: ERROR_MESSAGE.receivedInvitationCodeInvalid });
+    if (removedSpacesReceivedInvitationCode === "failed") setError("receivedInvitationCode", { type: "invalid", message: ERROR_MESSAGE.receivedInvitationCodeInvalid });
   };
 
   return (
@@ -38,7 +40,6 @@ const ParticipatePetGroupWithCodeForm = () => {
         placeholder={PLACEHOLDER.receivedInvitationCode}
         {...register("receivedInvitationCode", {
           required: ERROR_MESSAGE.receivedInvitationCodeRequired,
-          onChange: (e: FormEvent<HTMLInputElement>) => setValue("receivedInvitationCode", removeSpaces(e.currentTarget.value)),
         })}
       />
       <div className={styles.errorMessageContainer} style={assignInlineVars({ [styles.errorMessageVisibility]: errors?.receivedInvitationCode ? "visible" : "hidden" })}>
