@@ -30,12 +30,13 @@ const SWIPE_BUTTON_WIDTH = 66;
 const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) => {
   const [isChecked, setIsChecked] = useState(taskItem.isComplete);
   const [showDetails, setShowDetails] = useState(false);
-
   const [startX, setStartX] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
+  const checkboxId = `checkbox-${taskItem.logId}`;
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
     setIsChecked(event.target.checked);
   };
 
@@ -71,8 +72,11 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
     transition: "transform 0.5s ease",
   };
 
-  const toggleDetails = () => {
-    setShowDetails(!showDetails);
+  const toggleDetails = (event: React.MouseEvent<HTMLLIElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.id !== checkboxId && !target.closest(`label[for="${checkboxId}"]`)) {
+      setShowDetails(!showDetails);
+    }
   };
 
   return (
@@ -80,7 +84,11 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
       <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={listItemStyle} className={styles.container}>
         <li className={styles.listContainer} onClick={toggleDetails}>
           <div className={styles.leftPart}>
-            <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
+            <label htmlFor={checkboxId} className={styles.checkBox}>
+              <input type="checkbox" className={styles.inputCheckbox} id={checkboxId} checked={isChecked} onChange={handleCheckboxChange} />
+              <span className={styles.checkBoxOn}></span>
+            </label>
+
             <div className={styles.taskAndTimeBox}>
               <div className={styles.checkStar}>
                 {taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt={"중요 표시"} />}

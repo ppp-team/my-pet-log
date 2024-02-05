@@ -57,8 +57,8 @@ export const textBox = style({
 });
 
 export const checkBox = style({
-  width: "2rem",
-  height: "2rem",
+  width: "2.4rem",
+  height: "2.4rem",
 
   border: "1.5px solid var(--White)",
 });
