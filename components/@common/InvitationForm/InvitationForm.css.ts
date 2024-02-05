@@ -10,13 +10,13 @@ export const form = style({
   marginBottom: "3.5rem",
 });
 
-export const subtitle = style({
+export const formTitle = style({
   fontSize: "1.6rem",
   fontWeight: "500",
   color: "#000",
 });
 
-export const receivedInvitationCodeInput = style({
+export const input = style({
   paddingTop: "1.1rem",
   paddingBottom: "1.1rem",
   borderBottom: `2px solid ${borderColor}`,
