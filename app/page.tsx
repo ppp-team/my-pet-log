@@ -2,6 +2,7 @@ import * as styles from "@/app/page.css";
 import EditIcon from "@/assets/edit.svg";
 import EditIconUrl from "@/assets/edit.svg?url";
 import Image from "next/image";
+
 const Home = () => {
   return (
     <div className={styles.container}>

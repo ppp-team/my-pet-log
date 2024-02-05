@@ -8,15 +8,7 @@ import ratData from "./rat-type.json";
 import reptileData from "./reptile-type.json";
 
 interface PetOptionsProps {
-  강아지: string[];
-  고양이: string[];
-  물고기: string[];
-  햄스터: string[];
-  새: string[];
-  토끼: string[];
-  파충류: string[];
-  곤충: string[];
-  기타: string[];
+  [key: string]: string[];
 }
 
 export const petOptions: PetOptionsProps = {
