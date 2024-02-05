@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import formatDaysAgo from "@/utils/formatDaysAgo";
 
 const receivedInvitationListMock: ReceivedInvitationList[] = [
   { invitationId: "string1", petId: "string1", ownerId: "string", petName: "string1", petImageUrl: sampleImageSrc, invitedAt: "2024-01-01 00:00:00" },
@@ -23,7 +22,7 @@ const ReceivedInvitationList = () => {
             <div className={styles.item}>
               <Image className={styles.petImage} src={invitation.petImageUrl} alt="펫 프로필 이미지" width={48} height={48} />
               <p className={styles.petName}>{invitation.petName}</p>
-              <p className={styles.invitedDate}>{formatDaysAgo(invitation.invitedAt)}</p>
+              <p className={styles.invitedDate}>{invitation.invitedAt}</p>
               <div className={styles.responseContainer}>
                 <button className={styles.acceptButton}>수락</button>
                 <button className={styles.declineButton}>거절</button>
