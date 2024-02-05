@@ -1,3 +1,5 @@
+"use client";
+
 import LogItem, { TasksType } from "@/components/@common/LogList/LogItem";
 import SimpleModal from "@/components/@common/SimpleModal";
 import { useModal } from "@/hooks/useModal";
