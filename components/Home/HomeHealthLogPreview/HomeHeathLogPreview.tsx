@@ -1,4 +1,4 @@
-import LogList from "@/components/@common/LogList";
+import LogList from "@/components/Healthlog/LogList";
 
 const HomeHeathLogPreview = () => {
   return (

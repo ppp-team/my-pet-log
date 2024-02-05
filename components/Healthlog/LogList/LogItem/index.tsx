@@ -22,18 +22,18 @@ export type TasksType = {
 
 interface LogItemProps {
   taskItem: TasksType;
-  pageType: string;
   onDelete: () => void; // 로직 보완
 }
 
-const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogItemProps) => {
+const SWIPE_BUTTON_WIDTH = 66;
+
+const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) => {
   const [isChecked, setIsChecked] = useState(taskItem.isComplete);
   const [showDetails, setShowDetails] = useState(false);
 
   const [startX, setStartX] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
-  const swipeButtonsWidth = 66;
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
@@ -50,7 +50,7 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogIt
       const swipingDistance = startX - currentX;
 
       if (swipingDistance > 0) {
-        setCurrentTranslate(Math.max(-swipeButtonsWidth, -swipingDistance));
+        setCurrentTranslate(Math.max(-SWIPE_BUTTON_WIDTH, -swipingDistance));
       } else if (swipingDistance < 0 && currentTranslate !== 0) {
         setCurrentTranslate(Math.min(0, -swipingDistance + currentTranslate));
       }
@@ -59,8 +59,8 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogIt
 
   const handleTouchEnd = () => {
     setIsSwiping(false);
-    if (currentTranslate <= -swipeButtonsWidth / 2) {
-      setCurrentTranslate(-swipeButtonsWidth);
+    if (currentTranslate <= -SWIPE_BUTTON_WIDTH / 2) {
+      setCurrentTranslate(-SWIPE_BUTTON_WIDTH);
     } else {
       setCurrentTranslate(0);
     }
@@ -80,7 +80,7 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogIt
       <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={listItemStyle} className={styles.container}>
         <li className={styles.listContainer} onClick={toggleDetails}>
           <div className={styles.leftPart}>
-            {pageType !== "home" && <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />}
+            <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
             <div className={styles.taskAndTimeBox}>
               <div className={styles.checkStar}>
                 {taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt={"중요 표시"} />}
@@ -93,7 +93,7 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogIt
             <span>{taskItem.manager.nickname}</span>
           </div>
         </li>
-        {currentTranslate === -swipeButtonsWidth && (
+        {currentTranslate === -SWIPE_BUTTON_WIDTH && (
           <div className={styles.swipeButtons}>
             <Link href="/healthlog/edit">
               <button className={styles.editButton}>수정</button>

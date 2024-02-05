@@ -1,11 +1,10 @@
 "use client";
 
-import LogList from "@/components/@common/LogList";
 import VanillaCalendar from "@/components/@common/VanillaCalendar";
+import LogList from "@/components/Healthlog/LogList";
 import QuickButtons from "@/components/Healthlog/QuickButtons";
 import { currentPetAtom } from "@/states/atom";
 import { useAtom } from "jotai";
-import { redirect } from "next/navigation";
 import { useState } from "react";
 import * as styles from "./page.css";
 
@@ -43,7 +42,7 @@ const Page = () => {
           <QuickButtons />
         </div>
         <div>
-          <LogList selectedDate={selectedDate} pageType="healthlog" />
+          <LogList selectedDate={selectedDate} />
         </div>
         {/* 글쓰기 플로팅 버튼 추가 */}
       </div>

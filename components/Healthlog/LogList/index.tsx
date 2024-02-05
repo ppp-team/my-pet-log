@@ -1,13 +1,13 @@
 "use client";
 
-import LogItem, { TasksType } from "@/components/@common/LogList/LogItem";
+import LogItem, { TasksType } from "@/components/Healthlog/LogList/LogItem";
 import Modal from "@/components/@common/Modal";
 import { useModal } from "@/hooks/useModal";
 import { useState } from "react";
 import { sampleLogList } from "./sampleLogList";
 import * as styles from "./style.css";
 
-const LogList = ({ pageType }: { pageType: string }) => {
+const LogList = () => {
   const [selectedTask, setSelectedTask] = useState<TasksType | null>(null);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
@@ -32,7 +32,7 @@ const LogList = ({ pageType }: { pageType: string }) => {
             <p className={styles.date}>{log.date}</p>
             <ul>
               {log.tasks.map((taskItem, taskIndex) => (
-                <LogItem taskItem={taskItem} key={taskIndex} pageType={pageType} onDelete={() => handleDelete(taskItem)} />
+                <LogItem taskItem={taskItem} key={taskIndex} onDelete={() => handleDelete(taskItem)} />
               ))}
             </ul>
           </div>
