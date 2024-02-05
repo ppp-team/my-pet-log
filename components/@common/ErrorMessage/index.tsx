@@ -6,7 +6,7 @@ interface ErrorMessageProps {
   message?: string;
 }
 
-const errorMessage = ({ message }: ErrorMessageProps) => {
+const ErrorMessage = ({ message }: ErrorMessageProps) => {
   return (
     <section className={styles.container}>
       <Image src={WarningIcon} alt="warning icon" width={12} height={12} />
@@ -15,4 +15,4 @@ const errorMessage = ({ message }: ErrorMessageProps) => {
   );
 };
 
-export default errorMessage;
+export default ErrorMessage;
