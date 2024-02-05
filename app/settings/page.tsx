@@ -4,7 +4,6 @@ import Link from "next/link";
 import MyProfile from "@/components/Setting/MyProfile";
 import MypetCarousel from "@/components/Setting/MypetCarousel";
 import * as styles from "@/app/settings/page.css";
-import "./swiper.css";
 import HeartIcon from "@/assets/heart.svg?url";
 import QuestionIcon from "@/assets/circle-help.svg?url";
 import MessageIcon from "@/assets/message-alt.svg?url";
@@ -14,9 +13,7 @@ import MenuList from "@/components/Setting/MenuList";
 const Page = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.title}>마이펫 관리하기</div>
       <MypetCarousel />
-      <div className={styles.title}>마이프로필 관리하기</div>
       <Link href="/profile">
         <MyProfile />
       </Link>

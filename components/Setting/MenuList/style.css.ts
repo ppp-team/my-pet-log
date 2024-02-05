@@ -1,6 +1,5 @@
 import { style } from "@vanilla-extract/css";
 
-/* 초대받은 내역 ~ 로그아웃까지의 list */
 export const list = style({
   width: "100%",
 

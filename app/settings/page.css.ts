@@ -1,15 +1,12 @@
 import { style } from "@vanilla-extract/css";
 
-export const container = style({});
-
-/* 마이 _ 관리하기 */
-export const title = style({
-  color: "#727272",
-  fontSize: "1.6rem",
-  fontWeight: "600",
+export const container = style({
+  padding: "2rem 1.6rem 1.6rem",
 });
 
 export const listContainer = style({
+  padding: "2.3rem 0",
+
   display: "flex",
   flexDirection: "column",
 });

@@ -13,8 +13,8 @@ interface MenuListProps {
 const MenuList = ({ href, src, alt, text }: MenuListProps) => {
   return (
     <Link className={styles.list} href={href}>
-      <Image src={src} alt={alt} width={24} height={24} />
-      {text}
+      <Image style={{ marginRight: "1.5rem" }} src={src} alt={alt} width={24} height={24} />
+      <span style={{ marginRight: "auto" }}>{text}</span>
       <Image src={CheckRigntIcon} alt="check right icon" width={22} height={22} />
     </Link>
   );
