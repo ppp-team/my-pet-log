@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FocusEventHandler, HTMLInputTypeAttribute, forwardRef } from "react";
 import * as styles from "./styles.css";
 
-interface InputProps {
+export interface InputProps {
   label: string;
   type?: HTMLInputTypeAttribute;
   value: string;

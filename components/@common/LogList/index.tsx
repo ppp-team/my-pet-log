@@ -1,69 +1,45 @@
-import LogItem from "@/components/@common/LogList/LogItem";
+"use client";
+
+import LogItem, { TasksType } from "@/components/@common/LogList/LogItem";
+import Modal from "@/components/@common/Modal";
+import { useModal } from "@/hooks/useModal";
+import { useState } from "react";
+import { sampleLogList } from "./sampleLogList";
 import * as styles from "./style.css";
 
-const sampleList = [
-  {
-    date: "2024년 1월 27일 토요일",
-    list: [
-      {
-        type: "사료",
-        subtype: "건식",
-        datetime: "2024-01-27T10:30",
-        isComplete: true,
-        isImportant: false,
-        managerId: "소희", // 나중엔 Number
-        memo: "건식 사료 100g",
-      },
-      {
-        type: "산책",
-        subtype: "여의도 한강 공원",
-        datetime: "2024-01-27T18:30",
-        isComplete: true,
-        isImportant: false,
-        managerId: "소희",
-        memo: "친구랑 같이 다녀옴",
-      },
-      {
-        type: "직접 입력",
-        subtype: "친구랑 홍대 멍냥카페",
-        datetime: "2024-01-27T19:30",
-        isComplete: true,
-        isImportant: false,
-        managerId: "슬",
-        memo: "",
-      },
-    ],
-  },
-  {
-    date: "2024년 1월 29일 월요일",
-    list: [
-      {
-        type: "건강",
-        subtype: "병원 진료",
-        datetime: "2024-01-29T19:30",
-        isComplete: false,
-        isImportant: true,
-        managerId: "슬",
-        memo: "",
-      },
-    ],
-  },
-];
-
 const LogList = ({ pageType }: { pageType: string }) => {
+  const [selectedTask, setSelectedTask] = useState<TasksType | null>(null);
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+
+  const handleDelete = (task: TasksType) => {
+    setSelectedTask(task);
+    openModalFunc();
+  };
+
+  const confirmDelete = () => {
+    closeModalFunc();
+    if (selectedTask) {
+      // 삭제 로직
+      console.log(`Deleting task with id: ${selectedTask.logId}`);
+    }
+  };
+
   return (
-    <ul>
-      {sampleList.map((dateInfo, index) => (
-        <div key={index}>
-          <p className={styles.date}>{dateInfo.date}</p>
-          <ul>
-            {dateInfo.list.map((taskItem, taskIndex) => (
-              <LogItem taskItem={taskItem} key={taskIndex} pageType={pageType} />
-            ))}
-          </ul>
-        </div>
-      ))}
-    </ul>
+    <>
+      <ul>
+        {sampleLogList.map((log, index) => (
+          <div key={index}>
+            <p className={styles.date}>{log.date}</p>
+            <ul>
+              {log.tasks.map((taskItem, taskIndex) => (
+                <LogItem taskItem={taskItem} key={taskIndex} pageType={pageType} onDelete={() => handleDelete(taskItem)} />
+              ))}
+            </ul>
+          </div>
+        ))}
+      </ul>
+      {isModalOpen && <Modal text="정말 삭제하시겠습니까?" buttonText="확인" onClick={confirmDelete} onClose={closeModalFunc} />}
+    </>
   );
 };
 
