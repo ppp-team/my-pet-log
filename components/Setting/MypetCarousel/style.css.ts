@@ -1,4 +1,6 @@
-import { globalStyle } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
+
+export const container = style({});
 
 globalStyle(".swiper", {
   width: "100%",
