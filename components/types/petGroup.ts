@@ -1,4 +1,4 @@
-export interface PetGroupType {
+export type PetGroupType = {
   petId: string;
   ownerId: string;
   inviteCode: string;
@@ -13,4 +13,4 @@ export interface PetGroupType {
   registNumber: string;
   repStatus: "Y" | "N";
   petImageUrl: string;
-}
+};

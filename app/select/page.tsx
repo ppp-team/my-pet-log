@@ -16,10 +16,10 @@ const SelectCreateJoinPage: NextPage = () => {
       <p className={styles.subTitle}>육아 기록을 작성할 동물을 등록하시겠어요?</p>
       <div className={styles.sampleImg}></div>
       <Link className={styles.linkCreate} href="/create/pet-group">
-        확인
+        마이펫을 등록할래요
       </Link>
       <button className={styles.linkParticipate} onClick={openModalFunc}>
-        공동 집사로 초대 받으셨나요?
+        기존 그룹에 참여할래요
       </button>
       {isModalOpen && (
         <ModalContainer>

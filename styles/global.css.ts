@@ -36,3 +36,11 @@ globalStyle("button", {
 globalStyle("li, dt, dd", {
   listStyle: "none",
 });
+
+globalStyle("input", {
+  WebkitAppearance: "none",
+  MozAppearance: "none",
+  appearance: "none",
+  border: "none",
+  outline: "none",
+});

@@ -7,6 +7,7 @@ export const PLACEHOLDER = {
   currentPassword: "현재 비밀번호 입력",
   newPassword: "새 비밀번호 입력",
   confirmNewPassword: "새 비밀번호 확인 입력",
+  receivedInvitationCode: "초대 코드 입력",
 };
 
 export const ERROR_MESSAGE = {
@@ -33,8 +34,8 @@ export const ERROR_MESSAGE = {
   newPasswordRequired: "새 비밀번호를 입력해 주세요.",
   confirmNewPasswordRequired: "새 비밀번호 확인을 입력해 주세요.",
 
-  invitedCodeRequired: "초대코드를 입력해 주세요.",
-  invitedCodeInvalid: "유효하지 않은 코드입니다. 확인 후 다시 시도해 주세요.",
+  receivedInvitationCodeRequired: "초대 코드를 입력해 주세요.",
+  receivedInvitationCodeInvalid: "유효하지 않은 코드입니다. 확인 후 다시 시도해 주세요.",
 };
 
 export const CONFIRM_MESSAGE = {
