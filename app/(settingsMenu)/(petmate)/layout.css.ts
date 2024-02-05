@@ -45,6 +45,7 @@ export const noActive = style([
   navItem,
   {
     color: "#818181",
+    borderBottom: "1px solid #e2e2e2",
   },
 ]);
 

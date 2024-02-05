@@ -1,12 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css";
 
-globalStyle(":root", {
-  vars: {
-    "--MainOrange": "#FF8743",
-    "--LightOrange": "#FFE1D0",
-  },
-});
-
 globalStyle("*", {
   boxSizing: "border-box",
   fontFamily: "Pretendard",
@@ -36,4 +29,12 @@ globalStyle("button", {
 
 globalStyle("li, dt, dd", {
   listStyle: "none",
+});
+
+globalStyle("input", {
+  WebkitAppearance: "none",
+  MozAppearance: "none",
+  appearance: "none",
+  border: "none",
+  outline: "none",
 });

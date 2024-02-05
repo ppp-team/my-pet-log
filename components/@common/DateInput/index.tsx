@@ -2,18 +2,23 @@ import * as styles from "@/app/diary/edit/style.css";
 import { InputProps } from "@/components/Diary/ImageInput";
 import VanillaCalendar from "@/components/@common/VanillaCalendar";
 import { getPrettyTime, getPrettyToday } from "@/utils/getPrettyToday";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Options } from "vanilla-calendar-pro";
+import { FieldValues, UseFormGetValues } from "react-hook-form";
 
-const DateInput = ({ register, setValue }: InputProps) => {
+interface DateInputProps extends InputProps {
+  getValue: UseFormGetValues<FieldValues>;
+}
+const DateInput = ({ register, setValue, getValue }: DateInputProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [dateValue, setDateValue] = useState(getPrettyToday());
+  const [timeValue, setTimeValue] = useState(getPrettyTime());
 
   const options: Options = {
     settings: {
       selected: {
-        dates: [getPrettyToday()],
-        time: getPrettyTime(),
+        dates: [getValue("date")],
+        time: getValue("time"),
       },
       selection: {
         time: true,
@@ -21,22 +26,28 @@ const DateInput = ({ register, setValue }: InputProps) => {
     },
     actions: {
       changeTime(e, self) {
-        setValue("time", ` ${self.selectedTime}`);
+        setValue("time", `${self.selectedTime}`);
+        // setTimeValue(getValue("time"));
       },
       clickDay(e, self) {
         if (!self.selectedDates[0]) return;
 
         setValue("date", `${self.selectedDates[0]}`);
+        setDateValue(getValue("date"));
       },
     },
   };
+
+  useEffect(() => {
+    setTimeValue(getValue("time"));
+  }, [isCalendarOpen]);
 
   return (
     <div className={styles.inputWrapper}>
       <label className={styles.label}>날짜</label>
       <div style={{ display: "flex", gap: "1rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
-        <input className={styles.input} value={getPrettyToday()} readOnly {...register("date")} />
-        <input className={styles.input} value={getPrettyTime()} suppressHydrationWarning readOnly {...register("time")} />
+        <input className={styles.input} value={dateValue} readOnly {...register("date")} />
+        <input className={styles.input} value={timeValue} suppressHydrationWarning readOnly {...register("time")} />
       </div>
       {isCalendarOpen && <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%" }} />}
     </div>
