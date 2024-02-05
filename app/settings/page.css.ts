@@ -1,12 +1,12 @@
 import { style } from "@vanilla-extract/css";
 
-export const container = style({
-  padding: "1.9rem 4.2rem",
-});
+export const container = style({});
 
 /* 마이 _ 관리하기 */
 export const title = style({
+  color: "#727272",
   fontSize: "1.6rem",
+  fontWeight: "600",
 });
 
 export const listContainer = style({
@@ -14,19 +14,8 @@ export const listContainer = style({
   flexDirection: "column",
 });
 
-/* 초대받은 내역 ~ 로그아웃까지의 list */
-export const list = style({
-  width: "100%",
-
-  marginBottom: "1rem",
-
-  fontSize: "1.6rem",
-  fontStyle: "normal",
-  fontWeight: "600",
-});
-
 export const logout = style({
-  fontSize: "1.6rem",
-  fontStyle: "normal",
+  color: "#c2c2c2",
+  fontSize: "1.4rem",
   fontWeight: "600",
 });
