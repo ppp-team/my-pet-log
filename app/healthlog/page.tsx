@@ -43,7 +43,7 @@ const Page = () => {
           <QuickButtons />
         </div>
         <div>
-          <LogList selectedDate={selectedDate} pageType="healthlog" />
+          <LogList pageType="healthlog" />
         </div>
         {/* 글쓰기 플로팅 버튼 추가 */}
       </div>
