@@ -15,7 +15,7 @@ const Page = () => {
         <MyProfile />
       </Link>
       <div className={styles.listContainer}>
-        <Link className={styles.list} href="/receivedinvites">
+        <Link className={styles.list} href="/received-invites">
           초대 받은 내역
         </Link>
         <Link className={styles.list} href="/ask">
