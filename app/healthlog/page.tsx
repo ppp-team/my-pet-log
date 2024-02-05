@@ -2,6 +2,7 @@
 
 import VanillaCalendar from "@/components/@common/VanillaCalendar";
 import LogList from "@/components/Healthlog/LogList";
+import LogWriteButton from "@/components/Healthlog/LogWriteButton";
 import QuickButtons from "@/components/Healthlog/QuickButtons";
 import { currentPetAtom } from "@/states/atom";
 import { useAtom } from "jotai";
@@ -44,7 +45,7 @@ const Page = () => {
         <div>
           <LogList selectedDate={selectedDate} />
         </div>
-        {/* 글쓰기 플로팅 버튼 추가 */}
+        <LogWriteButton />
       </div>
     </>
   );

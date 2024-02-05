@@ -6,4 +6,5 @@ import { createGlobalTheme } from "@vanilla-extract/css";
 export const Z_INDEX = createGlobalTheme(":root", {
   Modal: "10",
   SelectMateDropdown_dropdownList: "5",
+  LogWriteButton_button: "5",
 });

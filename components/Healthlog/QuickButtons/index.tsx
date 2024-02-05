@@ -6,6 +6,7 @@ import healthIconSrc from "@/assets/health-icon.svg?url";
 import walkIconSrc from "@/assets/walk-icon.svg?url";
 import treatIconSrc from "@/assets/treat-icon.svg?url";
 import writeIconSrc from "@/assets/write-pencil-icon.svg?url";
+import groomingIconSrc from "@/assets/grooming-icon.svg?url";
 
 const QuickButtons = () => {
   return (
@@ -36,7 +37,7 @@ const QuickButtons = () => {
       </div>
       <div className={styles.buttonWrapper}>
         <button className={`${styles.button} ${styles.secondColorButton}`}>
-          <Image src={feedIconSrc} width={40} height={40} alt={"미용 아이콘 이미지"} />
+          <Image src={groomingIconSrc} width={40} height={40} alt={"미용 아이콘 이미지"} />
         </button>
         <span className={styles.buttonText}>위생/미용</span>
       </div>
