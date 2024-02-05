@@ -1,3 +1,88 @@
-import { style } from "@vanilla-extract/css";
+import { style, createVar } from "@vanilla-extract/css";
 
-export const container = style({});
+export const borderColor = createVar();
+
+export const container = style({
+  paddingLeft: "1.6rem",
+  paddingRight: "1.6rem",
+});
+
+export const form = style({
+  display: "grid",
+});
+
+export const userProfileImageContainer = style({
+  paddingTop: "5.2rem",
+  paddingBottom: "4.9rem",
+  textAlign: "center",
+});
+
+export const userProfileImage = style({
+  width: "12.6rem",
+  height: "12.4rem",
+});
+
+export const fieldset = style({
+  display: "grid",
+  gap: "0.6rem",
+});
+
+export const idFieldset = style([fieldset, { marginBottom: "2.7rem" }]);
+
+export const nicknameFieldset = style([fieldset, { marginBottom: "3.2rem" }]);
+
+export const label = style({
+  fontSize: "1.6rem",
+  fontWeight: "600",
+  color: "var(--Black)",
+});
+
+export const inputBoxStyle = style({
+  minHeight: "5.1rem",
+  padding: "0.8rem 1.8rem",
+  borderRadius: "10px",
+  border: `1.5px solid ${borderColor}`,
+  backgroundColor: "var(--White)",
+  fontSize: "1.6rem",
+  fontWeight: "500",
+  color: "var(--Gray81)",
+});
+
+export const nicknameInputContainer = style([
+  inputBoxStyle,
+  {
+    position: "relative",
+    display: "grid",
+    gridTemplateColumns: "1fr auto",
+    alignItems: "center",
+  },
+]);
+
+export const textInput = style({});
+
+export const textInputError = style({
+  borderColor: "var(--Red)",
+});
+
+export const checkNicknameButton = style({
+  padding: "0.8rem 0.9rem",
+  borderRadius: "5px",
+  backgroundColor: "var(--LightOrange)",
+  color: "var(--MainOrange)",
+});
+
+export const hint = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "0.5rem",
+});
+
+export const submitButton = style({
+  padding: "0.9rem 0",
+  borderRadius: "10px",
+  backgroundColor: "#FF8743",
+  fontSize: "1.6rem",
+  fontWeight: "600",
+  textAlign: "center",
+  color: "var(--GrayF2)",
+});
