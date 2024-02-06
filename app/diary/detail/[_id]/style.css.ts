@@ -20,7 +20,7 @@ export const header = style({
 });
 
 export const petInfo = style({
-  color: "#C2C2C2",
+  color: "var(GrayC2)",
   fontSize: "1.4rem",
   fontWeight: "500",
 });
@@ -32,8 +32,8 @@ export const main = style({
 
   padding: "2.4rem 1.6rem 1.4rem",
 
-  borderTop: "1px solid #E8E8E8",
-  borderBottom: "1px solid #E8E8E8",
+  borderTop: "1px solid var(--GrayE8)",
+  borderBottom: "1px solid var(--GrayE8)",
 
   position: "relative",
 });
@@ -43,7 +43,7 @@ export const image = style({
   height: "23.8rem",
 
   borderRadius: "10px",
-  border: "1px solid #B5B5B5",
+  border: "1px solid var(--GrayB5)",
 
   backgroundSize: "cover",
 });
@@ -67,7 +67,7 @@ export const swiperFraction = style({
 
   backgroundColor: "rgba(0,0,0,0.5)",
 
-  color: "white",
+  color: "var(--White)",
   fontWeight: "500",
   textAlign: "center",
 
@@ -89,7 +89,7 @@ export const content = style({
 
   fontSize: "1.4rem",
   lineHeight: "1.8rem",
-  color: "#1F1F1F",
+  color: "var(--Gray1F)",
 
   wordBreak: "break-word",
 });
@@ -99,10 +99,10 @@ export const commentsCount = style({
 
   padding: "1.4rem 1.6rem",
 
-  borderBottom: "1px solid #E8E8E8",
+  borderBottom: "1px solid var(--GrayE8)",
 
   fontSize: "1.4rem",
-  color: "#818181",
+  color: "var(--Gray81)",
 });
 
 export const kebab = style({
@@ -120,7 +120,7 @@ export const commentContainer = style({
 
   padding: "1.6rem",
 
-  borderBottom: "1px solid #E8E8E8",
+  borderBottom: "1px solid var(--GrayE8)",
 });
 
 export const commentMain = style({
@@ -146,9 +146,9 @@ export const commentContent = style({
 
 const buttonCommon = {
   borderRadius: "5px",
-  border: "1px solid #E2E2E2",
+  border: "1px solid var(--GrayE2)",
 
-  color: "#818181",
+  color: "var(--Gray81)",
   fontSize: "1.3rem",
 };
 export const recommentButton = style({
@@ -179,7 +179,7 @@ export const commentInputContainer = style({
 
   padding: "1rem 1.6rem",
 
-  backgroundColor: "white",
+  backgroundColor: "var(--White)",
 });
 
 export const commentInput = style({
@@ -191,7 +191,7 @@ export const commentInput = style({
   borderRadius: "20px",
   border: "none",
 
-  backgroundColor: " #F4F4F4",
+  backgroundColor: " var(--GrayF4)",
 
   ":focus": {
     outline: "none",

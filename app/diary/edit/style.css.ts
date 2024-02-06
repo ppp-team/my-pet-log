@@ -25,7 +25,7 @@ export const input = style({
   padding: "0.8rem 1rem",
 
   borderRadius: "10px",
-  border: "1.5px solid #E2E2E2",
+  border: "1.5px solid var(--GrayE2)",
 
   ":focus": {
     outline: "none",
@@ -41,7 +41,7 @@ export const inputWrapper = style({
 export const p = style({
   fontSize: "1.2rem",
   fontWeight: "500",
-  color: "#818181",
+  color: "var(--Gray81)",
 });
 
 export const label = style({
@@ -56,7 +56,7 @@ export const button = style({
 
   fontSize: "1.6rem",
   fontWeight: "600",
-  color: "white",
+  color: "var(--White)",
 
   backgroundColor: "var(--MainOrange)",
 
@@ -64,7 +64,7 @@ export const button = style({
 });
 
 export const error = style({
-  color: "red",
+  color: "var(--Red)",
   fontSize: "1.1rem",
   fontWeight: "500",
 });
