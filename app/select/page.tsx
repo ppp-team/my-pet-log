@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import * as styles from "./page.css";
 import Link from "next/link";
 import { useModal } from "@/hooks/useModal";
-import ParticipatePetGroupModal from "@/components/Participate/ParticipatePetGroupModal";
+import ParticipatePetGroupModal from "@/components/Participate/ParticipatePetGroupModal/ParticipatePetGroupModal";
 import ModalContainer from "@/components/@common/ModalContainer";
 
 const SelectCreateJoinPage: NextPage = () => {

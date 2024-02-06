@@ -43,7 +43,7 @@ const Page = () => {
           <QuickButtons />
         </div>
         <div>
-          <LogList selectedDate={selectedDate} />
+          <LogList />
         </div>
         <LogWriteButton />
       </div>

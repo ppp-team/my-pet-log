@@ -3,8 +3,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NICKNAME_RULES, PLACEHOLDER } from "@/constants/inputConstant";
 import { useEffect } from "react";
-import * as styles from "@/app/(settingsMenu)/(account)/profile/page.css";
-import mockData from "@/app/(settingsMenu)/(account)/profile/mockData.json"; //추후 삭제
+import * as styles from "@/app/(settingsMenu)/(Account)/profile/page.css";
+import mockData from "@/app/(settingsMenu)/(Account)/profile/mockData.json"; //추후 삭제
 import cameraIcon from "@/assets/camera.svg?url";
 import Image from "next/image";
 
