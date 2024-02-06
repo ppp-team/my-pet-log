@@ -6,13 +6,15 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FormEvent } from "react";
 import Image from "next/image";
 import userProfileDefaultImageSrc from "@/assets/user-profile-default.svg?url";
-import { CONFIRM_MESSAGE, ERROR_MESSAGE, PLACEHOLDER } from "@/constants/inputConstant";
+import { CONFIRM_MESSAGE, ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/constants/inputConstant";
 import removeSpaces from "@/utils/removeSpaces";
-import { assignInlineVars } from "@vanilla-extract/dynamic";
+import ErrorMessage from "@/components/@common/ErrorMessage";
+import ConfirmMessage from "@/components/@common/ConfirmMessage/ConfirmMessage";
 
 interface IForm {
   nickname: string;
   profileImage: string;
+  isNicknameConfirmed: boolean;
 }
 
 const CreateUserProfilePage: NextPage = () => {
@@ -31,26 +33,64 @@ const CreateUserProfilePage: NextPage = () => {
     setValue("profileImage", URL.createObjectURL(files[0]));
   };
 
-  const onChangeNickname = (e: FormEvent<HTMLInputElement>) => {
-    const removedSpacesValue = removeSpaces(e.currentTarget.value);
-    if (removedSpacesValue.length >= 10) {
-      setError("nickname", { type: "maxLength", message: ERROR_MESSAGE.nicknameInvalid });
-      setValue("nickname", removedSpacesValue.slice(0, 10));
+  const onClickCheckNickname = () => {
+    const removeSpacesNickname = removeSpaces(watch("nickname"));
+    setValue("nickname", removeSpacesNickname);
+
+    if (removeSpacesNickname.length > 10) {
+      return;
+    }
+
+    if (removeSpacesNickname === "") {
+      // 공백만 입력했을 때
+      setError("nickname", { type: "required", message: ERROR_MESSAGE.nicknameRequired });
+      return;
+    }
+
+    // 닉네임 중복 에러메세지 테스트
+    const isConfirmed = removeSpacesNickname === "failed" ? false : true;
+    if (!isConfirmed) {
+      setError("nickname", { type: "duplicated", message: ERROR_MESSAGE.nicknameDuplicate });
     } else {
-      setError("nickname", {});
-      setValue("nickname", removedSpacesValue);
+      setValue("isNicknameConfirmed", true);
     }
   };
 
-  const onClickCheckNickname = () => {
-    const watchedNickname = watch("nickname");
+  const onSubmit: SubmitHandler<IForm> = (data) => {
+    const removeSpacesNickname = removeSpaces(data.nickname);
+    const isNicknameConfirmed = watch("isNicknameConfirmed");
+    setValue("nickname", removeSpacesNickname);
 
-    // 닉네임 중복 에러메세지 테스트
-    if (watchedNickname === "failed") setError("nickname", { type: "duplicated", message: ERROR_MESSAGE.nicknameDuplicate });
+    if (isNicknameConfirmed) {
+      // 중복 검사 완료일 경우에만 submit api 통신
+      alert("성공");
+    } else if (removeSpacesNickname === "") {
+      // 공백만 입력했을 때
+      setError("nickname", { type: "required", message: ERROR_MESSAGE.nicknameRequired });
+    } else {
+      setError("nickname", { type: "isNotConfirmed", message: ERROR_MESSAGE.nicknameNotConfirmed });
+    }
   };
 
-  const onSubmit: SubmitHandler<IForm> = (data) => {
-    console.log(data);
+  const getHint = () => {
+    const isNicknameConfirmed = watch("isNicknameConfirmed");
+
+    if (isNicknameConfirmed) {
+      return {
+        style: styles.inputConfirmStyle,
+        component: <ConfirmMessage message={CONFIRM_MESSAGE.nicknameValid} />,
+      };
+    } else if (errors?.nickname) {
+      return {
+        style: styles.inputErrorStyle,
+        component: <ErrorMessage message={errors.nickname.message} />,
+      };
+    } else {
+      return {
+        style: null,
+        component: null,
+      };
+    }
   };
 
   return (
@@ -79,26 +119,29 @@ const CreateUserProfilePage: NextPage = () => {
 
         <fieldset className={styles.idFieldset}>
           <label className={styles.label}>아이디</label>
-          <input className={(styles.textInput, styles.inputBoxStyle)} type="text" placeholder={"email@email.com"} readOnly />
+          <input className={styles.idInput} type="text" placeholder={"email@email.com"} readOnly />
         </fieldset>
 
         <fieldset className={styles.nicknameFieldset}>
           <label className={styles.label}>닉네임*</label>
-          <div className={styles.nicknameInputContainer} style={assignInlineVars({ [styles.borderColor]: errors?.nickname ? "var(--Red)" : "var(--GrayE2)" })}>
+          <div className={`${styles.nicknameInputContainer} ${getHint().style}`}>
             <input
-              // className={`${styles.textInput} ${errors?.nickname && styles.textInputError}`}
-              className={styles.textInput}
               type="text"
               placeholder={PLACEHOLDER.nickname}
               {...register("nickname", {
                 required: ERROR_MESSAGE.nicknameRequired,
-                onChange: onChangeNickname,
+                maxLength: NICKNAME_RULES.maxLength,
+                onChange() {
+                  setValue("isNicknameConfirmed", false);
+                },
               })}
             />
             <button className={styles.checkNicknameButton} type="button" onClick={onClickCheckNickname}>
               중복확인
             </button>
           </div>
+          <p className={`${styles.length} ${watch("nickname")?.length > 10 ? styles.maxLengthOver : ""}`}>{watch("nickname")?.length ?? "0"} / 10</p>
+          {getHint().component}
         </fieldset>
 
         <button className={styles.submitButton} type="submit">

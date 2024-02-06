@@ -1,7 +1,5 @@
 import { style, createVar } from "@vanilla-extract/css";
 
-export const borderColor = createVar();
-
 export const container = style({
   paddingLeft: "1.6rem",
   paddingRight: "1.6rem",
@@ -20,6 +18,7 @@ export const userProfileImageContainer = style({
 export const userProfileImage = style({
   width: "12.6rem",
   height: "12.4rem",
+  objectFit: "cover",
 });
 
 export const fieldset = style({
@@ -37,11 +36,21 @@ export const label = style({
   color: "var(--Black)",
 });
 
+export const length = style({
+  fontSize: "1.2rem",
+  fontWeight: "600",
+  color: "var(--Black)",
+});
+
+export const maxLengthOver = style({
+  color: "var(--Red)",
+});
+
 export const inputBoxStyle = style({
   minHeight: "5.1rem",
   padding: "0.8rem 1.8rem",
   borderRadius: "10px",
-  border: `1.5px solid ${borderColor}`,
+  border: `1.5px solid var(--GrayE2)`,
   backgroundColor: "var(--White)",
   fontSize: "1.6rem",
   fontWeight: "500",
@@ -58,10 +67,19 @@ export const nicknameInputContainer = style([
   },
 ]);
 
-export const textInput = style({});
+export const idInput = style([
+  inputBoxStyle,
+  {
+    cursor: "not-allowed",
+  },
+]);
 
-export const textInputError = style({
+export const inputErrorStyle = style({
   borderColor: "var(--Red)",
+});
+
+export const inputConfirmStyle = style({
+  borderColor: "var(--Green)",
 });
 
 export const checkNicknameButton = style({
@@ -71,13 +89,8 @@ export const checkNicknameButton = style({
   color: "var(--MainOrange)",
 });
 
-export const hint = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "0.5rem",
-});
-
 export const submitButton = style({
+  minHeight: "4.5rem",
   padding: "0.9rem 0",
   borderRadius: "10px",
   backgroundColor: "#FF8743",
