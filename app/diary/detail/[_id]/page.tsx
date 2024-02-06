@@ -2,6 +2,7 @@
 
 import KebabIcon from "@/assets/kebab.svg?url";
 import LikeIcon from "@/assets/like.svg?url";
+import SendIcon from "@/assets/send.svg?url";
 import Image from "next/image";
 import { useState } from "react";
 import "swiper/css";
@@ -10,7 +11,6 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import * as styles from "./style.css";
 import "./swiper.css";
-import SendIcon from "@/assets/send.svg?url";
 
 const COMMENT_DATA = [
   {
@@ -94,6 +94,7 @@ interface Tag {
 }
 
 const Comment = ({ comment }: { comment: CommentProp }) => {
+  const [isKebabOpen, setIsKebabOpen] = useState(false);
   return (
     <>
       <div className={styles.commentContainer}>
@@ -103,7 +104,17 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
             <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>
               {comment.writer.nickname} <span style={{ color: " #A4A4A4", fontWeight: "400" }}>{comment.createdAt}</span>
             </p>
-            {comment.writer.isCurrentUser && <Image src={KebabIcon} alt="kebab icon" width={24} height={24} />}
+            {comment.writer.isCurrentUser && (
+              <div onBlur={() => setIsKebabOpen(false)} tabIndex={1} style={{ position: "relative" }}>
+                <Image src={KebabIcon} alt="kebab icon" width={24} height={24} onClick={() => setIsKebabOpen(!isKebabOpen)} />
+                {isKebabOpen && (
+                  <ul className={styles.commentKebab}>
+                    <li className={styles.kebabList}>수정하기</li>
+                    <li className={styles.kebabList}>삭제하기</li>
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
           <p className={styles.commentContent}>{comment.content}</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -121,6 +132,7 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
 
 const DiaryDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [isKebabOpen, setIsKebabOpen] = useState(false);
 
   return (
     <>
@@ -131,26 +143,38 @@ const DiaryDetailPage = () => {
           </p>
           <h3 style={{ fontSize: "1.8rem", fontWeight: "600" }}>{DATA.title}</h3>
           <p style={{ fontSize: "1.4rem", color: "#9A9A9A" }}>{DATA.date}</p>
-          {DATA.writer.isCurrentUser && <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} />}
+          {DATA.writer.isCurrentUser && (
+            <div onBlur={() => setIsKebabOpen(false)} tabIndex={1}>
+              <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} onClick={() => setIsKebabOpen(!isKebabOpen)} />
+              {isKebabOpen && (
+                <ul className={styles.kebabModal}>
+                  <li className={styles.kebabList}>수정하기</li>
+                  <li className={styles.kebabList}>삭제하기</li>
+                </ul>
+              )}
+            </div>
+          )}
         </section>
 
         <section className={styles.main}>
           <div className={styles.swiperFraction}>
             {currentPage + 1}/{DATA.images.length}
           </div>
-          <Swiper
-            onSlideChange={(e) => setCurrentPage(e.activeIndex)}
-            pagination={{
-              dynamicBullets: true,
-            }}
-            modules={[Pagination]}
-          >
-            {DATA.images.map((image, idx) => (
-              <SwiperSlide key={idx}>
-                <div className={styles.image} style={{ backgroundImage: `url(${image})` }}></div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <div onClick={() => setIsKebabOpen(false)}>
+            <Swiper
+              onSlideChange={(e) => setCurrentPage(e.activeIndex)}
+              pagination={{
+                dynamicBullets: true,
+              }}
+              modules={[Pagination]}
+            >
+              {DATA.images.map((image, idx) => (
+                <SwiperSlide key={idx}>
+                  <div className={styles.image} style={{ backgroundImage: `url(${image})` }}></div>
+                </SwiperSlide>
+              ))}
+            </Swiper>{" "}
+          </div>
           <div className={styles.profile}>
             <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
               <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />

@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/styles/zindex.css";
 import { style } from "@vanilla-extract/css";
 
 export const root = style({
@@ -205,3 +206,49 @@ export const sendIcon = style({
 
   cursor: "pointer",
 });
+export const commonKebab = style({
+  width: "11rem",
+  padding: "0.4rem 0.5rem",
+
+  borderRadius: "7px",
+  background: "rgba(255, 255, 255, 0.95)",
+  boxShadow: "0px 4px 6px 5px rgba(105, 105, 105, 0.07)",
+
+  zIndex: 111,
+});
+
+export const kebabModal = style([
+  commonKebab,
+  {
+    position: "absolute",
+    bottom: "-5rem",
+    right: "1.2rem",
+  },
+]);
+
+export const kebabList = style({
+  padding: "0.6rem 2.5rem",
+
+  borderRadius: "5px",
+
+  fontSize: "1.4rem",
+  fontWeight: "500",
+  lineHeight: " 2rem",
+  textAlign: "center",
+
+  ":hover": {
+    backgroundColor: "var(--LightOrange)",
+
+    color: "var(--OrangeED)",
+    fontWeight: "600",
+  },
+});
+
+export const commentKebab = style([
+  commonKebab,
+  {
+    position: "absolute",
+    top: 0,
+    right: "0",
+  },
+]);

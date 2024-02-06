@@ -7,6 +7,8 @@ globalStyle(":root", {
 
     "--OrangeFFA": "#FFAB7C",
     "--OrangeFFC": "#FFCCAF",
+    "--OrangeFFE": "#FFEBDF",
+    "--OrangeED": "#ED7F41",
 
     "--Gray81": "#818181",
     "--GrayCF": "#CFCFCF",
