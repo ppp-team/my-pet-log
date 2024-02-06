@@ -30,7 +30,6 @@ const EditPage = () => {
             </label>
             <input
               {...register("title", { required: "제목을 입력해주세요.", maxLength: { value: MAX_LENGTH.title, message: `최대 ${MAX_LENGTH.title}자까지 작성할 수 있습니다.` } })}
-              maxLength={MAX_LENGTH.title}
               id="title"
               className={styles.input}
             />
@@ -57,7 +56,6 @@ const EditPage = () => {
                 required: "내용을 입력해주세요.",
                 maxLength: { value: MAX_LENGTH.content, message: `최대 ${MAX_LENGTH.content}자까지 작성할 수 있습니다.` },
               })}
-              maxLength={MAX_LENGTH.content}
               id="content"
               className={styles.input}
               style={{ height: "10rem" }}
