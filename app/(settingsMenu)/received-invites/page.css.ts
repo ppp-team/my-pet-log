@@ -67,7 +67,7 @@ export const profileImg = style({
   minHeight: "4rem",
 
   borderRadius: "50%",
-  border: "2px solid orange",
+  border: "2px solid var(--MainOrange)",
   backgroundSize: "contain",
 });
 
