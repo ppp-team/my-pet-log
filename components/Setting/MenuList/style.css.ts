@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 export const list = style({
   width: "100%",
 
-  marginBottom: "1rem",
+  marginBottom: "3.5rem",
 
   display: "flex",
   alignItems: "center",
