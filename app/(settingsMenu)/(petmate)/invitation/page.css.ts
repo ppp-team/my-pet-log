@@ -43,7 +43,7 @@ export const member = style({
   justifyContent: "space-between",
 
   borderRadius: "10px",
-  border: "2px solid orange",
+  border: "2px solid var(--MainOrange)",
 });
 
 export const profileWrapper = style({
@@ -57,7 +57,7 @@ export const profileImg = style({
   height: "4rem",
 
   borderRadius: "50%",
-  border: "1px solid orange",
+  border: "1px solid var(--MainOrange)",
   backgroundSize: "contain",
 });
 
@@ -81,7 +81,7 @@ export const state = style({
 });
 
 export const cancelButton = style({
-  color: "orange",
+  color: "var(--MainOrange)",
   fontSize: "1.6rem",
   fontWeight: "500",
 });

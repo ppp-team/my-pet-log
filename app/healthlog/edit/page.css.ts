@@ -47,11 +47,14 @@ export const typeButton = style({
   height: "8rem",
 
   borderRadius: "10px",
-  backgroundColor: "#d9d9d9",
+  backgroundColor: "#F4F4F4",
+  color: "var(--Gray81)",
+  fontWeight: "600",
 });
 
 export const typeButtonSelected = style({
-  backgroundColor: "orange",
+  backgroundColor: "var(--MainOrange)",
+  color: "var(--White)",
 });
 
 export const textBox = style({
@@ -61,7 +64,7 @@ export const textBox = style({
   padding: "1rem",
 
   borderRadius: "10px",
-  border: "1px solid #d9d9d9",
+  border: "1.5px solid var(--GrayE2)",
 });
 
 export const submitButton = style({
@@ -69,5 +72,5 @@ export const submitButton = style({
   height: "3.6rem",
 
   borderRadius: "50px",
-  backgroundColor: "orange",
+  backgroundColor: "var(--MainOrange)",
 });
