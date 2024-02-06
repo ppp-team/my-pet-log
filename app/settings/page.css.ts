@@ -15,4 +15,6 @@ export const logout = style({
   color: "#c2c2c2",
   fontSize: "1.4rem",
   fontWeight: "600",
+
+  cursor: "pointer",
 });
