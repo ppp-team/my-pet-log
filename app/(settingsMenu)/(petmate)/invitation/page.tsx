@@ -4,7 +4,7 @@ import mockData from "./mockData.json";
 import * as styles from "./page.css";
 import Modal from "@/components/@common/Modal";
 import { useModal } from "@/hooks/useModal";
-import Invite from "@/components/Setting/Invite";
+import InviteModal from "@/components/Setting/InviteModal";
 
 const Page = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
@@ -16,7 +16,7 @@ const Page = () => {
 
   return (
     <>
-      <Invite />
+      <InviteModal />
       <main className={styles.main}>
         {mockData.data.map((invite) => (
           <section key={invite.guardianId} className={styles.member}>

@@ -5,11 +5,17 @@ import "@/components/Setting/MypetCarousel/style.css";
 import { Pagination, Autoplay } from "swiper/modules";
 import "@/styles/global.css";
 import mockData from "./mockdata.json";
-import Card from "@/components/Setting/MypetCarousel/Card";
 import * as styles from "./style.css";
 import "./swiper.css";
+import MyPetInfo from "@/components/Setting/MyPetInfo";
 
-const MyPet = () => {
+const MyPetCarousel = () => {
+  const myPetInfoStyles = {
+    profileBorderColor: "var(--White)",
+    nameTextColor: "var(--White)",
+    breedTextColor: "var(--White)",
+  };
+
   return (
     <div>
       <div className={styles.title}>마이펫 관리하기</div>
@@ -27,9 +33,11 @@ const MyPet = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
-        {mockData.data.map((petinfo) => (
-          <SwiperSlide key={petinfo.petId}>
-            <Card petinfo={petinfo} />
+        {mockData.data.map((petInfo) => (
+          <SwiperSlide key={petInfo.petId}>
+            <div className={styles.container}>
+              <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />
+            </div>
           </SwiperSlide>
         ))}
         <SwiperSlide className="petadd">반려동물 추가 +</SwiperSlide>
@@ -38,4 +46,4 @@ const MyPet = () => {
   );
 };
 
-export default MyPet;
+export default MyPetCarousel;

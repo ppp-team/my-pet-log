@@ -1,36 +1,23 @@
-import { globalStyle, style } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 export const title = style({
-  marginBottom: "2rem",
+  margin: "0 1.6rem 2rem",
 
   color: "#727272",
   fontSize: "1.6rem",
   fontWeight: "600",
 });
 
-globalStyle(".swiper-slide", {
-  width: "30.5rem",
-  height: "12.1rem",
+export const container = style({
+  width: "100%",
+  height: "100%",
 
-  borderRadius: "10px",
+  padding: "2rem",
 
   display: "flex",
-  justifyContent: "center",
   alignItems: "center",
-});
+  gap: "1rem",
 
-globalStyle(".swiper-slide-active", {
-  backgroundColor: "var(--MainOrange)",
-});
-
-globalStyle(".swiper-slide-prev", {
-  backgroundColor: "var(--LightOrange)",
-});
-
-globalStyle(".swiper-slide-next", {
-  backgroundColor: "var(--LightOrange)",
-});
-
-globalStyle(".swiper-pagination", {
-  position: "static",
+  borderRadius: "10px",
+  fontSize: "18px",
 });
