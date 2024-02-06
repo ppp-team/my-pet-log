@@ -1,5 +1,5 @@
 import calculateAge from "@/utils/calculateAge";
-import { profile, Container } from "./style.css";
+import { profile, container, info } from "./style.css";
 
 //타입 추후에 다른 파일로 빼기
 interface MyPetProps {
@@ -26,12 +26,12 @@ interface MyPetProps {
   };
 }
 
-const MyPet = ({ petInfo, styles }: MyPetProps) => {
+const MyPetInfo = ({ petInfo, styles }: MyPetProps) => {
   // 프롭 안넘겨줄 시 기본값들
   const { profileBorderColor = "var(--MainOrange)", nameTextColor = "var(--Black)", breedTextColor = "var(--Gray81)" } = styles || {};
 
   return (
-    <>
+    <div className={container}>
       <div
         style={{
           backgroundImage: `url(${petInfo.petImageUrl})`,
@@ -39,15 +39,15 @@ const MyPet = ({ petInfo, styles }: MyPetProps) => {
         }}
         className={profile}
       />
-      <div className={Container}>
+      <div className={info}>
         <span style={{ fontSize: "1.8rem", fontWeight: "600", color: nameTextColor }}>{petInfo.name}</span>
         <span style={{ fontSize: "1.2rem", fontWeight: "500", color: breedTextColor }}>{petInfo.breed}</span>
         <span style={{ fontSize: "1.2rem", fontWeight: "500", color: breedTextColor }}>
           {petInfo.gender} · {calculateAge(petInfo.birth)}
         </span>
       </div>
-    </>
+    </div>
   );
 };
 
-export default MyPet;
+export default MyPetInfo;

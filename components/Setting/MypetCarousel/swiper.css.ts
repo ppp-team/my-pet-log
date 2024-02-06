@@ -6,7 +6,7 @@ globalStyle(".swiper-pagination-bullet", {
 
 globalStyle(".swiper-slide", {
   width: "30.5rem",
-  height: "12.1rem",
+  height: "14.6rem",
 
   borderRadius: "10px",
 
