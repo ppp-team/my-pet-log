@@ -28,7 +28,7 @@ const Page = () => {
       </Link>
       <div className={styles.listContainer}>
         <MenuList href="/ask" src={HeartIcon} alt="question icon" text="초대 받은 내역" />
-        <MenuList href="/faq" src={QuestionIcon} alt="question icon" text="faq" />
+        <MenuList href="/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
         <MenuList href="/ask" src={MessageIcon} alt="question icon" text="1:1 문의하기" />
         <MenuList href="/notice" src={NoticeIcon} alt="notice icon" text="공지사항" />
         <span className={styles.logout} onClick={openModalFunc}>
