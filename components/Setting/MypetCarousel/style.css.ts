@@ -21,3 +21,12 @@ export const container = style({
   borderRadius: "10px",
   fontSize: "18px",
 });
+
+export const petadd = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.5rem",
+
+  fontSize: "1.4rem",
+  color: "var(--White)",
+});
