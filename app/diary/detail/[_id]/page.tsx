@@ -11,6 +11,8 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import * as styles from "./style.css";
 import "./swiper.css";
+import { useModal } from "@/hooks/useModal";
+import Modal from "@/components/@common/Modal";
 
 const COMMENT_DATA = [
   {
@@ -95,6 +97,12 @@ interface Tag {
 
 const Comment = ({ comment }: { comment: CommentProp }) => {
   const [isKebabOpen, setIsKebabOpen] = useState(false);
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+
+  const deleteComment = () => {
+    //댓글 삭제 api
+  };
+
   return (
     <>
       <div className={styles.commentContainer}>
@@ -110,7 +118,15 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
                 {isKebabOpen && (
                   <ul className={styles.commentKebab}>
                     <li className={styles.kebabList}>수정하기</li>
-                    <li className={styles.kebabList}>삭제하기</li>
+                    <li
+                      className={styles.kebabList}
+                      onClick={() => {
+                        openModalFunc();
+                        setIsKebabOpen(false);
+                      }}
+                    >
+                      삭제하기
+                    </li>
                   </ul>
                 )}
               </div>
@@ -118,14 +134,14 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
           </div>
           <p className={styles.commentContent}>{comment.content}</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <button className={styles.recommentButton}>답글</button>{" "}
+            <button className={styles.recommentButton}>답글</button>
             <button className={styles.commentLikeButton}>
               <Image src={LikeIcon} alt="like icon" width={18} height={18} style={{ cursor: "pointer" }} /> 5
             </button>
           </div>
         </div>
       </div>
-      <div></div>
+      <div>{isModalOpen && <Modal text="정말 댓글을 삭제하시겠습니까?" buttonText="삭제" onClick={deleteComment} onClose={closeModalFunc} />}</div>
     </>
   );
 };
@@ -133,6 +149,11 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
 const DiaryDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isKebabOpen, setIsKebabOpen] = useState(false);
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+
+  const deleteDiary = () => {
+    //일기 삭제 api
+  };
 
   return (
     <>
@@ -149,7 +170,15 @@ const DiaryDetailPage = () => {
               {isKebabOpen && (
                 <ul className={styles.kebabModal}>
                   <li className={styles.kebabList}>수정하기</li>
-                  <li className={styles.kebabList}>삭제하기</li>
+                  <li
+                    className={styles.kebabList}
+                    onClick={() => {
+                      openModalFunc();
+                      setIsKebabOpen(false);
+                    }}
+                  >
+                    삭제하기
+                  </li>
                 </ul>
               )}
             </div>
@@ -173,7 +202,7 @@ const DiaryDetailPage = () => {
                   <div className={styles.image} style={{ backgroundImage: `url(${image})` }}></div>
                 </SwiperSlide>
               ))}
-            </Swiper>{" "}
+            </Swiper>
           </div>
           <div className={styles.profile}>
             <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
@@ -200,6 +229,7 @@ const DiaryDetailPage = () => {
             </div>
           </div>
         </section>
+        {isModalOpen && <Modal text="정말 일기를 삭제하시겠습니까?" buttonText="삭제" onClick={deleteDiary} onClose={closeModalFunc} />}
       </div>
     </>
   );
