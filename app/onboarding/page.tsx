@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import * as styles from "@/app/onboarding/page.css";
-import Onboarding from "./onboardingContent/Onbording1";
+import Onboarding from "./onboardingContent/OnbordingUI";
 import { useRouter } from "next/navigation";
 
 const MOCK = [<Onboarding key={1} />, <Onboarding key={2} />, <Onboarding key={3} />];

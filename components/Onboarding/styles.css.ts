@@ -23,3 +23,17 @@ export const textArea = style({
   justifyContent: "center",
   margin: "10px auto 25px ",
 });
+
+export const buttonWrapper = style({
+  width: "100%",
+});
+
+export const nextButton = style({
+  padding: "0.9rem 0",
+  borderRadius: "10px",
+  backgroundColor: "#FF8743",
+  fontSize: "1.6rem",
+  fontWeight: "600",
+  textAlign: "center",
+  color: "var(--GrayF2)",
+});
