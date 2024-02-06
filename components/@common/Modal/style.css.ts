@@ -11,7 +11,7 @@ export const container = style({
   justifyContent: "space-between",
   alignItems: "center",
 
-  backgroundColor: "#fff",
+  backgroundColor: "var(--GrayF2)",
   borderRadius: "10px",
 });
 
@@ -40,6 +40,6 @@ export const button = style({
   textAlign: "center",
   fontSize: "1.6rem",
   fontWeight: "600",
-  backgroundColor: "orange",
+  backgroundColor: "var(--MainOrange)",
   borderRadius: "10px",
 });

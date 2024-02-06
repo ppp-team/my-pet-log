@@ -1,4 +1,4 @@
 export const pagesWithHeader = {
-  logo: ["/settings", "/healthlog/main", "/diary/main", "/faq", "/notice", "/ask", "/settings", "/received-invite"],
-  petGroup: ["/home", "/healthlog", "/healthlog/edit", "/diary/edit", "/diary/detail", "/member", "/invitation"],
+  logo: ["/healthlog/select", "/diary/select", "/faq", "/notice", "/ask", "/settings", "/received-invite"],
+  petGroup: ["/home", "/healthlog", "/diary", "/healthlog/edit", "/diary/edit", "/diary/detail", "/member", "/invitation"],
 };

@@ -9,11 +9,11 @@ export const container = style({
 
   padding: "2rem",
 
-  backgroundColor: "orange",
+  backgroundColor: "var(--MainOrange)",
   borderRadius: "10px",
 
   fontSize: "1.6rem",
-  color: "white",
+  color: "var(--White)",
 });
 
 export const wrapper = style({
@@ -25,11 +25,12 @@ export const wrapper = style({
 });
 
 export const editButton = style({
-  width: "8rem",
-  padding: "0.4rem 1.2rem",
-
-  backgroundColor: "#FFE1D0",
-  color: "orange",
+  padding: "0.4rem 1.1rem",
 
   borderRadius: "5px",
+
+  backgroundColor: "#FFE1D0",
+  color: "var(--MainOrange)",
+  fontSize: "1.2rem",
+  fontWeight: "600",
 });

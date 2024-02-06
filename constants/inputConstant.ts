@@ -1,5 +1,6 @@
 export const PLACEHOLDER = {
   email: "이메일을 입력해 주세요.",
+  inviteEmail: "이메일 입력",
   password: "비밀번호를 입력해 주세요.",
   nickname: "닉네임을 입력해 주세요.",
   signUpPassword: "영문, 숫자를 조합해 8자 이상 입력해 주세요.",
