@@ -10,11 +10,9 @@ import * as styles from "./style.css";
 import "./swiper.css";
 
 const MyPet = () => {
-  const backgroundColors = ["#d9d9d9", "#aabbcc", "#ddeeff", "#ccddaa", "#bbaaee"];
-
   return (
-    <div className={styles.container}>
-      <div style={{ color: "#727272", fontSize: "1.6rem", fontWeight: "600" }}>마이펫 관리하기</div>
+    <div>
+      <div className={styles.title}>마이펫 관리하기</div>
       <Swiper
         slidesPerView={"auto"}
         centeredSlides={true}
@@ -29,9 +27,9 @@ const MyPet = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
-        {mockData.data.map((card, index) => (
-          <SwiperSlide key={card.petId}>
-            <Card card={card} backgroundColor={backgroundColors[index % backgroundColors.length]} />
+        {mockData.data.map((petinfo) => (
+          <SwiperSlide key={petinfo.petId}>
+            <Card petinfo={petinfo} />
           </SwiperSlide>
         ))}
         <SwiperSlide className="petadd">반려동물 추가 +</SwiperSlide>

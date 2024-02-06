@@ -13,32 +13,27 @@ interface PetInfo {
   birth: string;
   weight: string;
 }
-interface CardProps {
-  card: PetInfo;
-  backgroundColor: string;
+interface PetInfoProbs {
+  petinfo: PetInfo;
 }
 
-const Card = ({ card, backgroundColor }: CardProps) => {
-  const age = calculateAge(card.birth); // 나이 계산
+const Card = ({ petinfo }: PetInfoProbs) => {
+  const age = calculateAge(petinfo.birth); // 나이 계산
 
   return (
-    <div className={styles.container} style={{ background: backgroundColor }}>
+    <div className={styles.container}>
       <div
         className={styles.profile}
         style={{
-          backgroundImage: `url(${card.petImageUrl})`,
+          backgroundImage: `url(${petinfo.petImageUrl})`,
         }}
       />
       <div className={styles.petInfo}>
-        <p>{card.name}</p>
-        <p>{card.type}</p>
+        <p>{petinfo.name}</p>
+        <p>{petinfo.type}</p>
         <p>
-          {card.gender} {age} {card.weight}kg
+          {petinfo.gender} {age} {petinfo.weight}kg
         </p>
-      </div>
-      <div className={styles.iconsContainer}>
-        <Image src={EditIconUrl} alt="edit icon" width={10} height={10} />
-        <Image src={InviteIconUrl} alt="invite icon" width={10} height={10} />
       </div>
     </div>
   );

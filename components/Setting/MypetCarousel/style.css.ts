@@ -1,34 +1,36 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 
-export const container = style({});
+export const title = style({
+  marginBottom: "2rem",
 
-globalStyle(".swiper", {
-  width: "100%",
-  height: "100%",
+  color: "#727272",
+  fontSize: "1.6rem",
+  fontWeight: "600",
 });
 
 globalStyle(".swiper-slide", {
   width: "30.5rem",
   height: "12.1rem",
 
+  borderRadius: "10px",
+
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
 });
 
-globalStyle(".swiper-slide img", {
-  width: "100%",
-  height: "100%",
+globalStyle(".swiper-slide-active", {
+  backgroundColor: "var(--MainOrange)",
+});
 
-  display: "block",
-  objectFit: "cover",
+globalStyle(".swiper-slide-prev", {
+  backgroundColor: "var(--LightOrange)",
+});
+
+globalStyle(".swiper-slide-next", {
+  backgroundColor: "var(--LightOrange)",
 });
 
 globalStyle(".swiper-pagination", {
   position: "static",
-});
-
-globalStyle(".petadd", {
-  borderRadius: "10px",
-  backgroundColor: "#d3d3d3",
 });
