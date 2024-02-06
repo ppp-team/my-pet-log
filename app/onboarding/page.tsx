@@ -2,7 +2,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import * as styles from "@/app/onboarding/page.css";
-import Onboarding from "@/components/Onboarding";
+import Onboarding from "./onboardingContent/Onbording1";
+import { useRouter } from "next/navigation";
 
 const MOCK = [<Onboarding key={1} />, <Onboarding key={2} />, <Onboarding key={3} />];
 
@@ -15,36 +16,47 @@ const ImagePagination = ({ currentImage }: { currentImage: React.ReactNode }) =>
 };
 
 const Page = () => {
-  const [currentShow, setCurrentShow] = useState(1);
-  const currentImage = MOCK[currentShow - 1];
+  const router = useRouter();
+  const [currentShow, setCurrentShow] = useState(0);
+  const currentImage = MOCK[currentShow];
 
   const handleNext = () => {
-    if (currentShow < MOCK.length) {
+    if (currentShow < MOCK.length - 1) {
       setCurrentShow(currentShow + 1);
     }
+  };
+
+  const handleStartClick = () => {
+    router.push("/signup");
   };
 
   return (
     <>
       <div className={styles.container}>
-        <Link href="/signup">
-          <button className={styles.button}>건너뛰기</button>
-        </Link>
-        <ImagePagination currentImage={currentImage} />
+        <div className={styles.skipButtonWrapper}>
+          <button className={styles.skipButton} onClick={handleStartClick}>
+            건너뛰기
+          </button>
+        </div>
         <div className={styles.paginationButtons}>
-          {MOCK.map((_, index) => (
+          {MOCK.map((item, index) => (
             <button
-              key={index + 1}
-              className={`${styles.nextButton} ${currentShow === index + 1 ? styles.activePaginationButton : ""}`}
-              disabled={currentShow === index + 1}
+              key={item.key}
+              className={`${styles.nextButton} ${currentShow === index ? styles.activePaginationButton : ""}`}
+              disabled={currentShow === index}
+              onClick={() => setCurrentShow(index)}
             ></button>
           ))}
-          {MOCK.length === currentShow ? (
-            <Link href="/signup" className="nextButton">
+        </div>
+        <ImagePagination currentImage={currentImage} />
+
+        <div className={styles.bottomButtonWrapper}>
+          {currentShow === MOCK.length - 1 ? (
+            <button className={styles.bottomButton} onClick={handleStartClick}>
               시작하기
-            </Link>
+            </button>
           ) : (
-            <button className="nextButton" onClick={handleNext}>
+            <button className={styles.bottomButton} onClick={handleNext}>
               다음
             </button>
           )}
