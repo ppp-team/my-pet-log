@@ -44,7 +44,7 @@ const InvitationForm = ({ formTitle, inputPlaceholder, requiredErrorMessage, inv
       <label className={styles.formTitle}>{formTitle}</label>
       <input
         className={styles.input}
-        style={assignInlineVars({ [styles.borderColor]: errors?.inputValue ? "#FF3B30" : "#818181" })}
+        style={assignInlineVars({ [styles.borderColor]: errors?.inputValue ? "var(--Red)" : "var(--Gray81)" })}
         type="text"
         placeholder={inputPlaceholder}
         {...register("inputValue", {

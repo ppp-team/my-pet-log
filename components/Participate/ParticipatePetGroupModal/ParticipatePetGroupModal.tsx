@@ -24,7 +24,7 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
         <InvitationForm
           formTitle="초대 코드"
           inputPlaceholder={PLACEHOLDER.receivedInvitationCode}
-          requiredErrorMessage={ERROR_MESSAGE.receivedInvitationCodeInvalid}
+          requiredErrorMessage={ERROR_MESSAGE.receivedInvitationCodeRequired}
           invalidError={{
             getIsInvalid: (value) => {
               return value === "failed" ? true : false;
