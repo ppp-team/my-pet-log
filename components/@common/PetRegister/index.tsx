@@ -144,9 +144,9 @@ const PetRegister = () => {
         <input className={styles.writeInput} {...register("registNumber", PET_REGISTNUMBER_RULES)} placeholder={PET_PLACEHOLDER.registNumber} />
         {errors.registNumber && <ErrorMessage message={errors.registNumber.message} />}
 
-        {/* <button className={styles.button} type="submit">
-          작성완료
-        </button> */}
+        <button className={styles.button} type="submit">
+          시작하기
+        </button>
       </form>
     </div>
   );
