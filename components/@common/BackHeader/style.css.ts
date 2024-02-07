@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/styles/zindex.css";
 import { style } from "@vanilla-extract/css";
 
 export const header = style({
@@ -19,7 +20,7 @@ export const header = style({
   fontWeight: "500",
   lineHeight: "2.4rem",
 
-  zIndex: "10",
+  zIndex: Z_INDEX.Header,
 });
 
 export const backIcon = style({
