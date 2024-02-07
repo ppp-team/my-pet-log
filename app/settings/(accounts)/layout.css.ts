@@ -9,7 +9,7 @@ export const header = style({
   justifyContent: "center",
   alignItems: "center",
 
-  borderBottom: "1px solid #e2e2e2",
+  borderBottom: "1px solid var(--GrayE2)",
   fontSize: "1.6rem",
   fontWeight: "500",
 });
@@ -36,16 +36,16 @@ export const navItem = style({
 export const active = style([
   navItem,
   {
-    color: "#000",
-    borderBottom: "2px solid #FF8743",
+    color: "var(--White)",
+    borderBottom: "2px solid var(--MainOrange)",
   },
 ]);
 
 export const noActive = style([
   navItem,
   {
-    color: "#818181",
-    borderBottom: "1px solid #e2e2e2",
+    color: "var(--Gray81)",
+    borderBottom: "1px solid var(--GrayE2)",
   },
 ]);
 
