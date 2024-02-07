@@ -20,17 +20,19 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
         <br />
         직접 초대 코드를 입력해주세요.
       </p>
-      <InvitationForm
-        formTitle="초대 코드"
-        inputPlaceholder={PLACEHOLDER.receivedInvitationCode}
-        requiredErrorMessage={ERROR_MESSAGE.receivedInvitationCodeInvalid}
-        invalidError={{
-          getIsInvalid: (value) => {
-            return value === "failed" ? true : false;
-          },
-          message: ERROR_MESSAGE.receivedInvitationCodeInvalid,
-        }}
-      />
+      <div className={styles.formWrapper}>
+        <InvitationForm
+          formTitle="초대 코드"
+          inputPlaceholder={PLACEHOLDER.receivedInvitationCode}
+          requiredErrorMessage={ERROR_MESSAGE.receivedInvitationCodeInvalid}
+          invalidError={{
+            getIsInvalid: (value) => {
+              return value === "failed" ? true : false;
+            },
+            message: ERROR_MESSAGE.receivedInvitationCodeInvalid,
+          }}
+        />
+      </div>
       <ReceivedInvitationList />
     </section>
   );
