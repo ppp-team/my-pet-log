@@ -47,29 +47,7 @@ export const button = style({
 
 export const header = style({
   padding: "1.8rem 1.6rem",
-  backgroundColor: "#F4F4F4",
-});
-
-export const invitation = style({
-  padding: "1.6rem 1.8rem",
-
-  borderRadius: "10px",
-
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-
-  backgroundColor: "#fff",
-  fontSize: "1.4rem",
-  fontWeight: "600",
-  boxShadow: "0px 2px 4px 2px rgba(164, 164, 164, 0.25)",
-});
-
-export const invitationButton = style({
-  color: "#FF8746",
-  textAlign: "center",
-  fontSize: "1.4rem",
-  fontWeight: "600",
+  backgroundColor: "var(--GrayF4)",
 });
 
 export const state = style({
@@ -79,7 +57,7 @@ export const state = style({
   borderRadius: "5px",
 
   backgroundColor: "rgba(255, 225, 208, 1)",
-  color: "#ff8746",
+  color: "var(--MainOrange)",
   textAlign: "center",
   fontSize: "1.2rem",
   fontWeight: "600",
