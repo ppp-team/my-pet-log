@@ -51,7 +51,7 @@ const Page = () => {
 
       <label className={styles.label}>새 비밀번호*</label>
       <input
-        className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
+        className={`${styles.input} ${errors.newPassword ? styles.inputError : ""}`}
         {...register("newPassword", NEW_PASSWORD_RULES)}
         type="password"
         placeholder={PLACEHOLDER.newPassword}
@@ -60,7 +60,7 @@ const Page = () => {
 
       <label className={styles.label}>새 비밀번호 확인*</label>
       <input
-        className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
+        className={`${styles.input} ${errors.newPasswordCheck ? styles.inputError : ""}`}
         {...register("newPasswordCheck", newPasswordCheckRules(newPassword))}
         type="password"
         placeholder={PLACEHOLDER.confirmNewPassword}
