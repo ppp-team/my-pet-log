@@ -37,7 +37,7 @@ export const cameraIcon = style({
 
   borderRadius: "50%",
   border: "3px solid var(--White)",
-  backgroundColor: "var(--GrayF2)",
+  backgroundColor: "var(--LightOrange)",
 });
 
 export const label = style({
