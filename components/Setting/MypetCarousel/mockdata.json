@@ -1,5 +1,5 @@
 {
-  "count": 3,
+  "count": 4,
   "data": [
     {
       "petId": "1",
@@ -34,7 +34,7 @@
       "petImageUrl": "https://phinf.pstatic.net/contact/20220825_253/1661385964853G7XN3_JPEG/KakaoTalk_20220825_090521205.jpg?type=s160"
     },
     {
-      "petId": "2",
+      "petId": "3",
       "ownerId": "owner1",
       "inviteCode": "INV123",
       "name": "체리",
@@ -50,7 +50,7 @@
       "petImageUrl": "https://phinf.pstatic.net/contact/20220825_253/1661385964853G7XN3_JPEG/KakaoTalk_20220825_090521205.jpg?type=s160"
     },
     {
-      "petId": "3",
+      "petId": "4",
       "ownerId": "owner1",
       "inviteCode": "INV123",
       "name": "해피",

@@ -2,7 +2,7 @@ import AddIcon from "@/assets/add.svg?url";
 import * as styles from "@/components/@common/SelectPet/style.css";
 import { currentPetAtom } from "@/states/atom";
 import { useRouter } from "next/navigation";
-
+import NoPetProfileImage from "@/assets/images/pet-profile-default.svg?url";
 import { useAtom } from "jotai";
 import Image from "next/image";
 
@@ -27,8 +27,7 @@ const PET_DATA = [
   {
     id: 3,
     name: "나나",
-    image:
-      "https://us.123rf.com/450wm/lodimup/lodimup1507/lodimup150700064/42518873-%EC%95%84%EA%B8%B0-%EB%A1%AD-%EC%9D%B4%EC%96%B4-%ED%86%A0%EB%81%BC-%ED%9D%B0%EC%83%89%EC%97%90-%EA%B3%A0%EB%A6%BD.jpg",
+    image: "",
     gender: "여아",
     type: "롭이어",
     age: "2개월",
@@ -54,7 +53,11 @@ const Pet = ({ pet }: { pet: PetData }) => {
         router.push("/diary");
       }}
     >
-      {pet?.image ? <div className={styles.profile} style={{ backgroundImage: `url(${pet.image})` }} /> : <div className={styles.profile} />}
+      {pet?.image ? (
+        <div className={styles.profile} style={{ backgroundImage: `url(${pet.image})` }} />
+      ) : (
+        <div className={styles.profile} style={{ backgroundImage: `url(${NoPetProfileImage})` }} />
+      )}
       <div className={styles.text}>
         <h3 style={{ fontSize: "1.6rem", fontWeight: "700" }}>{pet.name}</h3>
         <p style={{ fontSize: "1.3rem", fontWeight: "500" }}>

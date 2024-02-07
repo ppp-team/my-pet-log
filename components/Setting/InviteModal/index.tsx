@@ -8,7 +8,7 @@ import { ERROR_MESSAGE, PLACEHOLDER } from "@/constants/inputConstant";
 import CloseIcon from "@/assets/close.svg?url";
 import InviteCode from "./InviteCode";
 
-const Invite = () => {
+const InviteModal = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   const handleInviteConfirm = () => {
@@ -53,4 +53,4 @@ const Invite = () => {
   );
 };
 
-export default Invite;
+export default InviteModal;

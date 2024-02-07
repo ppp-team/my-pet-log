@@ -13,29 +13,6 @@ export const codeContainer = style({
   background: "var(--LightOrange)",
 });
 
-export const profile = style({
-  width: "7rem",
-  height: "7rem",
-  minWidth: "7rem",
-  minHeight: "7rem",
-
-  marginLeft: "0.6rem",
-  marginRight: "1.7rem",
-
-  borderRadius: "50px",
-  border: "2px solid var(--MainOrange)",
-
-  backgroundSize: "contain",
-});
-
-export const petInfo = style({
-  marginRight: "0.6rem",
-
-  display: "flex",
-  flexDirection: "column",
-  gap: "0.3rem",
-});
-
 export const copyContainer = style({
   width: "100%",
   height: "4.5rem",

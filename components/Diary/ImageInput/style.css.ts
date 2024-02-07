@@ -49,7 +49,7 @@ export const preview = style({
 });
 
 export const addIcon = style({
-  color: "#FF8743",
+  color: "var(--MainOrange)",
   width: "2.4rem",
   height: "2.4rem",
 
@@ -63,7 +63,7 @@ export const closeIcon = style({
   width: "2.3rem",
   height: "2.3rem",
 
-  color: "#FF8743",
+  color: "var(--MainOrange)",
 
   position: "absolute",
   right: "-0.8rem",
@@ -73,7 +73,7 @@ export const closeIcon = style({
 });
 
 export const p = style({
-  color: "#818181",
+  color: "var(--Gray81)",
   fontSize: "1.2rem",
   fontWeight: "500",
 });
@@ -89,7 +89,7 @@ export const error = style({
 
   padding: "2rem",
 
-  backgroundColor: "white",
+  backgroundColor: "var(--White)",
 
   borderRadius: "7px",
 });
