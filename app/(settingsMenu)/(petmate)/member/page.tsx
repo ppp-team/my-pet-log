@@ -2,10 +2,10 @@
 
 import Modal from "@/components/@common/Modal";
 import mockData from "./mockData.json";
-import * as styles from "./style.css";
+import { container, memberlist, profileWrapper, profileImg, nickname, button } from "@/app/(settingsMenu)/(petmate)/petmate.css";
 import { useModal } from "@/hooks/useModal";
 
-const Page = () => {
+const Page = ({ params }: { params: { slug: string } }) => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   // 확인 버튼 누를 시
@@ -16,21 +16,22 @@ const Page = () => {
   };
 
   return (
-    <main className={styles.container}>
+    <main className={container}>
       {mockData.data.map((member) => (
-        <section key={member.guardianId} className={styles.member}>
-          <div className={styles.profileWrapper}>
+        <section key={member.guardianId} className={memberlist}>
+          <div className={profileWrapper}>
             <div
-              className={styles.profileImg}
+              className={profileImg}
               style={{
                 backgroundImage: `url(${member.profileImageUrl})`,
               }}
             />
-            <p className={styles.nickname}>
+            <p className={nickname}>
               {member.nickname} {member.guardianRole === "leader" ? "(나)" : ""}
+              {params.slug}
             </p>
           </div>
-          <button className={styles.deleteButton} onClick={openModalFunc}>
+          <button className={button} onClick={openModalFunc}>
             {member.guardianRole === "leader" ? "탈퇴하기" : "삭제"}
           </button>
         </section>

@@ -1,33 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-export const header = style({
-  padding: "1.8rem 1.6rem",
-  backgroundColor: "#F4F4F4",
-});
-
-export const invitation = style({
-  padding: "1.6rem 1.8rem",
-
-  borderRadius: "10px",
-
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-
-  backgroundColor: "#fff",
-  fontSize: "1.4rem",
-  fontWeight: "600",
-  boxShadow: "0px 2px 4px 2px rgba(164, 164, 164, 0.25)",
-});
-
-export const invitationButton = style({
-  color: "#FF8746",
-  textAlign: "center",
-  fontSize: "1.4rem",
-  fontWeight: "600",
-});
-
-export const main = style({
+export const container = style({
   padding: "2.4rem 1.5rem 0",
 
   display: "flex",
@@ -35,7 +8,7 @@ export const main = style({
   gap: "0.8rem",
 });
 
-export const member = style({
+export const memberlist = style({
   padding: "1.2rem 1.6rem",
 
   display: "flex",
@@ -66,6 +39,39 @@ export const nickname = style({
   fontWeight: "600",
 });
 
+export const button = style({
+  color: "var(--MainOrange)",
+  fontSize: "1.6rem",
+  fontWeight: "500",
+});
+
+export const header = style({
+  padding: "1.8rem 1.6rem",
+  backgroundColor: "#F4F4F4",
+});
+
+export const invitation = style({
+  padding: "1.6rem 1.8rem",
+
+  borderRadius: "10px",
+
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+
+  backgroundColor: "#fff",
+  fontSize: "1.4rem",
+  fontWeight: "600",
+  boxShadow: "0px 2px 4px 2px rgba(164, 164, 164, 0.25)",
+});
+
+export const invitationButton = style({
+  color: "#FF8746",
+  textAlign: "center",
+  fontSize: "1.4rem",
+  fontWeight: "600",
+});
+
 export const state = style({
   width: "5.4rem",
   height: "2.1rem",
@@ -78,10 +84,4 @@ export const state = style({
   fontSize: "1.2rem",
   fontWeight: "600",
   lineHeight: "2.1rem",
-});
-
-export const cancelButton = style({
-  color: "var(--MainOrange)",
-  fontSize: "1.6rem",
-  fontWeight: "500",
 });

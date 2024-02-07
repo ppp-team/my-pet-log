@@ -1,7 +1,7 @@
 "use client";
 
 import mockData from "./mockData.json";
-import * as styles from "./page.css";
+import { container, memberlist, profileWrapper, profileImg, nickname, state, button } from "@/app/(settingsMenu)/(petmate)/petmate.css";
 import Modal from "@/components/@common/Modal";
 import { useModal } from "@/hooks/useModal";
 import InviteModal from "@/components/Setting/InviteModal";
@@ -17,20 +17,20 @@ const Page = () => {
   return (
     <>
       <InviteModal />
-      <main className={styles.main}>
+      <main className={container}>
         {mockData.data.map((invite) => (
-          <section key={invite.guardianId} className={styles.member}>
-            <div className={styles.profileWrapper}>
+          <section key={invite.guardianId} className={memberlist}>
+            <div className={profileWrapper}>
               <div
-                className={styles.profileImg}
+                className={profileImg}
                 style={{
                   backgroundImage: `url(${invite.profileImageUrl})`,
                 }}
               />
-              <p className={styles.nickname}>{invite.nickname}</p>
-              <div className={styles.state}>{invite.state}</div>
+              <p className={nickname}>{invite.nickname}</p>
+              <div className={state}>{invite.state}</div>
             </div>
-            <button className={styles.cancelButton} onClick={openModalFunc}>
+            <button className={button} onClick={openModalFunc}>
               초대 취소
             </button>
           </section>

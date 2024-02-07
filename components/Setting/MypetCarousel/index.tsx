@@ -36,7 +36,7 @@ const MyPetCarousel = () => {
               <div className={petInfoWrapper}>
                 <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />
               </div>
-              <Link href="/profile" className={petButton}>
+              <Link href="" className={petButton}>
                 마이펫 정보 수정
               </Link>
               <Link href="/member" className={petMateButton}>
