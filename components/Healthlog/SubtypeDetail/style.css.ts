@@ -154,6 +154,18 @@ export const textBox = style({
   },
 });
 
+export const p = style({
+  fontSize: "1.2rem",
+  fontWeight: "500",
+  color: "var(--White)",
+});
+
+export const error = style({
+  color: "var(--Red)",
+  fontSize: "1.1rem",
+  fontWeight: "500",
+});
+
 export const checkboxWrapper = style({
   display: "flex",
 });

@@ -26,7 +26,8 @@ const Page = () => {
     handleSubmit,
     setValue,
     getValues,
-    // formState: { errors },
+    watch,
+    formState: { errors },
   } = useForm();
 
   const buttonTypes: { type: keyof typeof subtypeOptions | "CUSTOM" | "WALK"; label: string }[] = [
@@ -113,7 +114,9 @@ const Page = () => {
                 </button>
               ))}
             </div>
-            <div ref={topSubtypeRef}>{visibleSubtype && activeButtonGroup === "top" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} />}</div>
+            <div ref={topSubtypeRef}>
+              {visibleSubtype && activeButtonGroup === "top" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} watch={watch} errors={errors} />}
+            </div>
           </div>
 
           <div className={styles.inputWrapper}>
@@ -133,7 +136,9 @@ const Page = () => {
                 </button>
               ))}
             </div>
-            <div ref={bottomSubtypeRef}>{visibleSubtype && activeButtonGroup === "bottom" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} />}</div>
+            <div ref={bottomSubtypeRef}>
+              {visibleSubtype && activeButtonGroup === "bottom" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} watch={watch} errors={errors} />}
+            </div>
           </div>
 
           <div>

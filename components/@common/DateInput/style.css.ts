@@ -13,6 +13,7 @@ export const label = style({
 export const input = style({
   height: "4.5rem",
   width: "100%",
+
   fontSize: "1.6rem",
   fontWeight: "500",
 
