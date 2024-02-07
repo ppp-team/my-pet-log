@@ -8,7 +8,7 @@ import DefaultImage from "@/assets/user.svg?url";
 import cameraIcon from "@/assets/camera.svg?url";
 import Image from "next/image";
 import TitleHeader from "@/components/@common/TitleHeader/index";
-import DateInput from "@/components/@common/DateInput";
+import PetDateInput from "./PetDateInput";
 import { petOptions } from "@/public/data/petOptions";
 import ErrorMessage from "../ErrorMessage";
 
@@ -127,10 +127,12 @@ const PetRegister = () => {
         </div>
 
         {/* 생일  */}
-        <DateInput register={register} setValue={setValue} getValue={getValues} />
+        <label className={styles.label}>생일</label>
+        <PetDateInput register={register} setValue={setValue} getValue={getValues} />
 
         {/* 처음 만난 날  */}
-        {/* <DateInput register={register} setValue={setValue} getValue={getValues} />*/}
+        <label className={styles.label}>처음 만난 날</label>
+        <PetDateInput register={register} setValue={setValue} getValue={getValues} />
 
         {/* 몸무게 */}
         <label className={styles.label}>몸무게*</label>
