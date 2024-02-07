@@ -7,7 +7,7 @@ import { useModal } from "@/hooks/useModal";
 import ParticipatePetGroupModal from "@/components/Participate/ParticipatePetGroupModal/ParticipatePetGroupModal";
 import ModalContainer from "@/components/@common/ModalContainer";
 
-const SelectCreateJoinPage: NextPage = () => {
+const NoPetGroupPage: NextPage = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   return (
@@ -30,4 +30,4 @@ const SelectCreateJoinPage: NextPage = () => {
   );
 };
 
-export default SelectCreateJoinPage;
+export default NoPetGroupPage;
