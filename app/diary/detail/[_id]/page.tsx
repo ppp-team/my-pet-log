@@ -1,8 +1,11 @@
 "use client";
 
 import KebabIcon from "@/assets/kebab.svg?url";
-import LikeIcon from "@/assets/like.svg?url";
+import LikeIcon from "@/assets/like.svg";
 import SendIcon from "@/assets/send.svg?url";
+import BackHeader from "@/components/@common/BackHeader";
+import Modal from "@/components/@common/Modal";
+import { useModal } from "@/hooks/useModal";
 import Image from "next/image";
 import { useState } from "react";
 import "swiper/css";
@@ -11,9 +14,6 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import * as styles from "./style.css";
 import "./swiper.css";
-import { useModal } from "@/hooks/useModal";
-import Modal from "@/components/@common/Modal";
-import BackHeader from "@/components/@common/BackHeader";
 
 const COMMENT_DATA = [
   {
@@ -137,7 +137,7 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <button className={styles.recommentButton}>답글</button>
             <button className={styles.commentLikeButton}>
-              <Image src={LikeIcon} alt="like icon" width={18} height={18} style={{ cursor: "pointer" }} /> 5
+              <LikeIcon color={comment.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} />
             </button>
           </div>
         </div>
@@ -165,7 +165,7 @@ const DiaryDetailPage = () => {
             {DATA.petType} | {DATA.petAge}
           </p>
           <h3 style={{ fontSize: "1.8rem", fontWeight: "600" }}>{DATA.title}</h3>
-          <p style={{ fontSize: "1.4rem", color: "#9A9A9A" }}>{DATA.date}</p>
+          <p style={{ fontSize: "1.4rem", color: "var(--Gray9A)" }}>{DATA.date}</p>
           {DATA.writer.isCurrentUser && (
             <div onBlur={() => setIsKebabOpen(false)} tabIndex={1}>
               <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} onClick={() => setIsKebabOpen(!isKebabOpen)} />
@@ -212,8 +212,8 @@ const DiaryDetailPage = () => {
               <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{DATA.writer.nickname}</p>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Image src={LikeIcon} alt="like icon" width={18} height={18} style={{ cursor: "pointer" }} />
-              <p style={{ fontSize: "1.4rem", color: "#818181" }}>{DATA.likeCount}</p>
+              <LikeIcon color={DATA.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
+              <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{DATA.likeCount}</p>
             </div>
           </div>
           <p className={styles.content}>{DATA.content}</p>
