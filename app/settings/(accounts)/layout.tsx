@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import * as styles from "@/app/(settingsMenu)/(Account)/layout.css";
+import * as styles from "@/app/settings/(accounts)/layout.css";
 import CloseIcon from "@/assets/close.svg?url"; //추후 수정
 import Image from "next/image";
 
@@ -20,11 +20,11 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
           </div>
         </header>
         <ul className={styles.navList}>
-          <li className={`${pathname === "/profile" ? styles.active : styles.noActive}`}>
-            <Link href="/profile">프로필 설정</Link>
+          <li className={`${pathname === "/settings/profile" ? styles.active : styles.noActive}`}>
+            <Link href="/settings/profile">프로필 설정</Link>
           </li>
-          <li className={`${pathname === "/password" ? styles.active : styles.noActive}`}>
-            <Link href="/password">비밀번호 변경</Link>
+          <li className={`${pathname === "/settings/password" ? styles.active : styles.noActive}`}>
+            <Link href="/settings/password">비밀번호 변경</Link>
           </li>
         </ul>
       </nav>

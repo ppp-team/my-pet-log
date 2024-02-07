@@ -39,7 +39,7 @@ const MyPetCarousel = () => {
               <Link href="" className={petButton}>
                 마이펫 정보 수정
               </Link>
-              <Link href="/member" className={petMateButton}>
+              <Link href="settings/member" className={petMateButton}>
                 펫메이트 초대 및 그룹 관리
               </Link>
             </div>

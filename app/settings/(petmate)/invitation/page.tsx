@@ -1,7 +1,7 @@
 "use client";
 
 import mockData from "./mockData.json";
-import { container, memberlist, profileWrapper, profileImg, nickname, state, button } from "@/app/(settingsMenu)/(petmate)/petmate.css";
+import { container, memberlist, profileWrapper, profileImg, nickname, state, button } from "@/app/settings/(petmate)/petmate.css";
 import Modal from "@/components/@common/Modal";
 import { useModal } from "@/hooks/useModal";
 import InviteModal from "@/components/Setting/InviteModal";

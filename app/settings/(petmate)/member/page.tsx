@@ -2,7 +2,7 @@
 
 import Modal from "@/components/@common/Modal";
 import mockData from "./mockData.json";
-import { container, memberlist, profileWrapper, profileImg, nickname, button } from "@/app/(settingsMenu)/(petmate)/petmate.css";
+import { container, memberlist, profileWrapper, profileImg, nickname, button } from "@/app/settings/(petmate)/petmate.css";
 import { useModal } from "@/hooks/useModal";
 
 const Page = ({ params }: { params: { slug: string } }) => {
