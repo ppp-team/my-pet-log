@@ -72,18 +72,19 @@ const CreateUserProfilePage: NextPage = () => {
     }
   };
 
-  const getHint = () => {
+  const getNicknameState = () => {
     const isNicknameConfirmed = watch("isNicknameConfirmed");
+    const isNicknameError = errors?.nickname;
 
     if (isNicknameConfirmed) {
       return {
         style: styles.inputConfirmStyle,
         component: <ConfirmMessage message={CONFIRM_MESSAGE.nicknameValid} />,
       };
-    } else if (errors?.nickname) {
+    } else if (isNicknameError) {
       return {
         style: styles.inputErrorStyle,
-        component: <ErrorMessage message={errors.nickname.message} />,
+        component: <ErrorMessage message={errors?.nickname?.message} />,
       };
     } else {
       return {
@@ -124,7 +125,7 @@ const CreateUserProfilePage: NextPage = () => {
 
         <fieldset className={styles.nicknameFieldset}>
           <label className={styles.label}>닉네임*</label>
-          <div className={`${styles.nicknameInputContainer} ${getHint().style}`}>
+          <div className={`${styles.nicknameInputContainer} ${getNicknameState().style}`}>
             <input
               type="text"
               placeholder={PLACEHOLDER.nickname}
@@ -141,7 +142,7 @@ const CreateUserProfilePage: NextPage = () => {
             </button>
           </div>
           <p className={`${styles.length} ${watch("nickname")?.length > 10 ? styles.maxLengthOver : ""}`}>{watch("nickname")?.length ?? "0"} / 10</p>
-          {getHint().component}
+          {getNicknameState().component}
         </fieldset>
 
         <button className={styles.submitButton} type="submit">
