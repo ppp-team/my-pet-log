@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import * as styles from "@/app/settings/(accounts)/layout.css";
-import CloseIcon from "@/assets/close.svg?url"; //추후 수정
+import CloseIcon from "@/assets/close.svg?url";
 import Image from "next/image";
 
 export default function AccountLayout({ children }: { children: React.ReactNode }) {

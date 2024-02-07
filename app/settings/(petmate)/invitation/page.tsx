@@ -30,9 +30,11 @@ const Page = () => {
               <p className={nickname}>{invite.nickname}</p>
               <div className={state}>{invite.state}</div>
             </div>
-            <button className={button} onClick={openModalFunc}>
-              초대 취소
-            </button>
+            {invite.state !== "거절" && (
+              <button className={button} onClick={openModalFunc}>
+                초대 취소
+              </button>
+            )}
           </section>
         ))}
       </main>

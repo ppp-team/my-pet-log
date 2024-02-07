@@ -36,7 +36,7 @@ export const navItem = style({
 export const active = style([
   navItem,
   {
-    color: "var(--White)",
+    color: "var(--Black)",
     borderBottom: "2px solid var(--MainOrange)",
   },
 ]);
