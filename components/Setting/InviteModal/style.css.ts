@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const header = style({
   padding: "1.8rem 1.6rem",
-  backgroundColor: "#F4F4F4",
+  backgroundColor: "var(--GrayF4)",
 });
 
 export const invitation = style({
@@ -14,14 +14,14 @@ export const invitation = style({
   alignItems: "center",
   justifyContent: "space-between",
 
-  backgroundColor: "#fff",
+  backgroundColor: "var(--White)",
   fontSize: "1.4rem",
   fontWeight: "600",
   boxShadow: "0px 2px 4px 2px rgba(164, 164, 164, 0.25)",
 });
 
 export const invitationButton = style({
-  color: "#FF8746",
+  color: "(--MainOrange)",
   textAlign: "center",
   fontSize: "1.4rem",
   fontWeight: "600",
