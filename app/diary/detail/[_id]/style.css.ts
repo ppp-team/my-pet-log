@@ -20,7 +20,7 @@ export const header = style({
 });
 
 export const petInfo = style({
-  color: "var(GrayC2)",
+  color: "var(--GrayC2)",
   fontSize: "1.4rem",
   fontWeight: "500",
 });
