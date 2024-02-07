@@ -1,24 +1,26 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
+  margin: "1rem auto 2.5rem ",
+
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  margin: "10px auto 25px ",
 });
 
 export const wrapper = style({
+  width: "100%",
+  margin: "0 auto",
+
+  borderRadius: "10px",
   display: "flex",
   justifyContent: "center",
-  margin: "10px auto 25px ",
-  width: "251px",
-  height: "335px",
-  backgroundColor: "lightgrey",
-  borderRadius: "10px",
 });
 
 export const titleSection = style({
+  padding: "3.4rem 0 2.4rem ",
   color: "var(--Black)",
+
   textAlign: "center",
   fontSize: "2rem",
   fontWeight: "600",
@@ -26,18 +28,21 @@ export const titleSection = style({
 });
 
 export const scriptSection = style({
-  margin: "2.4rem auto 3.4rem auto",
+  margin: "0 auto",
 
   color: "var(--Gray81)",
   textAlign: "center",
-  fontSize: "15px",
+  fontSize: "1.5rem",
   fontWeight: "400",
-  lineHeight: "20px",
+  lineHeight: "2rem",
 });
 
 export const textArea = style({
+  width: "100%",
+  height: "13.2rem",
+  margin: "1rem auto 2.5rem ",
+
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  margin: "10px auto 25px ",
 });
