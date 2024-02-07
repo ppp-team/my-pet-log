@@ -46,6 +46,10 @@ const PetRegister = () => {
     setSelectedOption(event.target.value);
   };
 
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedOption(e.target.id);
+  };
+
   return (
     <div>
       <TitleHeader title={"마이펫 정보 입력"} redirectPath={"/"} />
@@ -90,19 +94,43 @@ const PetRegister = () => {
 
         {/* 성별 */}
         <label className={styles.label}>성별*</label>
-        <div className={styles.radioWrapper}>
-          {/* <input className={styles.leftRadio} type="radio" id="male" name="gender" /> */}
-          <label htmlFor="male">남</label>
-          {/* <input className={styles.rightRadio} type="radio" id="female" name="gender" /> */}
-          <label htmlFor="female">여</label>
+        <div className={styles.radioContainer}>
+          <div className={styles.leftRadio}>
+            <input type="radio" id="male" checked={selectedOption === "male"} onChange={handleRadioChange} />
+            <label className={`${styles.radioOption} ${selectedOption === "male" && styles.leftSelected}`} htmlFor="male">
+              남
+            </label>
+          </div>
+          <div className={styles.rightRadio}>
+            <input type="radio" id="female" checked={selectedOption === "female"} onChange={handleRadioChange} />
+            <label className={`${styles.radioOption} ${selectedOption === "female" && styles.rightSelected}`} htmlFor="female">
+              여
+            </label>
+          </div>
         </div>
 
         {/* 중성화 여부 */}
         <label className={styles.label}>중성화 여부</label>
+        <div className={styles.radioContainer}>
+          <div className={styles.leftRadio}>
+            <input type="radio" id="yes" checked={selectedOption === "yes"} onChange={handleRadioChange} />
+            <label className={`${styles.radioOption} ${selectedOption === "yes" && styles.leftSelected}`} htmlFor="yes">
+              했어요
+            </label>
+          </div>
+          <div className={styles.rightRadio}>
+            <input type="radio" id="no" checked={selectedOption === "no"} onChange={handleRadioChange} />
+            <label className={`${styles.radioOption} ${selectedOption === "no" && styles.rightSelected}`} htmlFor="no">
+              안했어요
+            </label>
+          </div>
+        </div>
 
-        {/* <DateInput register={register} setValue={setValue} getValue={getValues} />
+        {/* 생일  */}
+        <DateInput register={register} setValue={setValue} getValue={getValues} />
 
-        <DateInput register={register} setValue={setValue} getValue={getValues} /> */}
+        {/* 처음 만난 날  */}
+        {/* <DateInput register={register} setValue={setValue} getValue={getValues} />*/}
 
         {/* 몸무게 */}
         <label className={styles.label}>몸무게*</label>

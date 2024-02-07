@@ -93,14 +93,56 @@ export const selectBox = style({
   padding: "0 1rem",
 
   borderRadius: "10px",
-  border: "1px solid #d9d9d9",
+  border: "1px solid var(--MainOrange)",
 });
 
-export const radioWrapper = style({
-  padding: "1.3rem 1.8rem",
+//라디오 인풋풋
+
+export const radioContainer = style({
+  display: "flex",
+  flexDirection: "row",
+
+  position: "relative",
+  border: "1.5px var(--LightOrange)",
+  borderRadius: "5px",
+});
+
+export const radioOption = style({
+  width: "100%",
+  display: "inline-block",
+  padding: "1.3rem 14.5rem 1.3rem 1.9rem",
+  fontSize: "1.6rem",
+  // border: "solid 1px transparent",
+  float: "left",
+  cursor: "pointer",
+});
+
+export const leftRadio = style({
+  width: "100%",
+  border: "solid 1px rgba(0, 0, 0, .15)",
 });
 
 export const rightRadio = style({
+  width: "100%",
+  border: "solid 1px rgba(0, 0, 0, .15)",
+});
+
+export const leftSelected = style({
+  width: "100%",
+
   borderRadius: "10px 0px 0px 10px",
-  border: "1.5px solid var(--, #E2E2E2)",
+  border: "1.5px solid var(--MainOrange)",
+
+  color: "var(--MainOrange)",
+  backgroundColor: "var(--LightOrange)",
+});
+
+export const rightSelected = style({
+  width: "100%",
+
+  borderRadius: "0px 10px 10px 0px",
+  border: "1.5px solid var(--MainOrange)",
+
+  color: "var(--MainOrange)",
+  backgroundColor: "var(--LightOrange)",
 });
