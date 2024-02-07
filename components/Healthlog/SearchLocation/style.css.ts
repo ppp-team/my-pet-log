@@ -24,6 +24,18 @@ export const inputWrapper = style({
 
   borderRadius: "10px",
   border: "1.5px solid var(--White)",
+
+  backgroundColor: "var(--MainOrange)",
+  color: "var(--White)",
+
+  "::placeholder": {
+    color: "var(--White)",
+  },
+
+  ":focus": {
+    backgroundColor: "var(--White)",
+    color: "var(--MainOrange)",
+  },
 });
 
 export const searchButton = style({
@@ -31,5 +43,9 @@ export const searchButton = style({
   height: "4rem",
 
   borderRadius: "10px",
-  backgroundColor: "white",
+  border: "1.5px solid var(--White)",
+
+  backgroundColor: "var(--MainOrange)",
+  color: "var(--White)",
+  fontWeight: "600",
 });

@@ -1,5 +1,6 @@
 "use client";
 
+import AddIcon from "@/assets/add.svg";
 import DateInput from "@/components/@common/DateInput";
 import SelectMateDropdown from "@/components/Healthlog/SelectMateDropdown";
 import SubtypeDetail from "@/components/Healthlog/SubtypeDetail";
@@ -28,12 +29,12 @@ const Page = () => {
   } = useForm();
 
   const buttonTypes: { type: keyof typeof subtypeOptions | "CUSTOM" | "WALK"; label: string }[] = [
-    { type: "FEED", label: "사료 +" },
-    { type: "HEALTH", label: "건강 +" },
-    { type: "WALK", label: "산책 +" },
-    { type: "TREAT", label: "간식/영양제 +" },
-    { type: "GROOMING", label: "위생/미용 +" },
-    { type: "CUSTOM", label: "직접 입력 +" },
+    { type: "FEED", label: "사료" },
+    { type: "HEALTH", label: "건강" },
+    { type: "WALK", label: "산책" },
+    { type: "TREAT", label: "간식/영양제" },
+    { type: "GROOMING", label: "위생/미용" },
+    { type: "CUSTOM", label: "직접 입력" },
   ];
 
   const handleTypeButtonClick = (subtype: keyof typeof subtypeOptions | "CUSTOM" | "WALK", group: string) => {
@@ -95,7 +96,6 @@ const Page = () => {
           </div>
 
           <div className={styles.inputWrapper}>
-            <label>주요 항목</label>
             <div className={styles.buttonGroup}>
               {buttonTypes.slice(0, 3).map(({ type, label }) => (
                 <button
@@ -108,6 +108,7 @@ const Page = () => {
                   }}
                 >
                   {label}
+                  <AddIcon className={selectedType === type ? styles.addIconSelected : styles.addIcon} />
                 </button>
               ))}
             </div>
@@ -127,6 +128,7 @@ const Page = () => {
                   }}
                 >
                   {label}
+                  <AddIcon className={selectedType === type ? styles.addIconSelected : styles.addIcon} />
                 </button>
               ))}
             </div>

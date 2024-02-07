@@ -29,6 +29,18 @@ export const inputBox = style({
 
   borderRadius: "10px",
   border: "1.5px solid var(--White)",
+
+  backgroundColor: "var(--MainOrange)",
+  color: "var(--White)",
+
+  "::placeholder": {
+    color: "var(--White)",
+  },
+
+  ":focus": {
+    backgroundColor: "var(--White)",
+    color: "var(--MainOrange)",
+  },
 });
 
 export const selectWrapper = style({
@@ -44,6 +56,10 @@ export const selectBox = style({
   width: "100%",
   height: "4rem",
 
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+
   padding: "0 1rem",
 
   borderRadius: "10px",
@@ -54,6 +70,24 @@ export const selectBox = style({
   textAlign: "left",
 });
 
+export const selectBoxOpen = style({
+  backgroundColor: "var(--White)",
+  color: "var(--MainOrange)",
+});
+
+export const dropdownIcon = style({
+  width: "1rem",
+  height: "1rem",
+
+  fill: "var(--White)",
+});
+
+export const dropdownIconOpen = style({
+  transform: "rotate(180deg)",
+
+  fill: "var(--MainOrange)",
+});
+
 export const optionsList = style({
   width: "100%",
 
@@ -61,7 +95,7 @@ export const optionsList = style({
   flexDirection: "column",
 
   position: "absolute",
-  top: "4rem",
+  top: "7.9rem",
   left: "0",
 
   padding: "0",
@@ -78,6 +112,7 @@ export const optionsList = style({
 
 export const optionButton = style({
   width: "100%",
+  height: "4.8rem",
 
   padding: "1rem",
   textAlign: "left",
@@ -99,12 +134,24 @@ export const optionButton = style({
 
 export const textBox = style({
   width: "100%",
-  height: "6rem",
+  height: "8rem",
 
   padding: "1rem",
 
   borderRadius: "10px",
   border: "1.5px solid var(--White)",
+
+  backgroundColor: "var(--MainOrange)",
+  color: "var(--White)",
+
+  "::placeholder": {
+    color: "var(--White)",
+  },
+
+  ":focus": {
+    backgroundColor: "var(--White)",
+    color: "var(--MainOrange)",
+  },
 });
 
 export const checkboxWrapper = style({
@@ -112,11 +159,13 @@ export const checkboxWrapper = style({
 });
 
 export const checkBox = style({
-  display: "block",
+  height: "2.4rem",
+
+  display: "flex",
+  alignItems: "center",
 
   position: "relative",
   paddingLeft: "3rem",
-  marginBottom: "2rem",
 
   cursor: "pointer",
   userSelect: "none",
@@ -139,7 +188,7 @@ export const checkBoxOn = style({
   left: 0,
 
   borderRadius: "50%",
-  border: "2px solid var(--White)",
+  border: "1.5px solid var(--White)",
   backgroundColor: "transparent",
 });
 

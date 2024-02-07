@@ -1,12 +1,15 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
-  width: "100%",
+  width: "100vw",
+  height: "100vh",
 
   padding: "2.4rem 1.6rem 8.3rem 1.6rem",
 
   display: "flex",
   flexDirection: "column",
+
+  overflow: "auto",
 });
 
 export const title = style({
@@ -22,8 +25,8 @@ export const formItems = style({
 
   gap: "1rem",
 
-  fontSize: "1.4rem",
-  fontWeight: "700",
+  fontSize: "1.6rem",
+  fontWeight: "600",
 });
 
 export const inputWrapper = style({
@@ -46,10 +49,19 @@ export const typeButton = style({
   width: "100%",
   height: "8rem",
 
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+
+  padding: "1rem",
+
   borderRadius: "10px",
-  backgroundColor: "#F4F4F4",
+  backgroundColor: "var(--GrayF2)",
   color: "var(--Gray81)",
   fontWeight: "600",
+  border: "none",
+  outline: "none",
+  cursor: "pointer",
 });
 
 export const typeButtonSelected = style({
@@ -57,20 +69,28 @@ export const typeButtonSelected = style({
   color: "var(--White)",
 });
 
-export const textBox = style({
-  width: "100%",
-  height: "8rem",
+export const addIcon = style({
+  width: "1.6rem",
+  height: "1.6rem",
 
-  padding: "1rem",
+  fill: "var(--GrayC2)",
+});
 
-  borderRadius: "10px",
-  border: "1.5px solid var(--GrayE2)",
+export const addIconSelected = style({
+  width: "1.6rem",
+  height: "1.6rem",
+
+  fill: "var(--White)",
 });
 
 export const submitButton = style({
-  width: "23.6rem",
-  height: "3.6rem",
+  width: "100%",
+  height: "4.5rem",
 
   borderRadius: "50px",
   backgroundColor: "var(--MainOrange)",
+
+  fontSize: "1.6rem",
+  fontWeight: "600",
+  color: "var(--White)",
 });

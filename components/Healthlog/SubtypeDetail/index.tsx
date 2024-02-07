@@ -1,6 +1,7 @@
+import DropdownIcon from "@/assets/drop-down-icon.svg";
 import SearchLocation from "@/components/Healthlog/SearchLocation";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { UseFormRegister } from "react-hook-form";
 import * as styles from "./style.css";
 
@@ -42,18 +43,21 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register 
       )}
       {visibleSubtype === "CUSTOM" && (
         <div className={styles.inputWrapper}>
-          <label>주요 항목 (직접 입력)</label>
-          <input className={styles.inputBox} {...register("subtype")} />
+          <label>주요 항목</label>
+          <input className={styles.inputBox} {...register("subtype")} placeholder="항목명을 직접 입력하세요" />
         </div>
       )}
       {["FEED", "HEALTH", "TREAT", "GROOMING"].includes(visibleSubtype) && (
         <div className={styles.selectWrapper} ref={dropdownRef}>
-          <button className={styles.selectBox} onClick={() => setDropdownOpen(!dropdownOpen)}>
-            {selectedOption || "세부사항 선택"}
+          <label>세부사항</label>
+          <button className={`${styles.selectBox} ${dropdownOpen ? styles.selectBoxOpen : ""}`} onClick={() => setDropdownOpen(!dropdownOpen)}>
+            {selectedOption || "세부사항을 선택하세요"}
+            <DropdownIcon className={`${styles.dropdownIcon} ${dropdownOpen ? styles.dropdownIconOpen : ""}`} />
           </button>
+
           {dropdownOpen && (
             <ul className={styles.optionsList}>
-              {subtypeOptions[visibleSubtype as keyof typeof subtypeOptions].map((option: string, index: number) => (
+              {subtypeOptions[visibleSubtype].map((option: string, index: number) => (
                 <li key={index}>
                   <button type="button" className={styles.optionButton} onClick={() => handleOptionClick(option)} {...register("subtype")}>
                     {option}
@@ -69,7 +73,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register 
 
       <div className={styles.inputWrapper}>
         <label>메모</label>
-        <textarea className={styles.textBox} {...register("memo")}></textarea>
+        <textarea className={styles.textBox} {...register("memo")} placeholder="내용을 입력하세요"></textarea>
       </div>
       <div className={styles.checkboxWrapper}>
         <label htmlFor="isImportantCheckbox" className={styles.checkBox}>

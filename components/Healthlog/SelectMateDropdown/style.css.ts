@@ -8,20 +8,27 @@ export const container = style({
 
 export const inputBox = style({
   width: "100%",
-  height: "4rem",
+  height: "4.5rem",
 
   padding: "1rem",
 
   display: "flex",
   alignItems: "center",
 
-  border: "1px solid #d9d9d9",
+  border: "1.5px solid var(--GrayE2)",
   borderRadius: "10px",
 
   backgroundImage: `url(${dropdownIconSrc})`,
   backgroundSize: "1rem 1rem",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "right 1.5rem center",
+
+  fontSize: "1.4rem",
+  fontWeight: "500",
+
+  ":focus": {
+    border: "1.5px solid var(--MainOrange)",
+  },
 });
 
 export const dropdownList = style({
@@ -48,5 +55,10 @@ export const dropdownItem = style({
   alignItems: "center",
 
   fontSize: "1.4rem",
-  fontWeight: "normal",
+  fontWeight: "500",
+
+  ":hover": {
+    backgroundColor: "var(--LightOrange)",
+    color: "var(--MainOrange)",
+  },
 });
