@@ -5,7 +5,7 @@ import mockData from "./mockData.json";
 import { container, memberlist, profileWrapper, profileImg, nickname, button } from "@/app/settings/(petmate)/petmate.css";
 import { useModal } from "@/hooks/useModal";
 
-const Page = ({ params }: { params: { slug: string } }) => {
+const Page = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   // 확인 버튼 누를 시
@@ -28,7 +28,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
             />
             <p className={nickname}>
               {member.nickname} {member.guardianRole === "leader" ? "(나)" : ""}
-              {params.slug}
             </p>
           </div>
           <button className={button} onClick={openModalFunc}>

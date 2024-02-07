@@ -41,7 +41,7 @@ export const cameraIcon = style({
 });
 
 export const label = style({
-  marginBottom: "0.6rem",
+  margin: "0.6rem 0",
 
   fontSize: "1.6rem",
   fontWeight: "600",
@@ -49,7 +49,6 @@ export const label = style({
 
 export const input = style({
   padding: "1.3rem 1.8rem",
-  marginBottom: "0.8rem",
 
   borderRadius: "10px",
   border: "1.5px solid var(--GrayE2)",
@@ -78,6 +77,15 @@ export const email = style([
     cursor: "not-allowed",
   },
 ]);
+
+//슬추수
+export const length = style({
+  marginTop: "1rem",
+
+  fontSize: "1.4rem",
+  fontWeight: "600",
+  color: "var(--MainOrange)",
+});
 
 export const button = style({
   padding: "1.3rem 0",

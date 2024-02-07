@@ -7,6 +7,7 @@ import * as styles from "@/app/settings/(accounts)/profile/page.css";
 import mockData from "./mockData.json"; //추후 삭제
 import cameraIcon from "@/assets/camera.svg?url";
 import Image from "next/image";
+import ErrorMessage from "@/components/@common/ErrorMessage";
 
 interface IFormInput {
   nickname: string;
@@ -20,7 +21,8 @@ const Page = () => {
     formState: { errors },
     setValue,
     watch,
-  } = useForm<IFormInput>({ mode: "onChange" });
+  } = useForm<IFormInput>({ mode: "onTouched" });
+  const nicknameValue = watch("nickname");
 
   // 리액트 훅 폼 사용해서 닉네임, 프로필, 이메일 받아오도록 추후 수정
   useEffect(() => {
@@ -50,12 +52,13 @@ const Page = () => {
       </label>
       <input id="image" type="file" accept="image/*" {...register("image")} onChange={handleImageChange} style={{ display: "none" }} />
 
-      <label className={styles.label}>닉네임*</label>
-      <input className={styles.nickname} {...register("nickname", NICKNAME_RULES)} placeholder={PLACEHOLDER.nickname} />
-      {errors.nickname && <span>{errors.nickname.message}</span>}
-
       <label className={styles.label}>이메일*</label>
       <input className={styles.email} value={mockData.email} readOnly />
+
+      <label className={styles.label}>닉네임*</label>
+      <input className={styles.nickname} {...register("nickname", NICKNAME_RULES)} placeholder={PLACEHOLDER.nickname} />
+      {errors.nickname && <ErrorMessage message={errors.nickname.message} />}
+      <span className={styles.length}>{nicknameValue?.length} / 10</span>
 
       <button className={styles.button} type="submit">
         확인
