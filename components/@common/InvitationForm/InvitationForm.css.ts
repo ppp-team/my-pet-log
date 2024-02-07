@@ -29,12 +29,12 @@ export const input = style({
 
 export const button = style({
   padding: "0.9rem 0",
-  borderRadius: "10px",
-  backgroundColor: "#FF8743",
+  borderRadius: "30px",
+  backgroundColor: "var(--MainOrange)",
   fontSize: "1.6rem",
   fontWeight: "600",
+  color: "var(--White)",
   textAlign: "center",
-  color: "#F2F2F2",
 });
 
 export const errorMessageContainer = style({
