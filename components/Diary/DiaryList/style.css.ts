@@ -13,7 +13,7 @@ export const search = style({
 
   borderRadius: "20px",
   border: "none",
-  background: "#E8E8E8",
+  background: "var(--GrayE8)",
 
   margin: "2.4rem 0",
   padding: "0.8rem 1rem",
@@ -41,7 +41,7 @@ export const diaryListWrapper = style({
 });
 
 export const date = style({
-  color: "#818181",
+  color: "var(--Gray81)",
   fontSize: "1.4rem",
   fontWeight: "500",
 });
@@ -51,7 +51,7 @@ export const diaryWrapper = style({
   gap: "1.9rem",
   justifyContent: "space-between",
 
-  border: "1px solid #E8E8E8",
+  border: "1px solid var(--GrayE8)",
   borderRadius: "10px",
 
   boxShadow: " 0px 1px 4px 1px rgba(164, 164, 164, 0.15)",
@@ -101,7 +101,7 @@ export const description = style({
 
   fontSize: "1.2rem",
   lineHeight: "1.6rem",
-  color: "#818181",
+  color: "var(--Gray81)",
 
   marginTop: "0.6rem",
 });

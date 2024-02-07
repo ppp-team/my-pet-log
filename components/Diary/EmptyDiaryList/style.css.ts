@@ -11,7 +11,7 @@ export const root = style({
 });
 
 export const p = style({
-  color: "#C2C2C2",
+  color: "var(--GrayC2)",
   textAlign: "center",
   fontWeight: "500",
   fontSize: "1.6rem",
