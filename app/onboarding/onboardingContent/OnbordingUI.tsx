@@ -1,25 +1,28 @@
 import * as styles from "./style.css";
-import Image from "next/image";
-import Onboarding1 from "@/public/onboarding/onboarding1.png";
+import Image, { StaticImageData } from "next/image";
 
-const Onboarding = () => {
+interface OnboardingProps {
+  image: StaticImageData;
+  title: string[];
+  description: string[];
+}
+
+const Onboarding = ({ image, title, description }: OnboardingProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Image src={Onboarding1} alt="content image" width={289} height={340} />
+        <Image src={image} alt="content image" width={289} height={340} />
       </div>
       <div className={styles.textArea}>
         <h1 className={styles.titleSection}>
-          <div>
-            함께 키우고 기록하는
-            <br />
-            마이펫로그
-          </div>
+          {title.map((line, index) => (
+            <div key={index}>{line}</div>
+          ))}
         </h1>
         <p className={styles.scriptSection}>
-          친구와 가족 모두가 키우는 <br />
-          마이펫의 육아일기와 건강수첩을 <br />
-          다함께 기록해보세요!
+          {description.map((line, index) => (
+            <div key={index}>{line}</div>
+          ))}
         </p>
       </div>
     </div>
