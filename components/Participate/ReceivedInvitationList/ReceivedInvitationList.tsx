@@ -1,5 +1,5 @@
 import * as styles from "./ReceivedInvitationList.css";
-import { ReceivedInvitationList } from "@/components/types/receivedInvitation";
+import { ReceivedInvitationList } from "@/types/receivedInvitation";
 import sampleImageSrc from "@/assets/edit.svg?url";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
