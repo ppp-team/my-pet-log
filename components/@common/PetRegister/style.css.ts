@@ -41,6 +41,7 @@ export const cameraIcon = style({
 });
 
 export const label = style({
+  marginTop: "0.8rem",
   marginBottom: "0.6rem",
 
   fontSize: "1.6rem",
@@ -87,13 +88,15 @@ export const inputWrapper = style({
 });
 
 export const selectBox = style({
-  width: "100%",
-  height: "3rem",
-
-  padding: "0 1rem",
+  padding: "1.3rem 1.8rem",
+  marginBottom: "0.8rem",
 
   borderRadius: "10px",
-  border: "1px solid var(--MainOrange)",
+  border: "1.5px solid #e2e2e2",
+
+  color: "var(--Gray81)",
+  fontSize: "1.6rem",
+  fontWeight: "600",
 });
 
 //라디오 인풋
@@ -109,10 +112,13 @@ export const radioContainer = style({
 
 export const radioOption = style({
   width: "100%",
-  display: "inline-block",
   padding: "1.3rem 14.5rem 1.3rem 1.9rem",
+
+  display: "inline-block",
+
+  color: "var(--Gray81)",
   fontSize: "1.6rem",
-  // border: "solid 1px transparent",
+  fontWeight: "600",
   float: "left",
   cursor: "pointer",
 });

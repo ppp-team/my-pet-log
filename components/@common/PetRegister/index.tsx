@@ -21,9 +21,10 @@ interface IFormInput {
 }
 
 const PetRegister = () => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedType, setSelectedType] = useState("");
   const [selectedBreed, setSelectedBreed] = useState("");
-  const [breedOptions, setBreedOptions] = useState<string[]>([]);
+  const [selectedGender, setSelectedGender] = useState("");
+  const [selectedNeutering, setSelectedNeutering] = useState("");
 
   const {
     register,
@@ -32,7 +33,7 @@ const PetRegister = () => {
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onChange" });
+  } = useForm<IFormInput>({ mode: "onTouched" });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
 
@@ -42,12 +43,23 @@ const PetRegister = () => {
     setValue("image", URL.createObjectURL(files[0]));
   };
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
+  //동물 타입
+  const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedType(event.target.value);
+  };
+  //동물 타입별 세부 품종
+  const handleBreedChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedBreed(event.target.value);
   };
 
-  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(e.target.id);
+  //중성화
+  const handleNeuteringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedNeutering(e.target.id);
+  };
+
+  //성별
+  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedGender(e.target.id);
   };
 
   return (
@@ -74,7 +86,7 @@ const PetRegister = () => {
 
         {/* 타입 */}
         <label className={styles.label}>타입*</label>
-        <select className={styles.selectBox} onChange={handleSelectChange} value={selectedOption}>
+        <select className={styles.selectBox} onChange={handleTypeChange} value={selectedType} defaultValue={""}>
           {Object.keys(petOptions).map((option: string, index: number) => (
             <option key={index} value={option}>
               {option}
@@ -84,8 +96,8 @@ const PetRegister = () => {
 
         {/* 품종 */}
         <label className={styles.label}>품종*</label>
-        <select className={styles.selectBox} onChange={handleSelectChange} value={selectedBreed}>
-          {petOptions[selectedOption]?.map((breed: string, index: number) => (
+        <select className={styles.selectBox} onChange={handleBreedChange} value={selectedBreed}>
+          {petOptions[selectedType]?.map((breed: string, index: number) => (
             <option key={index} value={breed}>
               {breed}
             </option>
@@ -96,14 +108,14 @@ const PetRegister = () => {
         <label className={styles.label}>성별*</label>
         <div className={styles.radioContainer}>
           <div className={styles.leftRadio}>
-            <input type="radio" id="male" checked={selectedOption === "male"} onChange={handleRadioChange} />
-            <label className={`${styles.radioOption} ${selectedOption === "male" && styles.leftSelected}`} htmlFor="male">
+            <input type="radio" id="male" name="gender" checked={selectedGender === "male"} onChange={handleGenderChange} />
+            <label className={`${styles.radioOption} ${selectedGender === "male" && styles.leftSelected}`} htmlFor="male">
               남
             </label>
           </div>
           <div className={styles.rightRadio}>
-            <input type="radio" id="female" checked={selectedOption === "female"} onChange={handleRadioChange} />
-            <label className={`${styles.radioOption} ${selectedOption === "female" && styles.rightSelected}`} htmlFor="female">
+            <input type="radio" id="female" name="gender" checked={selectedGender === "female"} onChange={handleGenderChange} />
+            <label className={`${styles.radioOption} ${selectedGender === "female" && styles.rightSelected}`} htmlFor="female">
               여
             </label>
           </div>
@@ -113,14 +125,14 @@ const PetRegister = () => {
         <label className={styles.label}>중성화 여부</label>
         <div className={styles.radioContainer}>
           <div className={styles.leftRadio}>
-            <input type="radio" id="yes" checked={selectedOption === "yes"} onChange={handleRadioChange} />
-            <label className={`${styles.radioOption} ${selectedOption === "yes" && styles.leftSelected}`} htmlFor="yes">
+            <input type="radio" id="yes" name="neutering" checked={selectedNeutering === "yes"} onChange={handleNeuteringChange} />
+            <label className={`${styles.radioOption} ${selectedNeutering === "yes" && styles.leftSelected}`} htmlFor="yes">
               했어요
             </label>
           </div>
           <div className={styles.rightRadio}>
-            <input type="radio" id="no" checked={selectedOption === "no"} onChange={handleRadioChange} />
-            <label className={`${styles.radioOption} ${selectedOption === "no" && styles.rightSelected}`} htmlFor="no">
+            <input type="radio" id="no" name="neutering" checked={selectedNeutering === "no"} onChange={handleNeuteringChange} />
+            <label className={`${styles.radioOption} ${selectedNeutering === "no" && styles.rightSelected}`} htmlFor="no">
               안했어요
             </label>
           </div>
