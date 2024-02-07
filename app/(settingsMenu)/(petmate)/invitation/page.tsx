@@ -1,15 +1,22 @@
+"use client";
+
 import mockData from "./mockData.json";
-import * as styles from "./style.css";
+import * as styles from "./page.css";
+import Modal from "@/components/@common/Modal";
+import { useModal } from "@/hooks/useModal";
+import InviteModal from "@/components/Setting/InviteModal";
 
 const Page = () => {
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+
+  const handleConfirm = () => {
+    closeModalFunc();
+    // 초대 취소 로직 구현...
+  };
+
   return (
     <>
-      <header className={styles.header}>
-        <section className={styles.invitation}>
-          <p>💌 다른 펫메이트도 초대하고 싶다면?</p>
-          <button className={styles.invitationButton}>초대하기 &gt;</button>
-        </section>
-      </header>
+      <InviteModal />
       <main className={styles.main}>
         {mockData.data.map((invite) => (
           <section key={invite.guardianId} className={styles.member}>
@@ -23,10 +30,13 @@ const Page = () => {
               <p className={styles.nickname}>{invite.nickname}</p>
               <div className={styles.state}>{invite.state}</div>
             </div>
-            <button className={styles.cancelButton}>초대 취소</button>
+            <button className={styles.cancelButton} onClick={openModalFunc}>
+              초대 취소
+            </button>
           </section>
         ))}
       </main>
+      {isModalOpen && <Modal text="정말 초대를 취소하시겠습니까?" buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
     </>
   );
 };

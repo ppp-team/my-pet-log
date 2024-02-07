@@ -6,7 +6,6 @@ export const errorMessageVisibility = createVar();
 export const form = style({
   display: "flex",
   flexDirection: "column",
-  padding: "0 2rem",
   marginBottom: "3.5rem",
 });
 

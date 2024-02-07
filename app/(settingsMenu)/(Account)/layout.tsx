@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import * as styles from "@/app/(settingsMenu)/(account)/layout.css";
+import * as styles from "@/app/(settingsMenu)/(Account)/layout.css";
 import CloseIcon from "@/assets/close.svg?url"; //추후 수정
 import Image from "next/image";
 

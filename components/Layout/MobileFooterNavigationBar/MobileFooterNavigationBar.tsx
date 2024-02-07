@@ -5,7 +5,7 @@ const MOBILE_FOOTER_NAVIGATION = [
   { id: 1, name: "홈", icon: "", href: "/home" },
   { id: 2, name: "육아일기", icon: "", href: "/diary" },
   { id: 3, name: "건강수첩", icon: "", href: "/healthlog" },
-  { id: 4, name: "관리", icon: "", href: "settings" },
+  { id: 4, name: "관리", icon: "", href: "/settings" },
 ];
 
 const MobileFooterNavigationBar = () => {
