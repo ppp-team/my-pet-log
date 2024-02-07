@@ -1,6 +1,5 @@
 "use client";
 
-import AddIcon from "@/assets/add.svg";
 import BackHeader from "@/components/@common/BackHeader";
 import DateInput from "@/components/@common/DateInput";
 import SelectMateDropdown from "@/components/Healthlog/SelectMateDropdown";
