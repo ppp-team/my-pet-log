@@ -33,13 +33,11 @@ const EditPage = () => {
               id="title"
               className={styles.input}
             />
-            {watch("title") ? (
+            {
               <p className={styles.p}>
-                {watch("title")?.length}/ {MAX_LENGTH.title}
+                {watch("title")?.length ?? "0"}/ {MAX_LENGTH.title}
               </p>
-            ) : (
-              <p className={styles.p}>0/ {MAX_LENGTH.title}</p>
-            )}
+            }
             {errors["title"] && <p className={styles.error}>{errors["title"].message?.toString()}</p>}
           </div>
 
@@ -60,19 +58,17 @@ const EditPage = () => {
               className={styles.input}
               style={{ height: "10rem" }}
             />
-            {watch("content") ? (
+            {
               <p className={styles.p}>
-                {watch("content")?.length}/ {MAX_LENGTH.content}
+                {watch("content")?.length ?? "0"}/ {MAX_LENGTH.content}
               </p>
-            ) : (
-              <p className={styles.p}>0/ {MAX_LENGTH.content}</p>
-            )}
+            }
             {errors["content"] && <p className={styles.error}>{errors["content"].message?.toString()}</p>}
           </div>
 
           <button className={styles.button}>작성하기</button>
         </form>
-      </div>{" "}
+      </div>
     </>
   );
 };
