@@ -4,7 +4,7 @@ import * as styles from "./InvitationForm.css";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-import cautionIconSrc from "@/assets/caution.svg?url";
+import cautionIconSrc from "@/assets/circle-warning.svg?url";
 import removeSpaces from "@/utils/removeSpaces";
 
 interface IForm {
