@@ -1,6 +1,7 @@
 "use client";
 
 import AddIcon from "@/assets/add.svg";
+import BackHeader from "@/components/@common/BackHeader";
 import DateInput from "@/components/@common/DateInput";
 import SelectMateDropdown from "@/components/Healthlog/SelectMateDropdown";
 import SubtypeDetail from "@/components/Healthlog/SubtypeDetail";
@@ -84,8 +85,8 @@ const Page = () => {
 
   return (
     <>
+      <BackHeader title="건강수첩 작성하기" />
       <div className={styles.container}>
-        <p className={styles.title}>건강수첩 작성하기</p>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems}>
           <div className={styles.inputWrapper}>
             <DateInput register={register} setValue={setValue} getValue={getValues} />

@@ -14,6 +14,7 @@ export const input = style({
   height: "4.5rem",
   width: "100%",
   fontSize: "1.6rem",
+  fontWeight: "500",
 
   margin: "0.6rem 0",
   padding: "0.8rem 1rem",

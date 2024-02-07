@@ -4,19 +4,12 @@ export const container = style({
   width: "100vw",
   height: "100vh",
 
-  padding: "2.4rem 1.6rem 8.3rem 1.6rem",
+  padding: "7rem 1.6rem 8.3rem 1.6rem",
 
   display: "flex",
   flexDirection: "column",
 
   overflow: "auto",
-});
-
-export const title = style({
-  margin: "2.2rem auto",
-
-  fontSize: "1.6rem",
-  fontWeight: "700",
 });
 
 export const formItems = style({

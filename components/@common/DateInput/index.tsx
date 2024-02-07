@@ -48,7 +48,7 @@ const DateInput = ({ register, setValue, getValue }: DateInputProps) => {
 
   return (
     <div className={styles.inputWrapper}>
-      <label className={styles.label}>날짜</label>
+      <label className={styles.label}>날짜*</label>
       <div style={{ display: "flex", gap: "1rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
         <input className={styles.input} value={dateValue} readOnly {...register("date")} />
         <input className={styles.input} value={timeValue} suppressHydrationWarning readOnly {...register("time")} />
