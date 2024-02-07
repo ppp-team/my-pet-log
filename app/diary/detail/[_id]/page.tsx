@@ -13,6 +13,7 @@ import * as styles from "./style.css";
 import "./swiper.css";
 import { useModal } from "@/hooks/useModal";
 import Modal from "@/components/@common/Modal";
+import BackHeader from "@/components/@common/BackHeader";
 
 const COMMENT_DATA = [
   {
@@ -157,6 +158,7 @@ const DiaryDetailPage = () => {
 
   return (
     <>
+      <BackHeader title="육아일기" />
       <div className={styles.root}>
         <section className={styles.header}>
           <p className={styles.petInfo}>

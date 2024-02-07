@@ -17,7 +17,7 @@ export const h3 = style({
 });
 
 export const p = style({
-  color: "#818181",
+  color: "var(--Gray81)",
   fontSize: "1.6rem",
   textDecorationLine: "underline",
 

@@ -1,11 +1,11 @@
+import Modal from "@/components/@common/Modal";
+import { useModal } from "@/hooks/useModal";
+import { DragDropContext, Draggable, DropResult, Droppable } from "@hello-pangea/dnd";
 import { useState } from "react";
-import * as styles from "./style.css";
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { IoIosCloseCircle } from "react-icons/io";
-import { useModal } from "@/hooks/useModal";
-import ModalContainer from "@/components/@common/ModalContainer";
-import { LuImagePlus, LuImageOff } from "react-icons/lu";
-import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
+import { LuImageOff, LuImagePlus } from "react-icons/lu";
+import * as styles from "./style.css";
 
 interface ImagesType {
   name: string;
@@ -98,13 +98,7 @@ const ImageInput = ({ register, setValue }: InputProps) => {
         <p className={styles.p}>
           이미지 최대 {MAX_IMAGES}개 중 {images.length}개
         </p>
-        {isModalOpen && (
-          <ModalContainer>
-            <div className={styles.error}>
-              최대 이미지 수 {MAX_IMAGES}개를 초과했습니다.<button onClick={closeModalFunc}>닫기</button>
-            </div>
-          </ModalContainer>
-        )}
+        {isModalOpen && <Modal text="최대 이미지 수 10개를 초과했습니다." onClick={closeModalFunc} buttonText="확인" onClose={closeModalFunc} />}
       </div>
     </>
   );
