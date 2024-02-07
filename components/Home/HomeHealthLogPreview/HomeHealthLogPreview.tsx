@@ -1,6 +1,6 @@
 import LogList from "@/components/@common/LogList";
 
-const HomeHeathLogPreview = () => {
+const HomeHealthLogPreview = () => {
   return <LogList />;
 };
-export default HomeHeathLogPreview;
+export default HomeHealthLogPreview;
