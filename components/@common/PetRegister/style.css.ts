@@ -96,7 +96,7 @@ export const selectBox = style({
   border: "1px solid var(--MainOrange)",
 });
 
-//라디오 인풋풋
+//라디오 인풋
 
 export const radioContainer = style({
   display: "flex",

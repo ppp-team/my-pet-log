@@ -1,5 +1,6 @@
+import { useState } from "react";
 import * as styles from "./style.css";
-import WarningIcon from "@/assets/circle-warning.svg?url";
+import CheckIcon from "@/assets/confirm.svg";
 import Image from "next/image";
 
 interface ErrorMessageProps {
@@ -7,10 +8,15 @@ interface ErrorMessageProps {
 }
 
 const OptionalMessage = ({ message }: ErrorMessageProps) => {
+  const [isActive, setIsActive] = useState(false);
+
+  const handleClick = () => {
+    setIsActive(!isActive);
+  };
   return (
-    <section className={styles.container}>
-      <Image src={WarningIcon} alt="check icon" width={12} height={12} />
-      <span className={styles.checked}>{message}</span>
+    <section className={styles.container} onClick={handleClick}>
+      <CheckIcon width={12} height={12} style={{ color: isActive ? "var(--MainOrange)" : "var(--Gray81)" }} />
+      <span className={`${styles.checked} ${isActive ? styles.active : ""}`}>{message}</span>
     </section>
   );
 };

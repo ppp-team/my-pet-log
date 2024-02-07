@@ -5,6 +5,7 @@ import { getPrettyTime, getPrettyToday } from "@/utils/getPrettyToday";
 import { useEffect, useState } from "react";
 import { Options } from "vanilla-calendar-pro";
 import { FieldValues, UseFormGetValues } from "react-hook-form";
+import OptionalMessage from "./component/OptionalCheck";
 
 interface DateInputProps extends InputProps {
   getValue: UseFormGetValues<FieldValues>;
@@ -36,6 +37,7 @@ const PetDateInput = ({ register, setValue, getValue }: DateInputProps) => {
         <input className={styles.input} value={dateValue} readOnly {...register("date")} />
       </div>
       {isCalendarOpen && <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%" }} />}
+      <OptionalMessage message="기억이 나지 않아요" />
     </div>
   );
 };

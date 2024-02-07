@@ -11,5 +11,9 @@ export const container = style({
 export const checked = style({
   fontSize: "1.1rem",
   fontWeight: "500",
-  color: "var(--Green)",
+  color: "var(--Gray81)",
+});
+
+export const active = style({
+  color: "var(--MainOrange)",
 });
