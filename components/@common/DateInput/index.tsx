@@ -1,4 +1,4 @@
-import * as styles from "@/app/diary/edit/style.css";
+import * as styles from "./style.css";
 import { InputProps } from "@/components/Diary/ImageInput";
 import VanillaCalendar from "@/components/@common/VanillaCalendar";
 import { getPrettyTime, getPrettyToday } from "@/utils/getPrettyToday";
@@ -22,6 +22,10 @@ const DateInput = ({ register, setValue, getValue }: DateInputProps) => {
       },
       selection: {
         time: true,
+      },
+      iso8601: false,
+      visibility: {
+        theme: "light",
       },
     },
     actions: {
@@ -49,7 +53,11 @@ const DateInput = ({ register, setValue, getValue }: DateInputProps) => {
         <input className={styles.input} value={dateValue} readOnly {...register("date")} />
         <input className={styles.input} value={timeValue} suppressHydrationWarning readOnly {...register("time")} />
       </div>
-      {isCalendarOpen && <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%" }} />}
+      {isCalendarOpen && (
+        <div className={styles.calendarWrapper}>
+          <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%", minHeight: "30rem", height: "35rem" }} />
+        </div>
+      )}
     </div>
   );
 };
