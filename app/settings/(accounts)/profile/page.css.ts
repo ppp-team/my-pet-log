@@ -36,8 +36,8 @@ export const cameraIcon = style({
   padding: "0.4rem",
 
   borderRadius: "50%",
-  border: "3px solid #fff",
-  backgroundColor: "#f2f2f2",
+  border: "3px solid var(--White)",
+  backgroundColor: "var(--GrayF2)",
 });
 
 export const label = style({
@@ -52,7 +52,7 @@ export const input = style({
   marginBottom: "0.8rem",
 
   borderRadius: "10px",
-  border: "1.5px solid #e2e2e2",
+  border: "1.5px solid var(--GrayE2)",
 
   fontSize: "1.6rem",
   fontWeight: "600",
@@ -74,7 +74,7 @@ export const nickname = style([
 export const email = style([
   input,
   {
-    color: "#818181",
+    color: "var(--Gray81)",
     cursor: "not-allowed",
   },
 ]);
@@ -85,6 +85,6 @@ export const button = style({
 
   borderRadius: "30px",
 
-  color: "#fff",
+  color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
 });
