@@ -5,6 +5,7 @@ import { container, memberlist, profileWrapper, profileImg, nickname, state, but
 import Modal from "@/components/@common/Modal";
 import { useModal } from "@/hooks/useModal";
 import InviteModal from "@/components/Setting/InviteModal";
+import NoProfileImage from "@/assets/images/person-profile-default.svg?url";
 
 const Page = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
@@ -24,7 +25,7 @@ const Page = () => {
               <div
                 className={profileImg}
                 style={{
-                  backgroundImage: `url(${invite.profileImageUrl})`,
+                  backgroundImage: `url(${invite.profileImageUrl || NoProfileImage})`,
                 }}
               />
               <p className={nickname}>{invite.nickname}</p>

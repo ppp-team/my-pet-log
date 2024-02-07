@@ -4,6 +4,7 @@ import Modal from "@/components/@common/Modal";
 import mockData from "./mockData.json";
 import { container, memberlist, profileWrapper, profileImg, nickname, button } from "@/app/settings/(petmate)/petmate.css";
 import { useModal } from "@/hooks/useModal";
+import NoProfileImage from "@/assets/images/person-profile-default.svg?url";
 
 const Page = () => {
   const { isModalOpen: isModalOpen1, openModalFunc: openModal1, closeModalFunc: closeModal1 } = useModal();
@@ -14,7 +15,7 @@ const Page = () => {
   const currentUser = {
     id: "seul9085",
     nickname: "이슬", // 현재 사용자의 닉네임
-    profileImageUrl: "currentUserProfileImageUrl", // 현재 사용자의 프로필 이미지 URL
+    profileImageUrl: "", // 현재 사용자의 프로필 이미지 URL
   };
 
   // mockData에서 현재 사용자의 데이터를 찾음
@@ -39,7 +40,7 @@ const Page = () => {
     <main className={container}>
       <section className={memberlist}>
         <div className={profileWrapper}>
-          <div className={profileImg} style={{ backgroundImage: `url(${currentUser.profileImageUrl})` }} />
+          <div className={profileImg} style={{ backgroundImage: `url(${currentUser.profileImageUrl || NoProfileImage})` }} />
           <p className={nickname}>{currentUser.nickname} (나)</p>
         </div>
         <button className={button} onClick={() => (isLeader ? openModal1() : openModal2())}>
@@ -55,7 +56,7 @@ const Page = () => {
             <div
               className={profileImg}
               style={{
-                backgroundImage: `url(${member.profileImageUrl})`,
+                backgroundImage: `url(${member.profileImageUrl || NoProfileImage})`,
               }}
             />
             <p className={nickname}>{member.nickname}</p>

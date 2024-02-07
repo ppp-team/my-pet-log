@@ -9,6 +9,7 @@ import cameraIcon from "@/assets/camera.svg?url";
 import Image from "next/image";
 import ErrorMessage from "@/components/@common/ErrorMessage";
 import ConfirmMessage from "@/components/@common/ConfirmMessage/ConfirmMessage";
+import NoProfileImage from "@/assets/images/person-profile-default.svg?url";
 
 interface IFormInput {
   nickname: string;
@@ -30,7 +31,7 @@ const Page = () => {
   // 리액트 훅 폼 사용해서 닉네임, 프로필, 이메일 받아오도록 추후 수정
   useEffect(() => {
     setValue("nickname", mockData.nickname);
-    setValue("image", mockData.profileImageUrl);
+    setValue("image", mockData.profileImageUrl || NoProfileImage);
     setValue("isNicknameConfirmed", false);
   }, [setValue]);
 
