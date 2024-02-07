@@ -1,6 +1,6 @@
 import * as styles from "./style.css";
 import Image from "next/image";
-import LetterIcon from "@/assets/letter.png";
+import LetterIcon from "@/assets/images/letter.png";
 import { useModal } from "@/hooks/useModal";
 import ModalContainer from "@/components/@common/ModalContainer";
 import InvitationForm from "@/components/@common/InvitationForm/InvitationForm";

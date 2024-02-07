@@ -48,6 +48,8 @@ export const label = style({
 });
 
 export const input = style({
+  width: "100%",
+
   padding: "1.3rem 1.8rem",
 
   borderRadius: "10px",
@@ -69,6 +71,39 @@ export const nickname = style([
     },
   },
 ]);
+
+export const nicknameContainer = style({
+  width: "100%",
+
+  position: "relative",
+});
+
+export const inputErrorStyle = style({
+  borderColor: "var(--Red)",
+});
+
+export const inputConfirmStyle = style({
+  borderColor: "var(--Green)",
+});
+
+export const checkNicknameButton = style({
+  width: "6.3rem",
+  height: "2.9rem",
+
+  padding: "0.8rem 0.9rem",
+
+  position: "absolute",
+  right: "0.9rem",
+  top: "50%",
+  transform: "translateY(-50%)",
+
+  borderRadius: "5px",
+
+  fontSize: "1.2rem",
+  backgroundColor: "var(--LightOrange)",
+  color: "var(--MainOrange)",
+  fontWeight: "600",
+});
 
 export const email = style([
   input,
