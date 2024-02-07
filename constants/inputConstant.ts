@@ -27,6 +27,7 @@ export const ERROR_MESSAGE = {
 
   nicknameRequired: "닉네임을 입력해 주세요.",
   nicknameInvalid: "닉네임은 10자를 초과할 수 없습니다.",
+  nicknameNotConfirmed: "닉네임 중복확인을 해주세요.",
   nicknameDuplicate: "이미 사용중인 닉네임입니다.",
 
   currentPasswordRequired: "현재 비밀번호를 입력해 주세요.",
