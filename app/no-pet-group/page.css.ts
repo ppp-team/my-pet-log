@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
-  paddingTop: "6rem",
+  paddingTop: "11.6rem",
   paddingLeft: "1.6rem",
   paddingRight: "1.6rem",
   textAlign: "center",
