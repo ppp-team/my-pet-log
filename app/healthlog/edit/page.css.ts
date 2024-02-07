@@ -66,14 +66,16 @@ export const addIcon = style({
   width: "1.6rem",
   height: "1.6rem",
 
-  fill: "var(--GrayC2)",
+  color: "var(--Gray81)",
+  fontWeight: "600",
 });
 
 export const addIconSelected = style({
   width: "1.6rem",
   height: "1.6rem",
 
-  fill: "var(--White)",
+  color: "var(--White)",
+  fontWeight: "600",
 });
 
 export const submitButton = style({

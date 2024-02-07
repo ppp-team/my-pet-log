@@ -110,7 +110,7 @@ const Page = () => {
                   }}
                 >
                   {label}
-                  <AddIcon className={selectedType === type ? styles.addIconSelected : styles.addIcon} />
+                  <span className={selectedType === type ? styles.addIconSelected : styles.addIcon}>+</span>
                 </button>
               ))}
             </div>
@@ -132,7 +132,7 @@ const Page = () => {
                   }}
                 >
                   {label}
-                  <AddIcon className={selectedType === type ? styles.addIconSelected : styles.addIcon} />
+                  <span className={selectedType === type ? styles.addIconSelected : styles.addIcon}>+</span>
                 </button>
               ))}
             </div>
