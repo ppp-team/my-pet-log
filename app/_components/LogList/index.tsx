@@ -12,6 +12,7 @@ const LogList = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   const handleDelete = (task: TasksType) => {
+    console.log("modal-test");
     setSelectedTask(task);
     openModalFunc();
   };
