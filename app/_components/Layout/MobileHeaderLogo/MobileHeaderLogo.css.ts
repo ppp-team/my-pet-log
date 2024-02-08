@@ -10,7 +10,7 @@ export const header = style({
   width: "100vw",
   height: "5.6rem",
   paddingLeft: "1.7rem",
-  border: "1px solid var(--GrayE8)",
+  borderBottom: "1px solid var(--GrayE8)",
   backgroundColor: "white",
 });
 
