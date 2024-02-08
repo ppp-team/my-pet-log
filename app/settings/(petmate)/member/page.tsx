@@ -1,10 +1,10 @@
 "use client";
 
-import Modal from "@/components/@common/Modal";
+import Modal from "@/app/_components/Modal";
 import mockData from "./mockData.json";
 import { container, memberlist, profileWrapper, profileImg, nickname, button } from "@/app/settings/(petmate)/petmate.css";
-import { useModal } from "@/hooks/useModal";
-import NoProfileImage from "@/assets/images/person-profile-default.svg?url";
+import { useModal } from "@/app/_hooks/useModal";
+import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 
 const Page = () => {
   const { isModalOpen: isModalOpen1, openModalFunc: openModal1, closeModalFunc: closeModal1 } = useModal();

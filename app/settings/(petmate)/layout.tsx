@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import * as styles from "./layout.css";
-import TitleHeader from "@/components/@common/TitleHeader";
+import TitleHeader from "@/app/_components/TitleHeader";
 
 export default function PetmateLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

@@ -1,7 +1,7 @@
 "use client";
 
-import KebabIcon from "@/assets/kebab.svg?url";
-import LikeIcon from "@/assets/like.svg?url";
+import KebabIcon from "@/public/icons/kebab.svg?url";
+import LikeIcon from "@/public/icons/like.svg?url";
 import Image from "next/image";
 import { useState } from "react";
 import "swiper/css";
@@ -10,8 +10,8 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import * as styles from "./style.css";
 import "./swiper.css";
-import SendIcon from "@/assets/send.svg?url";
-import BackHeader from "@/components/@common/BackHeader";
+import SendIcon from "@/public/icons/send.svg?url";
+import BackHeader from "@/app/_components/BackHeader";
 
 const COMMENT_DATA = [
   {

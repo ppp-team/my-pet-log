@@ -1,9 +1,9 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { CURRENT_PASSWORD_RULES, ERROR_MESSAGE, NEW_PASSWORD_RULES, PLACEHOLDER } from "@/constants/inputConstant";
+import { CURRENT_PASSWORD_RULES, ERROR_MESSAGE, NEW_PASSWORD_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import * as styles from "@/app/settings/(accounts)/password/page.css";
-import ErrorMessage from "@/components/@common/ErrorMessage";
+import ErrorMessage from "@/app/_components/ErrorMessage";
 
 interface IFormInput {
   password: string;

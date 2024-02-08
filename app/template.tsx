@@ -1,12 +1,12 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { pagesWithHeader } from "@/constants/pagesWithHeader";
-import PcHeader from "@/components/Layout/PcHeader/PcHeader";
-import MobileHeaderLogo from "@/components/Layout/MobileHeaderLogo/MobileHeaderLogo";
-import MainWrapper from "@/components/Layout/MainWrapper/MainWrapper";
-import MobileFooterNavigationBar from "@/components/Layout/MobileFooterNavigationBar/MobileFooterNavigationBar";
-import MobileHeaderPetGroup from "@/components/Layout/MobileHeaderPetGroup/MobileHeaderPetGroup";
+import { pagesWithHeader } from "@/app/_constants/pagesWithHeader";
+import PcHeader from "@/app/_components/Layout/PcHeader/PcHeader";
+import MobileHeaderLogo from "@/app/_components/Layout/MobileHeaderLogo/MobileHeaderLogo";
+import MainWrapper from "@/app/_components/Layout/MainWrapper/MainWrapper";
+import MobileFooterNavigationBar from "@/app/_components/Layout/MobileFooterNavigationBar/MobileFooterNavigationBar";
+import MobileHeaderPetGroup from "@/app/_components/Layout/MobileHeaderPetGroup/MobileHeaderPetGroup";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

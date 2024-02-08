@@ -1,15 +1,15 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { CONFIRM_MESSAGE, ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/constants/inputConstant";
+import { CONFIRM_MESSAGE, ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import { useEffect } from "react";
 import * as styles from "@/app/settings/(accounts)/profile/page.css";
 import mockData from "./mockData.json"; //추후 삭제
-import cameraIcon from "@/assets/camera.svg?url";
+import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
-import ErrorMessage from "@/components/@common/ErrorMessage";
-import ConfirmMessage from "@/components/@common/ConfirmMessage/ConfirmMessage";
-import NoProfileImage from "@/assets/images/person-profile-default.svg?url";
+import ErrorMessage from "@/app/_components/ErrorMessage";
+import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
+import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 
 interface IFormInput {
   nickname: string;

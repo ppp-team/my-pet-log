@@ -1,16 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import MyProfile from "@/components/Setting/MyProfile";
-import MypetCarousel from "@/components/Setting/MypetCarousel";
+import MyProfile from "@/app/settings/components/MyProfile";
+import MypetCarousel from "@/app/settings/components/MypetCarousel";
 import * as styles from "@/app/settings/page.css";
-import HeartIcon from "@/assets/heart.svg?url";
-import QuestionIcon from "@/assets/circle-help.svg?url";
-import MessageIcon from "@/assets/message-alt.svg?url";
-import NoticeIcon from "@/assets/megaphone.svg?url";
-import MenuList from "@/components/Setting/MenuList";
-import Modal from "@/components/@common/Modal";
-import { useModal } from "@/hooks/useModal";
+import HeartIcon from "@/public/icons/heart.svg?url";
+import QuestionIcon from "@/public/icons/circle-help.svg?url";
+import MessageIcon from "@/public/icons/message-alt.svg?url";
+import NoticeIcon from "@/public/icons/megaphone.svg?url";
+import MenuList from "@/app/settings/components/MenuList";
+import Modal from "@/app/_components/Modal";
+import { useModal } from "@/app/_hooks/useModal";
 
 const Page = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();

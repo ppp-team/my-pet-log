@@ -1,9 +1,9 @@
 "use client";
 
-import BackHeader from "@/components/@common/BackHeader";
-import DateInput from "@/components/@common/DateInput";
-import SelectMateDropdown from "@/components/Healthlog/SelectMateDropdown";
-import SubtypeDetail from "@/components/Healthlog/SubtypeDetail";
+import BackHeader from "@/app/_components/BackHeader";
+import DateInput from "@/app/_components/DateInput";
+import SelectMateDropdown from "@/app/healthlog/componets/SelectMateDropdown";
+import SubtypeDetail from "@/app/healthlog/componets/SubtypeDetail";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";

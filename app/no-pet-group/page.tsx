@@ -3,11 +3,11 @@
 import { NextPage } from "next";
 import * as styles from "./page.css";
 import Link from "next/link";
-import { useModal } from "@/hooks/useModal";
-import ParticipatePetGroupModal from "@/components/Participate/ParticipatePetGroupModal/ParticipatePetGroupModal";
-import ModalContainer from "@/components/@common/ModalContainer";
+import { useModal } from "@/app/_hooks/useModal";
+import ParticipatePetGroupModal from "@/app/home/components/ParticipatePetGroupModal/ParticipatePetGroupModal";
+import ModalContainer from "@/app/_components/ModalContainer";
 import Image from "next/image";
-import MockUpImageSrc from "@/assets/images/mock-up.svg?url";
+import MockUpImageSrc from "@/public/images/mock-up.svg?url";
 
 const NoPetGroupPage: NextPage = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();

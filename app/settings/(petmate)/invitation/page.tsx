@@ -2,10 +2,10 @@
 
 import mockData from "./mockData.json";
 import { container, memberlist, profileWrapper, profileImg, nickname, state, button } from "@/app/settings/(petmate)/petmate.css";
-import Modal from "@/components/@common/Modal";
-import { useModal } from "@/hooks/useModal";
-import InviteModal from "@/components/Setting/InviteModal";
-import NoProfileImage from "@/assets/images/person-profile-default.svg?url";
+import Modal from "@/app/_components/Modal";
+import { useModal } from "@/app/_hooks/useModal";
+import InviteModal from "@/app/settings/components/InviteModal";
+import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 
 const Page = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();

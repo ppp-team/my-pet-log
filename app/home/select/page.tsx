@@ -1,6 +1,6 @@
 "use client";
 
-import SelectPet from "@/components/@common/SelectPet";
+import SelectPet from "@/app/_components/SelectPet";
 
 const HomeSelectPage = () => {
   return <SelectPet type="건강수첩" />;

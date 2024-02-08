@@ -1,7 +1,7 @@
 import * as styles from "@/app/page.css";
-import EditIcon from "@/assets/edit.svg";
-import EditIconUrl from "@/assets/edit.svg?url";
-import PetRegister from "@/components/@common/PetRegister";
+import EditIcon from "@/public/icons/edit.svg";
+import EditIconUrl from "@/public/icons/edit.svg?url";
+import PetRegister from "@/app/_components/PetRegister";
 import Image from "next/image";
 
 const Home = () => {

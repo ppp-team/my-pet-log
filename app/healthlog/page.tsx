@@ -1,10 +1,10 @@
 "use client";
 
-import VanillaCalendar from "@/components/@common/VanillaCalendar";
-import LogList from "@/components/@common/LogList";
-import LogWriteButton from "@/components/Healthlog/LogWriteButton";
-import QuickButtons from "@/components/Healthlog/QuickButtons";
-import { currentPetAtom } from "@/states/atom";
+import VanillaCalendar from "@/app/_components/VanillaCalendar";
+import LogList from "@/app/_components/LogList";
+import LogWriteButton from "@/app/healthlog/componets/LogWriteButton";
+import QuickButtons from "@/app/healthlog/componets/QuickButtons";
+import { currentPetAtom } from "@/app/_states/atom";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import * as styles from "./page.css";

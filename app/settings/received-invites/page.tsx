@@ -1,8 +1,8 @@
-import TitleHeader from "@/components/@common/TitleHeader";
+import TitleHeader from "@/app/_components/TitleHeader";
 import mockData from "./mockData.json";
 import * as styles from "./page.css";
-import { getTimeAgo } from "@/utils/getTimeAgo";
-import NoProfileImage from "@/assets/images/person-profile-default.svg?url";
+import { getTimeAgo } from "@/app/_utils/getTimeAgo";
+import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 
 const Page = () => {
   return (

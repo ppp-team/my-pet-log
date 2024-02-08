@@ -5,11 +5,11 @@ import * as styles from "./page.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormEvent } from "react";
 import Image from "next/image";
-import userProfileDefaultImageSrc from "@/assets/user-profile-default.svg?url";
-import { CONFIRM_MESSAGE, ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/constants/inputConstant";
-import removeSpaces from "@/utils/removeSpaces";
-import ErrorMessage from "@/components/@common/ErrorMessage";
-import ConfirmMessage from "@/components/@common/ConfirmMessage/ConfirmMessage";
+import userProfileDefaultImageSrc from "@/public/icons/user-profile-default.svg?url";
+import { CONFIRM_MESSAGE, ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
+import removeSpaces from "@/app/_utils/removeSpaces";
+import ErrorMessage from "@/app/_components/ErrorMessage";
+import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
 
 interface IForm {
   nickname: string;

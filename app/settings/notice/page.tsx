@@ -1,6 +1,6 @@
 import { NotionAPI } from "notion-client";
-import Service from "@/components/Setting/Service";
-import pageInfoMap from "@/components/Setting/Service/PageInfo";
+import Service from "@/app/settings/components/Service";
+import pageInfoMap from "@/app/settings/components/Service/PageInfo";
 
 const Page = async () => {
   const notion = new NotionAPI();
