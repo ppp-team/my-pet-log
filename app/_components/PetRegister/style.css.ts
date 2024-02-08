@@ -50,7 +50,6 @@ export const label = style({
 
 export const input = style({
   padding: "1.3rem 1.8rem",
-  marginBottom: "0.8rem",
 
   borderRadius: "10px",
   border: "1.5px solid #e2e2e2",
@@ -99,8 +98,11 @@ export const selectBox = style({
   fontWeight: "600",
 });
 
-//라디오 인풋
+export const hidePlaceholder = style({
+  display: "none",
+});
 
+//라디오 인풋
 export const radioContainer = style({
   display: "flex",
   flexDirection: "row",

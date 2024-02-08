@@ -10,7 +10,7 @@ import Image from "next/image";
 import TitleHeader from "@/app/_components/TitleHeader/index";
 import PetDateInput from "./PetDateInput";
 import { petOptions } from "@/public/data/petOptions";
-import ErrorMessage from "../ErrorMessage";
+import ErrorMessage from "@/app/_components/ErrorMessage";
 
 interface IFormInput {
   petName: string;
@@ -37,8 +37,8 @@ const PetRegister = () => {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
     if (!files) return;
     setValue("image", URL.createObjectURL(files[0]));
   };
@@ -86,7 +86,10 @@ const PetRegister = () => {
 
         {/* 타입 */}
         <label className={styles.label}>타입*</label>
-        <select className={styles.selectBox} onChange={handleTypeChange} value={selectedType} defaultValue={""}>
+        <select className={styles.selectBox} onChange={handleTypeChange} value={selectedType} required>
+          <option className={styles.hidePlaceholder} value="" disabled>
+            타입을 선택하세요
+          </option>
           {Object.keys(petOptions).map((option: string, index: number) => (
             <option key={index} value={option}>
               {option}
@@ -96,7 +99,10 @@ const PetRegister = () => {
 
         {/* 품종 */}
         <label className={styles.label}>품종*</label>
-        <select className={styles.selectBox} onChange={handleBreedChange} value={selectedBreed}>
+        <select className={styles.selectBox} onChange={handleBreedChange} value={selectedBreed} required>
+          <option className={styles.hidePlaceholder} value="" disabled>
+            품종을 선택하세요
+          </option>
           {petOptions[selectedType]?.map((breed: string, index: number) => (
             <option key={index} value={breed}>
               {breed}
