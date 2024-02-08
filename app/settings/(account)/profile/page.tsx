@@ -7,6 +7,7 @@ import * as styles from "@/app/settings/(account)/profile/page.css";
 import mockData from "./mockData.json"; //추후 삭제
 import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
+import removeSpaces from "@/app/_utils/removeSpaces";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
 import NoProfileImage from "@/public/images/person-profile-default.svg?url";
@@ -35,6 +36,11 @@ const Page = () => {
     setValue("isNicknameConfirmed", false);
   }, [setValue]);
 
+  useEffect(() => {
+    // 사용자가 닉네임을 변경할 때마다 실행(전에는 한번 유효성 검사되고 다시 닉네임 변경하면 유효성 검사를 다시 해야하는데 초기화를 안해서 안하더라구요)
+    setValue("isNicknameConfirmed", false);
+  }, [nicknameValue, setValue]);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
@@ -42,6 +48,20 @@ const Page = () => {
   };
 
   const onClickCheckNickname = () => {
+    //닉네임 입력 시 모든 공백 제거
+    const removeSpacesNickname = removeSpaces(watch("nickname"));
+    setValue("nickname", removeSpacesNickname);
+
+    if (removeSpacesNickname.length > 10) {
+      return;
+    }
+
+    if (removeSpacesNickname === "") {
+      // 공백만 입력했을 때
+      setError("nickname", { type: "required", message: ERROR_MESSAGE.nicknameRequired });
+      return;
+    }
+
     // 닉네임 중복 에러메세지 테스트
     const isConfirmed = true;
 
