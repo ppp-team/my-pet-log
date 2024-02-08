@@ -2,7 +2,7 @@
 
 import * as styles from "./MobileHeaderPetGroup.css";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
-import { PetGroupType } from "@/components/types/petGroup";
+import { PetGroupType } from "@/types/petGroup";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";

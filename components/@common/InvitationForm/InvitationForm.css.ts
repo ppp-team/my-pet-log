@@ -12,7 +12,7 @@ export const form = style({
 export const formTitle = style({
   fontSize: "1.6rem",
   fontWeight: "500",
-  color: "#000",
+  color: "var(--Black)",
 });
 
 export const input = style({
@@ -23,18 +23,18 @@ export const input = style({
   fontSize: "1.6rem",
   fontWeight: "400",
   "::placeholder": {
-    color: "#9f9f9f",
+    color: "var(--Gray9f)",
   },
 });
 
 export const button = style({
   padding: "0.9rem 0",
   borderRadius: "10px",
-  backgroundColor: "#FF8743",
+  backgroundColor: "var(--MainOrange)",
   fontSize: "1.6rem",
   fontWeight: "600",
   textAlign: "center",
-  color: "#F2F2F2",
+  color: "var(--GrayF2)",
 });
 
 export const errorMessageContainer = style({
@@ -49,5 +49,5 @@ export const errorMessageContainer = style({
 export const errorMessage = style({
   fontSize: "1rem",
   fontWeight: "500",
-  color: "#FF3B30",
+  color: "var(--Red)",
 });
