@@ -25,7 +25,7 @@ interface LogItemProps {
   onDelete: () => void; // 로직 보완
 }
 
-const SWIPE_BUTTON_WIDTH = 66;
+const SWIPE_BUTTON_WIDTH = 132;
 
 const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) => {
   const [isChecked, setIsChecked] = useState(taskItem.isComplete);
@@ -58,18 +58,15 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
     }
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
     setIsSwiping(false);
-    if (currentTranslate <= -SWIPE_BUTTON_WIDTH / 2) {
+    const endX = event.changedTouches[0].clientX;
+    const swipedDistance = startX - endX;
+    if (swipedDistance > 0) {
       setCurrentTranslate(-SWIPE_BUTTON_WIDTH);
     } else {
       setCurrentTranslate(0);
     }
-  };
-
-  const listItemStyle = {
-    transform: `translateX(${currentTranslate}px)`,
-    transition: "transform 0.5s ease",
   };
 
   const toggleDetails = (event: React.MouseEvent<HTMLLIElement>) => {
@@ -81,7 +78,7 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
 
   return (
     <div className={styles.swipeArea}>
-      <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={listItemStyle} className={styles.container}>
+      <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className={styles.container}>
         <li className={styles.listContainer} onClick={toggleDetails}>
           <div className={styles.leftPart}>
             <label htmlFor={checkboxId} className={styles.checkBox}>
@@ -112,6 +109,7 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
           </div>
         )}
       </div>
+
       {showDetails && (
         <div className={styles.logDetailContainer}>
           <LogDetail />

@@ -11,6 +11,8 @@ export const container = style({
   gap: "0.5rem",
 
   fontSize: "1.2rem",
+
+  transition: "transform 0.3s ease",
 });
 
 export const listContainer = style({
@@ -21,7 +23,7 @@ export const listContainer = style({
   alignItems: "center",
   justifyContent: "space-between",
 
-  borderBottom: "1px solid #c2c2c2",
+  borderBottom: "1px solid var(--GrayC2)",
 });
 
 export const leftPart = style({
@@ -120,8 +122,18 @@ export const manager = style({
   color: "#FF8743",
 });
 
+export const swipeArea = style({
+  display: "flex",
+  flexDirection: "column",
+  overflow: "visible",
+});
+
 export const swipeButtons = style({
   display: "flex",
+
+  marginRight: "-1.6rem",
+
+  transition: "transform 0.3s ease",
 });
 
 export const editButton = style({
@@ -148,12 +160,6 @@ export const deleteButton = style({
   backgroundColor: "#FF3B30",
   color: "white",
   fontSize: "1.4rem",
-});
-
-export const swipeArea = style({
-  display: "flex",
-  flexDirection: "column",
-  overflow: "visible",
 });
 
 export const logDetailContainer = style({

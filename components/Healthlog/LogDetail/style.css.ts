@@ -19,9 +19,17 @@ export const container = style({
 export const wrapper = style({
   width: "100%",
 
+  gap: "1.2rem",
+
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-start",
+});
+
+export const box = style({
+  display: "flex",
+
+  gap: "1.6rem",
 });
 
 export const editButton = style({
