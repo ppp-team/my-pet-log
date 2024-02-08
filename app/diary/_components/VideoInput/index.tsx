@@ -1,5 +1,5 @@
-import { InputProps } from "@/app/diary/components/ImageInput";
-import * as inputStyles from "@/app/diary/components/ImageInput/style.css";
+import { InputProps } from "@/app/diary/_components/ImageInput";
+import * as inputStyles from "@/app/diary/_components/ImageInput/style.css";
 import { useState } from "react";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";

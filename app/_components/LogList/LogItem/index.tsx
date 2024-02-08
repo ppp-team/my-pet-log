@@ -1,7 +1,7 @@
 "use client";
 
 import starIconSrc from "@/public/icons/important-star-icon.svg?url";
-import LogDetail from "@/app/healthlog/componets/LogDetail";
+import LogDetail from "@/app/healthlog/_components/LogDetail";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";

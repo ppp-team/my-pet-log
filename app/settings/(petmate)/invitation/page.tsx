@@ -4,7 +4,7 @@ import mockData from "./mockData.json";
 import { container, memberlist, profileWrapper, profileImg, nickname, state, button } from "@/app/settings/(petmate)/petmate.css";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
-import InviteModal from "@/app/settings/components/InviteModal";
+import InviteModal from "@/app/settings/_components/InviteModal";
 import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 
 const Page = () => {

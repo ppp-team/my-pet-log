@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import MyProfile from "@/app/settings/components/MyProfile";
-import MypetCarousel from "@/app/settings/components/MypetCarousel";
+import MyProfile from "@/app/settings/_components/MyProfile";
+import MypetCarousel from "@/app/settings/_components/MypetCarousel";
 import * as styles from "@/app/settings/page.css";
 import HeartIcon from "@/public/icons/heart.svg?url";
 import QuestionIcon from "@/public/icons/circle-help.svg?url";
 import MessageIcon from "@/public/icons/message-alt.svg?url";
 import NoticeIcon from "@/public/icons/megaphone.svg?url";
-import MenuList from "@/app/settings/components/MenuList";
+import MenuList from "@/app/settings/_components/MenuList";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 

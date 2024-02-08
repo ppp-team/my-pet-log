@@ -1,5 +1,5 @@
 import DropdownIcon from "@/public/icons/drop-down-icon.svg";
-import SearchLocation from "@/app/healthlog/componets/SearchLocation";
+import SearchLocation from "@/app/healthlog/_components/SearchLocation";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
 import React, { useEffect, useRef, useState } from "react";
 import { UseFormRegister } from "react-hook-form";

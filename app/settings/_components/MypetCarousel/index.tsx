@@ -5,7 +5,7 @@ import { Pagination } from "swiper/modules";
 import mockData from "./mockdata.json";
 import { title, petadd, container, petButton, petMateButton, petInfoWrapper } from "./style.css";
 import "./swiper.css";
-import MyPetInfo from "@/app/settings/components/MyPetInfo";
+import MyPetInfo from "@/app/settings/_components/MyPetInfo";
 import Image from "next/image";
 import AddIcon from "@/public/icons/add.svg?url";
 import Link from "next/link";

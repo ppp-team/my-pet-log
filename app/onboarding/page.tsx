@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import * as styles from "@/app/onboarding/page.css";
-import Onboarding from "@/app/onboarding/onboardingContent/OnbordingUI";
+import Onboarding from "@/app/onboarding/_components/OnbordingUI";
 import { useRouter } from "next/navigation";
-import OnboardingData from "@/app/onboarding/onboardingContent/OnboardingData";
+import OnboardingData from "@/app/onboarding/_components/OnboardingData";
 
 const Page = () => {
   const router = useRouter();

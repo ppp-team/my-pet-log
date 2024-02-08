@@ -2,7 +2,7 @@ import * as styles from "./style.css";
 import petInfo from "./mockData.json";
 import CopyIcon from "@/public/icons/copy.svg?url";
 import Image from "next/image";
-import MyPetInfo from "@/app/settings/components/MyPetInfo";
+import MyPetInfo from "@/app/settings/_components/MyPetInfo";
 
 const InviteCode = () => {
   const inviteCode = "seul1234";

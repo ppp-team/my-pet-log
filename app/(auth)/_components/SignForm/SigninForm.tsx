@@ -1,11 +1,11 @@
 "use client";
-import PasswordInput from "@/app/(auth)/components/SignInput/PasswordInput";
-import Input from "@/app/(auth)/components/SignInput/Input";
+import PasswordInput from "@/app/(auth)/_components/SignInput/PasswordInput";
+import Input from "@/app/(auth)/_components/SignInput/Input";
 import { EMAIL_RULES, ERROR_MESSAGE, PLACEHOLDER, SIGNIN_PASSWORD_RULES } from "@/app/_constants/inputConstant";
 import * as styles from "./styles.css";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import SubmitButton from "@/app/(auth)/components/SubmitButton/index";
+import SubmitButton from "@/app/(auth)/_components/SubmitButton/index";
 
 const SignInForm = () => {
   const { control, handleSubmit, setError, formState } = useForm({

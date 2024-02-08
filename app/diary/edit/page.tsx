@@ -1,8 +1,8 @@
 "use client";
 
 import DateInput from "@/app/_components/DateInput";
-import ImageInput from "@/app/diary/components/ImageInput";
-import VideoInput from "@/app/diary/components/VideoInput";
+import ImageInput from "@/app/diary/_components/ImageInput";
+import VideoInput from "@/app/diary/_components/VideoInput";
 import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
 import BackHeader from "@/app/_components/BackHeader";

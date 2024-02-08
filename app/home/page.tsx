@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import * as styles from "./page.css";
-import HomePetProfile from "@/app/home/components/HomePetProfile/HomePetProfile";
-import HomeHealthLogPreview from "@/app/home/components/HomeHealthLogPreview/HomeHealthLogPreview";
+import HomePetProfile from "@/app/home/_components/HomePetProfile/HomePetProfile";
+import HomeHealthLogPreview from "@/app/home/_components/HomeHealthLogPreview/HomeHealthLogPreview";
 
 const HomePage: NextPage = () => {
   return (

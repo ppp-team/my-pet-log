@@ -2,8 +2,8 @@
 
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
 import LogList from "@/app/_components/LogList";
-import LogWriteButton from "@/app/healthlog/componets/LogWriteButton";
-import QuickButtons from "@/app/healthlog/componets/QuickButtons";
+import LogWriteButton from "@/app/healthlog/_components/LogWriteButton";
+import QuickButtons from "@/app/healthlog/_components/QuickButtons";
 import { currentPetAtom } from "@/app/_states/atom";
 import { useAtom } from "jotai";
 import { useState } from "react";

@@ -1,5 +1,5 @@
 import * as styles from "@/app/diary/edit/style.css";
-import { InputProps } from "@/app/diary/components/ImageInput";
+import { InputProps } from "@/app/diary/_components/ImageInput";
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
 import { useState } from "react";
 import { Options } from "vanilla-calendar-pro";

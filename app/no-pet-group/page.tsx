@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import * as styles from "./page.css";
 import Link from "next/link";
 import { useModal } from "@/app/_hooks/useModal";
-import ParticipatePetGroupModal from "@/app/home/components/ParticipatePetGroupModal/ParticipatePetGroupModal";
+import ParticipatePetGroupModal from "@/app/home/_components/ParticipatePetGroupModal/ParticipatePetGroupModal";
 import ModalContainer from "@/app/_components/ModalContainer";
 import Image from "next/image";
 import MockUpImageSrc from "@/public/images/mock-up.svg?url";

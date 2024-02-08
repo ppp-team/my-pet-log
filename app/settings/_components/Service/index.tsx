@@ -3,8 +3,8 @@ import Link from "next/link";
 import { ExtendedRecordMap } from "notion-types";
 import { NotionRenderer } from "react-notion-x";
 import { useEffect, useState } from "react";
-import pageInfoMap, { PageInfo } from "@/app/settings/components/Service/PageInfo";
-import * as styles from "@/app/settings/components/Service/style.css";
+import pageInfoMap, { PageInfo } from "@/app/settings/_components/Service/PageInfo";
+import * as styles from "@/app/settings/_components/Service/style.css";
 import CloseIcon from "@/public/icons/close.svg";
 import { useRouter } from "next/navigation";
 

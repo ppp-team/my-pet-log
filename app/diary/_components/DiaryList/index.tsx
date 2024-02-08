@@ -1,4 +1,4 @@
-import EmptyDiaryList from "@/app/diary/components/EmptyDiaryList";
+import EmptyDiaryList from "@/app/diary/_components/EmptyDiaryList";
 import { useState } from "react";
 import * as styles from "./style.css";
 import Link from "next/link";

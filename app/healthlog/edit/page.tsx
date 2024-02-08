@@ -2,8 +2,8 @@
 
 import BackHeader from "@/app/_components/BackHeader";
 import DateInput from "@/app/_components/DateInput";
-import SelectMateDropdown from "@/app/healthlog/componets/SelectMateDropdown";
-import SubtypeDetail from "@/app/healthlog/componets/SubtypeDetail";
+import SelectMateDropdown from "@/app/healthlog/_components/SelectMateDropdown";
+import SubtypeDetail from "@/app/healthlog/_components/SubtypeDetail";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";

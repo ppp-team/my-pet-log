@@ -1,5 +1,5 @@
 import * as styles from "./style.css";
-import { InputProps } from "@/app/diary/components/ImageInput";
+import { InputProps } from "@/app/diary/_components/ImageInput";
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
 import { getPrettyTime, getPrettyToday } from "@/app/_utils/getPrettyToday";
 import { useEffect, useState } from "react";

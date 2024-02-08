@@ -1,4 +1,4 @@
-import Input, { InputProps } from "@/app/(auth)/components/SignInput/Input";
+import Input, { InputProps } from "@/app/(auth)/_components/SignInput/Input";
 import { forwardRef } from "react";
 import { inputContainer } from "./styles.css";
 

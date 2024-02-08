@@ -1,14 +1,14 @@
 "use client";
-import Input from "@/app/(auth)/components/SignInput/Input";
-import PasswordInput from "@/app/(auth)/components/SignInput/PasswordInput";
+import Input from "@/app/(auth)/_components/SignInput/Input";
+import PasswordInput from "@/app/(auth)/_components/SignInput/PasswordInput";
 import { ERROR_MESSAGE, SIGNUP_PASSWORD_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import { useModal } from "@/app/_hooks/useModal";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import * as styles from "./styles.css";
-import SubmitButton from "@/app/(auth)/components/SubmitButton/index";
+import SubmitButton from "@/app/(auth)/_components/SubmitButton/index";
 import ModalContainer from "@/app/_components/ModalContainer";
-import AlertModal from "@/app/(auth)/components/AlertModal";
+import AlertModal from "@/app/(auth)/_components/AlertModal";
 
 const SignUpForm = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();

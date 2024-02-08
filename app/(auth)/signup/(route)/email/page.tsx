@@ -1,4 +1,4 @@
-import SignUpForm from "@/app/(auth)/components/SignForm/SignupForm";
+import SignUpForm from "@/app/(auth)/_components/SignForm/SignupForm";
 import React from "react";
 import { NextPage } from "next";
 
