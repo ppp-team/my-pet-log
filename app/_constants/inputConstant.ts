@@ -117,7 +117,7 @@ export const PET_NAME_RULES = {
 
 export const PET_REGISTNUMBER_RULES = {
   pattern: {
-    value: /^\d{15}$/,
+    value: /^[0-9]+$/,
     message: PET_ERROR_MESSAGE.NumberInvalid,
   },
 };
