@@ -6,7 +6,7 @@ export const container = style({
   display: "flex",
   flexDirection: "column",
 
-  gap: "0.5rem",
+  gap: "1rem",
 });
 
 export const searchContainer = style({
@@ -16,25 +16,36 @@ export const searchContainer = style({
 
 export const inputWrapper = style({
   width: "100%",
-  height: "3rem",
+  height: "4rem",
 
   flex: 1,
-  marginRight: "0.5rem",
+  marginRight: "1rem",
   padding: "1rem",
 
   borderRadius: "10px",
-  border: "1px solid #d9d9d9",
+  border: "1.5px solid var(--White)",
+
+  backgroundColor: "var(--MainOrange)",
+  color: "var(--White)",
+
+  "::placeholder": {
+    color: "var(--White)",
+  },
 
   ":focus": {
-    outline: "none",
-    border: "1px solid orange",
+    backgroundColor: "var(--White)",
+    color: "var(--MainOrange)",
   },
 });
 
 export const searchButton = style({
   width: "8rem",
-  height: "3rem",
+  height: "4rem",
 
-  borderRadius: "50px",
-  backgroundColor: "white",
+  borderRadius: "10px",
+  border: "1.5px solid var(--White)",
+
+  backgroundColor: "var(--MainOrange)",
+  color: "var(--White)",
+  fontWeight: "600",
 });

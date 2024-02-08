@@ -18,6 +18,7 @@ globalStyle(":root", {
     "--Gray45": "#454545",
     "--Gray72": "#727272",
     "--GrayE4": "#E4E4E4",
+    "--Gray9f": "#9f9f9f",
 
     "--White": "#FFFFFF",
     "--Black": "#000000",
