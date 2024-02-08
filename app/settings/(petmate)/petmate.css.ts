@@ -8,7 +8,7 @@ export const container = style({
   gap: "0.8rem",
 });
 
-export const member = style({
+export const memberlist = style({
   padding: "1.2rem 1.6rem",
 
   display: "flex",
@@ -16,7 +16,7 @@ export const member = style({
   justifyContent: "space-between",
 
   borderRadius: "10px",
-  border: "2px solid orange",
+  border: "2px solid var(--MainOrange)",
 });
 
 export const profileWrapper = style({
@@ -30,7 +30,7 @@ export const profileImg = style({
   height: "4rem",
 
   borderRadius: "50%",
-  border: "1px solid orange",
+  border: "1px solid var(--MainOrange)",
   backgroundSize: "contain",
 });
 
@@ -39,8 +39,27 @@ export const nickname = style({
   fontWeight: "600",
 });
 
-export const deleteButton = style({
-  color: "orange",
+export const button = style({
+  color: "var(--MainOrange)",
   fontSize: "1.6rem",
   fontWeight: "500",
+});
+
+export const header = style({
+  padding: "1.8rem 1.6rem",
+  backgroundColor: "var(--GrayF4)",
+});
+
+export const state = style({
+  width: "5.4rem",
+  height: "2.1rem",
+
+  borderRadius: "5px",
+
+  backgroundColor: "rgba(255, 225, 208, 1)",
+  color: "var(--MainOrange)",
+  textAlign: "center",
+  fontSize: "1.2rem",
+  fontWeight: "600",
+  lineHeight: "2.1rem",
 });

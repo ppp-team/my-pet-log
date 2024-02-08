@@ -8,7 +8,7 @@ export const list = style({
   display: "flex",
   alignItems: "center",
 
-  color: "#454545",
+  color: "var(--Gray45)",
   fontSize: "1.6rem",
   fontStyle: "normal",
   fontWeight: "600",

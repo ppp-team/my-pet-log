@@ -3,8 +3,8 @@ import { style } from "@vanilla-extract/css";
 export const container = style({
   padding: "2rem 0",
 
-  borderTop: "1px solid #e4e4e4",
-  borderBottom: "1px solid #e4e4e4",
+  borderTop: "1px solid var(--GrayE4)",
+  borderBottom: "1px solid var(--GrayE4)",
 });
 
 export const ProfileWrapper = style({
@@ -18,7 +18,7 @@ export const ProfileWrapper = style({
 export const title = style({
   marginBottom: "2rem",
 
-  color: "#727272",
+  color: "var(--Gray72)",
   fontSize: "1.6rem",
   fontWeight: "600",
 });
@@ -41,7 +41,7 @@ export const nickname = style({
 
 export const email = style({
   fontSize: "1.3rem",
-  color: "#818181",
+  color: "var(--Gray81)",
   fontWeight: "400",
 });
 

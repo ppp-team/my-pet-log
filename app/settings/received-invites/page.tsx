@@ -2,6 +2,7 @@ import TitleHeader from "@/components/@common/TitleHeader";
 import mockData from "./mockData.json";
 import * as styles from "./page.css";
 import { getTimeAgo } from "@/utils/getTimeAgo";
+import NoProfileImage from "@/assets/images/person-profile-default.svg?url";
 
 const Page = () => {
   return (
@@ -13,7 +14,7 @@ const Page = () => {
             <div
               className={styles.profileImg}
               style={{
-                backgroundImage: `url(${invitations.petImageUrl})`,
+                backgroundImage: `url(${invitations.petImageUrl || NoProfileImage})`,
               }}
             />
             <div className={styles.infoContainer}>

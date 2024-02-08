@@ -2,8 +2,11 @@ import * as styles from "./style.css";
 import data from "./mockData.json";
 import CheckRigntIcon from "@/assets/chevron-right.svg?url";
 import Image from "next/image";
+import NoMyProfileImage from "@/assets/images/person-profile-default.svg?url";
 
 const MyProfile = () => {
+  const profileImageUrl = data.imgUrl || NoMyProfileImage;
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>마이프로필 관리하기</div>
@@ -11,7 +14,7 @@ const MyProfile = () => {
         <div
           className={styles.profileImg}
           style={{
-            backgroundImage: `url(${data.imgUrl})`,
+            backgroundImage: `url(${profileImageUrl})`,
           }}
         />
         <div>

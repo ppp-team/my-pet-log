@@ -36,23 +36,24 @@ export const cameraIcon = style({
   padding: "0.4rem",
 
   borderRadius: "50%",
-  border: "3px solid #fff",
-  backgroundColor: "#f2f2f2",
+  border: "3px solid var(--White)",
+  backgroundColor: "var(--LightOrange)",
 });
 
 export const label = style({
-  marginBottom: "0.6rem",
+  margin: "0.6rem 0",
 
   fontSize: "1.6rem",
   fontWeight: "600",
 });
 
 export const input = style({
+  width: "100%",
+
   padding: "1.3rem 1.8rem",
-  marginBottom: "0.8rem",
 
   borderRadius: "10px",
-  border: "1.5px solid #e2e2e2",
+  border: "1.5px solid var(--GrayE2)",
 
   fontSize: "1.6rem",
   fontWeight: "600",
@@ -71,13 +72,55 @@ export const nickname = style([
   },
 ]);
 
+export const nicknameContainer = style({
+  width: "100%",
+
+  position: "relative",
+});
+
+export const inputErrorStyle = style({
+  borderColor: "var(--Red)",
+});
+
+export const inputConfirmStyle = style({
+  borderColor: "var(--Green)",
+});
+
+export const checkNicknameButton = style({
+  width: "6.3rem",
+  height: "2.9rem",
+
+  padding: "0.8rem 0.9rem",
+
+  position: "absolute",
+  right: "0.9rem",
+  top: "50%",
+  transform: "translateY(-50%)",
+
+  borderRadius: "5px",
+
+  fontSize: "1.2rem",
+  backgroundColor: "var(--LightOrange)",
+  color: "var(--MainOrange)",
+  fontWeight: "600",
+});
+
 export const email = style([
   input,
   {
-    color: "#818181",
+    color: "var(--Gray81)",
     cursor: "not-allowed",
   },
 ]);
+
+//슬추수
+export const length = style({
+  marginTop: "1rem",
+
+  fontSize: "1.4rem",
+  fontWeight: "600",
+  color: "var(--MainOrange)",
+});
 
 export const button = style({
   padding: "1.3rem 0",
@@ -85,6 +128,6 @@ export const button = style({
 
   borderRadius: "30px",
 
-  color: "#fff",
+  color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
 });
