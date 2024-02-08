@@ -11,13 +11,11 @@ import TitleHeader from "@/app/_components/TitleHeader/index";
 import PetDateInput from "./PetDateInput";
 import { petOptions } from "@/public/data/petOptions";
 import ErrorMessage from "@/app/_components/ErrorMessage";
-import SignButton from "../SignButton";
 import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 
 interface IFormInput {
   petName: string;
   image: string;
-  email: string;
   type: string;
   breed: string;
   weight: number;
@@ -64,7 +62,6 @@ const PetRegister = () => {
   }, [dropdownRef]);
 
   //드롭다운
-
   const handleTypeClick = (type: string) => {
     setValue("type", type);
     setSelectedType(type);
@@ -76,15 +73,6 @@ const PetRegister = () => {
     setValue("breed", breed);
     setSelectedBreed(breed);
     setDropdownOpen(false);
-  };
-
-  //동물 타입
-  const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedType(event.target.value);
-  };
-  //동물 타입별 세부 품종
-  const handleBreedChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedBreed(event.target.value);
   };
 
   //중성화
@@ -207,11 +195,11 @@ const PetRegister = () => {
 
         {/* 생일  */}
         <label className={styles.label}>생일</label>
-        <PetDateInput register={register} setValue={setValue} getValue={getValues} />
+        <PetDateInput id="birthday" register={register} setValue={setValue} getValue={getValues} />
 
         {/* 처음 만난 날  */}
         <label className={styles.label}>처음 만난 날</label>
-        <PetDateInput register={register} setValue={setValue} getValue={getValues} />
+        <PetDateInput id="first-meet" register={register} setValue={setValue} getValue={getValues} />
 
         {/* 몸무게 */}
         <label className={styles.label}>몸무게*</label>
