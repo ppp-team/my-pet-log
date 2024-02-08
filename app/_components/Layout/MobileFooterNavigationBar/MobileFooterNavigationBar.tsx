@@ -1,10 +1,10 @@
 import Link from "next/link";
 import * as styles from "./MobileFooterNavigationBar.css";
 
-import HomeIcon from "@/assets/home.svg";
-import DiaryIcon from "@/assets/diary.svg";
-import HealthlogIcon from "@/assets/healthlog.svg";
-import SettingsIcon from "@/assets/settings.svg";
+import HomeIcon from "@/public/icons/home.svg";
+import DiaryIcon from "@/public/icons/diary.svg";
+import HealthlogIcon from "@/public/icons/healthlog.svg";
+import SettingsIcon from "@/public/icons/settings.svg";
 import { usePathname } from "next/navigation";
 
 const MOBILE_FOOTER_NAVIGATION = [
