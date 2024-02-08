@@ -85,3 +85,46 @@ export const NEW_PASSWORD_RULES = {
     message: ERROR_MESSAGE.signupPasswordInvalid,
   },
 };
+
+// 반려동물
+export const PET_PLACEHOLDER = {
+  name: "이름 입력",
+  type: "타입 입력",
+  breed: "품종 입력",
+  date: "날짜 선택",
+  weight: "숫자",
+  registNumber: "등록번호 입력",
+};
+
+export const PET_ERROR_MESSAGE = {
+  nameRequired: "이름 입력은 필수입니다.",
+  nameDuplicate: "이미 사용중인 닉네임입니다.",
+  nameInvalid: "올바른 이름을 입력해주세요.",
+
+  typeRequired: "타입을 선택해주세요!",
+
+  breedRequired: "품종을 입력해주세요!",
+
+  genderRequired: "성별을 선택해주세요!",
+
+  NumberInvalid: "숫자만 입력해 주세요",
+};
+
+export const PET_NAME_RULES = {
+  required: PET_ERROR_MESSAGE.nameRequired,
+  maxLength: { value: 10, message: PET_ERROR_MESSAGE.nameInvalid },
+};
+
+export const PET_REGISTNUMBER_RULES = {
+  pattern: {
+    value: /^\d{15}$/,
+    message: PET_ERROR_MESSAGE.NumberInvalid,
+  },
+};
+
+export const PET_WEIGHT_RULES = {
+  pattern: {
+    value: /^\d*\.?\d*$/,
+    message: PET_ERROR_MESSAGE.NumberInvalid,
+  },
+};
