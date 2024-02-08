@@ -1,30 +1,75 @@
 import { style } from "@vanilla-extract/css";
 
-export const container = style({ margin: 0, padding: "1.9rem 4.2rem", display: "flex", flexDirection: "column", alignItems: "center", maxWidth: "39.3rem" });
+export const container = style({
+  maxWidth: "39.3rem",
+  margin: "0 auto",
+  padding: "9.6rem 1.6rem 6.9rem",
 
-export const button = style({
-  borderRadius: "5px",
-  border: "1px solid grey;",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+
+  backgroundColor: "var(--GrayFA)",
+});
+
+export const skipButtonWrapper = style({
+  width: "100%",
+  margin: "0 auto",
+  display: "flex",
+  justifyContent: "flex-end",
+});
+
+export const skipButton = style({
   padding: "0.9rem 1.3rem",
+
+  borderRadius: "5px",
+  border: "1px solid var(--GrayE2)",
+  color: "var(--Gray81)",
   fontSize: "1.6rem",
   fontWeight: "400",
 });
 
 export const paginationButtons = style({
+  margin: "1rem auto 2.5rem ",
+
   display: "flex",
   justifyContent: "center",
-  margin: "1rem auto 2.5rem ",
 });
 
 export const nextButton = style({
   width: "1rem",
   height: "1rem",
-  border: "1px solid #ccc",
-  borderRadius: "50%",
   margin: "0 0.5rem",
-  backgroundColor: "#fff",
+
+  border: "1px solid var(--GrayE2)",
+  borderRadius: "50%",
+
+  backgroundColor: "var(--GrayE2)",
 });
 
 export const activePaginationButton = style({
-  backgroundColor: "#ccc",
+  border: "var(--MainOrange)",
+
+  backgroundColor: "var(--MainOrange)",
+});
+
+export const bottomButtonWrapper = style({
+  width: "100%",
+  margin: "0 auto",
+
+  display: "flex",
+  justifyContent: "center",
+});
+
+export const bottomButton = style({
+  width: "100%",
+  padding: "1.3rem 0",
+
+  borderRadius: "30px",
+
+  backgroundColor: "var(--MainOrange)",
+  color: "var(--White)",
+  fontSize: "1.6rem",
+  fontWeight: "600",
+  textAlign: "center",
 });
