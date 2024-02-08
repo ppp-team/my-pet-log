@@ -1,7 +1,7 @@
 "use client";
 
-import KebabIcon from "@/assets/kebab.svg?url";
-import LikeIcon from "@/assets/like.svg";
+import KebabIcon from "@/public/icons/kebab.svg?url";
+import LikeIcon from "@/public/icons/like.svg";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import Image from "next/image";
