@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { CONFIRM_MESSAGE, ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import { useEffect } from "react";
-import * as styles from "@/app/settings/(accounts)/profile/page.css";
+import * as styles from "@/app/settings/(account)/profile/page.css";
 import mockData from "./mockData.json"; //추후 삭제
 import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
