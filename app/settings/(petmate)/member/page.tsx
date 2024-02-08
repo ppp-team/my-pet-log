@@ -40,7 +40,7 @@ const Page = () => {
     <main className={container}>
       <section className={memberlist}>
         <div className={profileWrapper}>
-          <div className={profileImg} style={{ backgroundImage: `url(${currentUser.profileImageUrl || NoProfileImage})` }} />
+          <div className={profileImg} style={{ backgroundImage: `url(${currentUser.profileImageUrl ?? NoProfileImage})` }} />
           <p className={nickname}>{currentUser.nickname} (나)</p>
         </div>
         <button className={button} onClick={() => (isLeader ? openModal1() : openModal2())}>

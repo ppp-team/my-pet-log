@@ -1,7 +1,7 @@
 import * as styles from "./ReceivedInvitationList.css";
 import { ReceivedInvitationList } from "@/app/_types/receivedInvitation";
 import sampleImageSrc from "@/public/icons/edit.svg?url";
-import petProfileDefaultSrc from "@/public/images/pet-profile-default.svg?url";
+import petProfileDefaultSrc from "@/public/images/.svg?url";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";

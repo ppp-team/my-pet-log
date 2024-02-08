@@ -32,7 +32,7 @@ const Page = () => {
   // 리액트 훅 폼 사용해서 닉네임, 프로필, 이메일 받아오도록 추후 수정
   useEffect(() => {
     setValue("nickname", mockData.nickname);
-    setValue("image", mockData.profileImageUrl || NoProfileImage);
+    setValue("image", mockData.profileImageUrl ?? NoProfileImage);
     setValue("isNicknameConfirmed", false);
   }, [setValue]);
 
