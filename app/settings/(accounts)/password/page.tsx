@@ -2,7 +2,7 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { CURRENT_PASSWORD_RULES, ERROR_MESSAGE, NEW_PASSWORD_RULES, PLACEHOLDER } from "@/constants/inputConstant";
-import * as styles from "@/app/(settingsMenu)/(Account)/password/page.css";
+import * as styles from "@/app/settings/(accounts)/password/page.css";
 import ErrorMessage from "@/components/@common/ErrorMessage";
 
 interface IFormInput {
@@ -51,7 +51,7 @@ const Page = () => {
 
       <label className={styles.label}>새 비밀번호*</label>
       <input
-        className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
+        className={`${styles.input} ${errors.newPassword ? styles.inputError : ""}`}
         {...register("newPassword", NEW_PASSWORD_RULES)}
         type="password"
         placeholder={PLACEHOLDER.newPassword}
@@ -60,7 +60,7 @@ const Page = () => {
 
       <label className={styles.label}>새 비밀번호 확인*</label>
       <input
-        className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
+        className={`${styles.input} ${errors.newPasswordCheck ? styles.inputError : ""}`}
         {...register("newPasswordCheck", newPasswordCheckRules(newPassword))}
         type="password"
         placeholder={PLACEHOLDER.confirmNewPassword}

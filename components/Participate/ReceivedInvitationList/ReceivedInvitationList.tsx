@@ -1,6 +1,7 @@
 import * as styles from "./ReceivedInvitationList.css";
-import { ReceivedInvitationList } from "@/components/types/receivedInvitation";
+import { ReceivedInvitationList } from "@/types/receivedInvitation";
 import sampleImageSrc from "@/assets/edit.svg?url";
+import petProfileDefaultSrc from "@/assets/images/pet-profile-default.svg?url";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -20,7 +21,7 @@ const ReceivedInvitationList = () => {
         {receivedInvitationListMock.map((invitation) => (
           <SwiperSlide key={invitation.invitationId} className={styles.itemOverride}>
             <div className={styles.item}>
-              <Image className={styles.petImage} src={invitation.petImageUrl} alt="펫 프로필 이미지" width={48} height={48} />
+              <Image className={styles.petImage} src={invitation.petImageUrl ?? petProfileDefaultSrc} alt="펫 프로필 이미지" width={48} height={48} />
               <p className={styles.petName}>{invitation.petName}</p>
               <p className={styles.invitedDate}>{invitation.invitedAt}</p>
               <div className={styles.responseContainer}>

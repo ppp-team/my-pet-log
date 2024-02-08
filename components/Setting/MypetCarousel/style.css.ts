@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 export const title = style({
   margin: "0 1.6rem 2rem",
 
-  color: "#727272",
+  color: "var(--Gray72)",
   fontSize: "1.6rem",
   fontWeight: "600",
 });

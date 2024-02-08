@@ -24,14 +24,14 @@ const Page = () => {
     <>
       <MypetCarousel />
       <div className={styles.container}>
-        <Link href="/profile">
+        <Link href="/settings/profile">
           <MyProfile />
         </Link>
         <div className={styles.listContainer}>
-          <MenuList href="/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
-          <MenuList href="/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
-          <MenuList href="/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />
-          <MenuList href="/notice" src={NoticeIcon} alt="notice icon" text="공지사항" />
+          <MenuList href="/settings/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
+          <MenuList href="/settings/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
+          <MenuList href="/settings/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />
+          <MenuList href="/settings/notice" src={NoticeIcon} alt="notice icon" text="공지사항" />
           <span className={styles.logout} onClick={openModalFunc}>
             로그아웃
           </span>

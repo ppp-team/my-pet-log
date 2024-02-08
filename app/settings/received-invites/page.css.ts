@@ -11,7 +11,7 @@ export const buttonCommon = style({
 });
 
 export const groupdateCommon = style({
-  color: "#818181",
+  color: "var(--Gray81)",
   fontSize: "1.4rem",
   fontWeight: "500",
 
@@ -97,7 +97,7 @@ export const acceptButton = style([
     marginRight: "0.8rem",
 
     backgroundColor: "var(--MainOrange)",
-    color: "#fff",
+    color: "var(--White)",
   },
 ]);
 
@@ -105,7 +105,7 @@ export const refuseButton = style([
   buttonCommon,
   {
     border: "1px solid var(--MainOrange)",
-    backgroundColor: "#fff",
+    backgroundColor: "var(--White)",
     color: "var(--MainOrange)",
   },
 ]);

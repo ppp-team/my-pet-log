@@ -24,3 +24,7 @@ export const title = style({
   textAlign: "center",
   color: "#000",
 });
+
+export const formWrapper = style({
+  padding: "0 2rem",
+});

@@ -13,11 +13,11 @@ export default function PetmateLayout({ children }: { children: React.ReactNode 
       <nav>
         <TitleHeader title="펫메이트 초대 및 그룹 관리" redirectPath="/settings" />
         <ul className={styles.navList}>
-          <li className={`${pathname === "/member" ? styles.active : styles.noActive}`}>
-            <Link href="/member">펫메이트 그룹 관리</Link>
+          <li className={`${pathname === "/settings/member" ? styles.active : styles.noActive}`}>
+            <Link href="/settings/member">펫메이트 그룹 관리</Link>
           </li>
-          <li className={`${pathname === "/invitation" ? styles.active : styles.noActive}`}>
-            <Link href="/invitation">펫메이트 초대 내역</Link>
+          <li className={`${pathname === "/settings/invitation" ? styles.active : styles.noActive}`}>
+            <Link href="/settings/invitation">펫메이트 초대 내역</Link>
           </li>
         </ul>
       </nav>

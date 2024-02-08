@@ -19,11 +19,11 @@ export const input = style({
   padding: "1.3rem 1.8rem",
 
   borderRadius: "10px",
-  border: "1.5px solid #e2e2e2",
+  border: "1.5px solid var(--GrayE2)",
 
   fontSize: "1.6rem",
   fontWeight: "500",
-  color: "#818181",
+  color: "var(--Gray81)",
 
   ":focus": {
     outline: "none",
@@ -32,7 +32,7 @@ export const input = style({
 });
 
 export const inputError = style({
-  border: "1.5px solid #ff3b30",
+  border: "1.5px solid var(--Red)",
 });
 
 export const button = style({
@@ -41,6 +41,6 @@ export const button = style({
 
   borderRadius: "30px",
 
-  color: "#fff",
+  color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
 });

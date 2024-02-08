@@ -25,7 +25,7 @@ export const iconWrapper = style({
 });
 
 export const text = style({
-  color: "#000",
+  color: "var(--White)",
   textAlign: "center",
   fontSize: "16px",
   fontWeight: "500",
@@ -36,7 +36,7 @@ export const button = style({
 
   padding: "0.9rem 0",
 
-  color: "#F2F2F2",
+  color: "var(--Gray)",
   textAlign: "center",
   fontSize: "1.6rem",
   fontWeight: "600",
