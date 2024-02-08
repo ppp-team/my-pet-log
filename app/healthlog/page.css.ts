@@ -20,6 +20,7 @@ export const calendarBox = style({
   height: "30rem",
 
   margin: "2.4rem 1.6rem",
+  padding: "1rem",
 
   display: "flex",
   justifyContent: "center",
