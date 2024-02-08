@@ -1,7 +1,7 @@
 "use client";
 
-import DiaryList from "@/components/Diary/DiaryList";
-import { currentPetAtom } from "@/states/atom";
+import DiaryList from "@/app/diary/_components/DiaryList";
+import { currentPetAtom } from "@/app/_states/atom";
 import { useAtom } from "jotai";
 import { redirect } from "next/navigation";
 

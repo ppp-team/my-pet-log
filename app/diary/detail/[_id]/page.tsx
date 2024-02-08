@@ -2,10 +2,8 @@
 
 import KebabIcon from "@/assets/kebab.svg?url";
 import LikeIcon from "@/assets/like.svg";
-import SendIcon from "@/assets/send.svg?url";
-import BackHeader from "@/components/@common/BackHeader";
-import Modal from "@/components/@common/Modal";
-import { useModal } from "@/hooks/useModal";
+import Modal from "@/app/_components/Modal";
+import { useModal } from "@/app/_hooks/useModal";
 import Image from "next/image";
 import { useState } from "react";
 import "swiper/css";
@@ -14,6 +12,8 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import * as styles from "./style.css";
 import "./swiper.css";
+import SendIcon from "@/public/icons/send.svg?url";
+import BackHeader from "@/app/_components/BackHeader";
 
 const COMMENT_DATA = [
   {

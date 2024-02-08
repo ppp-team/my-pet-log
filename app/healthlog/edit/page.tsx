@@ -1,8 +1,9 @@
 "use client";
 
-import DateInput from "@/components/@common/DateInput";
-import SelectMateDropdown from "@/components/Healthlog/SelectMateDropdown";
-import SubtypeDetail from "@/components/Healthlog/SubtypeDetail";
+import BackHeader from "@/app/_components/BackHeader";
+import DateInput from "@/app/_components/DateInput";
+import SelectMateDropdown from "@/app/healthlog/_components/SelectMateDropdown";
+import SubtypeDetail from "@/app/healthlog/_components/SubtypeDetail";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,16 +25,17 @@ const Page = () => {
     handleSubmit,
     setValue,
     getValues,
-    // formState: { errors },
+    watch,
+    formState: { errors },
   } = useForm();
 
   const buttonTypes: { type: keyof typeof subtypeOptions | "CUSTOM" | "WALK"; label: string }[] = [
-    { type: "FEED", label: "사료 +" },
-    { type: "HEALTH", label: "건강 +" },
-    { type: "WALK", label: "산책 +" },
-    { type: "TREAT", label: "간식/영양제 +" },
-    { type: "GROOMING", label: "위생/미용 +" },
-    { type: "CUSTOM", label: "직접 입력 +" },
+    { type: "FEED", label: "사료" },
+    { type: "HEALTH", label: "건강" },
+    { type: "WALK", label: "산책" },
+    { type: "TREAT", label: "간식/영양제" },
+    { type: "GROOMING", label: "위생/미용" },
+    { type: "CUSTOM", label: "직접 입력" },
   ];
 
   const handleTypeButtonClick = (subtype: keyof typeof subtypeOptions | "CUSTOM" | "WALK", group: string) => {
@@ -83,8 +85,8 @@ const Page = () => {
 
   return (
     <>
+      <BackHeader title="건강수첩 작성하기" />
       <div className={styles.container}>
-        <p className={styles.title}>건강수첩 작성하기</p>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems}>
           <div className={styles.inputWrapper}>
             <DateInput register={register} setValue={setValue} getValue={getValues} />
@@ -95,7 +97,6 @@ const Page = () => {
           </div>
 
           <div className={styles.inputWrapper}>
-            <label>주요 항목</label>
             <div className={styles.buttonGroup}>
               {buttonTypes.slice(0, 3).map(({ type, label }) => (
                 <button
@@ -108,10 +109,13 @@ const Page = () => {
                   }}
                 >
                   {label}
+                  <span className={selectedType === type ? styles.addIconSelected : styles.addIcon}>+</span>
                 </button>
               ))}
             </div>
-            <div ref={topSubtypeRef}>{visibleSubtype && activeButtonGroup === "top" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} />}</div>
+            <div ref={topSubtypeRef}>
+              {visibleSubtype && activeButtonGroup === "top" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} watch={watch} errors={errors} />}
+            </div>
           </div>
 
           <div className={styles.inputWrapper}>
@@ -127,10 +131,13 @@ const Page = () => {
                   }}
                 >
                   {label}
+                  <span className={selectedType === type ? styles.addIconSelected : styles.addIcon}>+</span>
                 </button>
               ))}
             </div>
-            <div ref={bottomSubtypeRef}>{visibleSubtype && activeButtonGroup === "bottom" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} />}</div>
+            <div ref={bottomSubtypeRef}>
+              {visibleSubtype && activeButtonGroup === "bottom" && <SubtypeDetail visibleSubtype={visibleSubtype} register={register} watch={watch} errors={errors} />}
+            </div>
           </div>
 
           <div>

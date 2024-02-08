@@ -1,11 +1,11 @@
 "use client";
 
-import DateInput from "@/components/@common/DateInput";
-import ImageInput from "@/components/Diary/ImageInput";
-import VideoInput from "@/components/Diary/VideoInput";
+import DateInput from "@/app/_components/DateInput";
+import ImageInput from "@/app/diary/_components/ImageInput";
+import VideoInput from "@/app/diary/_components/VideoInput";
 import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
-import BackHeader from "@/components/@common/BackHeader";
+import BackHeader from "@/app/_components/BackHeader";
 
 const MAX_LENGTH = { title: 15, content: 500 };
 

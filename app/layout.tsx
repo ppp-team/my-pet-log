@@ -1,7 +1,8 @@
-import QueryProvider from "@/components/QueryProvider";
+import QueryProvider from "@/app/_components/QueryProvider";
 import "@/styles/global.css";
 import "@/styles/colors.css";
 import type { Metadata } from "next";
+import Template from "./template";
 
 export const metadata: Metadata = {
   title: "마이펫로그",
@@ -12,7 +13,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <Template>
+            {children}
+            <div id="portal"></div>
+          </Template>
+        </QueryProvider>
       </body>
     </html>
   );
