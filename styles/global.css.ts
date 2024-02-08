@@ -38,3 +38,10 @@ globalStyle("input", {
   border: "none",
   outline: "none",
 });
+
+globalStyle("fieldset", {
+  border: "0",
+  padding: "0",
+  margin: "0",
+  minWidth: "0",
+});

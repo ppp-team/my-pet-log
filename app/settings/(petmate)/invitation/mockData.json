@@ -1,0 +1,23 @@
+{
+  "count": 3,
+  "data": [
+    {
+      "guardianId": "1",
+      "nickname": "홍길동",
+      "state": "거절",
+      "profileImageUrl": ""
+    },
+    {
+      "guardianId": "2",
+      "nickname": "김철수",
+      "state": "대기 중",
+      "profileImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Golde33443.jpg/560px-Golde33443.jpg"
+    },
+    {
+      "guardianId": "3",
+      "nickname": "이영희",
+      "state": "대기 중",
+      "profileImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Golde33443.jpg/560px-Golde33443.jpg"
+    }
+  ]
+}

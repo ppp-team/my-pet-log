@@ -1,43 +1,57 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import "@/components/Setting/MypetCarousel/style.css";
-import { Pagination, Autoplay } from "swiper/modules";
-import "@/styles/global.css";
+import { Pagination } from "swiper/modules";
 import mockData from "./mockdata.json";
-import Card from "@/components/Setting/MypetCarousel/Card";
-import * as styles from "./style.css";
+import { title, petadd, container, petButton, petMateButton, petInfoWrapper } from "./style.css";
 import "./swiper.css";
+import MyPetInfo from "@/components/Setting/MyPetInfo";
+import Image from "next/image";
+import AddIcon from "@/assets/add.svg?url";
+import Link from "next/link";
 
-const MyPet = () => {
-  const backgroundColors = ["#d9d9d9", "#aabbcc", "#ddeeff", "#ccddaa", "#bbaaee"];
+const MyPetCarousel = () => {
+  const myPetInfoStyles = {
+    profileBorderColor: "var(--White)",
+    nameTextColor: "var(--White)",
+    breedTextColor: "var(--White)",
+  };
 
   return (
-    <div className={styles.container}>
-      <div style={{ color: "#727272", fontSize: "1.6rem", fontWeight: "600" }}>마이펫 관리하기</div>
+    <div>
+      <div className={title}>마이펫 관리하기</div>
       <Swiper
         slidesPerView={"auto"}
         centeredSlides={true}
         spaceBetween={20}
-        autoplay={{
-          delay: 2000,
-          disableOnInteraction: false,
-        }}
         pagination={{
           clickable: true,
         }}
-        modules={[Autoplay, Pagination]}
+        modules={[Pagination]}
         className="mySwiper"
       >
-        {mockData.data.map((card, index) => (
-          <SwiperSlide key={card.petId}>
-            <Card card={card} backgroundColor={backgroundColors[index % backgroundColors.length]} />
+        {mockData.data.map((petInfo) => (
+          <SwiperSlide key={petInfo.petId}>
+            <div className={container}>
+              <div className={petInfoWrapper}>
+                <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />
+              </div>
+              <Link href="" className={petButton}>
+                마이펫 정보 수정
+              </Link>
+              <Link href="/settings/member" className={petMateButton}>
+                펫메이트 초대 및 그룹 관리
+              </Link>
+            </div>
           </SwiperSlide>
         ))}
-        <SwiperSlide className="petadd">반려동물 추가 +</SwiperSlide>
+        <SwiperSlide className={petadd}>
+          <Image src={AddIcon} alt="add icon" width={36} height={36} />
+          <span>반려동물 추가</span>
+        </SwiperSlide>
       </Swiper>
     </div>
   );
 };
 
-export default MyPet;
+export default MyPetCarousel;

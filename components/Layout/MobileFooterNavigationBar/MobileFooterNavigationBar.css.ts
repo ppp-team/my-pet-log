@@ -1,8 +1,10 @@
+import { Z_INDEX } from "@/styles/zindex.css";
 import { style } from "@vanilla-extract/css";
 
 export const footer = style({
   position: "fixed",
   bottom: "0",
+  zIndex: Z_INDEX.MobileLayout,
 });
 
 export const nav = style({

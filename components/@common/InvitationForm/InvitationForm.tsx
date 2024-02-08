@@ -4,7 +4,7 @@ import * as styles from "./InvitationForm.css";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-import cautionIconSrc from "@/assets/caution.svg?url";
+import cautionIconSrc from "@/assets/circle-warning.svg?url";
 import removeSpaces from "@/utils/removeSpaces";
 
 interface IForm {
@@ -44,7 +44,7 @@ const InvitationForm = ({ formTitle, inputPlaceholder, requiredErrorMessage, inv
       <label className={styles.formTitle}>{formTitle}</label>
       <input
         className={styles.input}
-        style={assignInlineVars({ [styles.borderColor]: errors?.inputValue ? "#FF3B30" : "#818181" })}
+        style={assignInlineVars({ [styles.borderColor]: errors?.inputValue ? "var(--Red)" : "var(--Gray81)" })}
         type="text"
         placeholder={inputPlaceholder}
         {...register("inputValue", {

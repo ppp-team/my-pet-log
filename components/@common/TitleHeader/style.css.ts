@@ -9,7 +9,7 @@ export const header = style({
   justifyContent: "center",
   alignItems: "center",
 
-  borderBottom: "1px solid #e2e2e2",
+  borderBottom: "1px solid var(--GrayE2)",
   fontSize: "1.6rem",
   fontWeight: "500",
 });

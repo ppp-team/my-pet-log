@@ -22,20 +22,21 @@ export type TasksType = {
 
 interface LogItemProps {
   taskItem: TasksType;
-  pageType: string;
   onDelete: () => void; // 로직 보완
 }
 
-const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogItemProps) => {
+const SWIPE_BUTTON_WIDTH = 132;
+
+const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) => {
   const [isChecked, setIsChecked] = useState(taskItem.isComplete);
   const [showDetails, setShowDetails] = useState(false);
-
   const [startX, setStartX] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
-  const swipeButtonsWidth = 66;
+  const checkboxId = `checkbox-${taskItem.logId}`;
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
     setIsChecked(event.target.checked);
   };
 
@@ -50,37 +51,41 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogIt
       const swipingDistance = startX - currentX;
 
       if (swipingDistance > 0) {
-        setCurrentTranslate(Math.max(-swipeButtonsWidth, -swipingDistance));
+        setCurrentTranslate(Math.max(-SWIPE_BUTTON_WIDTH, -swipingDistance));
       } else if (swipingDistance < 0 && currentTranslate !== 0) {
         setCurrentTranslate(Math.min(0, -swipingDistance + currentTranslate));
       }
     }
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
     setIsSwiping(false);
-    if (currentTranslate <= -swipeButtonsWidth / 2) {
-      setCurrentTranslate(-swipeButtonsWidth);
+    const endX = event.changedTouches[0].clientX;
+    const swipedDistance = startX - endX;
+    if (swipedDistance > 0) {
+      setCurrentTranslate(-SWIPE_BUTTON_WIDTH);
     } else {
       setCurrentTranslate(0);
     }
   };
 
-  const listItemStyle = {
-    transform: `translateX(${currentTranslate}px)`,
-    transition: "transform 0.5s ease",
-  };
-
-  const toggleDetails = () => {
-    setShowDetails(!showDetails);
+  const toggleDetails = (event: React.MouseEvent<HTMLLIElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.id !== checkboxId && !target.closest(`label[for="${checkboxId}"]`)) {
+      setShowDetails(!showDetails);
+    }
   };
 
   return (
     <div className={styles.swipeArea}>
-      <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={listItemStyle} className={styles.container}>
+      <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className={styles.container}>
         <li className={styles.listContainer} onClick={toggleDetails}>
           <div className={styles.leftPart}>
-            {pageType !== "home" && <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />}
+            <label htmlFor={checkboxId} className={styles.checkBox}>
+              <input type="checkbox" className={styles.inputCheckbox} id={checkboxId} checked={isChecked} onChange={handleCheckboxChange} />
+              <span className={styles.checkBoxOn}></span>
+            </label>
+
             <div className={styles.taskAndTimeBox}>
               <div className={styles.checkStar}>
                 {taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt={"중요 표시"} />}
@@ -93,7 +98,7 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogIt
             <span>{taskItem.manager.nickname}</span>
           </div>
         </li>
-        {currentTranslate === -swipeButtonsWidth && (
+        {currentTranslate === -SWIPE_BUTTON_WIDTH && (
           <div className={styles.swipeButtons}>
             <Link href="/healthlog/edit">
               <button className={styles.editButton}>수정</button>
@@ -104,6 +109,7 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, pageType, onDelete }: LogIt
           </div>
         )}
       </div>
+
       {showDetails && (
         <div className={styles.logDetailContainer}>
           <LogDetail />

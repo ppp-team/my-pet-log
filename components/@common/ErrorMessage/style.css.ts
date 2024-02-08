@@ -9,7 +9,7 @@ export const container = style({
 });
 
 export const error = style({
-  color: "#ff3b30",
+  color: "var(--Red)",
   fontSize: "1.1rem",
   fontWeight: "500",
 });
