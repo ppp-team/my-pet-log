@@ -2,7 +2,7 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTNUMBER_RULES, PET_PLACEHOLDER } from "@/app/_constants/inputConstant";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as styles from "./style.css";
 import DefaultImage from "@/public/icons/user.svg?url";
 import cameraIcon from "@/public/icons/camera.svg?url";
@@ -11,16 +11,23 @@ import TitleHeader from "@/app/_components/TitleHeader/index";
 import PetDateInput from "./PetDateInput";
 import { petOptions } from "@/public/data/petOptions";
 import ErrorMessage from "@/app/_components/ErrorMessage";
+import SignButton from "../SignButton";
+import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 
 interface IFormInput {
   petName: string;
   image: string;
   email: string;
+  type: string;
+  breed: string;
   weight: number;
   registNumber: number;
 }
 
 const PetRegister = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [typeOpen, setTypeOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [selectedType, setSelectedType] = useState("");
   const [selectedBreed, setSelectedBreed] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
@@ -41,6 +48,34 @@ const PetRegister = () => {
     const files = event.target.files;
     if (!files) return;
     setValue("image", URL.createObjectURL(files[0]));
+  };
+
+  //드롭다운 외부 클릭시 닫히게 하기
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
+  //드롭다운
+
+  const handleTypeClick = (type: string) => {
+    setValue("type", type);
+    setSelectedType(type);
+    setSelectedBreed("");
+    setTypeOpen(false);
+  };
+
+  const handleBreedClick = (breed: string) => {
+    setValue("breed", breed);
+    setSelectedBreed(breed);
+    setDropdownOpen(false);
   };
 
   //동물 타입
@@ -86,29 +121,55 @@ const PetRegister = () => {
 
         {/* 타입 */}
         <label className={styles.label}>타입*</label>
-        <select className={styles.selectBox} onChange={handleTypeChange} value={selectedType} required>
-          <option className={styles.hidePlaceholder} value="" disabled>
-            타입을 선택하세요
-          </option>
-          {Object.keys(petOptions).map((option: string, index: number) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
+        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(!typeOpen)}>
+          {selectedType || "타입을 선택하세요"}
+          <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
+        </button>
+
+        {typeOpen && (
+          <ul className={styles.optionsList}>
+            {Object.keys(petOptions).map((type: string, index: number) => (
+              <li key={index} value={type}>
+                <button type="button" className={styles.optionButton} onClick={() => handleTypeClick(type)} {...register("type")}>
+                  {type}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* {selectedType === "기타" && (
+          <>
+            <input
+              className={styles.inputBox}
+              placeholder="품종을 직접 입력하세요"
+              {...register("type", {
+                required: "내용을 입력해주세요",
+                // maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
+              })}
+              autoFocus
+            />
+          </>
+        )} */}
 
         {/* 품종 */}
         <label className={styles.label}>품종*</label>
-        <select className={styles.selectBox} onChange={handleBreedChange} value={selectedBreed} required>
-          <option className={styles.hidePlaceholder} value="" disabled>
-            품종을 선택하세요
-          </option>
-          {petOptions[selectedType]?.map((breed: string, index: number) => (
-            <option key={index} value={breed}>
-              {breed}
-            </option>
-          ))}
-        </select>
+        <button className={`${styles.selectBox} ${dropdownOpen ? styles.selectBoxOpen : ""}`} onClick={() => setDropdownOpen(!dropdownOpen)}>
+          {selectedBreed || "품종을 선택하세요"}
+          <DropdownIcon className={`${styles.dropdownIcon} ${dropdownOpen ? styles.dropdownIconOpen : ""}`} />
+        </button>
+
+        {dropdownOpen && (
+          <ul className={styles.optionsList}>
+            {petOptions[selectedType]?.map((breed: string, index: number) => (
+              <li key={index} value={breed}>
+                <button type="button" className={styles.optionButton} onClick={() => handleBreedClick(breed)} {...register("breed")}>
+                  {breed}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {/* 성별 */}
         <label className={styles.label}>성별*</label>
