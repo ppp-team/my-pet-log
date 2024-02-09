@@ -1,10 +1,10 @@
-import * as styles from "@/app/diary/edit/style.css";
+import * as styles from "./style.css";
 import { InputProps } from "@/app/diary/_components/ImageInput";
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
 import { useState } from "react";
 import { Options } from "vanilla-calendar-pro";
 import { FieldValues, UseFormGetValues } from "react-hook-form";
-import OptionalMessage from "./component/OptionalCheck";
+import OptionalMessage from "@/app/_components/PetRegister/component/OptionalCheck";
 
 interface DateInputProps extends InputProps {
   getValue: UseFormGetValues<FieldValues>;
@@ -42,7 +42,11 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
       <div style={{ display: "flex", gap: "1rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
         <input id={id} className={styles.input} value={dateValue} readOnly {...register("date")} disabled={isDisabled} />
       </div>
-      {isCalendarOpen && <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%" }} />}
+      {isCalendarOpen && (
+        <div className={styles.calendarWrapper}>
+          <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%" }} />
+        </div>
+      )}
       <OptionalMessage message="기억이 나지 않아요" onClearDate={clearDate} />
     </div>
   );

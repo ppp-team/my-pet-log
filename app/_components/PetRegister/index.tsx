@@ -8,7 +8,7 @@ import DefaultImage from "@/public/icons/user.svg?url";
 import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
 import TitleHeader from "@/app/_components/TitleHeader/index";
-import PetDateInput from "./PetDateInput";
+import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
 import { petOptions } from "@/public/data/petOptions";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import DropdownIcon from "@/public/icons/drop-down-icon.svg";

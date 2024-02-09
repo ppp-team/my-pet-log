@@ -12,6 +12,8 @@ export const profile = style({
 
   display: "flex",
   justifyContent: "center",
+
+  position: "relative",
 });
 
 export const image = style({
@@ -26,6 +28,14 @@ export const image = style({
   backgroundPosition: "center",
 
   cursor: "pointer",
+});
+
+export const cameraWrapper = style({
+  width: "100%",
+});
+
+export const fileUploadInput = style({
+  width: "100%",
 });
 
 export const cameraIcon = style({
@@ -92,6 +102,9 @@ export const selectBox = style({
   padding: "1.3rem 1.8rem",
   marginBottom: "0.8rem",
 
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
   borderRadius: "10px",
   border: "1.5px solid #e2e2e2",
 
@@ -111,6 +124,7 @@ export const inputBox = style({
 
   backgroundColor: "var(--MainOrange)",
   color: "var(--White)",
+  textAlign: "left",
 
   "::placeholder": {
     color: "var(--White)",
