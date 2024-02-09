@@ -1,24 +1,17 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import * as styles from "@/app/settings/(account)/layout.css";
-import CloseIcon from "@/public/icons/close.svg?url";
-import Image from "next/image";
+import TitleHeader from "@/app/_components/TitleHeader";
 
 export default function AccountLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router = useRouter();
 
   return (
     <section>
       <nav>
-        <header className={styles.header}>
-          나의 프로필
-          <div className={styles.closeIcon} onClick={() => router.push("/settings")}>
-            <Image src={CloseIcon} alt="close icon" width={25} height={25} />
-          </div>
-        </header>
+        <TitleHeader title="나의 프로필" redirectPath="/settings" />
         <ul className={styles.navList}>
           <li className={`${pathname === "/settings/profile" ? styles.active : styles.noActive}`}>
             <Link href="/settings/profile">프로필 설정</Link>

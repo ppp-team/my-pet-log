@@ -18,7 +18,7 @@ interface MyPetProps {
     firstMeetDate: string;
     registNumber: string;
     repStatus: string;
-    petImageUrl: string;
+    petImageUrl: string | null;
   };
   styles?: {
     profileBorderColor: string;
