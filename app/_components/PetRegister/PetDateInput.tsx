@@ -33,7 +33,7 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
 
   const clearDate = () => {
     setDateValue("날짜 입력");
-    // setValue("date", "");
+    setValue("date", "");
     setIsDisabled((prev) => !prev);
   };
 

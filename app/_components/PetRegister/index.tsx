@@ -126,28 +126,16 @@ const PetRegister = () => {
           </ul>
         )}
 
-        {/* {selectedType === "기타" && (
-          <>
-            <input
-              className={styles.inputBox}
-              placeholder="품종을 직접 입력하세요"
-              {...register("type", {
-                required: "내용을 입력해주세요",
-                // maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
-              })}
-              autoFocus
-            />
-          </>
-        )} */}
-
         {/* 품종 */}
         <label className={styles.label}>품종*</label>
-        <button className={`${styles.selectBox} ${dropdownOpen ? styles.selectBoxOpen : ""}`} onClick={() => setDropdownOpen(!dropdownOpen)}>
-          {selectedBreed || "품종을 선택하세요"}
-          <DropdownIcon className={`${styles.dropdownIcon} ${dropdownOpen ? styles.dropdownIconOpen : ""}`} />
-        </button>
+        {selectedType !== "기타" && (
+          <button className={`${styles.selectBox} ${dropdownOpen ? styles.selectBoxOpen : ""}`} onClick={() => setDropdownOpen(!dropdownOpen)}>
+            {selectedBreed || "품종을 선택하세요"}
+            <DropdownIcon className={`${styles.dropdownIcon} ${dropdownOpen ? styles.dropdownIconOpen : ""}`} />
+          </button>
+        )}
 
-        {dropdownOpen && (
+        {dropdownOpen && selectedType !== "기타" && (
           <ul className={styles.optionsList}>
             {petOptions[selectedType]?.map((breed: string, index: number) => (
               <li key={index} value={breed}>
@@ -157,6 +145,19 @@ const PetRegister = () => {
               </li>
             ))}
           </ul>
+        )}
+
+        {selectedType === "기타" && (
+          <>
+            <input
+              className={styles.writeInput}
+              placeholder="품종을 직접 입력하세요"
+              {...register("breed", {
+                required: "내용을 입력해주세요",
+              })}
+              autoFocus
+            />
+          </>
         )}
 
         {/* 성별 */}
@@ -202,12 +203,12 @@ const PetRegister = () => {
         <PetDateInput id="first-meet" register={register} setValue={setValue} getValue={getValues} />
 
         {/* 몸무게 */}
-        <label className={styles.label}>몸무게*</label>
+        <label className={styles.label}>몸무게</label>
         <input className={styles.writeInput} {...register("weight", PET_WEIGHT_RULES)} placeholder={PET_PLACEHOLDER.weight} />
         {errors.weight && <ErrorMessage message={errors.weight.message} />}
 
         {/* 동물등록번호 */}
-        <label className={styles.label}>동물등록번호*</label>
+        <label className={styles.label}>동물등록번호</label>
         <input className={styles.writeInput} {...register("registNumber", PET_REGISTNUMBER_RULES)} placeholder={PET_PLACEHOLDER.registNumber} />
         {errors.registNumber && <ErrorMessage message={errors.registNumber.message} />}
 
