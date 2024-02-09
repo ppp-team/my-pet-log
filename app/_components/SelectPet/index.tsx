@@ -27,7 +27,7 @@ const PET_DATA = [
   {
     id: 3,
     name: "나나",
-    image: "",
+    image: null,
     gender: "여아",
     type: "롭이어",
     age: "2개월",
@@ -53,11 +53,8 @@ const Pet = ({ pet }: { pet: PetData }) => {
         router.push("/diary");
       }}
     >
-      {pet?.image ? (
-        <div className={styles.profile} style={{ backgroundImage: `url(${pet.image})` }} />
-      ) : (
-        <div className={styles.profile} style={{ backgroundImage: `url(${NoPetProfileImage})` }} />
-      )}
+      <div className={styles.profile} style={{ backgroundImage: `url(${pet.image ?? NoPetProfileImage}` }} />
+
       <div className={styles.text}>
         <h3 style={{ fontSize: "1.6rem", fontWeight: "700" }}>{pet.name}</h3>
         <p style={{ fontSize: "1.3rem", fontWeight: "500" }}>

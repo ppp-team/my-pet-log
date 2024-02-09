@@ -7,6 +7,8 @@ globalStyle(":root", {
 
     "--OrangeFFA": "#FFAB7C",
     "--OrangeFFC": "#FFCCAF",
+    "--OrangeFFE": "#FFEBDF",
+    "--OrangeED": "#ED7F41",
 
     "--Gray81": "#818181",
     "--GrayCF": "#CFCFCF",
@@ -16,6 +18,7 @@ globalStyle(":root", {
     "--GrayF2": "#F2F2F2",
     "--GrayFA": "#FAFAFA",
     "--GrayF4": "#F4F4F4",
+    "--Gray9A": "#9A9A9A",
     "--Gray45": "#454545",
     "--Gray72": "#727272",
     "--GrayE4": "#E4E4E4",
