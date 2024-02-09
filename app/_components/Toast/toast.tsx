@@ -23,7 +23,6 @@ export const showToast = (message: string, isSuccess: boolean) => {
     hideProgressBar: true,
     pauseOnHover: false,
     draggable: true,
-    closeOnClick: true,
     theme: "light",
   });
 };
