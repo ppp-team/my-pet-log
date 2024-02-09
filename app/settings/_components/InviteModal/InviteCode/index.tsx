@@ -3,7 +3,7 @@ import petInfo from "./mockData.json";
 import CopyIcon from "@/public/icons/copy.svg?url";
 import Image from "next/image";
 import MyPetInfo from "@/app/settings/_components/MyPetInfo";
-import { showToast } from "@/app/_components/Toast/toast";
+import { showToast } from "@/app/_components/Toast";
 
 const InviteCode = () => {
   const inviteCode = "seul1234";
