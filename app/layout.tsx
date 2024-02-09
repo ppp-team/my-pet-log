@@ -3,6 +3,8 @@ import "@/styles/global.css";
 import "@/styles/colors.css";
 import type { Metadata } from "next";
 import Template from "./template";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "마이펫로그",
@@ -17,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Template>
             {children}
             <div id="portal"></div>
+            <ToastContainer />
           </Template>
         </QueryProvider>
       </body>
