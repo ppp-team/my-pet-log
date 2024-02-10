@@ -4,8 +4,9 @@ import Input from "@/app/(auth)/_components/SignInput/Input";
 import { EMAIL_RULES, ERROR_MESSAGE, PLACEHOLDER, SIGNIN_PASSWORD_RULES } from "@/app/_constants/inputConstant";
 import * as styles from "./styles.css";
 import { useForm, Controller } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import SubmitButton from "@/app/(auth)/_components/SubmitButton/index";
+import { postLogin } from "@/app/_api/auth";
 
 const SignInForm = () => {
   const { control, handleSubmit, setError, formState } = useForm({
@@ -18,23 +19,14 @@ const SignInForm = () => {
     <div className={styles.container}>
       <form
         className={styles.form}
-        onSubmit={(e) => {
-          e.preventDefault();
-          //임시로 폼 제출시 즉시 home으로 이동
-          router.push("/");
-        }}
-
-        //API연결하는 로직입니다
-        // onSubmit={handleSubmit(async (data) => {
-        //   const res = await postLogin({ email: data.email, password: data.password });
-        //   if (res !== null) {
-        //     localStorage.setItem("accessToken", res.accessToken);
-        //     router.push("/");
-        //     return;
-        //   }
-        //   setError("email", { message: ERROR_MESSAGE.emailCheck });
-        //   setError("password", { message: ERROR_MESSAGE.passwordCheck });
-        // })}
+        onSubmit={handleSubmit(async (data) => {
+          const res = await postLogin({ email: data.email, password: data.password });
+          if (res !== null) {
+            return router.push("/home");
+          }
+          setError("email", { message: ERROR_MESSAGE.emailCheck });
+          setError("password", { message: ERROR_MESSAGE.passwordCheck });
+        })}
       >
         <Controller
           control={control}
