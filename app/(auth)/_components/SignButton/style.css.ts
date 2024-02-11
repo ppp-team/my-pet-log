@@ -10,7 +10,6 @@ export const signButton = style({
   margin: "auto",
   cursor: "pointer",
   display: "flex",
-  justifyContent: "center",
   alignItems: "center",
 
   fontSize: "1.4rem",
@@ -26,3 +25,12 @@ export const kakaoButton = style({
 export const googleButton = style({});
 
 export const emailButton = style({});
+
+export const iconWrapper = style({
+  display: "flex",
+  alignItems: "center",
+});
+
+export const messageWrapper = style({
+  width: "100%",
+});

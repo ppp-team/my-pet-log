@@ -1,5 +1,5 @@
 "use client";
-import * as styles from "@/app/(auth)/signup/page.css";
+import * as styles from "@/app/(auth)/style.css";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,16 +17,16 @@ const page = () => {
           이미 회원이신가요?
           <Link className={styles.link} href="/login">
             로그인하기
-          </Link>{" "}
+          </Link>
         </p>
         <div className={styles.buttonWrapper}>
-          <SignButton type="kakao" action="회원가입하기" />
+          <SignButton type="kakao" action="가입" />
         </div>
         <div className={styles.buttonWrapper}>
-          <SignButton type="google" action="회원가입하기" />
+          <SignButton type="google" action="가입" />
         </div>
         <Link className={styles.emailWrapper} href="/signup/email">
-          <SignButton type="email" action="회원가입하기" />
+          <SignButton type="email" action="가입" />
         </Link>
       </div>
     </>

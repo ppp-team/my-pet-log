@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-export const container = style({ margin: 0, padding: "0  4.5rem", display: "flex", flexDirection: "column", alignItems: "center", maxWidth: "39.3rem" });
+export const container = style({ margin: 0, padding: "0  4.5rem", display: "flex", flexDirection: "column", alignItems: "center" });
 
 export const imgWrapper = style({
   marginTop: "11.7rem",
