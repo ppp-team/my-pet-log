@@ -4,11 +4,9 @@ import { useState } from "react";
 import * as styles from "./style.css";
 import Onboarding from "@/app/(auth)/onboarding/OnbordingUI";
 import OnboardingData from "@/app/(auth)/onboarding/OnboardingData";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const Page = () => {
-  const router = useRouter();
   const [currentShow, setCurrentShow] = useState(0);
   const currentOnboarding = OnboardingData[currentShow];
 
@@ -17,10 +15,6 @@ const Page = () => {
       setCurrentShow(currentShow + 1);
     }
   };
-
-  // const handleStartClick = () => {
-  //   router.push("/signup");
-  // };
 
   return (
     <>
