@@ -5,6 +5,7 @@ import * as styles from "./style.css";
 import Onboarding from "@/app/(auth)/onboarding/OnbordingUI";
 import OnboardingData from "@/app/(auth)/onboarding/OnboardingData";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Page = () => {
   const router = useRouter();
@@ -17,17 +18,17 @@ const Page = () => {
     }
   };
 
-  const handleStartClick = () => {
-    router.push("/signup");
-  };
+  // const handleStartClick = () => {
+  //   router.push("/signup");
+  // };
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.skipButtonWrapper}>
-          <button className={styles.skipButton} onClick={handleStartClick}>
-            건너뛰기
-          </button>
+          <Link href="/signup/email">
+            <button className={styles.skipButton}>건너뛰기</button>
+          </Link>
         </div>
         <div className={styles.paginationButtons}>
           {OnboardingData.map((data, index) => (
@@ -42,9 +43,9 @@ const Page = () => {
         <Onboarding image={currentOnboarding.image} title={currentOnboarding.title} description={currentOnboarding.description} />
         <div className={styles.bottomButtonWrapper}>
           {currentShow === OnboardingData.length - 1 ? (
-            <button className={styles.bottomButton} onClick={handleStartClick}>
-              시작하기
-            </button>
+            <Link href="/signup/email" className={styles.link}>
+              <button className={styles.bottomButton}>시작하기</button>
+            </Link>
           ) : (
             <button className={styles.bottomButton} onClick={handleNext}>
               다음

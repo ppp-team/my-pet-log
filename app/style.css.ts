@@ -72,3 +72,7 @@ export const bottomButton = style({
   fontWeight: "600",
   textAlign: "center",
 });
+
+export const link = style({
+  width: "inherit",
+});
