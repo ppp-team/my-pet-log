@@ -5,7 +5,7 @@ import Image from "next/image";
 import NoMyProfileImage from "@/public/images/person-profile-default.svg?url";
 
 const MyProfile = () => {
-  const profileImageUrl = data.imgUrl || NoMyProfileImage;
+  const profileImageUrl = data.imgUrl ?? NoMyProfileImage;
 
   return (
     <div className={styles.container}>

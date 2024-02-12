@@ -5,7 +5,7 @@
       "petId": "1001",
       "ownerId": "5001",
       "petName": "체리",
-      "petImageUrl": "",
+      "petImageUrl": null,
       "invitedAt": "2023-12-30 12:00:00"
     },
     {

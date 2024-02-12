@@ -1,8 +1,8 @@
-import Image1 from "@/public/onboarding/onboarding1.png";
-import Image2 from "@/public/onboarding/onboarding2.png";
-import Image3 from "@/public/onboarding/onboarding3.png";
-import Image4 from "@/public/onboarding/onboarding4.png";
-import Image5 from "@/public/onboarding/onboarding5.png";
+import Image1 from "@/public/images/onboarding1.png";
+import Image2 from "@/public/images/onboarding2.png";
+import Image3 from "@/public/images/onboarding3.png";
+import Image4 from "@/public/images/onboarding4.png";
+import Image5 from "@/public/images/onboarding5.png";
 
 const OnboardingData = [
   {
