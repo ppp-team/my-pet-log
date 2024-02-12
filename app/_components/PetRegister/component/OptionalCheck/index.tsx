@@ -17,9 +17,11 @@ const OptionalMessage = ({ message, onClearInput }: OptionalMessageProps) => {
   };
 
   return (
-    <section className={styles.container} onClick={handleClick}>
-      <CheckIcon width={12} height={12} style={{ color: isActive ? "var(--MainOrange)" : "var(--Gray81)" }} />
-      <span className={`${styles.checked} ${isActive ? styles.active : ""}`}>{message}</span>
+    <section className={styles.container}>
+      <div className={styles.itemWrapper} onClick={handleClick}>
+        <CheckIcon width={12} height={12} style={{ color: isActive ? "var(--MainOrange)" : "var(--Gray81)" }} />
+        <span className={`${styles.checked} ${isActive ? styles.active : ""}`}>{message}</span>
+      </div>
     </section>
   );
 };
