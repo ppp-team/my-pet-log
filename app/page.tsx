@@ -20,7 +20,7 @@ const Page = () => {
     <>
       <div className={styles.container}>
         <div className={styles.skipButtonWrapper}>
-          <Link href="/signup/email">
+          <Link href="/signup">
             <button className={styles.skipButton}>건너뛰기</button>
           </Link>
         </div>
@@ -37,7 +37,7 @@ const Page = () => {
         <Onboarding image={currentOnboarding.image} title={currentOnboarding.title} description={currentOnboarding.description} />
         <div className={styles.bottomButtonWrapper}>
           {currentShow === OnboardingData.length - 1 ? (
-            <Link href="/signup/email" className={styles.link}>
+            <Link href="/signup" className={styles.link}>
               <button className={styles.bottomButton}>시작하기</button>
             </Link>
           ) : (
