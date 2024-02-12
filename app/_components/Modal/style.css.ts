@@ -20,8 +20,6 @@ export const iconWrapper = style({
 
   display: "flex",
   justifyContent: "flex-end",
-
-  cursor: "pointer",
 });
 
 export const text = style({
@@ -36,7 +34,7 @@ export const button = style({
 
   padding: "0.9rem 0",
 
-  color: "var(--White)",
+  color: "var(--GrayF2)",
   textAlign: "center",
   fontSize: "1.6rem",
   fontWeight: "600",

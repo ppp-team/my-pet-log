@@ -14,7 +14,7 @@ const Page = () => {
             <div
               className={styles.profileImg}
               style={{
-                backgroundImage: `url(${invitations.petImageUrl || NoProfileImage})`,
+                backgroundImage: `url(${invitations.petImageUrl ?? NoProfileImage})`,
               }}
             />
             <div className={styles.infoContainer}>

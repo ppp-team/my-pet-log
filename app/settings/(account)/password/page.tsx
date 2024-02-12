@@ -2,7 +2,7 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { CURRENT_PASSWORD_RULES, ERROR_MESSAGE, NEW_PASSWORD_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
-import * as styles from "@/app/settings/(accounts)/password/page.css";
+import * as styles from "@/app/settings/(account)/password/page.css";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 
 interface IFormInput {
