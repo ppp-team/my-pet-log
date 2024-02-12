@@ -5,7 +5,7 @@ export const form = style({
   display: "flex",
   flexDirection: "column",
   rowGap: "0.8rem",
-  color: "black",
+  color: "var(--Black)",
 });
 
 export const buttonWrapper = style({
@@ -15,8 +15,6 @@ export const buttonWrapper = style({
 
 export const container = style({
   width: "100%",
-  // marginTop: "5rem",
-  // padding: "2rem",
 
   display: "flex",
   justifyContent: "center",

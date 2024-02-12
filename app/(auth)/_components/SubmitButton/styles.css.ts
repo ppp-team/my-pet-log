@@ -8,6 +8,7 @@ export const submitButton = style({
   alignItems: "center",
   border: "1px solid var(--MainOrange)",
   borderRadius: "30px",
+  backgroundColor: "var(--MainOrange)",
   color: "var(--White)",
   fontWeight: 600,
   fontSize: "1.6rem",

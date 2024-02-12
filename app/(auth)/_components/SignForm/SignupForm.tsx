@@ -9,6 +9,7 @@ import * as styles from "./styles.css";
 import SubmitButton from "@/app/(auth)/_components/SubmitButton/index";
 import ModalContainer from "@/app/_components/ModalContainer";
 import AlertModal from "@/app/(auth)/_components/AlertModal";
+import Modal from "@/app/_components/Modal";
 
 const SignUpForm = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
@@ -88,11 +89,7 @@ const SignUpForm = () => {
           <SubmitButton disabled={!formState.isValid} type={"회원가입"} />
         </div>
       </form>
-      {isModalOpen && (
-        <ModalContainer>
-          <AlertModal onClick={handleCloseModal}></AlertModal>
-        </ModalContainer>
-      )}
+      {isModalOpen && <Modal text={"가입이 완료되었습니다!"} buttonText={"확인"} onClick={handleCloseModal} onClose={handleCloseModal} />}
     </>
   );
 };
