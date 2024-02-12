@@ -1,9 +1,8 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
-  maxWidth: "39.3rem",
   margin: "0 auto",
-  padding: "9.6rem 1.6rem 6.9rem",
+  padding: "3.65rem 1.6rem 6.9rem",
 
   display: "flex",
   flexDirection: "column",
@@ -72,4 +71,8 @@ export const bottomButton = style({
   fontSize: "1.6rem",
   fontWeight: "600",
   textAlign: "center",
+});
+
+export const link = style({
+  width: "inherit",
 });
