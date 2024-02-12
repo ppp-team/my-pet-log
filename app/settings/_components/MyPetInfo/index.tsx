@@ -18,7 +18,7 @@ interface MyPetProps {
     firstMeetDate: string;
     registNumber: string;
     repStatus: string;
-    petImageUrl: string;
+    petImageUrl: string | null;
   };
   styles?: {
     profileBorderColor: string;
@@ -30,7 +30,7 @@ interface MyPetProps {
 const MyPetInfo = ({ petInfo, styles }: MyPetProps) => {
   // 프롭 안넘겨줄 시 기본값들
   const { profileBorderColor = "var(--MainOrange)", nameTextColor = "var(--Black)", breedTextColor = "var(--Gray81)" } = styles || {};
-  const petImageUrl = petInfo.petImageUrl || NoPetProfileImage;
+  const petImageUrl = petInfo.petImageUrl ?? NoPetProfileImage;
 
   return (
     <div className={container}>
