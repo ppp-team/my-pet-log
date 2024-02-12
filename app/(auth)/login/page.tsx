@@ -25,7 +25,7 @@ const page = () => {
         <div className={styles.buttonWrapper}>
           <SignButton type="google" action="로그인" />
         </div>
-        <Link className={styles.emailWrapper} href="/signin/email">
+        <Link className={styles.emailWrapper} href="/login/email">
           <SignButton type="email" action="로그인" />
         </Link>
       </div>

@@ -7,45 +7,42 @@ export const inputBox = style({
   display: "inline-flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  gap: "0.8rem",
 });
 
 export const label = style({
-  color: "#333",
+  color: "var(--Black)",
   fontSize: "1.6rem",
+  fontWeight: 600,
 });
 
 export const styledInput = style({
   width: "100%",
-  height: "5rem",
-  padding: "1.5rem 1.6rem",
+  padding: "1.3rem 1.6rem",
+  marginTop: "0.6rem",
   display: "flex",
   alignItems: "center",
   gap: "1rem",
   borderRadius: "0.8rem",
-  border: "1px solid #d9d9d9",
-  background: "#ffffff",
+  border: "1.5px solid var(--GrayE2)",
+  background: "var(--White)",
   selectors: {
     "&:focus": {
       outline: "none",
-      borderColor: "#0070f3",
+      borderColor: "var(--MainOrange)",
     },
     "&.error": {
-      borderColor: "#ff0000",
-    },
-    "&:disabled": {
-      color: "#9f9f9f",
-      cursor: "default",
+      borderColor: "var(--Red)",
     },
   },
 });
 
 export const error = style({
-  color: "#ff0000",
-  fontSize: "1.4rem",
+  border: "1.5px solid var(--Red)",
+  fontSize: "1.6rem",
 });
 
 export const inputContainer = style({
   position: "relative",
   display: "flex",
+  flexDirection: "row",
 });

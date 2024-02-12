@@ -75,7 +75,13 @@ const SignUpForm = () => {
             },
           }}
           render={({ field, fieldState }) => (
-            <PasswordInput label="비밀번호 확인*" {...field} placeholder={PLACEHOLDER.signUpPassword} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <PasswordInput
+              label="비밀번호 재확인*"
+              {...field}
+              placeholder={PLACEHOLDER.signUpPassword}
+              hasError={Boolean(fieldState.error)}
+              errorText={fieldState.error?.message}
+            />
           )}
         />
         <div className={styles.buttonWrapper}>

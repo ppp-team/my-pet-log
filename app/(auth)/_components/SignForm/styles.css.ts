@@ -1,10 +1,11 @@
 import { style } from "@vanilla-extract/css";
 
 export const form = style({
-  width: "52rem",
+  width: "100%",
   display: "flex",
   flexDirection: "column",
-  rowGap: "1.6rem",
+  rowGap: "0.8rem",
+  padding: "0 1.6rem",
   color: "black",
 });
 
