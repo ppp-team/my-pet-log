@@ -12,24 +12,26 @@ import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
 import { petOptions } from "@/public/data/petOptions";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import DropdownIcon from "@/public/icons/drop-down-icon.svg";
+import OptionalMessage from "./component/OptionalCheck";
 
 interface IFormInput {
   petName: string;
   image: string;
   type: string;
   breed: string;
-  weight: number;
-  registNumber: number;
+  weight: number | null;
+  registNumber: number | null;
 }
 
 const PetRegister = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLUListElement>(null);
   const [selectedType, setSelectedType] = useState("");
   const [selectedBreed, setSelectedBreed] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedNeutering, setSelectedNeutering] = useState("");
+  const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요
 
   const {
     register,
@@ -62,17 +64,22 @@ const PetRegister = () => {
   }, [dropdownRef]);
 
   //드롭다운
+  useEffect(() => {
+    setSelectedBreed("");
+    setValue("breed", "");
+  }, [selectedType, setValue]);
+
   const handleTypeClick = (type: string) => {
     setValue("type", type);
     setSelectedType(type);
     setSelectedBreed("");
-    setTypeOpen(false);
+    setTypeOpen((prev) => !prev);
   };
 
   const handleBreedClick = (breed: string) => {
     setValue("breed", breed);
     setSelectedBreed(breed);
-    setDropdownOpen(false);
+    setDropdownOpen((prev) => !prev);
   };
 
   //중성화
@@ -83,6 +90,10 @@ const PetRegister = () => {
   //성별
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedGender(e.target.id);
+  };
+  const clearWeightInput = () => {
+    setValue("weight", null);
+    setIsWeightDisabled((prev) => !prev);
   };
 
   return (
@@ -109,13 +120,13 @@ const PetRegister = () => {
 
         {/* 타입 */}
         <label className={styles.label}>타입*</label>
-        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(!typeOpen)}>
+        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
           {selectedType || "타입을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
 
         {typeOpen && (
-          <ul className={styles.optionsList}>
+          <ul className={styles.optionsList} ref={dropdownRef}>
             {Object.keys(petOptions).map((type: string, index: number) => (
               <li key={index} value={type}>
                 <button type="button" className={styles.optionButton} onClick={() => handleTypeClick(type)} {...register("type")}>
@@ -136,7 +147,7 @@ const PetRegister = () => {
         )}
 
         {dropdownOpen && selectedType !== "기타" && (
-          <ul className={styles.optionsList}>
+          <ul className={styles.optionsList} ref={dropdownRef}>
             {petOptions[selectedType]?.map((breed: string, index: number) => (
               <li key={index} value={breed}>
                 <button type="button" className={styles.optionButton} onClick={() => handleBreedClick(breed)} {...register("breed")}>
@@ -204,8 +215,9 @@ const PetRegister = () => {
 
         {/* 몸무게 */}
         <label className={styles.label}>몸무게</label>
-        <input className={styles.writeInput} {...register("weight", PET_WEIGHT_RULES)} placeholder={PET_PLACEHOLDER.weight} />
+        <input className={styles.writeInput} {...register("weight", PET_WEIGHT_RULES)} placeholder={PET_PLACEHOLDER.weight} disabled={isWeightDisabled} />
         {errors.weight && <ErrorMessage message={errors.weight.message} />}
+        <OptionalMessage onClearInput={clearWeightInput} message={"모르겠어요"} />
 
         {/* 동물등록번호 */}
         <label className={styles.label}>동물등록번호</label>

@@ -165,7 +165,7 @@ export const selectWrapper = style({
 
 export const selectBoxOpen = style({
   backgroundColor: "var(--White)",
-  color: "var(--MainOrange)",
+  // color: "var(--MainOrange)",
 });
 
 export const dropdownIcon = style({

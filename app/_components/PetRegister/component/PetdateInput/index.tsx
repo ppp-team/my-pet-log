@@ -24,7 +24,6 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
     actions: {
       clickDay(e, self) {
         if (!self.selectedDates[0]) return;
-
         setValue("date", `${self.selectedDates[0]}`);
         setDateValue(getValue("date"));
       },
@@ -32,8 +31,8 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
   };
 
   const clearDate = () => {
-    setDateValue("날짜 입력");
-    setValue("date", "");
+    setDateValue("");
+    setValue("date", null);
     setIsDisabled((prev) => !prev);
   };
 
@@ -47,7 +46,7 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
           <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%" }} />
         </div>
       )}
-      <OptionalMessage message="기억이 나지 않아요" onClearDate={clearDate} />
+      <OptionalMessage message="기억이 나지 않아요" onClearInput={clearDate} />
     </div>
   );
 };

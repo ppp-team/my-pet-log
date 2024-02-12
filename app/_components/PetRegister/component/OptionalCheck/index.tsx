@@ -5,14 +5,14 @@ import Image from "next/image";
 
 interface OptionalMessageProps {
   message?: string;
-  onClearDate: () => void;
+  onClearInput: () => void;
 }
 
-const OptionalMessage = ({ message, onClearDate }: OptionalMessageProps) => {
+const OptionalMessage = ({ message, onClearInput }: OptionalMessageProps) => {
   const [isActive, setIsActive] = useState(false);
 
   const handleClick = () => {
-    onClearDate();
+    onClearInput();
     setIsActive(!isActive);
   };
 

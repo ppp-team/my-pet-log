@@ -15,6 +15,7 @@ export const input = style({
 
   fontSize: "1.6rem",
   fontWeight: "600",
+  cursor: "pointer",
 
   ":focus": {
     outline: "none",
