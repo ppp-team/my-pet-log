@@ -24,6 +24,8 @@ export const styledInput = style({
   gap: "1rem",
   borderRadius: "0.8rem",
   border: "1.5px solid var(--GrayE2)",
+
+  fontSize: "1.6rem",
   background: "var(--White)",
   selectors: {
     "&:focus": {

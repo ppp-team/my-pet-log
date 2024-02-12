@@ -41,7 +41,7 @@ const SignInForm = () => {
           name="email"
           rules={EMAIL_RULES}
           render={({ field, fieldState }) => (
-            <Input label="이메일*" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} message={fieldState.error?.message} />
+            <Input label="이메일*" {...field} placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <Controller

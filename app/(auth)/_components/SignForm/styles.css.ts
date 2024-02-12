@@ -5,18 +5,18 @@ export const form = style({
   display: "flex",
   flexDirection: "column",
   rowGap: "0.8rem",
-  padding: "0 1.6rem",
   color: "black",
 });
 
 export const buttonWrapper = style({
   marginTop: "2rem",
-  marginBottom: "2.4rem",
+  marginBottom: "3.2rem",
 });
 
 export const container = style({
-  marginTop: "5rem",
-  padding: "2rem",
+  width: "100%",
+  // marginTop: "5rem",
+  // padding: "2rem",
 
   display: "flex",
   justifyContent: "center",

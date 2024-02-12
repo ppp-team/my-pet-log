@@ -4,7 +4,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div>
+    <div className={styles.container}>
       <p className={styles.title}>이메일로 회원가입</p>
       <SignUpForm />
     </div>
