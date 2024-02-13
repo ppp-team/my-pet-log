@@ -23,3 +23,16 @@ export const postLogin = async ({ email, password }: FormData) => {
     return null;
   }
 };
+
+export const postLogout = async () => {
+  try {
+    const res = await instance.post("/auth/logout");
+    if (res.status === 200) {
+      cookies().delete("accessToken");
+      return true;
+    }
+  } catch (error: any) {
+    console.error(error.response.data);
+    return null;
+  }
+};
