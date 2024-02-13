@@ -1,21 +1,20 @@
 import { style } from "@vanilla-extract/css";
 
 export const form = style({
-  width: "52rem",
+  width: "100%",
   display: "flex",
   flexDirection: "column",
-  rowGap: "1.6rem",
-  color: "black",
+  rowGap: "0.8rem",
+  color: "var(--Black)",
 });
 
 export const buttonWrapper = style({
   marginTop: "2rem",
-  marginBottom: "2.4rem",
+  marginBottom: "3.2rem",
 });
 
 export const container = style({
-  marginTop: "5rem",
-  padding: "2rem",
+  width: "100%",
 
   display: "flex",
   justifyContent: "center",

@@ -3,6 +3,7 @@ import petInfo from "./mockData.json";
 import CopyIcon from "@/public/icons/copy.svg?url";
 import Image from "next/image";
 import MyPetInfo from "@/app/settings/_components/MyPetInfo";
+import { showToast } from "@/app/_components/Toast";
 
 const InviteCode = () => {
   const inviteCode = "seul1234";
@@ -12,10 +13,10 @@ const InviteCode = () => {
     navigator.clipboard
       .writeText(inviteCode)
       .then(() => {
-        alert("초대 코드가 복사되었습니다."); // 여기에 토스트 메시지 띄우면 될 듯?!
+        showToast("복사가 완료됐습니다.", true);
       })
       .catch(() => {
-        alert("복사를 실패했습니다.");
+        showToast("복사를 실패했습니다.", false);
       });
   };
 
