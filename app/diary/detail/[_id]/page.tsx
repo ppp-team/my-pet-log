@@ -1,7 +1,9 @@
 "use client";
 
 import KebabIcon from "@/public/icons/kebab.svg?url";
-import LikeIcon from "@/public/icons/like.svg?url";
+import LikeIcon from "@/public/icons/like.svg";
+import Modal from "@/app/_components/Modal";
+import { useModal } from "@/app/_hooks/useModal";
 import Image from "next/image";
 import { useState } from "react";
 import "swiper/css";
@@ -95,6 +97,13 @@ interface Tag {
 }
 
 const Comment = ({ comment }: { comment: CommentProp }) => {
+  const [isKebabOpen, setIsKebabOpen] = useState(false);
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+
+  const deleteComment = () => {
+    //댓글 삭제 api
+  };
+
   return (
     <>
       <div className={styles.commentContainer}>
@@ -104,24 +113,48 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
             <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>
               {comment.writer.nickname} <span style={{ color: " #A4A4A4", fontWeight: "400" }}>{comment.createdAt}</span>
             </p>
-            {comment.writer.isCurrentUser && <Image src={KebabIcon} alt="kebab icon" width={24} height={24} />}
+            {comment.writer.isCurrentUser && (
+              <div onBlur={() => setIsKebabOpen(false)} tabIndex={1} style={{ position: "relative" }}>
+                <Image src={KebabIcon} alt="kebab icon" width={24} height={24} onClick={() => setIsKebabOpen(!isKebabOpen)} />
+                {isKebabOpen && (
+                  <ul className={styles.commentKebab}>
+                    <li className={styles.kebabList}>수정하기</li>
+                    <li
+                      className={styles.kebabList}
+                      onClick={() => {
+                        openModalFunc();
+                        setIsKebabOpen(false);
+                      }}
+                    >
+                      삭제하기
+                    </li>
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
           <p className={styles.commentContent}>{comment.content}</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <button className={styles.recommentButton}>답글</button>{" "}
+            <button className={styles.recommentButton}>답글</button>
             <button className={styles.commentLikeButton}>
-              <Image src={LikeIcon} alt="like icon" width={18} height={18} style={{ cursor: "pointer" }} /> 5
+              <LikeIcon color={comment.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} />
             </button>
           </div>
         </div>
       </div>
-      <div></div>
+      <div>{isModalOpen && <Modal text="정말 댓글을 삭제하시겠습니까?" buttonText="삭제" onClick={deleteComment} onClose={closeModalFunc} />}</div>
     </>
   );
 };
 
 const DiaryDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [isKebabOpen, setIsKebabOpen] = useState(false);
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+
+  const deleteDiary = () => {
+    //일기 삭제 api
+  };
 
   return (
     <>
@@ -132,35 +165,55 @@ const DiaryDetailPage = () => {
             {DATA.petType} | {DATA.petAge}
           </p>
           <h3 style={{ fontSize: "1.8rem", fontWeight: "600" }}>{DATA.title}</h3>
-          <p style={{ fontSize: "1.4rem", color: "#9A9A9A" }}>{DATA.date}</p>
-          {DATA.writer.isCurrentUser && <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} />}
+          <p style={{ fontSize: "1.4rem", color: "var(--Gray9A)" }}>{DATA.date}</p>
+          {DATA.writer.isCurrentUser && (
+            <div onBlur={() => setIsKebabOpen(false)} tabIndex={1}>
+              <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} onClick={() => setIsKebabOpen(!isKebabOpen)} />
+              {isKebabOpen && (
+                <ul className={styles.kebabModal}>
+                  <li className={styles.kebabList}>수정하기</li>
+                  <li
+                    className={styles.kebabList}
+                    onClick={() => {
+                      openModalFunc();
+                      setIsKebabOpen(false);
+                    }}
+                  >
+                    삭제하기
+                  </li>
+                </ul>
+              )}
+            </div>
+          )}
         </section>
 
         <section className={styles.main}>
           <div className={styles.swiperFraction}>
             {currentPage + 1}/{DATA.images.length}
           </div>
-          <Swiper
-            onSlideChange={(e) => setCurrentPage(e.activeIndex)}
-            pagination={{
-              dynamicBullets: true,
-            }}
-            modules={[Pagination]}
-          >
-            {DATA.images.map((image, idx) => (
-              <SwiperSlide key={idx}>
-                <div className={styles.image} style={{ backgroundImage: `url(${image})` }}></div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <div onClick={() => setIsKebabOpen(false)}>
+            <Swiper
+              onSlideChange={(e) => setCurrentPage(e.activeIndex)}
+              pagination={{
+                dynamicBullets: true,
+              }}
+              modules={[Pagination]}
+            >
+              {DATA.images.map((image, idx) => (
+                <SwiperSlide key={idx}>
+                  <div className={styles.image} style={{ backgroundImage: `url(${image})` }}></div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
           <div className={styles.profile}>
             <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
               <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
               <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{DATA.writer.nickname}</p>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Image src={LikeIcon} alt="like icon" width={18} height={18} style={{ cursor: "pointer" }} />
-              <p style={{ fontSize: "1.4rem", color: "#818181" }}>{DATA.likeCount}</p>
+              <LikeIcon color={DATA.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
+              <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{DATA.likeCount}</p>
             </div>
           </div>
           <p className={styles.content}>{DATA.content}</p>
@@ -178,6 +231,7 @@ const DiaryDetailPage = () => {
             </div>
           </div>
         </section>
+        {isModalOpen && <Modal text="정말 일기를 삭제하시겠습니까?" buttonText="삭제" onClick={deleteDiary} onClose={closeModalFunc} />}
       </div>
     </>
   );
