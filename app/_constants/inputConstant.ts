@@ -122,6 +122,10 @@ export const PET_REGISTNUMBER_RULES = {
   },
 };
 
+export const PET_GENDER_RULES = {
+  required: PET_ERROR_MESSAGE.genderRequired,
+};
+
 export const PET_WEIGHT_RULES = {
   pattern: {
     value: /^\d+(\.\d{0,2})?$/,
