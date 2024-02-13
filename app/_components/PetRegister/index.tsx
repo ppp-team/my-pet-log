@@ -32,14 +32,15 @@ export interface IFormInput {
 }
 
 const PetRegister = () => {
+  const [profileImage, setProfileImage] = useState<string>(DefaultImage);
   const [section, setSection] = useState(1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
-  const dropdownRef = useRef<HTMLUListElement>(null);
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedBreed, setSelectedBreed] = useState("");
-  const [selectedGender, setSelectedGender] = useState("");
-  const [selectedNeutering, setSelectedNeutering] = useState("");
+  const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
+  const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
+  const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
+  const [selectedGender, setSelectedGender] = useState(""); //성별 선택 반영
+  const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요
 
   const {
@@ -68,8 +69,13 @@ const PetRegister = () => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files) return;
+    setProfileImage(URL.createObjectURL(files[0]));
     setValue("image", URL.createObjectURL(files[0]));
   };
+
+  useEffect(() => {
+    setProfileImage(watch("image") || DefaultImage);
+  }, [watch]);
 
   //드롭다운 외부 클릭시 닫히게 하기
   useEffect(() => {
