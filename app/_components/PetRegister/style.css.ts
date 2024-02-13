@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 //타이틀 헤더
 export const header = style({
-  padding: "1.4rem 1.6rem",
+  padding: "1.8rem 1.6rem",
 
   position: "relative",
 

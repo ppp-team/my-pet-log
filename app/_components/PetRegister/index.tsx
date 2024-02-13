@@ -57,15 +57,23 @@ const PetRegister = () => {
   //전체 폼 제출
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
 
-  //섹션 전환을 위한 핸들러
+  //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
+  let isSectionValid = false;
+  if (getValues() && getValues().petName && getValues().type && getValues().breed) {
+    isSectionValid = true;
+  }
+
   const handleNextSection = () => {
-    setSection(section + 1);
+    if (isSectionValid) {
+      setSection(section + 1);
+    }
   };
+
   const handlePrevSection = () => {
     setSection(section - 1);
   };
 
-  //마이펫 이미지
+  //프로필 이미지
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files) return;
@@ -192,7 +200,7 @@ const PetRegister = () => {
           />
         </>
       )}
-      <button className={styles.button} onClick={handleNextSection}>
+      <button className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
         다음
       </button>
     </>

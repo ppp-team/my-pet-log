@@ -14,7 +14,7 @@ interface DateInputProps {
 }
 const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [dateValue, setDateValue] = useState("날짜 입력");
+  const [dateValue, setDateValue] = useState("날짜 선택");
   const [isDisabled, setIsDisabled] = useState(false);
 
   const options: Options = {

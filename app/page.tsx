@@ -5,7 +5,6 @@ import * as styles from "./style.css";
 import Onboarding from "@/app/(auth)/onboarding/OnbordingUI";
 import OnboardingData from "@/app/(auth)/onboarding/OnboardingData";
 import Link from "next/link";
-import PetRegister from "./_components/PetRegister";
 
 const Page = () => {
   const [currentShow, setCurrentShow] = useState(0);
@@ -48,7 +47,6 @@ const Page = () => {
           )}
         </div>
       </div>
-      <PetRegister />
     </>
   );
 };
