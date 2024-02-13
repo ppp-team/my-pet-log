@@ -22,7 +22,6 @@ const Page = () => {
     const logoutSuccess = await postLogout();
     closeModalFunc();
 
-    console.log(logoutSuccess);
     if (logoutSuccess) {
       router.push("/login");
     }

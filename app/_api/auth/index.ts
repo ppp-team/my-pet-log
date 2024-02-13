@@ -26,8 +26,18 @@ export const postLogin = async ({ email, password }: FormData) => {
 
 export const postLogout = async () => {
   try {
-    const res = await instance.post("/auth/logout");
-    if (res.status === 200) {
+    const accessToken = cookies().get("accessToken")?.value;
+    const res = await instance.post(
+      "/auth/logout",
+      {},
+      {
+        headers: {
+          accessToken: accessToken,
+        },
+      },
+    );
+
+    if (res.status === 204) {
       cookies().delete("accessToken");
       return true;
     }
