@@ -1,7 +1,7 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTNUMBER_RULES, PET_PLACEHOLDER } from "@/app/_constants/inputConstant";
+import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTNUMBER_RULES, PET_PLACEHOLDER, PET_ERROR_MESSAGE } from "@/app/_constants/inputConstant";
 import { useState, useEffect, useRef } from "react";
 import * as styles from "./style.css";
 import DefaultImage from "@/public/images/pet-profile-default.svg?url";
@@ -22,7 +22,7 @@ export interface IFormInput {
   type: string;
   breed: string;
   gender: string;
-  neutering: string | null;
+  neutering: boolean | null;
   birthday: string | null;
   firstMeet: string | null;
   name: string;
@@ -119,12 +119,14 @@ const PetRegister = () => {
 
   //중성화
   const handleNeuteringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedNeutering(e.target.id);
+    setSelectedNeutering(e.target.value);
+    setValue("neutering", e.target.value === "true" ? true : e.target.value === "false" ? false : null);
   };
 
   //성별
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedGender(e.target.id);
+    setSelectedGender(e.target.value);
+    setValue("gender", e.target.value);
   };
 
   //몸무게
@@ -212,13 +214,13 @@ const PetRegister = () => {
       <label className={styles.label}>성별*</label>
       <div className={styles.radioContainer}>
         <div className={styles.leftRadio}>
-          <input type="radio" id="male" name="gender" checked={selectedGender === "male"} onChange={handleGenderChange} />
+          <input type="radio" id="male" name="gender" value="male" checked={selectedGender === "male"} onChange={handleGenderChange} />
           <label className={`${styles.radioOption} ${selectedGender === "male" && styles.leftSelected}`} htmlFor="male">
             남
           </label>
         </div>
         <div className={styles.rightRadio}>
-          <input type="radio" id="female" name="gender" checked={selectedGender === "female"} onChange={handleGenderChange} />
+          <input type="radio" id="female" name="gender" value="female" checked={selectedGender === "female"} onChange={handleGenderChange} />
           <label className={`${styles.radioOption} ${selectedGender === "female" && styles.rightSelected}`} htmlFor="female">
             여
           </label>
@@ -229,14 +231,14 @@ const PetRegister = () => {
       <label className={styles.label}>중성화 여부</label>
       <div className={styles.radioContainer}>
         <div className={styles.leftRadio}>
-          <input type="radio" id="yes" name="neutering" checked={selectedNeutering === "yes"} onChange={handleNeuteringChange} />
-          <label className={`${styles.radioOption} ${selectedNeutering === "yes" && styles.leftSelected}`} htmlFor="yes">
+          <input type="radio" id="yes" name="neutering" value="true" checked={selectedNeutering === "true"} onChange={handleNeuteringChange} />
+          <label className={`${styles.radioOption} ${selectedNeutering === "true" && styles.leftSelected}`} htmlFor="yes">
             했어요
           </label>
         </div>
         <div className={styles.rightRadio}>
-          <input type="radio" id="no" name="neutering" checked={selectedNeutering === "no"} onChange={handleNeuteringChange} />
-          <label className={`${styles.radioOption} ${selectedNeutering === "no" && styles.rightSelected}`} htmlFor="no">
+          <input type="radio" id="no" name="neutering" value="false" checked={selectedNeutering === "false"} onChange={handleNeuteringChange} />
+          <label className={`${styles.radioOption} ${selectedNeutering === "false" && styles.rightSelected}`} htmlFor="no">
             안했어요
           </label>
         </div>
@@ -267,7 +269,7 @@ const PetRegister = () => {
     </>
   );
   return (
-    <div>
+    <>
       <header className={styles.header}>
         {section === 2 && (
           <div className={styles.backIcon} onClick={handlePrevSection}>
@@ -282,7 +284,7 @@ const PetRegister = () => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>
-    </div>
+    </>
   );
 };
 
