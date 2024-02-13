@@ -48,6 +48,8 @@ export const cameraIcon = style({
   borderRadius: "50%",
   border: "3px solid #fff",
   backgroundColor: "#f2f2f2",
+
+  cursor: "pointer",
 });
 
 export const label = style({

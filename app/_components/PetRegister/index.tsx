@@ -117,16 +117,18 @@ const PetRegister = () => {
 
   const section1 = (
     <>
-      <label className={styles.profile} htmlFor="image">
+      <div className={styles.profile}>
         <div
           className={styles.image}
           style={{
             backgroundImage: `url(${watch("image") || DefaultImage})`,
           }}
         >
-          <Image className={styles.cameraIcon} src={cameraIcon} alt="camera icon" width={40} height={40} />
+          <label htmlFor="image">
+            <Image className={styles.cameraIcon} src={cameraIcon} alt="camera icon" width={40} height={40} />
+          </label>
         </div>
-      </label>
+      </div>
       <input id="image" type="file" accept="image/*" {...register("image")} onChange={handleImageChange} style={{ display: "none" }} />
       {/* 이름 */}
       <label className={styles.label}>이름*</label>
