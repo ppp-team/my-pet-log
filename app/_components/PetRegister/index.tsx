@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTNUMBER_RULES, PET_PLACEHOLDER } from "@/app/_constants/inputConstant";
 import { useState, useEffect, useRef } from "react";
 import * as styles from "./style.css";
-import DefaultImage from "@/public/icons/user.svg?url";
+import DefaultImage from "@/public/images/pet-profile-default.svg?url";
 import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
 import TitleHeader from "@/app/_components/TitleHeader/index";
@@ -14,7 +14,7 @@ import ErrorMessage from "@/app/_components/ErrorMessage";
 import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 import OptionalMessage from "./component/OptionalCheck";
 
-interface IFormInput {
+export interface IFormInput {
   petName: string;
   image: string;
   type: string;
@@ -44,6 +44,7 @@ const PetRegister = () => {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
 
+  //마이펫 이미지
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files) return;
@@ -91,6 +92,8 @@ const PetRegister = () => {
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedGender(e.target.id);
   };
+
+  //몸무게
   const clearWeightInput = () => {
     setValue("weight", null);
     setIsWeightDisabled((prev) => !prev);

@@ -9,7 +9,7 @@ import OptionalMessage from "@/app/_components/PetRegister/component/OptionalChe
 interface DateInputProps extends InputProps {
   getValue: UseFormGetValues<FieldValues>;
 }
-const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
+const PetDateInput = ({ register, setValue, getValue }: DateInputProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [dateValue, setDateValue] = useState("날짜 입력");
   const [isDisabled, setIsDisabled] = useState(false);
@@ -39,7 +39,7 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
   return (
     <div className={styles.inputWrapper}>
       <div style={{ display: "flex", gap: "1rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
-        <input id={id} className={styles.input} value={dateValue} readOnly {...register("date")} disabled={isDisabled} />
+        <input className={styles.input} value={dateValue} readOnly {...register("date")} disabled={isDisabled} />
       </div>
       {isCalendarOpen && (
         <div className={styles.calendarWrapper}>
