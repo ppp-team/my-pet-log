@@ -1,7 +1,7 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES, PET_ERROR_MESSAGE } from "@/app/_constants/inputConstant";
+import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
 import { useState, useEffect, useRef } from "react";
 import * as styles from "./style.css";
 import DefaultImage from "@/public/images/pet-profile-default.svg?url";
@@ -39,6 +39,7 @@ const PetRegister = () => {
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
   const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
   const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
+  const [selectedGender, setSelectedGender] = useState<string>("");
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요
 
@@ -120,6 +121,12 @@ const PetRegister = () => {
   const handleNeuteringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedNeutering(e.target.value);
     setValue("neutering", e.target.value === "true" ? true : e.target.value === "false" ? false : null);
+  };
+
+  //성별 클릭여부
+  const handleGenderChange = (value: string) => {
+    setSelectedGender(value);
+    setValue("gender", value);
   };
 
   //몸무게
@@ -210,14 +217,21 @@ const PetRegister = () => {
       <label className={styles.label}>성별*</label>
       <div className={styles.radioContainer}>
         <div className={styles.leftRadio}>
-          <input type="radio" id="male" value="male" {...register("gender", PET_GENDER_RULES)} />
-          <label className={`${styles.radioOption} ${watch("gender") === "male" && styles.leftSelected}`} htmlFor="male">
+          <input type="radio" id="male" value="male" checked={selectedGender === "male"} onClick={() => handleGenderChange("male")} {...register("gender", PET_GENDER_RULES)} />
+          <label className={`${styles.radioOption} ${selectedGender === "male" && styles.leftSelected}`} htmlFor="male">
             남
           </label>
         </div>
         <div className={styles.rightRadio}>
-          <input type="radio" id="female" value="female" {...register("gender", PET_GENDER_RULES)} />
-          <label className={`${styles.radioOption} ${watch("gender") === "female" && styles.rightSelected}`} htmlFor="female">
+          <input
+            type="radio"
+            id="female"
+            value="female"
+            checked={selectedGender === "female"}
+            onClick={() => handleGenderChange("female")}
+            {...register("gender", PET_GENDER_RULES)}
+          />
+          <label className={`${styles.radioOption} ${selectedGender === "female" && styles.rightSelected}`} htmlFor="female">
             여
           </label>
         </div>
