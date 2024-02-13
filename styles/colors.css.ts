@@ -11,6 +11,7 @@ globalStyle(":root", {
     "--OrangeED": "#ED7F41",
 
     "--Gray81": "#818181",
+    "--GrayB1": "#B1B1B1",
     "--GrayCF": "#CFCFCF",
     "--GrayC2": "#C2C2C2",
     "--GrayE2": "#E2E2E2",
@@ -23,6 +24,7 @@ globalStyle(":root", {
     "--Gray72": "#727272",
     "--GrayE4": "#E4E4E4",
     "--Gray9f": "#9f9f9f",
+    "--Gray41": "#414141",
 
     "--White": "#FFFFFF",
     "--Black": "#000000",

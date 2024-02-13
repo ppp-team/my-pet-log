@@ -1,5 +1,6 @@
 import { ChangeEventHandler, FocusEventHandler, HTMLInputTypeAttribute, forwardRef } from "react";
 import * as styles from "./styles.css";
+import ErrorMessage from "@/app/_components/ErrorMessage";
 
 export interface InputProps {
   label: string;
@@ -25,9 +26,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ label, type, value, ha
         onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
-        className={`${styles.styledInput} ${hasError ? styles.error : ""}`}
+        className={`${styles.styledInput} ${hasError && styles.error}`}
       />
-      {hasError && <p className={styles.error}>{errorText}</p>}
+      {hasError && <ErrorMessage message={errorText} />}
     </div>
   );
 });

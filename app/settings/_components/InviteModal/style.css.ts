@@ -21,7 +21,7 @@ export const invitation = style({
 });
 
 export const invitationButton = style({
-  color: "(--MainOrange)",
+  color: "var(--MainOrange)",
   textAlign: "center",
   fontSize: "1.4rem",
   fontWeight: "600",

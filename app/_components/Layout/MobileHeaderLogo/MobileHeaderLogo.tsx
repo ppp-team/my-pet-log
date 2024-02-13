@@ -1,11 +1,11 @@
 import Image from "next/image";
 import * as styles from "./MobileHeaderLogo.css";
-import sampleImageSrc from "@/public/icons/edit.svg?url";
+import logoImageSrc from "@/public/icons/logo.svg?url";
 
 const MobileHeaderLogo = () => {
   return (
     <header className={styles.header}>
-      <Image src={sampleImageSrc} alt="펫그룹 이미지" width={40} height={40} />
+      <Image className={styles.logo} src={logoImageSrc} alt="로고 이미지" width={37} height={36} />
     </header>
   );
 };
