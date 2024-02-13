@@ -1,7 +1,6 @@
 import { useState } from "react";
 import * as styles from "./style.css";
 import CheckIcon from "@/public/icons/confirm.svg";
-import Image from "next/image";
 
 interface OptionalMessageProps {
   message?: string;

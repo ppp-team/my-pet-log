@@ -1,15 +1,18 @@
 import * as styles from "./style.css";
-import { InputProps } from "@/app/diary/_components/ImageInput";
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
 import { useState } from "react";
 import { Options } from "vanilla-calendar-pro";
-import { FieldValues, UseFormGetValues } from "react-hook-form";
+import { UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import OptionalMessage from "@/app/_components/PetRegister/component/OptionalCheck";
+import { IFormInput } from "@/app/_components/PetRegister";
 
-interface DateInputProps extends InputProps {
-  getValue: UseFormGetValues<FieldValues>;
+interface DateInputProps {
+  register: UseFormRegister<IFormInput>;
+  setValue: UseFormSetValue<IFormInput>;
+  getValue: UseFormGetValues<IFormInput>;
+  id: "birthday" | "firstMeet";
 }
-const PetDateInput = ({ register, setValue, getValue }: DateInputProps) => {
+const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [dateValue, setDateValue] = useState("날짜 입력");
   const [isDisabled, setIsDisabled] = useState(false);
@@ -18,28 +21,28 @@ const PetDateInput = ({ register, setValue, getValue }: DateInputProps) => {
     type: "default",
     settings: {
       selected: {
-        dates: [getValue("date")],
+        dates: getValue(id) ? [getValue(id) as string] : [],
       },
     },
     actions: {
       clickDay(e, self) {
         if (!self.selectedDates[0]) return;
-        setValue("date", `${self.selectedDates[0]}`);
-        setDateValue(getValue("date"));
+        setValue(id, `${self.selectedDates[0]}`);
+        setDateValue(getValue(id) || "");
       },
     },
   };
 
   const clearDate = () => {
     setDateValue("");
-    setValue("date", null);
+    setValue(id, null);
     setIsDisabled((prev) => !prev);
   };
 
   return (
     <div className={styles.inputWrapper}>
       <div style={{ display: "flex", gap: "1rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
-        <input className={styles.input} value={dateValue} readOnly {...register("date")} disabled={isDisabled} />
+        <input className={styles.input} value={dateValue} readOnly {...register(id)} disabled={isDisabled} />
       </div>
       {isCalendarOpen && (
         <div className={styles.calendarWrapper}>

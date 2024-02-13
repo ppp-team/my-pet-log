@@ -19,8 +19,14 @@ export interface IFormInput {
   image: string;
   type: string;
   breed: string;
+  gender: string;
+  neutering: string | null;
+  birthday: string | null;
+  firstMeet: string | null;
+  name: string;
   weight: number | null;
   registNumber: number | null;
+  id: string | number | null;
 }
 
 const PetRegister = () => {
@@ -49,6 +55,9 @@ const PetRegister = () => {
   //섹션 전환을 위한 핸들러
   const handleNextSection = () => {
     setSection(section + 1);
+  };
+  const handlePrevSection = () => {
+    setSection(section - 1);
   };
 
   //마이펫 이미지
@@ -219,7 +228,7 @@ const PetRegister = () => {
 
       {/* 처음 만난 날  */}
       <label className={styles.label}>처음 만난 날</label>
-      <PetDateInput id="first-meet" register={register} setValue={setValue} getValue={getValues} />
+      <PetDateInput id="firstMeet" register={register} setValue={setValue} getValue={getValues} />
 
       {/* 몸무게 */}
       <label className={styles.label}>몸무게</label>
