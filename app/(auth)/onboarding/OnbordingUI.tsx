@@ -2,7 +2,7 @@ import * as styles from "./style.css";
 import Image, { StaticImageData } from "next/image";
 
 interface OnboardingProps {
-  image: StaticImageData;
+  image: string | StaticImageData;
   title: string[];
   description: string[];
 }
@@ -19,11 +19,11 @@ const Onboarding = ({ image, title, description }: OnboardingProps) => {
             <div key={index}>{line}</div>
           ))}
         </h1>
-        <p className={styles.scriptSection}>
+        <div className={styles.scriptSection}>
           {description.map((line, index) => (
             <div key={index}>{line}</div>
           ))}
-        </p>
+        </div>
       </div>
     </div>
   );

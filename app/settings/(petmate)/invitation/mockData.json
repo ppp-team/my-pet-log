@@ -5,7 +5,7 @@
       "guardianId": "1",
       "nickname": "홍길동",
       "state": "거절",
-      "profileImageUrl": ""
+      "profileImageUrl": null
     },
     {
       "guardianId": "2",

@@ -3,9 +3,10 @@
 import DateInput from "@/app/_components/DateInput";
 import ImageInput from "@/app/diary/_components/ImageInput";
 import VideoInput from "@/app/diary/_components/VideoInput";
-import { useForm } from "react-hook-form";
+import { FieldValues, UseFormRegister, useForm } from "react-hook-form";
 import * as styles from "./style.css";
 import BackHeader from "@/app/_components/BackHeader";
+import ErrorMessage from "@/app/_components/ErrorMessage";
 
 const MAX_LENGTH = { title: 15, content: 500 };
 
@@ -38,7 +39,7 @@ const EditPage = () => {
                 {watch("title")?.length ?? "0"}/ {MAX_LENGTH.title}
               </p>
             }
-            {errors["title"] && <p className={styles.error}>{errors["title"].message?.toString()}</p>}
+            {errors.title && <ErrorMessage message={errors.title.message?.toString()} />}
           </div>
 
           <DateInput register={register} setValue={setValue} getValue={getValues} />
@@ -63,7 +64,7 @@ const EditPage = () => {
                 {watch("content")?.length ?? "0"}/ {MAX_LENGTH.content}
               </p>
             }
-            {errors["content"] && <p className={styles.error}>{errors["content"].message?.toString()}</p>}
+            {errors.content && <ErrorMessage message={errors.content.message?.toString()} />}
           </div>
 
           <button className={styles.button}>작성하기</button>
