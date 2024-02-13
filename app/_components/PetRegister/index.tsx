@@ -7,12 +7,14 @@ import * as styles from "./style.css";
 import DefaultImage from "@/public/images/pet-profile-default.svg?url";
 import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
-import TitleHeader from "@/app/_components/TitleHeader/index";
 import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
 import { petOptions } from "@/public/data/petOptions";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 import OptionalMessage from "./component/OptionalCheck";
+import CloseIcon from "@/public/icons/close.svg?url";
+import BackIcon from "@/public/icons/chevron-left.svg?url";
+import { useRouter } from "next/navigation";
 
 export interface IFormInput {
   petName: string;
@@ -48,6 +50,8 @@ const PetRegister = () => {
     getValues,
     watch,
   } = useForm<IFormInput>({ mode: "onTouched" });
+
+  const router = useRouter();
 
   //전체 폼 제출
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
@@ -248,10 +252,19 @@ const PetRegister = () => {
       </button>
     </>
   );
-
   return (
     <div>
-      <TitleHeader title={"마이펫 정보 입력"} redirectPath={"/"} />
+      <header className={styles.header}>
+        {section === 2 && (
+          <div className={styles.backIcon} onClick={handlePrevSection}>
+            <Image src={BackIcon} alt="backward icon" width={25} height={25} />
+          </div>
+        )}
+        마이펫 정보 입력
+        <div className={styles.closeIcon} onClick={() => router.push("/")}>
+          <Image src={CloseIcon} alt="close icon" width={25} height={25} />
+        </div>
+      </header>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>

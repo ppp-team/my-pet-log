@@ -1,5 +1,39 @@
 import { style } from "@vanilla-extract/css";
 
+//타이틀 헤더
+export const header = style({
+  padding: "1.4rem 1.6rem",
+
+  position: "relative",
+
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
+  borderBottom: "1px solid var(--GrayE2)",
+  fontSize: "1.6rem",
+  fontWeight: "500",
+});
+
+export const backIcon = style({
+  position: "absolute",
+  top: "50%",
+  left: "1.6rem",
+  transform: "translateY(-50%)",
+
+  cursor: "pointer",
+});
+
+export const closeIcon = style({
+  position: "absolute",
+  right: "1.6rem",
+  top: "50%",
+  transform: "translateY(-50%)",
+
+  cursor: "pointer",
+});
+
+//폼
 export const formContainer = style({
   padding: "5rem 1.5rem",
 
@@ -7,6 +41,7 @@ export const formContainer = style({
   flexDirection: "column",
 });
 
+//프로필
 export const profile = style({
   marginBottom: "5rem",
 
@@ -52,6 +87,7 @@ export const cameraIcon = style({
   cursor: "pointer",
 });
 
+//공통 라벨, 인풋
 export const label = style({
   marginTop: "0.8rem",
   marginBottom: "0.6rem",
@@ -99,7 +135,6 @@ export const inputWrapper = style({
 });
 
 // 타입, 품종
-
 export const selectBox = style({
   padding: "1.3rem 1.8rem",
   marginBottom: "0.8rem",
@@ -146,24 +181,6 @@ export const selectWrapper = style({
 
   gap: "1rem",
 });
-
-// export const selectBox = style({
-//   width: "100%",
-//   height: "4rem",
-
-//   display: "flex",
-//   justifyContent: "space-between",
-//   alignItems: "center",
-
-//   padding: "0 1rem",
-
-//   borderRadius: "10px",
-//   border: "1.5px solid var(--White)",
-
-//   backgroundColor: "var(--MainOrange)",
-//   color: "var(--White)",
-//   textAlign: "left",
-// });
 
 export const selectBoxOpen = style({
   backgroundColor: "var(--White)",
