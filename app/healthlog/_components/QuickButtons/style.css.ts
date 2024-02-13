@@ -3,9 +3,9 @@ import { style } from "@vanilla-extract/css";
 export const buttonContainer = style({
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "flex-start",
 
-  margin: "0 auto",
+  margin: "0 1.6rem",
   gap: "1rem",
 });
 
