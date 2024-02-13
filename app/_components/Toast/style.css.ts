@@ -20,7 +20,20 @@ globalStyle(".Toastify__toast-container ", {
 
 globalStyle(".Toastify__toast ", {
   minHeight: "unset",
+  padding: "1.2rem",
 
   borderRadius: "6px",
   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+});
+
+globalStyle(".Toastify__close-button", {
+  alignSelf: "unset",
+});
+
+globalStyle(".Toastify__toast-body", {
+  padding: "unset",
+});
+
+globalStyle(".Toastify__close-button > svg", {
+  display: "flex",
 });
