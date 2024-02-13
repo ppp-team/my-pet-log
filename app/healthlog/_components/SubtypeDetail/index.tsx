@@ -55,6 +55,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
               required: "내용을 입력해주세요",
               maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
             })}
+            maxLength={MAX_LENGTH.subtype}
             autoFocus
           />
           {
@@ -94,6 +95,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
                   required: "내용을 입력해주세요",
                   maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
                 })}
+                maxLength={MAX_LENGTH.subtype}
                 autoFocus
               />
               {
@@ -114,6 +116,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
           {...register("memo", {
             maxLength: { value: MAX_LENGTH.memo, message: `최대 ${MAX_LENGTH.memo}자까지 작성할 수 있습니다.` },
           })}
+          maxLength={MAX_LENGTH.memo}
         />
         {
           <p className={styles.p}>
