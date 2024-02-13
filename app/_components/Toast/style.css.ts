@@ -24,3 +24,11 @@ globalStyle(".Toastify__toast ", {
   borderRadius: "6px",
   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
 });
+
+globalStyle(".Toastify__close-button", {
+  alignSelf: "unset",
+});
+
+globalStyle(".Toastify__toast-body", {
+  padding: "0.5rem",
+});
