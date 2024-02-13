@@ -8,9 +8,8 @@ export type PetGroupType = {
   gender: string;
   isNeutered: "Y" | "N";
   birth: string; //태어난
-  firstMeetDate: string;
   weight: string;
   registNumber: string;
   repStatus: "Y" | "N";
-  petImageUrl: string;
+  petImageUrl: string | null;
 };
