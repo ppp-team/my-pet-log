@@ -41,7 +41,7 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
   const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
   const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
-  const [selectedGender, setSelectedGender] = useState<string>("");
+  const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요
 
@@ -137,6 +137,7 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
     setIsWeightDisabled((prev) => !prev);
   };
 
+  //삭제하기 버튼, API호출하는 코드로 수정 예정
   const handleDelete = () => {
     console.log("동물 삭제");
   };
