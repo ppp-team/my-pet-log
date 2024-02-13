@@ -31,7 +31,9 @@ export interface IFormInput {
   id: string | number | null;
 }
 
-const PetRegister = () => {
+type PetFormType = "register" | "edit";
+
+const PetRegister = ({ type }: { type: PetFormType }) => {
   const [profileImage, setProfileImage] = useState<string>(DefaultImage);
   const [section, setSection] = useState(1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -134,6 +136,32 @@ const PetRegister = () => {
     setValue("weight", null);
     setIsWeightDisabled((prev) => !prev);
   };
+
+  const handleDelete = () => {
+    console.log("동물 삭제");
+  };
+
+  // 타입에 따라 타이틀 변경하고 삭제하기 버튼 렌더링
+  let headerTitle = "";
+  let deleteButton = null;
+  let submitText = "";
+  switch (type) {
+    case "register":
+      headerTitle = "마이펫 정보 입력";
+      submitText = "작성 완료";
+      break;
+    case "edit":
+      headerTitle = "마이펫 정보 수정";
+      submitText = "수정 완료";
+      deleteButton = (
+        <div className={styles.deleteButtonWrapper}>
+          <button className={styles.deleteButton} onClick={handleDelete}>
+            동물 삭제하기
+          </button>
+        </div>
+      );
+      break;
+  }
 
   const section1 = (
     <>
@@ -274,11 +302,15 @@ const PetRegister = () => {
       <input className={styles.writeInput} {...register("registNumber", PET_REGISTNUMBER_RULES)} placeholder={PET_PLACEHOLDER.registNumber} />
       {errors.registNumber && <ErrorMessage message={errors.registNumber.message} />}
 
+      {/* 삭제하기 버튼 */}
+      {type === "edit" && deleteButton}
+
       <button className={styles.button} type="submit">
-        작성완료
+        {submitText}
       </button>
     </>
   );
+
   return (
     <>
       <header className={styles.header}>
@@ -287,7 +319,7 @@ const PetRegister = () => {
             <Image src={BackIcon} alt="backward icon" width={25} height={25} />
           </div>
         )}
-        마이펫 정보 입력
+        {headerTitle}
         <div className={styles.closeIcon} onClick={() => router.push("/")}>
           <Image src={CloseIcon} alt="close icon" width={25} height={25} />
         </div>

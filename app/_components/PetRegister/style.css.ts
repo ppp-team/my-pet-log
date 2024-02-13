@@ -330,3 +330,16 @@ export const rightSelected = style({
   color: "var(--MainOrange)",
   backgroundColor: "var(--LightOrange)",
 });
+
+export const deleteButtonWrapper = style({});
+export const deleteButton = style({
+  marginTop: "3.2rem",
+  padding: "0.6rem 1.4rem",
+  borderRadius: "5px",
+  border: "1px solid var(--Gray81)",
+
+  color: "var(--Gray81)",
+
+  fontSize: "1.4rem",
+  fontWeight: 500,
+});
