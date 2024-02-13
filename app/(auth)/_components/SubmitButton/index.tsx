@@ -8,7 +8,7 @@ const SubmitButton = ({ type, disabled }: ButtonProps) => {
   return (
     <div>
       <button className={submitButton} disabled={disabled}>
-        {type === "로그인" ? "로그인" : "작성 완료"}
+        {type === "로그인" ? "로그인하기" : "작성완료"}
       </button>
     </div>
   );
