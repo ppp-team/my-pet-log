@@ -5,13 +5,13 @@ export interface PetType {
   name: string;
   type: string;
   breed: string;
-  gender: string;
-  isNeutered: string;
+  gender: "FEMALE" | "MALE";
+  isNeutered: "Y" | "N";
   birth: string;
   firstMeetDate: string;
   weight: string;
   registeredNumber: string | null;
-  repStatus: string;
+  repStatus: "REPRESENTATIVE" | "NORMAL";
   petImageUrl: string | null;
 }
 
