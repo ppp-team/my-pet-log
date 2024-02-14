@@ -17,6 +17,15 @@ const nextConfig = {
 
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "mypetlog.s3.ap-northeast-2.amazonaws.com",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 module.exports = withVanillaExtract(nextConfig);
