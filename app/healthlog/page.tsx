@@ -6,7 +6,7 @@ import LogWriteButton from "@/app/healthlog/_components/LogWriteButton";
 import QuickButtons from "@/app/healthlog/_components/QuickButtons";
 import { currentPetAtom } from "@/app/_states/atom";
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as styles from "./page.css";
 
 const Page = () => {
@@ -15,6 +15,10 @@ const Page = () => {
   const [currentPet, setCurrentPet] = useAtom(currentPetAtom); //추후에 localStorage로 바꿔야할듯
 
   // if (!currentPet) return redirect("/healthlog/select");
+
+  useEffect(() => {
+    console.log(selectedDate);
+  }, [selectedDate]);
 
   return (
     <>

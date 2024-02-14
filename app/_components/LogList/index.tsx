@@ -7,7 +7,14 @@ import { useState } from "react";
 import { sampleLogList } from "./sampleLogList";
 import * as styles from "./style.css";
 
-const LogList = () => {
+interface LogListProps {
+  petId: number;
+  year: number;
+  month: number;
+  day: number;
+}
+
+const LogList: React.FC<LogListProps> = ({ petId, year, month, day }) => {
   const [selectedTask, setSelectedTask] = useState<TasksType | null>(null);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
