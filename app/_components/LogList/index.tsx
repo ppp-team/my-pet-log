@@ -1,10 +1,12 @@
 "use client";
 
-import LogItem, { TasksType } from "@/app/_components/LogList/LogItem";
+import { getPetLogs } from "@/app/_api/log";
+import LogItem, { LogsType } from "@/app/_components/LogList/LogItem";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import { useState } from "react";
-import { sampleLogList } from "./sampleLogList";
+import { useQuery } from "react-query";
+import QueryProvider from "../QueryProvider";
 import * as styles from "./style.css";
 
 interface LogListProps {
@@ -15,37 +17,36 @@ interface LogListProps {
 }
 
 const LogList: React.FC<LogListProps> = ({ petId, year, month, day }) => {
-  const [selectedTask, setSelectedTask] = useState<TasksType | null>(null);
+  const { data: logs, isLoading, error } = useQuery(["petLogs", petId, year, month, day], () => getPetLogs(petId, year, month, day));
+  const [selectedLog, setSelectedLog] = useState<LogsType | null>(null);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
-  const handleDelete = (task: TasksType) => {
-    console.log("modal-test");
-    setSelectedTask(task);
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !logs) return <div>Error</div>;
+
+  const handleDelete = (logItem: LogsType) => {
+    setSelectedLog(logItem);
     openModalFunc();
   };
 
   const confirmDelete = () => {
     closeModalFunc();
-    if (selectedTask) {
+    if (selectedLog) {
       // 삭제 로직
-      console.log(`Deleting task with id: ${selectedTask.logId}`);
+      console.log(`Deleting log with id: ${selectedLog.logId}`);
     }
   };
 
   return (
     <>
-      <ul>
-        {sampleLogList.map((log, index) => (
-          <div key={index}>
-            <p className={styles.date}>{log.date}</p>
-            <ul>
-              {log.tasks.map((taskItem, taskIndex) => (
-                <LogItem taskItem={taskItem} key={taskIndex} onDelete={() => handleDelete(taskItem)} />
-              ))}
-            </ul>
-          </div>
-        ))}
-      </ul>
+      <div>
+        <p className={styles.date}>{logs.date}</p>
+        <ul>
+          {logs.logs.map((logItem: any, index: number) => (
+            <LogItem logItem={logItem} key={index} onDelete={() => handleDelete(logItem)} />
+          ))}
+        </ul>
+      </div>
       {isModalOpen && <Modal text="정말 삭제하시겠습니까?" buttonText="확인" onClick={confirmDelete} onClose={closeModalFunc} />}
     </>
   );
