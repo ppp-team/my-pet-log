@@ -1,7 +1,7 @@
 "use client";
 
-import starIconSrc from "@/public/icons/important-star-icon.svg?url";
 import LogDetail from "@/app/healthlog/_components/LogDetail";
+import starIconSrc from "@/public/icons/important-star-icon.svg?url";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -22,7 +22,7 @@ export type TasksType = {
 
 interface LogItemProps {
   taskItem: TasksType;
-  onDelete: () => void; // 로직 보완
+  onDelete: () => void;
 }
 
 const SWIPE_BUTTON_WIDTH = 132;
@@ -82,13 +82,13 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
         <li className={styles.listContainer} onClick={toggleDetails}>
           <div className={styles.leftPart}>
             <label htmlFor={checkboxId} className={styles.checkBox}>
-              <input type="checkbox" className={styles.inputCheckbox} id={checkboxId} checked={isChecked} onChange={handleCheckboxChange} />
+              <input type="checkbox" id={checkboxId} checked={isChecked} onChange={handleCheckboxChange} className={styles.inputCheckbox} />
               <span className={styles.checkBoxOn}></span>
             </label>
 
             <div className={styles.taskAndTimeBox}>
               <div className={styles.checkStar}>
-                {taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt={"중요 표시"} />}
+                {taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt="중요 표시" />}
                 <span className={styles.taskName}>{taskItem.taskName}</span>
               </div>
               <span className={styles.time}>{taskItem.time}</span>
@@ -101,9 +101,29 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
         {currentTranslate === -SWIPE_BUTTON_WIDTH && (
           <div className={styles.swipeButtons}>
             <Link href="/healthlog/edit">
-              <button className={styles.editButton}>수정</button>
+              <button
+                className={styles.editButton}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                수정
+              </button>
             </Link>
-            <button className={styles.deleteButton} onClick={() => onDelete()}>
+            <button
+              className={styles.deleteButton}
+              onTouchEnd={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+            >
               삭제
             </button>
           </div>

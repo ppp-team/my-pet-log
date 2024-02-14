@@ -1,0 +1,49 @@
+.vanilla-calendar-month,
+.vanilla-calendar-year {
+  padding: 1.5rem 0.5rem;
+
+  cursor: pointer;
+  border-radius: 0.25rem;
+  border-width: 0px;
+  background-color: transparent;
+
+  font-size: 1.6rem;
+  line-height: normal;
+  font-weight: 700;
+}
+
+.vanilla-calendar-week__day {
+  height: 100%;
+  width: 100%;
+  min-width: 1.875rem;
+
+  padding-bottom: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.4rem;
+  line-height: 1rem;
+  font-weight: 700;
+}
+
+.vanilla-calendar-day__btn {
+  font-size: 1.4rem;
+}
+
+.vanilla-calendar-day_selected {
+  color: var(--White);
+  background-color: var(--MainOrange);
+}
+
+[data-calendar-theme="light"] .vanilla-calendar-day__btn_today {
+  background-color: var(--LightOrange);
+  color: var(--MainOrange);
+}
+
+[data-calendar-theme="light"] .vanilla-calendar-day__btn_selected,
+[data-calendar-theme="light"] .vanilla-calendar-day__btn_selected:hover {
+  background-color: var(--MainOrange);
+  color: var(--White);
+}
