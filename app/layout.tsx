@@ -16,10 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko">
       <body>
         <QueryProvider>
-          <Template>
-            {children}
-            <ToastContainer />
-          </Template>
+          {children}
+          <ToastContainer />
           <div id="portal"></div>
         </QueryProvider>
       </body>
