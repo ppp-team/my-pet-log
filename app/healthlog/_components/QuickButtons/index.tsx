@@ -8,47 +8,37 @@ import treatIconSrc from "@/public/icons/treat-icon.svg?url";
 import writeIconSrc from "@/public/icons/write-pencil-icon.svg?url";
 import groomingIconSrc from "@/public/icons/grooming-icon.svg?url";
 
+const buttonData = [
+  { src: feedIconSrc, text: "사료", colorClass: "" },
+  { src: treatIconSrc, text: "간식/영양제", colorClass: styles.secondColorButton },
+  { src: walkIconSrc, text: "산책", colorClass: styles.thirdColorButton },
+  { src: healthIconSrc, text: "건강", colorClass: "" },
+  { src: groomingIconSrc, text: "위생/미용", colorClass: styles.secondColorButton },
+  { src: writeIconSrc, text: "직접 입력", colorClass: styles.thirdColorButton, link: "/healthlog/edit" },
+];
+
 const QuickButtons = () => {
   return (
     <div className={styles.buttonContainer}>
-      <div className={styles.buttonWrapper}>
-        <button className={styles.button}>
-          <Image src={feedIconSrc} width={40} height={40} alt={"사료 아이콘 이미지"} />
-        </button>
-        <span className={styles.buttonText}>사료</span>
-      </div>
-      <div className={styles.buttonWrapper}>
-        <button className={`${styles.button} ${styles.secondColorButton}`}>
-          <Image src={treatIconSrc} width={40} height={40} alt={"간식 아이콘 이미지"} />
-        </button>
-        <span className={styles.buttonText}>간식/영양제</span>
-      </div>
-      <div className={styles.buttonWrapper}>
-        <button className={`${styles.button} ${styles.thirdColorButton}`}>
-          <Image src={walkIconSrc} width={40} height={40} alt={"산책 아이콘 이미지"} />
-        </button>
-        <span className={styles.buttonText}>산책</span>
-      </div>
-      <div className={styles.buttonWrapper}>
-        <button className={styles.button}>
-          <Image src={healthIconSrc} width={40} height={40} alt={"건강 아이콘 이미지"} />
-        </button>
-        <span className={styles.buttonText}>건강</span>
-      </div>
-      <div className={styles.buttonWrapper}>
-        <button className={`${styles.button} ${styles.secondColorButton}`}>
-          <Image src={groomingIconSrc} width={40} height={40} alt={"미용 아이콘 이미지"} />
-        </button>
-        <span className={styles.buttonText}>위생/미용</span>
-      </div>
-      <Link href="/healthlog/edit">
-        <div className={styles.buttonWrapper}>
-          <button className={`${styles.button} ${styles.thirdColorButton}`}>
-            <Image src={writeIconSrc} width={40} height={40} alt={"입력 아이콘 이미지"} />
-          </button>
-          <span className={styles.buttonText}>직접 입력</span>
-        </div>
-      </Link>
+      {buttonData.map(({ src, text, colorClass, link }, index) =>
+        link ? (
+          <Link href={link} key={index}>
+            <div className={styles.buttonWrapper}>
+              <button className={`${styles.button} ${colorClass}`}>
+                <Image src={src} width={40} height={40} alt={`${text} 아이콘 이미지`} />
+              </button>
+              <span className={styles.buttonText}>{text}</span>
+            </div>
+          </Link>
+        ) : (
+          <div className={styles.buttonWrapper} key={index}>
+            <button className={`${styles.button} ${colorClass}`}>
+              <Image src={src} width={40} height={40} alt={`${text} 아이콘 이미지`} />
+            </button>
+            <span className={styles.buttonText}>{text}</span>
+          </div>
+        ),
+      )}
     </div>
   );
 };

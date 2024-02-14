@@ -1,6 +1,7 @@
 import { HTMLAttributes, useEffect, useRef, useState } from "react";
 import VC, { Options } from "vanilla-calendar-pro";
 import "vanilla-calendar-pro/build/vanilla-calendar.min.css";
+import "./style.css";
 
 interface VanillaCalendarProps extends HTMLAttributes<HTMLDivElement> {
   config?: Options;
