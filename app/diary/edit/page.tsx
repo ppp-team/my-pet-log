@@ -7,6 +7,7 @@ import { FieldValues, UseFormRegister, useForm } from "react-hook-form";
 import * as styles from "./style.css";
 import BackHeader from "@/app/_components/BackHeader";
 import ErrorMessage from "@/app/_components/ErrorMessage";
+import { postDiary } from "@/app/_api/diary";
 
 const MAX_LENGTH = { title: 15, content: 500 };
 
@@ -24,7 +25,18 @@ const EditPage = () => {
     <>
       <BackHeader title="육아일기 글작성" />
       <div className={styles.container}>
-        <form className={styles.form} onSubmit={handleSubmit((data) => console.log(data))}>
+        <form
+          className={styles.form}
+          onSubmit={handleSubmit(async (data) => {
+            const request = {
+              title: data.title,
+              content: data.content,
+              date: data.date,
+            };
+            const res = await postDiary({ petId: 2, data: request });
+            console.log("res", res);
+          })}
+        >
           <div className={styles.inputWrapper}>
             <label htmlFor="title" className={styles.label}>
               일기 제목 *
