@@ -13,3 +13,17 @@ export const getInvitations = async () => {
     console.error(error.response.data);
   }
 };
+
+export const postAcceptance = async (invitationId: number) => {
+  try {
+    const response = await instance.post("/my/acceptance", {
+      invitationId,
+    });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    console.error(error.response.data);
+  }
+};
