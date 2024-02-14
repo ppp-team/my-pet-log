@@ -15,7 +15,7 @@ export const petOptions: PetOptionsProps = {
   강아지: dogData,
   고양이: catData,
   물고기: fishData,
-  햄스터: ratData,
+  설치류: ratData,
   새: birdData,
   토끼: rabbitData,
   파충류: reptileData,

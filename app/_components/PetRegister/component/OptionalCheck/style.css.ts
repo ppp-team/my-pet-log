@@ -8,8 +8,12 @@ export const container = style({
   gap: "0.5rem",
 });
 
+export const itemWrapper = style({
+  cursor: "pointer",
+});
+
 export const checked = style({
-  fontSize: "1.1rem",
+  fontSize: "1.4rem",
   fontWeight: "500",
   color: "var(--Gray81)",
 });
