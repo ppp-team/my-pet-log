@@ -1,3 +1,4 @@
+import AuthContext from "@/app/(auth)/_components/AuthContext";
 import QueryProvider from "@/app/_components/QueryProvider";
 import "@/styles/global.css";
 import "@/styles/colors.css";
@@ -16,11 +17,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko">
       <body>
         <QueryProvider>
-          <Template>
-            {children}
-            <ToastContainer />
-          </Template>
-          <div id="portal"></div>
+          <AuthContext>
+            <Template>
+              {children}
+              <ToastContainer />
+            </Template>
+            <div id="portal"></div>
+          </AuthContext>
         </QueryProvider>
       </body>
     </html>

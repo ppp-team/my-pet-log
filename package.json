@@ -21,6 +21,7 @@
     "jotai": "^2.6.2",
     "moment": "^2.30.1",
     "next": "14.0.4",
+    "next-auth": "^4.24.5",
     "notion-client": "^6.16.0",
     "notion-types": "^6.16.0",
     "react": "^18",
