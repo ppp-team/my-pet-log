@@ -13,6 +13,7 @@ const Page = () => {
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
   const [currentPet, setCurrentPet] = useAtom(currentPetAtom); //추후에 localStorage로 바꿔야할듯
+  const [year, month, day] = selectedDate.split("-");
 
   // if (!currentPet) return redirect("/healthlog/select");
 
@@ -47,7 +48,7 @@ const Page = () => {
           <QuickButtons />
         </div>
         <div>
-          <LogList />
+          <LogList petId={6} year={Number(year)} month={Number(month)} day={Number(day)} />
         </div>
         <LogWriteButton />
       </div>
