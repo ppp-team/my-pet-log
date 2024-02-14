@@ -5,55 +5,9 @@ import dropdownIconSrc from "@/public/icons/drop-down-icon-orange.svg?url";
 import petGroupSettingIconSrc from "@/public/icons/pet-group-settings.svg?url";
 import NoPetProfileIconSrc from "@/public/images/pet-profile-default.svg?url";
 import { useRouter } from "next/navigation";
-import { PetGroupType } from "@/app/_types/petGroup";
-
-const SAMPLE_PET_GROUP_LIST: PetGroupType[] = [
-  {
-    petId: "1",
-    ownerId: "1",
-    inviteCode: "",
-    name: "멍냥이",
-    type: "",
-    breed: "믹스",
-    gender: "남",
-    isNeutered: "Y",
-    birth: "2020.01.01",
-    weight: "3.5",
-    registNumber: "",
-    repStatus: "N",
-    petImageUrl: null,
-  },
-  {
-    petId: "2",
-    ownerId: "2",
-    inviteCode: "",
-    name: "냥냥이",
-    type: "",
-    breed: "퍼그",
-    gender: "여",
-    isNeutered: "Y",
-    birth: "2023.01.01",
-    weight: "3.5",
-    registNumber: "",
-    repStatus: "N",
-    petImageUrl: null,
-  },
-  {
-    petId: "3",
-    ownerId: "3",
-    inviteCode: "",
-    name: "멍멍이",
-    type: "",
-    breed: "말티즈",
-    gender: "여",
-    isNeutered: "Y",
-    birth: "2022.01.01",
-    weight: "5.5",
-    registNumber: "",
-    repStatus: "Y",
-    petImageUrl: NoPetProfileIconSrc,
-  },
-];
+import { PetsType } from "@/app/_types/petGroup/pets";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { editPetRep, getPets } from "@/app/_api/pets";
 
 type dropdownMenuItemType = {
   petId: string;
@@ -71,17 +25,24 @@ const SETTING_BUTTON: dropdownMenuItemType = {
 const MobilePetGroupDropdown = () => {
   const router = useRouter();
 
-  const parsedPetGroupList: dropdownMenuItemType[] = SAMPLE_PET_GROUP_LIST.map((item) => {
+  const { data: pets } = useQuery<PetsType>({
+    queryKey: ["pets"],
+    queryFn: () => getPets(),
+  });
+
+  const petList = pets?.data ?? [];
+
+  const parsedPetGroupList: dropdownMenuItemType[] = petList.map((item) => {
     return {
       petId: item.petId,
       petName: item.name,
       petProfileImageUrl: item?.petImageUrl ?? NoPetProfileIconSrc,
-      isSelected: item.repStatus === "Y" ? true : false,
+      isSelected: item.repStatus === "REPRESENTATIVE" ? true : false,
     };
   });
 
   /**
-   * @type {dropdownMenuItemType} currentPetGroupId로 리스트에서 repStatus === "Y"인 currentPetGroup 추출하고 없으면 리스트 첫번째
+   * @type {dropdownMenuItemType} currentPetGroupId로 리스트에서 repStatus === "REPRESENTATIVE"인 currentPetGroup 추출하고 없으면 리스트 첫번째
    */
   const currentPetGroup: dropdownMenuItemType = parsedPetGroupList.find((petGroup) => petGroup.isSelected === true) ?? parsedPetGroupList[0];
 
@@ -90,10 +51,27 @@ const MobilePetGroupDropdown = () => {
    */
   const dropDownMenuList: dropdownMenuItemType[] = [...parsedPetGroupList.filter((petGroup) => petGroup.petId !== currentPetGroup.petId), SETTING_BUTTON];
 
-  const onClickDropdownMenu = (id: string) => {
-    id === SETTING_BUTTON.petId ? router.push(id) : alert(id);
+  const queryClient = useQueryClient();
+
+  const { mutate: editPetRepMutation } = useMutation({
+    mutationKey: ["editPetRepKey"],
+    mutationFn: editPetRep,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["pets"],
+      });
+    },
+  });
+
+  const handleEditPet = (id: string) => {
+    editPetRepMutation(id);
   };
 
+  const onClickDropdownMenu = (id: string) => {
+    id === SETTING_BUTTON.petId ? router.push(id) : handleEditPet(id);
+  };
+
+  if (!currentPetGroup) return <></>;
   return (
     <Dropdown placement="bottom-start">
       <DropdownTrigger>
