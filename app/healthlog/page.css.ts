@@ -34,12 +34,19 @@ export const calendarBox = style({
 export const calendar = style({
   width: "100%",
   height: "100%",
-
-  fontSize: "1.2rem", // 적용이 안 됨
 });
 
 export const quickButtonsContainer = style({
   whiteSpace: "nowrap",
   overflowX: "auto",
   margin: "1rem 0",
+
+  selectors: {
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+
+  scrollbarWidth: "none",
+  msOverflowStyle: "none",
 });
