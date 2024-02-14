@@ -7,9 +7,8 @@ import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import * as styles from "./styles.css";
 import SubmitButton from "@/app/(auth)/_components/SubmitButton/index";
-import ModalContainer from "@/app/_components/ModalContainer";
-import AlertModal from "@/app/(auth)/_components/AlertModal";
 import Modal from "@/app/_components/Modal";
+import { postSignup } from "@/app/_api/auth";
 
 const SignUpForm = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
@@ -24,23 +23,17 @@ const SignUpForm = () => {
     router.push("/login");
   };
 
-  const handleSignUp = () => {
-    openModalFunc();
-  };
-
   return (
     <>
       <form
         className={styles.form}
-        onSubmit={handleSubmit(handleSignUp)}
-
-        // onSubmit={handleSubmit(async (data) => {
-        //   const res = await postUsers({ email: data.email, password: data.password });
-        //   if (res !== null) {
-        //     return openModalFunc();
-        //   }
-        //   setError("email", { message: ERROR_MESSAGE.emailDuplicate });
-        // })}
+        onSubmit={handleSubmit(async (data) => {
+          const res = await postSignup({ email: data.email, password: data.password });
+          if (res !== null) {
+            return openModalFunc();
+          }
+          setError("email", { message: ERROR_MESSAGE.emailDuplicate });
+        })}
       >
         <Controller
           control={control}
