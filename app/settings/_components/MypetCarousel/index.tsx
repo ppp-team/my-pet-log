@@ -19,12 +19,13 @@ const MyPetCarousel = () => {
     breedTextColor: "var(--White)",
   };
 
-  const { data: pets } = useQuery<PetsType>({
+  const { data: pets, isLoading } = useQuery<PetsType>({
     queryKey: ["pets"],
     queryFn: () => getPets(),
   });
 
   const petList = pets?.data ?? [];
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div>
