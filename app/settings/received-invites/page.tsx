@@ -5,7 +5,7 @@ import * as styles from "./page.css";
 import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 import { InvitationType } from "@/app/_types/invitaion/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getInvitations, postAcceptance } from "@/app/_api/invitation";
+import { getInvitations, postAcceptance, postRefusal } from "@/app/_api/invitation";
 
 const Page = () => {
   const queryClient = useQueryClient();
@@ -21,9 +21,19 @@ const Page = () => {
       queryClient.invalidateQueries({ queryKey: ["invites"] });
     },
   });
+  const refuseMutation = useMutation({
+    mutationFn: (invitationId: number) => postRefusal(invitationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["invites"] });
+    },
+  });
 
   const handleAccept = (invitationId: number) => {
     acceptMutation.mutate(invitationId);
+  };
+
+  const handleRefuse = (invitationId: number) => {
+    refuseMutation.mutate(invitationId);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -49,7 +59,9 @@ const Page = () => {
               <button className={styles.acceptButton} onClick={() => handleAccept(invitation.invitationId)}>
                 수락
               </button>
-              <button className={styles.refuseButton}>거절</button>
+              <button className={styles.refuseButton} onClick={() => handleRefuse(invitation.invitationId)}>
+                거절
+              </button>
             </div>
           </section>
         ))}

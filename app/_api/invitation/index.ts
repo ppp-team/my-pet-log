@@ -27,3 +27,17 @@ export const postAcceptance = async (invitationId: number) => {
     console.error(error.response.data);
   }
 };
+
+export const postRefusal = async (invitationId: number) => {
+  try {
+    const response = await instance.post("/my/refusal", {
+      invitationId,
+    });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    console.error(error.response.data);
+  }
+};
