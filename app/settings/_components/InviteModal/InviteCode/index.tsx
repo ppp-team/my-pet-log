@@ -24,7 +24,7 @@ const InviteCode = () => {
     <>
       <h3 style={{ fontSize: "1.6rem", fontWeight: "500", marginBottom: "1.1rem" }}>마이펫 초대 코드</h3>
       <section className={styles.codeContainer}>
-        <MyPetInfo petInfo={petInfo} />
+        <MyPetInfo />
         <div className={styles.copyContainer}>
           <span style={{ fontSize: "1.4rem", fontWeight: "500", color: "var(--Gray81)" }}>{inviteCode}</span>
           <button className={styles.copyIcon} onClick={handleCopyClick}>

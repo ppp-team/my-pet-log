@@ -1,25 +1,11 @@
 import calculateAge from "@/app/_utils/calculateAge";
 import { profile, container, info } from "./style.css";
 import NoPetProfileImage from "@/public/images/pet-profile-default.svg?url";
+import { getPetInfo } from "@/app/_api/pets";
+import { useQuery } from "@tanstack/react-query";
 
 //타입 추후에 다른 파일로 빼기
-interface MyPetProps {
-  petInfo: {
-    petId: string;
-    ownerId: string;
-    inviteCode: string;
-    name: string;
-    type: string;
-    breed: string;
-    gender: string;
-    weight: string;
-    isNeutered: string;
-    birth: string;
-    firstMeetDate: string;
-    registNumber: string;
-    repStatus: string;
-    petImageUrl: string | null;
-  };
+interface StyleProps {
   styles?: {
     profileBorderColor: string;
     nameTextColor: string;
@@ -27,9 +13,19 @@ interface MyPetProps {
   };
 }
 
-const MyPetInfo = ({ petInfo, styles }: MyPetProps) => {
+const petId = 7;
+
+const MyPetInfo = ({ styles }: StyleProps) => {
   // 프롭 안넘겨줄 시 기본값들
   const { profileBorderColor = "var(--MainOrange)", nameTextColor = "var(--Black)", breedTextColor = "var(--Gray81)" } = styles || {};
+
+  const { data: petInfo, isLoading } = useQuery({
+    queryKey: ["petInfo", petId],
+    queryFn: () => getPetInfo(petId),
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  console.log(petInfo);
   const petImageUrl = petInfo.petImageUrl ?? NoPetProfileImage;
 
   return (
