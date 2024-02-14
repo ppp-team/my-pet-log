@@ -1,9 +1,7 @@
 import calculateAge from "@/app/_utils/calculateAge";
 import { profile, container, info } from "./style.css";
 import NoPetProfileImage from "@/public/images/pet-profile-default.svg?url";
-import { getPetInfo } from "@/app/_api/pets";
-import { useQuery } from "@tanstack/react-query";
-import { PetInfo } from "@/app/_types/pets/types";
+import { PetType } from "@/app/_types/pets/types";
 
 //타입 추후에 다른 파일로 빼기
 interface StyleProps {
@@ -15,7 +13,7 @@ interface StyleProps {
 }
 
 interface MyPetProps extends StyleProps {
-  petInfo: PetInfo;
+  petInfo: PetType;
 }
 
 const MyPetInfo = ({ petInfo, styles }: MyPetProps) => {

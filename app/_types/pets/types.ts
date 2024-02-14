@@ -1,4 +1,4 @@
-export interface PetInfo {
+export interface PetType {
   petId: number;
   ownerId: string;
   inviteCode: string;
@@ -13,4 +13,9 @@ export interface PetInfo {
   registeredNumber: string | null;
   repStatus: string;
   petImageUrl: string | null;
+}
+
+export interface PetsType {
+  count: number;
+  data: PetType[];
 }

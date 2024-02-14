@@ -5,14 +5,14 @@ import MyPetInfo from "@/app/settings/_components/MyPetInfo";
 import { showToast } from "@/app/_components/Toast";
 import { useQuery } from "@tanstack/react-query";
 import { getPetInfo } from "@/app/_api/pets";
-import { PetInfo } from "@/app/_types/pets/types";
+import { PetType } from "@/app/_types/pets/types";
 
 const petId = 7;
 
 const InviteCode = () => {
   const inviteCode = "seul1234";
 
-  const { data: petInfo, isLoading } = useQuery<PetInfo>({
+  const { data: petInfo, isLoading } = useQuery<PetType>({
     queryKey: ["petInfo", petId],
     queryFn: () => getPetInfo(petId),
   });

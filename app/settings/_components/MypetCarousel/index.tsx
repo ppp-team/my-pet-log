@@ -2,13 +2,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
-import mockData from "./mockdata.json";
 import { title, petadd, container, petButton, petMateButton, petInfoWrapper } from "./style.css";
 import "./swiper.css";
 import MyPetInfo from "@/app/settings/_components/MyPetInfo";
 import Image from "next/image";
 import AddIcon from "@/public/icons/add.svg?url";
 import Link from "next/link";
+import { PetsType } from "@/app/_types/pets/types";
+import { useQuery } from "@tanstack/react-query";
+import { getPets } from "@/app/_api/pets";
 
 const MyPetCarousel = () => {
   const myPetInfoStyles = {
@@ -16,6 +18,13 @@ const MyPetCarousel = () => {
     nameTextColor: "var(--White)",
     breedTextColor: "var(--White)",
   };
+
+  const { data: pets } = useQuery<PetsType>({
+    queryKey: ["pets"],
+    queryFn: () => getPets(),
+  });
+
+  const petList = pets?.data ?? [];
 
   return (
     <div>
@@ -30,7 +39,7 @@ const MyPetCarousel = () => {
         modules={[Pagination]}
         className="mySwiper"
       >
-        {mockData.data.map((petInfo) => (
+        {petList.map((petInfo) => (
           <SwiperSlide key={petInfo.petId}>
             <div className={container}>
               <div className={petInfoWrapper}>{petInfo && <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />}</div>
