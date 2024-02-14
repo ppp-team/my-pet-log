@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import * as styles from "./HomePetProfile.css";
-import { PetsType } from "@/app/_types/petGroup/pets";
+import { PetsType } from "@/app/_types/petGroup/types";
 import calculateAge from "@/app/_utils/calculateAge";
 import NoPetProfileIconSrc from "@/public/images/pet-profile-default.svg?url";
 import { useQuery } from "@tanstack/react-query";

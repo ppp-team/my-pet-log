@@ -1,7 +1,7 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { UserType } from "@/app/_types/users/user";
+import { UserType } from "@/app/_types/users/types";
 
 export const getMe = async () => {
   try {

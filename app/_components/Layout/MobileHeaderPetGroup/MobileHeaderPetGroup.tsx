@@ -6,7 +6,7 @@ import Link from "next/link";
 import NoUserProfileIconSrc from "@/public/icons/user-profile-default-no-camera.svg?url";
 import MobilePetGroupDropdown from "../MobilePetGroupDropdown/MobilePetGroupDropdown";
 import { useQuery } from "@tanstack/react-query";
-import { UserType } from "@/app/_types/users/user";
+import { UserType } from "@/app/_types/users/types";
 import { getMe } from "@/app/_api/users";
 
 const getImagePath = (path: UserType["profilePath"]) => {

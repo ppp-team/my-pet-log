@@ -5,7 +5,7 @@ import dropdownIconSrc from "@/public/icons/drop-down-icon-orange.svg?url";
 import petGroupSettingIconSrc from "@/public/icons/pet-group-settings.svg?url";
 import NoPetProfileIconSrc from "@/public/images/pet-profile-default.svg?url";
 import { useRouter } from "next/navigation";
-import { PetsType } from "@/app/_types/petGroup/pets";
+import { PetsType } from "@/app/_types/petGroup/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { editPetRep, getPets } from "@/app/_api/pets";
 

@@ -1,7 +1,7 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { PetsType } from "@/app/_types/petGroup/pets";
+import { PetsType } from "@/app/_types/petGroup/types";
 
 export const getPets = async () => {
   try {
