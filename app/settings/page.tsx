@@ -11,13 +11,20 @@ import NoticeIcon from "@/public/icons/megaphone.svg?url";
 import MenuList from "@/app/settings/_components/MenuList";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
+import { postLogout } from "@/app/_api/auth";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  const router = useRouter();
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    const logoutSuccess = await postLogout();
     closeModalFunc();
-    // 로그아웃 시..
+
+    if (logoutSuccess) {
+      router.push("/login");
+    }
   };
 
   return (
