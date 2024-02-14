@@ -5,8 +5,8 @@ export interface PetInfo {
   name: string;
   type: string;
   breed: string;
-  gender: "MALE" | "FEMALE";
-  isNeutered: "Y" | "N";
+  gender: string;
+  isNeutered: string;
   birth: string;
   firstMeetDate: string;
   weight: string;

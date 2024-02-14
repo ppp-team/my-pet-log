@@ -33,9 +33,7 @@ const MyPetCarousel = () => {
         {mockData.data.map((petInfo) => (
           <SwiperSlide key={petInfo.petId}>
             <div className={container}>
-              <div className={petInfoWrapper}>
-                <MyPetInfo styles={myPetInfoStyles} />
-              </div>
+              <div className={petInfoWrapper}>{petInfo && <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />}</div>
               <Link href="" className={petButton}>
                 마이펫 정보 수정
               </Link>
