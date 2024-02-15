@@ -17,13 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko">
       <body>
         <QueryProvider>
-          <AuthContext>
-            <Template>
-              {children}
-              <ToastContainer />
-            </Template>
-            <div id="portal"></div>
-          </AuthContext>
+          {children}
+          <ToastContainer />
+          <div id="portal"></div>
         </QueryProvider>
       </body>
     </html>
