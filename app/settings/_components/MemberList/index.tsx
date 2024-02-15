@@ -3,18 +3,37 @@ import { useModal } from "@/app/_hooks/useModal";
 import Modal from "@/app/_components/Modal";
 import { memberlist, profileWrapper, profileImg, nickname, button } from "@/app/settings/(petmate)/petmate.css";
 import { GuardianType } from "@/app/_types/guardians/types";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteGuardians } from "@/app/_api/guardians";
 
 interface MemberListProps {
   members: GuardianType[];
   isLeader: boolean;
 }
 
+const petId = 7;
+
 const MemberList = ({ members, isLeader }: MemberListProps) => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  const [selectedGuardianId, setSelectedGuardianId] = useState<number | null>(null);
+  const queryClient = useQueryClient();
 
-  // 확인 버튼 누를 시
+  const deleteGuardianMutation = useMutation({
+    mutationFn: (guardianId: number) => deleteGuardians(petId, guardianId),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["petmate"] });
+    },
+  });
+
+  // 멤버 삭제 확인 버튼 누를 시
   const handleConfirm = () => {
     closeModalFunc();
+
+    if (selectedGuardianId !== null) {
+      deleteGuardianMutation.mutate(selectedGuardianId);
+    }
   };
 
   return (
@@ -31,7 +50,13 @@ const MemberList = ({ members, isLeader }: MemberListProps) => {
             <p className={nickname}>{member.nickname}</p>
           </div>
           {isLeader && (
-            <button className={button} onClick={openModalFunc}>
+            <button
+              className={button}
+              onClick={() => {
+                setSelectedGuardianId(member.guardianId);
+                openModalFunc();
+              }}
+            >
               삭제
             </button>
           )}

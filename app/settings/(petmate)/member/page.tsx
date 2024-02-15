@@ -12,7 +12,7 @@ import { getGuardians, deleteGuardians } from "@/app/_api/guardians";
 import { UserType } from "@/app/_types/user/types";
 import { getMe } from "@/app/_api/users";
 
-const petId = 6; //소희님네 동물
+const petId = 7;
 
 const Page = () => {
   const router = useRouter();
