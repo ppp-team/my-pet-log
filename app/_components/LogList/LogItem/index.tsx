@@ -6,19 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import * as styles from "./style.css";
-
-export type LogsType = {
-  logId: number;
-  isComplete: boolean;
-  isImportant: boolean;
-  taskName: string;
-  time: string;
-  manager: {
-    id: string;
-    nickname: string;
-    isCurrentUser: boolean;
-  };
-};
+import { LogsType } from "@/app/_types/log/types";
 
 interface LogItemProps {
   logItem: LogsType;
