@@ -14,7 +14,9 @@ import * as styles from "./style.css";
 import "./swiper.css";
 import SendIcon from "@/public/icons/send.svg?url";
 import BackHeader from "@/app/_components/BackHeader";
-
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import { getDiary } from "@/app/_api/diary";
 const COMMENT_DATA = [
   {
     commentId: 4,
@@ -53,7 +55,7 @@ const COMMENT_DATA = [
     ],
   },
 ];
-const DATA = {
+const diary = {
   diaryId: 43,
   title: "오늘은 공원에서 산책을 했어요",
   content:
@@ -146,15 +148,20 @@ const Comment = ({ comment }: { comment: CommentProp }) => {
     </>
   );
 };
-
+const petId = 2;
 const DiaryDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
+  const { _id: diaryId } = useParams();
+
   const deleteDiary = () => {
     //일기 삭제 api
   };
+
+  const { data: diary } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ petId, diaryId }) });
+  if (!diary) return;
 
   return (
     <>
@@ -162,11 +169,11 @@ const DiaryDetailPage = () => {
       <div className={styles.root}>
         <section className={styles.header}>
           <p className={styles.petInfo}>
-            {DATA.petType} | {DATA.petAge}
+            {diary.pet.breed} | {diary.pet.age ?? ""}
           </p>
-          <h3 style={{ fontSize: "1.8rem", fontWeight: "600" }}>{DATA.title}</h3>
-          <p style={{ fontSize: "1.4rem", color: "var(--Gray9A)" }}>{DATA.date}</p>
-          {DATA.writer.isCurrentUser && (
+          <h3 style={{ fontSize: "1.8rem", fontWeight: "600" }}>{diary.title}</h3>
+          <p style={{ fontSize: "1.4rem", color: "var(--Gray9A)" }}>{diary.date}</p>
+          {diary.writer.isCurrentUser && (
             <div onBlur={() => setIsKebabOpen(false)} tabIndex={1}>
               <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} onClick={() => setIsKebabOpen(!isKebabOpen)} />
               {isKebabOpen && (
@@ -188,38 +195,44 @@ const DiaryDetailPage = () => {
         </section>
 
         <section className={styles.main}>
-          <div className={styles.swiperFraction}>
-            {currentPage + 1}/{DATA.images.length}
-          </div>
-          <div onClick={() => setIsKebabOpen(false)}>
-            <Swiper
-              onSlideChange={(e) => setCurrentPage(e.activeIndex)}
-              pagination={{
-                dynamicBullets: true,
-              }}
-              modules={[Pagination]}
-            >
-              {DATA.images.map((image, idx) => (
-                <SwiperSlide key={idx}>
-                  <div className={styles.image} style={{ backgroundImage: `url(${image})` }}></div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-          <div className={styles.profile}>
-            <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
-              <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
-              <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{DATA.writer.nickname}</p>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <LikeIcon color={DATA.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
-              <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{DATA.likeCount}</p>
-            </div>
-          </div>
-          <p className={styles.content}>{DATA.content}</p>
+          {diary.images.length > 0 && (
+            <>
+              <div className={styles.swiperFraction}>
+                {currentPage + 1}/{diary.images.length}
+              </div>
+              <div onClick={() => setIsKebabOpen(false)}>
+                <Swiper
+                  onSlideChange={(e) => setCurrentPage(e.activeIndex)}
+                  pagination={{
+                    dynamicBullets: true,
+                  }}
+                  modules={[Pagination]}
+                >
+                  {diary.images.map((image, idx) => (
+                    <SwiperSlide key={idx}>
+                      <div className={styles.image} style={{ backgroundImage: `url(${image.path})` }}></div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+              <div className={styles.profile}>
+                <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
+                  <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
+                  <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{diary.writer.nickname}</p>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <LikeIcon color={diary.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
+                  <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{diary.likeCount}</p>
+                </div>
+              </div>
+            </>
+          )}
+
+          <p className={styles.content}>{diary.content}</p>
         </section>
+
         <section>
-          <div className={styles.commentsCount}>댓글({DATA.commentCount})</div>
+          <div className={styles.commentsCount}>댓글({diary.commentCount})</div>
           {COMMENT_DATA.map((comment) => (
             <Comment comment={comment} key={comment.commentId} />
           ))}

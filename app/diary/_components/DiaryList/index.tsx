@@ -10,11 +10,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as styles from "./style.css";
 
-const DIARY_CODE = "456";
-
 const Diary = ({ diary }: { diary: Diaries }) => {
   return (
-    <Link href={`/diary/detail/${DIARY_CODE}`}>
+    <Link href={`/diary/detail/${diary.diaryId}`}>
       <div className={styles.diaryWrapper}>
         <div className={styles.contents}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -43,7 +41,7 @@ const DiaryList = () => {
     queryKey: ["diaries", petId],
     queryFn: ({ pageParam }) => getDiaryList({ petId, page: pageParam, size: PAGE_SIZE }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage.last ? undefined : lastPageParam + 1),
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
   if (!data) return <EmptyDiaryList />;
@@ -57,7 +55,7 @@ const DiaryList = () => {
       <section className={styles.container}>
         {data.pages.map((p, idx) => (
           <div key={idx} className={styles.container}>
-            {p.content.map((v: any) => {
+            {p?.content.map((v: any) => {
               return (
                 <div className={styles.diaryListWrapper} key={v.date}>
                   <p className={styles.date}>{v.date}</p>

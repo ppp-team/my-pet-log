@@ -1,12 +1,49 @@
 export interface Diary {
+  diaryId: number;
   title: string;
   content: string;
-  date: string;
+  thumbnailPath: null | string;
+  writer: Writer;
+  commentCount: number;
+}
+
+export interface Writer {
+  id: string;
+  nickname: string;
+  isCurrentUser: boolean;
 }
 
 export interface GetDiaryListResponse {
-  date: string;
-  diaries: Diaries[];
+  content: [
+    {
+      date: string;
+      diaries: Diary[];
+    },
+  ];
+
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  numberOfElements: number;
+  first: boolean;
+  last: boolean;
+  empty: boolean;
 }
 
 export interface Diaries {
@@ -14,11 +51,7 @@ export interface Diaries {
   title: string;
   content: string;
   thumbnailPath: null;
-  writer: {
-    id: string;
-    nickname: string;
-    isCurrentUser: boolean;
-  };
+  writer: Writer;
   commentCount: number;
 }
 
@@ -26,4 +59,32 @@ export interface GetDiaryListRequest {
   petId: number;
   page: number | unknown;
   size: number;
+}
+
+export interface GetDiaryRequest {
+  petId: number;
+  diaryId: string | string[];
+}
+
+export interface GetDiaryResponse {
+  diaryId: number;
+  title: string;
+  content: string;
+  date: string;
+  images: [
+    {
+      mediaId: number;
+      path: string;
+    },
+  ];
+  videos: string[];
+  isCurrentUserLiked: boolean;
+  writer: Writer;
+  commentCount: number;
+  likeCount: number;
+  pet: {
+    id: number;
+    breed: string;
+    age: string;
+  };
 }
