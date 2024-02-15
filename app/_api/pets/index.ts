@@ -1,19 +1,26 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { PetsType } from "@/app/_types/petGroup/types";
+
+export const getPet = async (petId: number) => {
+  try {
+    const response = await instance.get(`/my/pets/${petId}`);
+    return response.data;
+  } catch (error: any) {
+    console.error(error.response.data);
+  }
+};
 
 export const getPets = async () => {
   try {
-    const response = await instance.get<PetsType>("/my/pets");
+    const response = await instance.get("/my/pets");
 
     if (response.status === 200) {
       return response.data;
-    } else {
-      throw new Error("Pet data not found");
     }
-  } catch (error) {
-    throw new Error("Error fetching pet data");
+  } catch (error: any) {
+    console.error(error.response.data);
+    return null;
   }
 };
 
