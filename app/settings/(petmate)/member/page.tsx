@@ -7,8 +7,8 @@ import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 import MemberList from "@/app/settings/_components/MemberList";
 import { useRouter } from "next/navigation";
 import { GuardiansType } from "@/app/_types/guardians/types";
-import { useQuery } from "@tanstack/react-query";
-import { getGuardians } from "@/app/_api/guardians";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { getGuardians, deleteGuardians } from "@/app/_api/guardians";
 import { UserType } from "@/app/_types/user/types";
 import { getMe } from "@/app/_api/users";
 
@@ -45,10 +45,22 @@ const Page = () => {
     router.push("/settings/ask");
   };
 
+  const deleteGuardianMutation = useMutation({
+    mutationFn: (guardianId: number) => deleteGuardians(petId, guardianId),
+
+    onSuccess: () => {
+      //삭제 시 .. 로컬 스토리지에서 현재 대표반려동물을 삭제하고..그 이후 처리를 어떻게 해야할 것인가..? 논의1
+      router.push("/home");
+    },
+  });
+
   //리더가 아닌 자신이 탈퇴하기
   const handleMemberConfirm = () => {
     closeModal2();
-    //탈퇴 로직
+
+    if (currentUserData?.guardianId) {
+      deleteGuardianMutation.mutate(currentUserData.guardianId);
+    }
   };
 
   return (
