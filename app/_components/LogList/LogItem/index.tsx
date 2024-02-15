@@ -6,34 +6,22 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import * as styles from "./style.css";
-
-export type TasksType = {
-  logId: number;
-  isComplete: boolean;
-  isImportant: boolean;
-  taskName: string;
-  time: string;
-  manager: {
-    id: string;
-    nickname: string;
-    isCurrentUser: boolean;
-  };
-};
+import { LogsType } from "@/app/_types/log/types";
 
 interface LogItemProps {
-  taskItem: TasksType;
-  onDelete: () => void;
+  logItem: LogsType;
+  onDelete: (logItem: LogsType) => void;
 }
 
 const SWIPE_BUTTON_WIDTH = 132;
 
-const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) => {
-  const [isChecked, setIsChecked] = useState(taskItem.isComplete);
+const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) => {
+  const [isChecked, setIsChecked] = useState(logItem.isComplete);
   const [showDetails, setShowDetails] = useState(false);
   const [startX, setStartX] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
-  const checkboxId = `checkbox-${taskItem.logId}`;
+  const checkboxId = `checkbox-${logItem.logId}`;
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
@@ -88,14 +76,14 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
 
             <div className={styles.taskAndTimeBox}>
               <div className={styles.checkStar}>
-                {taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt="중요 표시" />}
-                <span className={styles.taskName}>{taskItem.taskName}</span>
+                {logItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt="중요 표시" />}
+                <span className={styles.taskName}>{logItem.taskName}</span>
               </div>
-              <span className={styles.time}>{taskItem.time}</span>
+              <span className={styles.time}>{logItem.time}</span>
             </div>
           </div>
           <div className={styles.manager}>
-            <span>{taskItem.manager.nickname}</span>
+            <span>{logItem.manager.nickname}</span>
           </div>
         </li>
         {currentTranslate === -SWIPE_BUTTON_WIDTH && (
@@ -117,11 +105,11 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
               className={styles.deleteButton}
               onTouchEnd={(e) => {
                 e.stopPropagation();
-                onDelete();
+                onDelete(logItem);
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                onDelete();
+                onDelete(logItem);
               }}
             >
               삭제
