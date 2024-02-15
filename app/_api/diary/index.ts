@@ -1,7 +1,7 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { Diary, GetDiaryListRequest } from "@/app/_types/diary/diary.type";
+import { Diary, GetDiaryListRequest } from "@/app/_types/diary/type";
 
 export const postDiary = async ({ petId, data }: { petId: number; data: Diary }) => {
   try {

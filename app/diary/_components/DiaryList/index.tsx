@@ -1,5 +1,5 @@
 import { getDiaryList } from "@/app/_api/diary";
-import { Diaries } from "@/app/_types/diary/diary.type";
+import { Diaries } from "@/app/_types/diary/type";
 import EmptyDiaryList from "@/app/diary/_components/EmptyDiaryList";
 import CommentIconURL from "@/public/icons/message.svg?url";
 import SearchIconURL from "@/public/icons/search.svg?url";
