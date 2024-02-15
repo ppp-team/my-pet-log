@@ -120,7 +120,7 @@ const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) =>
 
       {showDetails && (
         <div className={styles.logDetailContainer}>
-          <LogDetail />
+          <LogDetail logId={logItem.logId} />
         </div>
       )}
     </div>

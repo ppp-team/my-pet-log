@@ -13,3 +13,12 @@ export const getLogs = async (petId: number, year: number, month: number, day: n
     return [];
   }
 };
+
+export const getLogDetail = async (petId: number, logId: number) => {
+  try {
+    const response = await instance.get(`/pets/${petId}/logs/${logId}`, {});
+    return response.data;
+  } catch (error: any) {
+    console.error(error.response ? error.response.data : error.message);
+  }
+};

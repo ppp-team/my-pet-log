@@ -33,6 +33,7 @@ export const box = style({
 });
 
 export const editButton = style({
+  marginTop: "1.8rem",
   padding: "0.4rem 1.1rem",
 
   borderRadius: "5px",

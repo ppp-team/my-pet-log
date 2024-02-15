@@ -17,3 +17,10 @@ export interface LogListType {
     logs: LogsType[];
   };
 }
+
+export interface LogDetailType {
+  logId: number;
+  type: string;
+  subType: string;
+  memo: string;
+}
