@@ -30,8 +30,6 @@ const Page = () => {
     enabled: !!petId,
   });
 
-  console.log(logsData);
-
   return (
     <>
       <div className={styles.container}>

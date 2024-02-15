@@ -11,6 +11,19 @@ export interface LogsType {
   };
 }
 
+export interface LogType {
+  // petId: number;
+  type: string;
+  subType: string | null;
+  isCustomLocation: boolean;
+  kakaoLocationId: number | null;
+  datetime: string;
+  isComplete: boolean;
+  isImportant: boolean;
+  memo: string | null;
+  managerId: string;
+}
+
 export interface LogListType {
   logsData: {
     date: string;
