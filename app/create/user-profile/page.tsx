@@ -9,6 +9,8 @@ import userProfileDefaultImageSrc from "@/public/images/user-profile-default.svg
 import { ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import removeSpaces from "@/app/_utils/removeSpaces";
 import { getNicknameHintState } from "@/app/_components/getNicknameHintState/getNicknameHintState";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { postCheckNickname } from "@/app/_api/users";
 
 interface IForm {
   nickname: string;
@@ -26,13 +28,24 @@ const CreateUserProfilePage: NextPage = () => {
     formState: { errors },
   } = useForm<IForm>({ mode: "onTouched" });
 
+  const { mutate: checkNicknameMutation } = useMutation({
+    mutationKey: ["checkNicknameKey"],
+    mutationFn: (nickname: string) => postCheckNickname(nickname),
+    onError: () => {
+      setError("nickname", { type: "duplicated", message: ERROR_MESSAGE.nicknameDuplicate });
+    },
+    onSuccess: () => {
+      setValue("isNicknameConfirmed", true);
+    },
+  });
+
   const onChangeProfileImage = (e: FormEvent<HTMLInputElement>) => {
     const files = e.currentTarget.files;
     if (!files) return;
     setValue("profileImage", URL.createObjectURL(files[0]));
   };
 
-  const onClickCheckNickname = () => {
+  const onClickCheckNickname = async () => {
     const removeSpacesNickname = removeSpaces(watch("nickname"));
     setValue("nickname", removeSpacesNickname);
 
@@ -46,15 +59,9 @@ const CreateUserProfilePage: NextPage = () => {
       return;
     }
 
-    // 닉네임 중복 에러메세지 테스트
-    const isConfirmed = removeSpacesNickname === "failed" ? false : true;
-    if (!isConfirmed) {
-      setError("nickname", { type: "duplicated", message: ERROR_MESSAGE.nicknameDuplicate });
-    } else {
-      setValue("isNicknameConfirmed", true);
-    }
+    // 닉네임 중복 검사
+    checkNicknameMutation(removeSpacesNickname);
   };
-
   const onSubmit: SubmitHandler<IForm> = (data) => {
     const removeSpacesNickname = removeSpaces(data.nickname);
     const isNicknameConfirmed = watch("isNicknameConfirmed");
