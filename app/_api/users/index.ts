@@ -11,5 +11,6 @@ export const getMe = async () => {
     }
   } catch (error: any) {
     console.error(error.response.data);
+    return null;
   }
 };

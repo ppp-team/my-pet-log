@@ -20,5 +20,20 @@ export const getPets = async () => {
     }
   } catch (error: any) {
     console.error(error.response.data);
+    return null;
+  }
+};
+
+export const editPetRep = async (petId: string) => {
+  try {
+    const response = await instance.post(`/my/pets/${petId}/selectRep`);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("User data not found");
+    }
+  } catch (error) {
+    throw new Error("Error fetching user data");
   }
 };

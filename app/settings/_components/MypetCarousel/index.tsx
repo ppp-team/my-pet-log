@@ -44,7 +44,7 @@ const MyPetCarousel = () => {
           <SwiperSlide key={petInfo.petId}>
             <div className={container}>
               <div className={petInfoWrapper}>{petInfo && <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />}</div>
-              <Link href="" className={petButton}>
+              <Link href="/settings/pet-register" className={petButton}>
                 마이펫 정보 수정
               </Link>
               <Link href="/settings/member" className={petMateButton}>
