@@ -5,11 +5,10 @@ import * as styles from "./page.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormEvent } from "react";
 import Image from "next/image";
-import userProfileDefaultImageSrc from "@/public/icons/user-profile-default.svg?url";
-import { CONFIRM_MESSAGE, ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
+import userProfileDefaultImageSrc from "@/public/images/user-profile-default.svg?url";
+import { ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import removeSpaces from "@/app/_utils/removeSpaces";
-import ErrorMessage from "@/app/_components/ErrorMessage";
-import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
+import { getNicknameHintState } from "@/app/_components/getNicknameHintState/getNicknameHintState";
 
 interface IForm {
   nickname: string;
@@ -72,27 +71,11 @@ const CreateUserProfilePage: NextPage = () => {
     }
   };
 
-  const getNicknameState = () => {
-    const isNicknameConfirmed = watch("isNicknameConfirmed");
-    const isNicknameError = errors?.nickname;
-
-    if (isNicknameConfirmed) {
-      return {
-        style: styles.inputConfirmStyle,
-        component: <ConfirmMessage message={CONFIRM_MESSAGE.nicknameValid} />,
-      };
-    } else if (isNicknameError) {
-      return {
-        style: styles.inputErrorStyle,
-        component: <ErrorMessage message={errors?.nickname?.message} />,
-      };
-    } else {
-      return {
-        style: null,
-        component: null,
-      };
-    }
-  };
+  const { hintStyle, hintComponent } = getNicknameHintState({
+    isNicknameConfirmed: watch("isNicknameConfirmed"),
+    nicknameErrorMessage: errors?.nickname?.message ?? null,
+    textLength: watch("nickname")?.length,
+  });
 
   return (
     <main className={styles.container}>
@@ -125,8 +108,9 @@ const CreateUserProfilePage: NextPage = () => {
 
         <fieldset className={styles.nicknameFieldset}>
           <label className={styles.label}>닉네임*</label>
-          <div className={`${styles.nicknameInputContainer} ${getNicknameState().style}`}>
+          <div className={styles.nicknameContainer}>
             <input
+              className={`${styles.nicknameInput} ${hintStyle}`}
               type="text"
               placeholder={PLACEHOLDER.nickname}
               {...register("nickname", {
@@ -141,8 +125,7 @@ const CreateUserProfilePage: NextPage = () => {
               중복확인
             </button>
           </div>
-          <p className={`${styles.length} ${watch("nickname")?.length > 10 ? styles.maxLengthOver : ""}`}>{watch("nickname")?.length ?? "0"} / 10</p>
-          {getNicknameState().component}
+          {hintComponent}
         </fieldset>
 
         <button className={styles.submitButton} type="submit">
