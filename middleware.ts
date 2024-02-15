@@ -5,9 +5,9 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   if (accessToken) {
-    if (path === "/" || path.startsWith("/login") || path === "/signup") return NextResponse.redirect(new URL("/home", request.url));
+    if (path === "/" || path.startsWith("/login") || path.startsWith("/signup")) return NextResponse.redirect(new URL("/home", request.url));
   } else {
-    if (path === "/" || path.startsWith("/login") || path === "/signup") {
+    if (path === "/" || path.startsWith("/login") || path.startsWith("/signup")) {
     } else return NextResponse.redirect(new URL("/login", request.url));
   }
 }

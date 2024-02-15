@@ -2,9 +2,8 @@ import { style } from "@vanilla-extract/css";
 
 export const container = style({
   width: "100vw",
-  height: "100vh",
 
-  padding: "7rem 1.6rem 8.3rem 1.6rem",
+  padding: "2.4rem 1.6rem",
 
   display: "flex",
   flexDirection: "column",

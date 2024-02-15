@@ -103,11 +103,11 @@ export const PET_ERROR_MESSAGE = {
 
   typeRequired: "타입을 선택해주세요!",
 
-  breedRequired: "품종을 입력해주세요!",
+  breedRequired: "품종을 선택해주세요!",
 
   genderRequired: "성별을 선택해주세요!",
 
-  NumberInvalid: "숫자만 입력해 주세요",
+  numberInvalid: "소수점 두자리 이하의 숫자만 입력할 수 있습니다.",
 };
 
 export const PET_NAME_RULES = {
@@ -117,14 +117,18 @@ export const PET_NAME_RULES = {
 
 export const PET_REGISTNUMBER_RULES = {
   pattern: {
-    value: /^\d{15}$/,
-    message: PET_ERROR_MESSAGE.NumberInvalid,
+    value: /^[0-9]+$/,
+    message: PET_ERROR_MESSAGE.numberInvalid,
   },
+};
+
+export const PET_GENDER_RULES = {
+  required: PET_ERROR_MESSAGE.genderRequired,
 };
 
 export const PET_WEIGHT_RULES = {
   pattern: {
-    value: /^\d*\.?\d*$/,
-    message: PET_ERROR_MESSAGE.NumberInvalid,
+    value: /^\d+(\.\d{0,2})?$/,
+    message: PET_ERROR_MESSAGE.numberInvalid,
   },
 };
