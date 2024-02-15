@@ -7,7 +7,7 @@ export const root = style({
   justifyContent: "center",
   alignItems: "center",
 
-  height: "100vh",
+  height: "calc(100vh - 11.2rem)",
 });
 
 export const p = style({
