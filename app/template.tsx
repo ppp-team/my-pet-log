@@ -20,7 +20,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <MobileFooterNavigationBar />
       </>
     );
-  } else if (pagesWithHeader.petGroup.includes(pathname)) {
+  } else if (pagesWithHeader.petGroup.includes(pathname) || pathname.startsWith("/diary/detail")) {
     return (
       <>
         <PcHeader />
