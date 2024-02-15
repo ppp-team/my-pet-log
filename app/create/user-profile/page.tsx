@@ -10,8 +10,9 @@ import { ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inp
 import removeSpaces from "@/app/_utils/removeSpaces";
 import { getNicknameHintState } from "@/app/_components/getNicknameHintState/getNicknameHintState";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getMe, postCheckNickname } from "@/app/_api/users";
+import { getMe, postCheckNickname, postUserProfile, postUserProfilePropType } from "@/app/_api/users";
 import { UserType } from "@/app/_types/users/types";
+import { useRouter } from "next/navigation";
 
 interface IForm {
   nickname: string;
@@ -20,6 +21,8 @@ interface IForm {
 }
 
 const CreateUserProfilePage: NextPage = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -34,14 +37,22 @@ const CreateUserProfilePage: NextPage = () => {
     queryFn: () => getMe(),
   });
 
-  const { mutate: checkNicknameMutation } = useMutation({
-    mutationKey: ["checkNicknameKey"],
-    mutationFn: (nickname: string) => postCheckNickname(nickname),
+  const { mutate: postCheckNicknameMutation } = useMutation({
+    mutationKey: ["postCheckNicknameKey"],
+    mutationFn: postCheckNickname,
     onError: () => {
       setError("nickname", { type: "duplicated", message: ERROR_MESSAGE.nicknameDuplicate });
     },
     onSuccess: () => {
       setValue("isNicknameConfirmed", true);
+    },
+  });
+
+  const { mutate: postUserProfileMutation } = useMutation({
+    mutationKey: ["postUserProfileKey"],
+    mutationFn: ({ nickname, profileImage }: postUserProfilePropType) => postUserProfile({ nickname, profileImage }),
+    onSuccess: () => {
+      router.push("/no-pet-group");
     },
   });
 
@@ -66,21 +77,23 @@ const CreateUserProfilePage: NextPage = () => {
     }
 
     // 닉네임 중복 검사
-    checkNicknameMutation(removeSpacesNickname);
+    postCheckNicknameMutation(removeSpacesNickname);
   };
+
   const onSubmit: SubmitHandler<IForm> = (data) => {
     const removeSpacesNickname = removeSpaces(data.nickname);
     const isNicknameConfirmed = watch("isNicknameConfirmed");
     setValue("nickname", removeSpacesNickname);
 
-    if (isNicknameConfirmed) {
-      // 중복 검사 완료일 경우에만 submit api 통신
-      alert("성공");
-    } else if (removeSpacesNickname === "") {
-      // 공백만 입력했을 때
+    if (removeSpacesNickname === "") {
       setError("nickname", { type: "required", message: ERROR_MESSAGE.nicknameRequired });
-    } else {
+    } else if (!isNicknameConfirmed) {
       setError("nickname", { type: "isNotConfirmed", message: ERROR_MESSAGE.nicknameNotConfirmed });
+    } else {
+      postUserProfileMutation({
+        nickname: removeSpacesNickname,
+        profileImage: data.profileImage,
+      });
     }
   };
 
@@ -96,7 +109,7 @@ const CreateUserProfilePage: NextPage = () => {
         <fieldset className={styles.userProfileImageContainer}>
           <label htmlFor="profileImage" style={{ cursor: "pointer" }}>
             <Image
-              className={styles.userProfileImage}
+              className={`${styles.userProfileImageDefault} ${watch("profileImage")?.length >= 1 && styles.userProfileImage}`}
               src={watch("profileImage")?.length >= 1 ? watch("profileImage") : userProfileDefaultImageSrc}
               alt="유저 프로필 이미지"
               width={126}

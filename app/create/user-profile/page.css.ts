@@ -15,10 +15,14 @@ export const userProfileImageContainer = style({
   textAlign: "center",
 });
 
-export const userProfileImage = style({
+export const userProfileImageDefault = style({
   width: "12.6rem",
   height: "12.4rem",
   objectFit: "cover",
+});
+
+export const userProfileImage = style({
+  borderRadius: "50%",
 });
 
 export const idFieldset = style({ marginBottom: "2.7rem" });

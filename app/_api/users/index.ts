@@ -28,3 +28,23 @@ export const postCheckNickname = async (nickname: string) => {
     return false;
   }
 };
+
+export interface postUserProfilePropType {
+  nickname: string;
+  profileImage?: string;
+}
+
+export const postUserProfile = async ({ nickname, profileImage }: postUserProfilePropType) => {
+  try {
+    const response = await instance.post("/users/profile", {
+      profileImage,
+      nickname,
+    });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    return false;
+  }
+};
