@@ -1,12 +1,12 @@
 "use client";
 
 import { getPetLogs } from "@/app/_api/log";
-import LogItem, { LogsType } from "@/app/_components/LogList/LogItem";
+import LogItem from "@/app/_components/LogList/LogItem";
+import { LogsType } from "@/app/_types/log/types";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import QueryProvider from "../QueryProvider";
 import * as styles from "./style.css";
 
 interface LogListProps {
