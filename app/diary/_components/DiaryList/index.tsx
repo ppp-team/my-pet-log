@@ -54,21 +54,22 @@ const DiaryList = () => {
         <input className={styles.search} />
         <Image src={SearchIconURL} alt="search icon" width={16} height={16} className={styles.searchIcon} />
       </div>
-
-      {data.pages.map((p, idx) => (
-        <section key={idx} className={styles.container}>
-          {p.content.map((v: any) => {
-            return (
-              <div className={styles.diaryListWrapper} key={v.date}>
-                <p className={styles.date}>{v.date}</p>
-                {v.diaries.map((diary: Diaries) => {
-                  return <Diary diary={diary} key={diary.diaryId} />;
-                })}
-              </div>
-            );
-          })}
-        </section>
-      ))}
+      <section className={styles.container}>
+        {data.pages.map((p, idx) => (
+          <div key={idx} className={styles.container}>
+            {p.content.map((v: any) => {
+              return (
+                <div className={styles.diaryListWrapper} key={v.date}>
+                  <p className={styles.date}>{v.date}</p>
+                  {v.diaries.map((diary: Diaries) => {
+                    return <Diary diary={diary} key={diary.diaryId} />;
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </section>
       <button onClick={() => fetchNextPage()}>더 불러오기</button>
       <Image src={WriteIconURL} alt="write icon" width={60} height={60} className={styles.writeIcon} onClick={() => router.push("/diary/edit")} />
     </div>
