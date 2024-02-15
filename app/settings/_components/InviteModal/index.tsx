@@ -7,13 +7,26 @@ import InvitationForm from "@/app/_components/InvitationForm/InvitationForm";
 import { ERROR_MESSAGE, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import CloseIcon from "@/public/icons/close.svg?url";
 import InviteCode from "./InviteCode";
+import { postInviteGuardian } from "@/app/_api/guardians";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+const petId = 7;
 
 const InviteModal = () => {
+  const queryClient = useQueryClient();
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
-  const handleInviteConfirm = () => {
+  const inviteMutation = useMutation({
+    mutationFn: (email: string) => postInviteGuardian(petId, email),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["my-invitations"] });
+    },
+  });
+
+  const handleInviteConfirm = async (value: string) => {
     closeModalFunc();
-    // 초대 로직 구현...하긔
+
+    inviteMutation.mutate(value);
   };
 
   return (
@@ -44,6 +57,7 @@ const InviteModal = () => {
                 },
                 message: ERROR_MESSAGE.emailCheck,
               }}
+              submit={handleInviteConfirm}
             />
             <InviteCode />
           </section>
