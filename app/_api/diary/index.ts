@@ -38,3 +38,14 @@ export const getDiary = async ({ petId, diaryId }: GetDiaryRequest): Promise<Get
     return null;
   }
 };
+
+export const getComments = async ({ petId, diaryId }: GetDiaryRequest) => {
+  try {
+    const res = await instance.get(`pets/${petId}/diaries/${diaryId}/comments`);
+
+    return res.data;
+  } catch (error: any) {
+    console.error(error.response);
+    return null;
+  }
+};

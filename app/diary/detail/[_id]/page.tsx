@@ -14,14 +14,16 @@ import * as styles from "./style.css";
 import "./swiper.css";
 import SendIcon from "@/public/icons/send.svg?url";
 import BackHeader from "@/app/_components/BackHeader";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { getDiary } from "@/app/_api/diary";
+import { getComments, getDiary } from "@/app/_api/diary";
+import { Comment } from "@/app/_types/diary/type";
 const COMMENT_DATA = [
   {
     commentId: 4,
     content: "eotrmfdmfekqslek",
     createdAt: "3시간",
+    likeCount: 0,
     isCurrentUserLiked: false,
     writer: {
       id: "thdefn5519",
@@ -40,6 +42,7 @@ const COMMENT_DATA = [
     commentId: 7,
     content: "eotrmfdmfekqslek",
     createdAt: "2시간",
+    likeCount: 0,
     isCurrentUserLiked: false,
     writer: {
       id: "thdefn5519",
@@ -79,26 +82,7 @@ const diary = {
   commentCount: 0,
 };
 
-interface CommentProp {
-  commentId: number;
-  content: string;
-  createdAt: string;
-  isCurrentUserLiked: boolean;
-  writer: Writer;
-  taggedUsers: Tag[];
-}
-interface Writer {
-  id: string;
-  nickname: string;
-  isCurrentUser: boolean;
-}
-interface Tag {
-  id: string;
-  nickname: string;
-  isCurrentUser: boolean;
-}
-
-const Comment = ({ comment }: { comment: CommentProp }) => {
+const Comment = ({ comment }: { comment: Comment }) => {
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
@@ -156,12 +140,20 @@ const DiaryDetailPage = () => {
 
   const { _id: diaryId } = useParams();
 
+  const { data: diary } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ petId, diaryId }) });
+
+  const { data: comments, fetchNextPage } = useInfiniteQuery({
+    queryKey: ["comments", { petId, diaryId }],
+    queryFn: () => getComments({ petId, diaryId }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
+  });
+  console.log(comments);
+  if (!diary) return;
+
   const deleteDiary = () => {
     //일기 삭제 api
   };
-
-  const { data: diary } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ petId, diaryId }) });
-  if (!diary) return;
 
   return (
     <>

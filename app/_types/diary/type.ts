@@ -13,6 +13,21 @@ export interface Writer {
   isCurrentUser: boolean;
 }
 
+export interface Comment {
+  commentId: number;
+  content: string;
+  createdAt: string;
+  likeCount: number;
+  isCurrentUserLiked: boolean;
+  writer: Writer;
+  taggedUsers: Tag[];
+}
+
+interface Tag {
+  id: string;
+  nickname: string;
+  isCurrentUser: boolean;
+}
 export interface GetDiaryListResponse {
   content: [
     {
@@ -87,4 +102,32 @@ export interface GetDiaryResponse {
     breed: string;
     age: string;
   };
+}
+
+export interface GetCommentsResponse {
+  content: Comment[];
+
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  numberOfElements: number;
+  first: boolean;
+  last: boolean;
+  empty: boolean;
 }
