@@ -2,16 +2,10 @@ import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 import { useModal } from "@/app/_hooks/useModal";
 import Modal from "@/app/_components/Modal";
 import { memberlist, profileWrapper, profileImg, nickname, button } from "@/app/settings/(petmate)/petmate.css";
-
-interface Member {
-  guardianId: string;
-  guardianRole: string;
-  nickname: string;
-  profileImageUrl: string | null;
-}
+import { GuardianType } from "@/app/_types/guardians/types";
 
 interface MemberListProps {
-  members: Member[];
+  members: GuardianType[];
   isLeader: boolean;
 }
 

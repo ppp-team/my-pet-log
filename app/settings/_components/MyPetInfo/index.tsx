@@ -1,25 +1,10 @@
 import calculateAge from "@/app/_utils/calculateAge";
 import { profile, container, info } from "./style.css";
 import NoPetProfileImage from "@/public/images/pet-profile-default.svg?url";
+import { PetType } from "@/app/_types/pets/types";
 
 //타입 추후에 다른 파일로 빼기
-interface MyPetProps {
-  petInfo: {
-    petId: string;
-    ownerId: string;
-    inviteCode: string;
-    name: string;
-    type: string;
-    breed: string;
-    gender: string;
-    weight: string;
-    isNeutered: string;
-    birth: string;
-    firstMeetDate: string;
-    registNumber: string;
-    repStatus: string;
-    petImageUrl: string | null;
-  };
+interface StyleProps {
   styles?: {
     profileBorderColor: string;
     nameTextColor: string;
@@ -27,9 +12,14 @@ interface MyPetProps {
   };
 }
 
+interface MyPetProps extends StyleProps {
+  petInfo: PetType;
+}
+
 const MyPetInfo = ({ petInfo, styles }: MyPetProps) => {
   // 프롭 안넘겨줄 시 기본값들
   const { profileBorderColor = "var(--MainOrange)", nameTextColor = "var(--Black)", breedTextColor = "var(--Gray81)" } = styles || {};
+
   const petImageUrl = petInfo.petImageUrl ?? NoPetProfileImage;
 
   return (

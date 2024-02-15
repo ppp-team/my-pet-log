@@ -46,3 +46,19 @@ export const postLogout = async () => {
     return null;
   }
 };
+
+export const postSignup = async ({ email, password }: FormData) => {
+  try {
+    const res = await instance.post("/auth/signup", {
+      email,
+      password,
+    });
+
+    if (res.status === 200) {
+      return "signup success";
+    }
+  } catch (error: any) {
+    console.error(error.response.data.message);
+    return null;
+  }
+};
