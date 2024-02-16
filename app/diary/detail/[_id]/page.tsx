@@ -43,7 +43,7 @@ const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | str
 
   //댓글 수정
   const putCommentMutation = useMutation({
-    mutationFn: () => putComment({ petId, commentId: comment.commentId, content: newCommentValue }),
+    mutationFn: () => putComment({ petId, commentId: comment.commentId, content: newCommentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
       showToast("댓글을 수정했습니다.", true);
@@ -60,7 +60,7 @@ const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | str
   const handleEditClick = () => {
     setIsEditing(true);
     setIsKebabOpen(false);
-    setNewCommentValue(comment.content);
+    setNewCommentValue(comment.content.replaceAll("<br>", "\n"));
   };
   return (
     <>
@@ -111,7 +111,7 @@ const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | str
               </button>
             </form>
           ) : (
-            <p className={styles.commentContent}>{comment.content}</p>
+            <pre className={styles.commentContent}>{comment.content.replaceAll("<br>", "\n")}</pre>
           )}
 
           <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -166,7 +166,7 @@ const DiaryDetailPage = () => {
 
   //댓글 생성
   const postCommentMutation = useMutation({
-    mutationFn: (content: string) => postComment({ petId, diaryId, content }),
+    mutationFn: () => postComment({ petId, diaryId, content: commentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
       setCommentValue("");
@@ -177,13 +177,13 @@ const DiaryDetailPage = () => {
     },
   });
 
-  const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentValue(e.target.value);
   };
 
   const handlePostComment = () => {
     if (commentValue.trim() == "") return;
-    postCommentMutation.mutate(commentValue);
+    postCommentMutation.mutate();
   };
   if (!diary) return;
 
@@ -262,7 +262,7 @@ const DiaryDetailPage = () => {
           <div className={styles.commentInputContainer}>
             <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
             <div style={{ width: "100%", position: "relative" }}>
-              <input placeholder="댓글을 남겨주세요" className={styles.commentInput} onChange={handleCommentChange} value={commentValue} />
+              <textarea placeholder="댓글을 남겨주세요" className={styles.commentInput} onChange={handleCommentChange} value={commentValue} />
               <Image src={SendIcon} alt="send icon" width={20} height={20} className={styles.sendIcon} onClick={handlePostComment} />
             </div>
           </div>
