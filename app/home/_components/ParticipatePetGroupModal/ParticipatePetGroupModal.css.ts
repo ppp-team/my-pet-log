@@ -28,3 +28,9 @@ export const title = style({
 export const formWrapper = style({
   padding: "0 2rem",
 });
+
+export const form = style({
+  display: "flex",
+  flexDirection: "column",
+  marginBottom: "3.5rem",
+});
