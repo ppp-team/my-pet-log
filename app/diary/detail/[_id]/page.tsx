@@ -257,7 +257,9 @@ const DiaryDetailPage = () => {
 
         <section>
           <div className={styles.commentsCount}>댓글({diary.commentCount})</div>
-          {comments?.pages.map((v) => v?.content.map((comment) => <Comment diaryId={diaryId} comment={comment} key={comment.commentId} />))}
+          <div style={{ minHeight: "10rem" }}>
+            {comments?.pages.map((v) => v?.content.map((comment) => <Comment diaryId={diaryId} comment={comment} key={comment.commentId} />))}
+          </div>
           <button onClick={() => fetchNextPage()}>댓글 더 불러오기</button>
           <div className={styles.commentInputContainer}>
             <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
