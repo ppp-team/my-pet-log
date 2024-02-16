@@ -5,11 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/images/logo-high-resolution.png";
 import SignButton from "@/app/(auth)/_components/SignButton";
-import { useSession, signIn } from "next-auth/react";
+import KakaoButton from "../_components/SignButton/KakaoButton";
 
 const Page = () => {
-  const { data: session } = useSession();
-
   return (
     <>
       <div className={styles.container}>
@@ -22,17 +20,15 @@ const Page = () => {
             회원가입 하기
           </Link>
         </p>
-        {session && (
-          <div className={styles.buttonWrapper}>
-            <SignButton type="kakao" action="로그인" onClick={() => signIn("kakao")} />
-          </div>
-        )}
+        <div className={styles.buttonWrapper}>
+          <KakaoButton />
+        </div>
 
-        {session && (
+        {/* {session && (
           <div className={styles.buttonWrapper}>
             <SignButton type="google" action="로그인" onClick={() => signIn("google")} />
           </div>
-        )}
+        )} */}
 
         <Link className={styles.emailWrapper} href="/login/email">
           <SignButton type="email" action="로그인" />
