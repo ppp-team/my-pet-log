@@ -14,3 +14,19 @@ export const getMe = async () => {
     return null;
   }
 };
+
+export const postCheckNickname = async (nickname: string) => {
+  try {
+    const response = await instance.post("/users/check/nickname", {
+      nickname,
+    });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    if (error.response.status === 409) {
+      return false;
+    }
+  }
+};
