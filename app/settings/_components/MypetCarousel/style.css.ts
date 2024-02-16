@@ -20,8 +20,13 @@ export const container = style({
 });
 
 export const petadd = style({
+  width: "100%",
+  height: "100%",
+
   display: "flex",
   flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
   gap: "0.5rem",
 
   fontSize: "1.4rem",
