@@ -1,11 +1,10 @@
-import { Z_INDEX } from "@/styles/zindex.css";
 import { style } from "@vanilla-extract/css";
 
 export const root = style({
   display: "flex",
   flexDirection: "column",
 
-  marginTop: "11.2rem",
+  marginTop: "5.6rem",
 });
 
 export const header = style({
@@ -72,7 +71,7 @@ export const swiperFraction = style({
   fontWeight: "500",
   textAlign: "center",
 
-  zIndex: "2",
+  zIndex: "1",
 });
 
 export const profileImage = style({
@@ -176,7 +175,7 @@ export const commentInputContainer = style({
   gap: "0.9rem",
 
   position: "sticky",
-  bottom: 0,
+  bottom: "5.6rem",
 
   padding: "1rem 1.6rem",
 
