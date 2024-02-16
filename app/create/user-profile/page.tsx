@@ -5,11 +5,15 @@ import * as styles from "./page.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormEvent } from "react";
 import Image from "next/image";
-import userProfileDefaultImageSrc from "@/public/icons/user-profile-default.svg?url";
-import { CONFIRM_MESSAGE, ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
+import userProfileDefaultImageSrc from "@/public/images/user-profile-default.svg?url";
+import { ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import removeSpaces from "@/app/_utils/removeSpaces";
-import ErrorMessage from "@/app/_components/ErrorMessage";
-import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
+import { getNicknameHintState } from "@/app/_components/getNicknameHintState/getNicknameHintState";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getMe, postCheckNickname, postUserProfile, postUserProfilePropType } from "@/app/_api/users";
+import { UserType } from "@/app/_types/users/types";
+import { useRouter } from "next/navigation";
+import { showToast } from "@/app/_components/Toast";
 
 interface IForm {
   nickname: string;
@@ -18,6 +22,8 @@ interface IForm {
 }
 
 const CreateUserProfilePage: NextPage = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -27,13 +33,45 @@ const CreateUserProfilePage: NextPage = () => {
     formState: { errors },
   } = useForm<IForm>({ mode: "onTouched" });
 
+  const { data: user } = useQuery<UserType>({
+    queryKey: ["me"],
+    queryFn: () => getMe(),
+  });
+
+  const { mutate: postCheckNicknameMutation } = useMutation({
+    mutationKey: ["postCheckNicknameKey"],
+    mutationFn: postCheckNickname,
+    onError: () => {
+      setError("nickname", { type: "duplicated", message: ERROR_MESSAGE.nicknameDuplicate });
+    },
+    onSuccess: () => {
+      setValue("isNicknameConfirmed", true);
+    },
+  });
+
+  const { mutate: postUserProfileMutation } = useMutation({
+    mutationKey: ["postUserProfileKey"],
+    mutationFn: ({ nickname, profileImage }: postUserProfilePropType) => postUserProfile({ nickname, profileImage }),
+    onError: () => {
+      showToast("등록 실패했습니다. 잠시 후 다시 시도해주세요.", false);
+    },
+    onSuccess: (data) => {
+      if (data) {
+        showToast("등록되었습니다!", true);
+        router.push("/no-pet-group");
+      } else {
+        showToast("등록 실패했습니다. 잠시 후 다시 시도해주세요.", false);
+      }
+    },
+  });
+
   const onChangeProfileImage = (e: FormEvent<HTMLInputElement>) => {
     const files = e.currentTarget.files;
     if (!files) return;
     setValue("profileImage", URL.createObjectURL(files[0]));
   };
 
-  const onClickCheckNickname = () => {
+  const onClickCheckNickname = async () => {
     const removeSpacesNickname = removeSpaces(watch("nickname"));
     setValue("nickname", removeSpacesNickname);
 
@@ -47,13 +85,8 @@ const CreateUserProfilePage: NextPage = () => {
       return;
     }
 
-    // 닉네임 중복 에러메세지 테스트
-    const isConfirmed = removeSpacesNickname === "failed" ? false : true;
-    if (!isConfirmed) {
-      setError("nickname", { type: "duplicated", message: ERROR_MESSAGE.nicknameDuplicate });
-    } else {
-      setValue("isNicknameConfirmed", true);
-    }
+    // 닉네임 중복 검사
+    postCheckNicknameMutation(removeSpacesNickname);
   };
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
@@ -61,38 +94,23 @@ const CreateUserProfilePage: NextPage = () => {
     const isNicknameConfirmed = watch("isNicknameConfirmed");
     setValue("nickname", removeSpacesNickname);
 
-    if (isNicknameConfirmed) {
-      // 중복 검사 완료일 경우에만 submit api 통신
-      alert("성공");
-    } else if (removeSpacesNickname === "") {
-      // 공백만 입력했을 때
+    if (removeSpacesNickname === "") {
       setError("nickname", { type: "required", message: ERROR_MESSAGE.nicknameRequired });
-    } else {
+    } else if (!isNicknameConfirmed) {
       setError("nickname", { type: "isNotConfirmed", message: ERROR_MESSAGE.nicknameNotConfirmed });
-    }
-  };
-
-  const getNicknameState = () => {
-    const isNicknameConfirmed = watch("isNicknameConfirmed");
-    const isNicknameError = errors?.nickname;
-
-    if (isNicknameConfirmed) {
-      return {
-        style: styles.inputConfirmStyle,
-        component: <ConfirmMessage message={CONFIRM_MESSAGE.nicknameValid} />,
-      };
-    } else if (isNicknameError) {
-      return {
-        style: styles.inputErrorStyle,
-        component: <ErrorMessage message={errors?.nickname?.message} />,
-      };
     } else {
-      return {
-        style: null,
-        component: null,
-      };
+      postUserProfileMutation({
+        nickname: removeSpacesNickname,
+        profileImage: data.profileImage,
+      });
     }
   };
+
+  const { hintStyle, hintComponent } = getNicknameHintState({
+    isNicknameConfirmed: watch("isNicknameConfirmed"),
+    nicknameErrorMessage: errors?.nickname?.message ?? null,
+    textLength: watch("nickname")?.length,
+  });
 
   return (
     <main className={styles.container}>
@@ -100,7 +118,7 @@ const CreateUserProfilePage: NextPage = () => {
         <fieldset className={styles.userProfileImageContainer}>
           <label htmlFor="profileImage" style={{ cursor: "pointer" }}>
             <Image
-              className={styles.userProfileImage}
+              className={`${styles.userProfileImageDefault} ${watch("profileImage")?.length >= 1 && styles.userProfileImage}`}
               src={watch("profileImage")?.length >= 1 ? watch("profileImage") : userProfileDefaultImageSrc}
               alt="유저 프로필 이미지"
               width={126}
@@ -120,13 +138,14 @@ const CreateUserProfilePage: NextPage = () => {
 
         <fieldset className={styles.idFieldset}>
           <label className={styles.label}>이메일</label>
-          <input className={styles.idInput} type="text" placeholder={"email@email.com"} readOnly />
+          <input className={styles.idInput} type="text" placeholder={user?.email} readOnly />
         </fieldset>
 
         <fieldset className={styles.nicknameFieldset}>
           <label className={styles.label}>닉네임*</label>
-          <div className={`${styles.nicknameInputContainer} ${getNicknameState().style}`}>
+          <div className={styles.nicknameContainer}>
             <input
+              className={`${styles.nicknameInput} ${hintStyle}`}
               type="text"
               placeholder={PLACEHOLDER.nickname}
               {...register("nickname", {
@@ -141,8 +160,7 @@ const CreateUserProfilePage: NextPage = () => {
               중복확인
             </button>
           </div>
-          <p className={`${styles.length} ${watch("nickname")?.length > 10 ? styles.maxLengthOver : ""}`}>{watch("nickname")?.length ?? "0"} / 10</p>
-          {getNicknameState().component}
+          {hintComponent}
         </fieldset>
 
         <button className={styles.submitButton} type="submit">

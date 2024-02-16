@@ -28,6 +28,7 @@ export const postCheckNickname = async (nickname: string) => {
     if (error.response.status === 409) {
       return false;
     }
+    return false;
   }
 };
 
