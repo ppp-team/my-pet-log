@@ -11,7 +11,7 @@ import { getNicknameState } from "@/app/settings/_utils/getNicknameState";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { UserType } from "@/app/_types/users/types";
 import { getMe, postCheckNickname, postUserProfile, postUserProfilePropType } from "@/app/_api/users";
-import { getImagePath } from "@/app/_utils/getImagePath";
+import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import { showToast } from "@/app/_components/Toast";
 
 interface IFormInput {
