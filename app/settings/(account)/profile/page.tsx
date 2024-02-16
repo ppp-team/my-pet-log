@@ -8,10 +8,11 @@ import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
 import { checkNickname } from "@/app/settings/_utils/checkNickname";
 import { getNicknameState } from "@/app/settings/_utils/getNicknameState";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { UserType } from "@/app/_types/users/types";
-import { getMe, postCheckNickname } from "@/app/_api/users";
+import { getMe, postCheckNickname, postUserProfile, postUserProfilePropType } from "@/app/_api/users";
 import { getImagePath } from "@/app/_utils/getImagePath";
+import { showToast } from "@/app/_components/Toast";
 
 interface IFormInput {
   nickname: string;
@@ -30,7 +31,6 @@ const Page = () => {
   } = useForm<IFormInput>({ mode: "onChange" });
   const nicknameValue = watch("nickname");
   const isNicknameConfirmed = watch("isNicknameConfirmed");
-  const queryClient = useQueryClient();
 
   const { data: user, isSuccess } = useQuery<UserType>({
     queryKey: ["me"],
@@ -69,11 +69,24 @@ const Page = () => {
   };
   const { style, message } = getNicknameState(isNicknameConfirmed, errors);
 
+  const { mutate: postUserProfileMutation } = useMutation({
+    mutationFn: ({ nickname, profileImage }: postUserProfilePropType) => postUserProfile({ nickname, profileImage }),
+    onSuccess: (data) => {
+      if (data) {
+        showToast("등록되었습니다!", true);
+      } else {
+        showToast("등록 실패했습니다. 잠시 후 다시 시도해주세요.", false);
+      }
+    },
+  });
+
   //폼 제출 시
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     if (isNicknameConfirmed) {
-      // 중복 검사 완료일 경우에만 submit api 통신
-      alert("성공");
+      postUserProfileMutation({
+        nickname: data.nickname,
+        profileImage: data.image,
+      });
     } else {
       setError("nickname", { type: "isNotConfirmed", message: ERROR_MESSAGE.nicknameNotConfirmed });
     }
