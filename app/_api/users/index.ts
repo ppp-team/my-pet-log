@@ -38,21 +38,20 @@ export interface postUserProfilePropType {
 
 export const postUserProfile = async ({ nickname, profileImage }: postUserProfilePropType) => {
   try {
-    const formData = new FormData();
-    formData.append("nickname", nickname);
-    if (profileImage) {
-      formData.append("profileImage", profileImage);
-    }
-
-    const response = await instance.post("/users/profile", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const response = await instance.post(
+      "/users/profile",
+      {
+        profileImage,
+        nickname,
+      },
+      { headers: { "Content-Type": "multipart/form-data" } },
+    );
 
     if (response.status === 200) {
       return true;
     }
   } catch (error: any) {
-    console.log(error.response.data);
+    console.error(error.response.data);
     return false;
   }
 };
