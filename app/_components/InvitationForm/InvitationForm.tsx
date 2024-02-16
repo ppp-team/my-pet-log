@@ -20,9 +20,10 @@ interface InvitationFormPropsType {
     getIsInvalid: (value: string) => boolean;
     message: string;
   };
+  submit: (value: string) => void;
 }
 
-const InvitationForm = ({ formTitle, inputPlaceholder, requiredErrorMessage, invalidError: { getIsInvalid, message: invalidMessage } }: InvitationFormPropsType) => {
+const InvitationForm = ({ formTitle, inputPlaceholder, requiredErrorMessage, submit, invalidError: { getIsInvalid, message: invalidMessage } }: InvitationFormPropsType) => {
   const {
     register,
     handleSubmit,
@@ -31,12 +32,14 @@ const InvitationForm = ({ formTitle, inputPlaceholder, requiredErrorMessage, inv
     formState: { errors },
   } = useForm<IForm>({ mode: "onTouched" });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: IForm) => {
     const inputDataRemovedSpaces = removeSpaces(data.inputValue);
-    setValue("inputValue", inputDataRemovedSpaces);
 
-    // 통신 실패 에러메세지 테스트
-    if (getIsInvalid(inputDataRemovedSpaces)) setError("inputValue", { type: "invalid", message: invalidMessage });
+    if (!getIsInvalid(inputDataRemovedSpaces)) {
+      submit(inputDataRemovedSpaces);
+    } else {
+      setError("inputValue", { type: "invalid", message: invalidMessage });
+    }
   };
 
   return (
