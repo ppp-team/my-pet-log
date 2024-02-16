@@ -31,7 +31,7 @@ export const postLogs = async (petId: number, logData: LogType) => {
 
 export const getLogDetail = async (petId: number, logId: number) => {
   try {
-    const response = await instance.get(`/pets/${petId}/logs/${logId}`, {});
+    const response = await instance.get(`/pets/${petId}/logs/${logId}`);
     if (response.status === 200) {
       return response.data;
     }
@@ -43,6 +43,18 @@ export const getLogDetail = async (petId: number, logId: number) => {
 export const deleteLog = async (petId: number, logId: number) => {
   try {
     const response = await instance.delete(`/pets/${petId}/logs/${logId}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error: any) {
+    console.error(error.response.data);
+    return null;
+  }
+};
+
+export const checkLog = async (petId: number, logId: number) => {
+  try {
+    const response = await instance.post(`/pets/${petId}/logs/${logId}/check`);
     if (response.status === 200) {
       return response.data;
     }

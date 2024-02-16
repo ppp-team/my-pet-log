@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import * as styles from "./style.css";
+import { checkLog } from "@/app/_api/log";
 
 interface LogItemProps {
   logItem: LogsType;
@@ -24,9 +25,19 @@ const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) =>
   const checkboxId = `checkbox-${logItem.logId}`;
   const logItemRef = useRef<HTMLDivElement>(null);
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const petId = 6;
+
+  const handleCheckboxChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
-    setIsChecked(event.target.checked);
+    const newCheckedState = event.target.checked;
+    setIsChecked(newCheckedState);
+
+    try {
+      await checkLog(petId, logItem.logId);
+    } catch (error) {
+      console.error("Failed to update log check status", error);
+      setIsChecked(!newCheckedState);
+    }
   };
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -68,7 +79,7 @@ const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) =>
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (logItemRef.current && !logItemRef.current.contains(event.target as Node)) {
-        setShowDetails(false); // 외부 클릭 시 로그 디테일 닫기
+        setShowDetails(false);
       }
     }
 
