@@ -62,7 +62,7 @@ export interface GetDiaryListResponse {
 }
 
 export interface Diaries {
-  diaryId: number;
+  diaryId: string;
   title: string;
   content: string;
   thumbnailPath: null;
@@ -74,6 +74,10 @@ export interface GetDiaryListRequest {
   petId: number;
   page: number | unknown;
   size: number;
+}
+
+export interface GetCommentsRequest extends GetDiaryListRequest {
+  diaryId: string | string[];
 }
 
 export interface GetDiaryRequest {

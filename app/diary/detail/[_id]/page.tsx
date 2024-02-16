@@ -18,74 +18,10 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tansta
 import { useParams } from "next/navigation";
 import { deleteDiary, getComments, getDiary } from "@/app/_api/diary";
 import { Comment } from "@/app/_types/diary/type";
-const COMMENT_DATA = [
-  {
-    commentId: 4,
-    content: "eotrmfdmfekqslek",
-    createdAt: "3시간",
-    likeCount: 0,
-    isCurrentUserLiked: false,
-    writer: {
-      id: "thdefn5519",
-      nickname: "하이",
-      isCurrentUser: false,
-    },
-    taggedUsers: [
-      {
-        id: "abcde5578",
-        nickname: "하이루",
-        isCurrentUser: false,
-      },
-    ],
-  },
-  {
-    commentId: 7,
-    content: "eotrmfdmfekqslek",
-    createdAt: "2시간",
-    likeCount: 0,
-    isCurrentUserLiked: false,
-    writer: {
-      id: "thdefn5519",
-      nickname: "하이",
-      isCurrentUser: true,
-    },
-    taggedUsers: [
-      {
-        id: "abcde5578",
-        nickname: "하이루",
-        isCurrentUser: false,
-      },
-    ],
-  },
-];
-const diary = {
-  diaryId: 43,
-  title: "오늘은 공원에서 산책을 했어요",
-  content:
-    "날씨가 좋아서 근처 공원에서 김밥 먹으면서 날씨가 좋아서 근처 공원에서 김밥 먹으면서 날씨가 좋아서 근처 공원에서 김밥 먹으면서 날씨가 좋아서 근처 공원에서 김밥 먹으면서 날씨가 좋아서 근처 공원에서 김밥 먹으면서 날씨가 좋아서 근처 공원에서 김밥 먹으면서 날씨가 좋아서 근처 공원에서 김밥 먹으면서 날씨가 좋아서 근처 공원에서 김밥 먹으면서",
-  date: "2024.02.01",
-  images: [
-    "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/4arX/image/rZ1xSXKCJ4cd-IExOYahRWdrqoo.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Golde33443.jpg/560px-Golde33443.jpg",
-    "https://i.namu.wiki/i/KU-AvOeaSMn1tXrd1KXYfLh7nEjlh2YeFOiRvZXkI8IZxaXx9fcf85CP3KeBVyhqO8fj28_udHMczlm7-T4QjMeOoLaCyUZ-XInhsLSFBYO-ggjAaQ5Y8DoQUEEePlJSMHBBE6cbRe_2_N9B-CO3fw.webp",
-  ],
-  isCurrentUserLiked: false,
-  likeCount: 24,
-  petType: "말티즈",
-  petAge: "4개월",
-  writer: {
-    id: "thdefn5519",
-    nickname: "해피지은",
-    profilePath: null,
-    isCurrentUser: true,
-  },
-  commentCount: 0,
-};
 
 const Comment = ({ comment }: { comment: Comment }) => {
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
-
   const deleteComment = () => {
     //댓글 삭제 api
   };
@@ -133,6 +69,7 @@ const Comment = ({ comment }: { comment: Comment }) => {
   );
 };
 const petId = 2;
+const PAGE_SIZE = 2;
 
 const DiaryDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -142,21 +79,21 @@ const DiaryDetailPage = () => {
   const { _id: diaryId } = useParams();
 
   const { data: diary } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ petId, diaryId }) });
-  console.log(diary);
-  // const { data: comments, fetchNextPage } = useInfiniteQuery({
-  //   queryKey: ["comments", { petId, diaryId }],
-  //   queryFn: () => getComments({ petId, diaryId }),
-  //   initialPageParam: 0,
-  //   getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
-  // });
-  // const deleteDiaryMutation = useMutation({
-  //   mutationFn: () => deleteDiary({ petId, diaryId }),
-  //   onSuccess: () => {
-  //     // queryClient.invalidateQueries({ queryKey: ["diary", { petId, diaryId }] });
-  //     console.log("delete");
-  //   },
-  // });
-  // console.log(comments);
+  const { data: comments, fetchNextPage } = useInfiniteQuery({
+    queryKey: ["comments", { petId, diaryId }],
+    queryFn: ({ pageParam }) => getComments({ petId, diaryId, page: pageParam, size: PAGE_SIZE }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
+  });
+
+  const deleteDiaryMutation = useMutation({
+    mutationFn: () => deleteDiary({ petId, diaryId }),
+    onSuccess: () => {
+      // queryClient.invalidateQueries({ queryKey: ["diary", { petId, diaryId }] });
+      console.log("delete");
+    },
+  });
+  console.log(comments);
   if (!diary) return;
 
   // const deleteDiary = () => {
@@ -233,9 +170,8 @@ const DiaryDetailPage = () => {
 
         <section>
           <div className={styles.commentsCount}>댓글({diary.commentCount})</div>
-          {COMMENT_DATA.map((comment) => (
-            <Comment comment={comment} key={comment.commentId} />
-          ))}
+          {comments?.pages.map((v) => v?.content.map((comment) => <Comment comment={comment} key={comment.commentId} />))}
+          <button onClick={() => fetchNextPage()}>댓글 더 불러오기</button>
           <div className={styles.commentInputContainer}>
             <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
             <div style={{ width: "100%", position: "relative" }}>

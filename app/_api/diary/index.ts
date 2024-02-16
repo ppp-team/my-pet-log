@@ -1,7 +1,7 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { Diary, GetDiaryListRequest, GetDiaryListResponse, GetDiaryRequest, GetDiaryResponse } from "@/app/_types/diary/type";
+import { Diary, GetCommentsRequest, GetCommentsResponse, GetDiaryListRequest, GetDiaryListResponse, GetDiaryRequest, GetDiaryResponse } from "@/app/_types/diary/type";
 
 export const postDiary = async ({ petId, data }: { petId: number; data: Diary }) => {
   try {
@@ -39,7 +39,7 @@ export const getDiary = async ({ petId, diaryId }: GetDiaryRequest): Promise<Get
   }
 };
 
-export const getComments = async ({ petId, diaryId }: GetDiaryRequest) => {
+export const getComments = async ({ petId, diaryId }: GetCommentsRequest): Promise<GetCommentsResponse | null> => {
   try {
     const res = await instance.get(`pets/${petId}/diaries/${diaryId}/comments`);
 
