@@ -13,6 +13,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMe, postCheckNickname, postUserProfile, postUserProfilePropType } from "@/app/_api/users";
 import { UserType } from "@/app/_types/users/types";
 import { useRouter } from "next/navigation";
+import { showToast } from "@/app/_components/Toast";
 
 interface IForm {
   nickname: string;
@@ -52,6 +53,7 @@ const CreateUserProfilePage: NextPage = () => {
     mutationKey: ["postUserProfileKey"],
     mutationFn: ({ nickname, profileImage }: postUserProfilePropType) => postUserProfile({ nickname, profileImage }),
     onSuccess: () => {
+      showToast("등록되었습니다!", true);
       router.push("/no-pet-group");
     },
   });
