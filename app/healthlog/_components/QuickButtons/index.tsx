@@ -34,7 +34,7 @@ const QuickButtons = () => {
       logData: {
         type: typeName,
         subType: null,
-        isCustomLocation: false,
+        isCustomLocation: typeName === "WALK",
         kakaoLocationId: null,
         datetime: formattedDateTime,
         isComplete: true,
