@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const container = style({
   padding: "2rem",
-
+  marginTop: "5.6rem",
   display: "flex",
   justifyContent: "center",
 });

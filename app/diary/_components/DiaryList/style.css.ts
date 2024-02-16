@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 export const root = style({
   display: "flex",
   flexDirection: "column",
-
+  gap: "2.4rem",
   padding: "2rem",
 });
 
@@ -15,7 +15,6 @@ export const search = style({
   border: "none",
   background: "var(--GrayE8)",
 
-  margin: "2.4rem 0",
   padding: "0.8rem 1rem",
 });
 
@@ -108,7 +107,7 @@ export const description = style({
 
 export const writeIcon = style({
   position: "fixed",
-  bottom: "1.3rem",
+  bottom: "6.9rem",
   right: "1.9rem",
 
   cursor: "pointer",
