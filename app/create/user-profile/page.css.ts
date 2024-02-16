@@ -1,4 +1,4 @@
-import { style, createVar } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 export const container = style({
   paddingLeft: "1.6rem",
@@ -15,38 +15,30 @@ export const userProfileImageContainer = style({
   textAlign: "center",
 });
 
-export const userProfileImage = style({
+export const userProfileImageDefault = style({
   width: "12.6rem",
   height: "12.4rem",
   objectFit: "cover",
 });
 
-export const fieldset = style({
-  display: "grid",
-  gap: "0.6rem",
+export const userProfileImage = style({
+  borderRadius: "50%",
 });
 
-export const idFieldset = style([fieldset, { marginBottom: "2.7rem" }]);
+export const idFieldset = style({ marginBottom: "2.7rem" });
 
-export const nicknameFieldset = style([fieldset, { marginBottom: "3.2rem" }]);
+export const nicknameFieldset = style({ marginBottom: "3.2rem" });
 
 export const label = style({
+  display: "block",
+  marginBottom: "0.6rem",
   fontSize: "1.6rem",
   fontWeight: "600",
   color: "var(--Black)",
 });
 
-export const length = style({
-  fontSize: "1.2rem",
-  fontWeight: "600",
-  color: "var(--Black)",
-});
-
-export const maxLengthOver = style({
-  color: "var(--Red)",
-});
-
 export const inputBoxStyle = style({
+  width: "100%",
   minHeight: "5.1rem",
   padding: "0.8rem 1.8rem",
   borderRadius: "10px",
@@ -57,15 +49,16 @@ export const inputBoxStyle = style({
   color: "var(--Gray81)",
 });
 
-export const nicknameInputContainer = style([
-  inputBoxStyle,
-  {
-    position: "relative",
-    display: "grid",
-    gridTemplateColumns: "1fr auto",
-    alignItems: "center",
+export const inputFocusStyle = style({
+  ":focus-within": {
+    borderColor: "var(--MainOrange)",
   },
-]);
+});
+
+export const nicknameContainer = style({
+  position: "relative",
+  width: "100%",
+});
 
 export const idInput = style([
   inputBoxStyle,
@@ -74,15 +67,13 @@ export const idInput = style([
   },
 ]);
 
-export const inputErrorStyle = style({
-  borderColor: "var(--Red)",
-});
-
-export const inputConfirmStyle = style({
-  borderColor: "var(--Green)",
-});
+export const nicknameInput = style([inputBoxStyle, inputFocusStyle]);
 
 export const checkNicknameButton = style({
+  position: "absolute",
+  right: "0.9rem",
+  top: "50%",
+  transform: "translateY(-50%)",
   padding: "0.8rem 0.9rem",
   borderRadius: "5px",
   backgroundColor: "var(--LightOrange)",
