@@ -5,7 +5,7 @@ import LikeIcon from "@/public/icons/like.svg";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import Image from "next/image";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -16,21 +16,34 @@ import SendIcon from "@/public/icons/send.svg?url";
 import BackHeader from "@/app/_components/BackHeader";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { deleteDiary, getComments, getDiary } from "@/app/_api/diary";
+import { deleteComment, deleteDiary, getComments, getDiary, postComment } from "@/app/_api/diary";
 import { Comment } from "@/app/_types/diary/type";
 import { showToast } from "@/app/_components/Toast";
 
-const Comment = ({ comment }: { comment: Comment }) => {
+const petId = 2;
+
+const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | string[] }) => {
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
-  const deleteComment = () => {
-    //댓글 삭제 api
-  };
+  const queryClient = useQueryClient();
+
+  //댓글 삭제
+  const deleteCommentMutation = useMutation({
+    mutationFn: (commentId: number) => deleteComment({ petId, commentId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
+      showToast("댓글을 삭제했습니다.", true);
+    },
+    onError: (e) => {
+      console.log(e.message);
+      showToast("댓글 삭제에 실패했습니다.", false);
+    },
+  });
 
   return (
     <>
       <div className={styles.commentContainer}>
-        <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
+        <div style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${comment.writer.profilePath})` }} className={styles.profileImage} />
         <div className={styles.commentMain}>
           <div className={styles.commentHeader}>
             <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>
@@ -65,29 +78,28 @@ const Comment = ({ comment }: { comment: Comment }) => {
           </div>
         </div>
       </div>
-      <div>{isModalOpen && <Modal text="정말 댓글을 삭제하시겠습니까?" buttonText="삭제" onClick={deleteComment} onClose={closeModalFunc} />}</div>
+      <div>
+        {isModalOpen && <Modal text="정말 댓글을 삭제하시겠습니까?" buttonText="삭제" onClick={() => deleteCommentMutation.mutate(comment.commentId)} onClose={closeModalFunc} />}
+      </div>
     </>
   );
 };
-const petId = 2;
-const PAGE_SIZE = 2;
+
+const PAGE_SIZE = 5;
 
 const DiaryDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isKebabOpen, setIsKebabOpen] = useState(false);
+  const [commentValue, setCommentValue] = useState("");
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const queryClient = useQueryClient();
   const { _id: diaryId } = useParams();
   const router = useRouter();
 
+  //일기 상세 조회
   const { data: diary } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ petId, diaryId }) });
-  const { data: comments, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["comments", { petId, diaryId }],
-    queryFn: ({ pageParam }) => getComments({ petId, diaryId, page: pageParam, size: PAGE_SIZE }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
-  });
 
+  //일기 삭제
   const deleteDiaryMutation = useMutation({
     mutationFn: () => deleteDiary({ petId, diaryId }),
     onSuccess: () => {
@@ -99,6 +111,36 @@ const DiaryDetailPage = () => {
       closeModalFunc();
     },
   });
+
+  //댓글 조회
+  const { data: comments, fetchNextPage } = useInfiniteQuery({
+    queryKey: ["comments", { petId, diaryId }],
+    queryFn: ({ pageParam }) => getComments({ petId, diaryId, page: pageParam, size: PAGE_SIZE }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
+  });
+
+  //댓글 생성
+  const postCommentMutation = useMutation({
+    mutationFn: (content: string) => postComment({ petId, diaryId, content }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
+      setCommentValue("");
+      showToast("댓글을 생성했습니다.", true);
+    },
+    onError: () => {
+      showToast("댓글 생성에 실패했습니다.", false);
+    },
+  });
+
+  const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCommentValue(e.target.value);
+  };
+
+  const handlePostComment = () => {
+    if (commentValue.trim() == "") return;
+    postCommentMutation.mutate(commentValue);
+  };
   if (!diary) return;
 
   return (
@@ -171,13 +213,13 @@ const DiaryDetailPage = () => {
 
         <section>
           <div className={styles.commentsCount}>댓글({diary.commentCount})</div>
-          {comments?.pages.map((v) => v?.content.map((comment) => <Comment comment={comment} key={comment.commentId} />))}
+          {comments?.pages.map((v) => v?.content.map((comment) => <Comment diaryId={diaryId} comment={comment} key={comment.commentId} />))}
           <button onClick={() => fetchNextPage()}>댓글 더 불러오기</button>
           <div className={styles.commentInputContainer}>
             <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
             <div style={{ width: "100%", position: "relative" }}>
-              <input placeholder="댓글을 남겨주세요" className={styles.commentInput} />
-              <Image src={SendIcon} alt="send icon" width={20} height={20} className={styles.sendIcon} />
+              <input placeholder="댓글을 남겨주세요" className={styles.commentInput} onChange={handleCommentChange} value={commentValue} />
+              <Image src={SendIcon} alt="send icon" width={20} height={20} className={styles.sendIcon} onClick={handlePostComment} />
             </div>
           </div>
         </section>

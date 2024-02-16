@@ -1,7 +1,17 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { GetCommentsRequest, GetCommentsResponse, GetDiaryListRequest, GetDiaryListResponse, GetDiaryRequest, GetDiaryResponse, PostDiaryRequest } from "@/app/_types/diary/type";
+import {
+  DeleteCommentRequest,
+  GetCommentsRequest,
+  GetCommentsResponse,
+  GetDiaryListRequest,
+  GetDiaryListResponse,
+  GetDiaryRequest,
+  GetDiaryResponse,
+  PostCommentRequest,
+  PostDiaryRequest,
+} from "@/app/_types/diary/type";
 
 export const postDiary = async ({ petId, data }: PostDiaryRequest) => {
   try {
@@ -55,4 +65,12 @@ export const deleteDiary = async ({ petId, diaryId }: GetDiaryRequest) => {
   } catch (error: any) {
     throw Error("일기 샥제 실패");
   }
+};
+
+export const postComment = async ({ petId, diaryId, content }: PostCommentRequest) => {
+  await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
+};
+
+export const deleteComment = async ({ petId, commentId }: DeleteCommentRequest) => {
+  await instance.delete(`pets/${petId}/diaries/comments/${commentId}`);
 };

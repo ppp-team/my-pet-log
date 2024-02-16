@@ -1,5 +1,5 @@
 import { getDiaryList } from "@/app/_api/diary";
-import { Diaries } from "@/app/_types/diary/type";
+import { Diary } from "@/app/_types/diary/type";
 import EmptyDiaryList from "@/app/diary/_components/EmptyDiaryList";
 import CommentIconURL from "@/public/icons/message.svg?url";
 import SearchIconURL from "@/public/icons/search.svg?url";
@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as styles from "./style.css";
 
-const Diary = ({ diary }: { diary: Diaries }) => {
+const Diary = ({ diary }: { diary: Diary }) => {
   return (
     <Link href={`/diary/detail/${diary.diaryId}`}>
       <div className={styles.diaryWrapper}>
@@ -59,7 +59,7 @@ const DiaryList = () => {
               return (
                 <div className={styles.diaryListWrapper} key={v.date}>
                   <p className={styles.date}>{v.date}</p>
-                  {v.diaries.map((diary: Diaries) => {
+                  {v.diaries.map((diary: Diary) => {
                     return <Diary diary={diary} key={diary.diaryId} />;
                   })}
                 </div>

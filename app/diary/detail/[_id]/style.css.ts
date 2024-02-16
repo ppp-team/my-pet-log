@@ -82,6 +82,9 @@ export const profileImage = style({
 
   border: "1px solid var(--MainOrange)",
   borderRadius: "50%",
+
+  backgroundSize: "cover",
+  backgroundPosition: "center",
 });
 
 export const content = style({

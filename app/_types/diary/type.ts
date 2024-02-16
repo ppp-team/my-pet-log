@@ -3,16 +3,11 @@ export interface Diary {
   title: string;
   content: string;
   thumbnailPath: null | string;
-  writer: Writer;
-  commentCount: number;
-}
-
-export interface Diaries {
-  diaryId: string;
-  title: string;
-  content: string;
-  thumbnailPath: null;
-  writer: Writer;
+  writer: {
+    id: string;
+    nickname: string;
+    isCurrentUser: boolean;
+  };
   commentCount: number;
 }
 
@@ -20,6 +15,7 @@ export interface Writer {
   id: string;
   nickname: string;
   isCurrentUser: boolean;
+  profilePath: string;
 }
 
 export interface Comment {
@@ -99,12 +95,7 @@ export interface GetDiaryResponse {
   ];
   videos: string[];
   isCurrentUserLiked: boolean;
-  writer: {
-    id: string;
-    nickname: string;
-    profilePath: string;
-    isCurrentUser: boolean;
-  };
+  writer: Writer;
   commentCount: number;
   likeCount: number;
   pet: {
@@ -151,4 +142,15 @@ export interface PostDiaryRequest {
     image?: File[];
     video?: File;
   };
+}
+
+export interface PostCommentRequest {
+  petId: number;
+  diaryId: string | string[];
+  content: string;
+}
+
+export interface DeleteCommentRequest {
+  petId: number;
+  commentId: number;
 }
