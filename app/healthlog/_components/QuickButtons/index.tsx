@@ -1,14 +1,14 @@
+import { usePostLogsMutation } from "@/app/_hooks/usePostLogMutation";
+import getKRDateTime from "@/app/_utils/getKRDateTime";
+import feedIconSrc from "@/public/icons/feed-icon.svg?url";
+import groomingIconSrc from "@/public/icons/grooming-icon.svg?url";
+import healthIconSrc from "@/public/icons/health-icon.svg?url";
+import treatIconSrc from "@/public/icons/treat-icon.svg?url";
+import walkIconSrc from "@/public/icons/walk-icon.svg?url";
+import writeIconSrc from "@/public/icons/write-pencil-icon.svg?url";
+import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./style.css";
-import Image from "next/image";
-import React from "react";
-import { usePostLogsMutation } from "@/app/_hooks/usePostLogMutation";
-import feedIconSrc from "@/public/icons/feed-icon.svg?url";
-import healthIconSrc from "@/public/icons/health-icon.svg?url";
-import walkIconSrc from "@/public/icons/walk-icon.svg?url";
-import treatIconSrc from "@/public/icons/treat-icon.svg?url";
-import writeIconSrc from "@/public/icons/write-pencil-icon.svg?url";
-import groomingIconSrc from "@/public/icons/grooming-icon.svg?url";
 
 const buttonData = [
   { src: feedIconSrc, typeName: "FEED", text: "사료", colorClass: "" },
@@ -21,11 +21,12 @@ const buttonData = [
 
 const QuickButtons = () => {
   const { mutate: postLog } = usePostLogsMutation();
-  const formattedDateTime = new Date().toISOString().slice(0, 16);
+
   const petId = 6;
   const managerId = "sohee11289110";
 
   const handleButtonClick = (typeName: string) => {
+    const formattedDateTime = getKRDateTime();
     const [datePart] = formattedDateTime.split("T");
     const [year, month, day] = datePart.split("-").map(Number);
 

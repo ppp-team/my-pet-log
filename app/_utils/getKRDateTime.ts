@@ -1,9 +1,17 @@
 const getKRDateTime = (): string => {
   const date = new Date();
-  const kstOffset = 9 * 60;
-  const localOffset = date.getTimezoneOffset();
-  date.setMinutes(date.getMinutes() + kstOffset - localOffset);
-  const formattedDateTime = date.toISOString().slice(0, 16);
+  const utc = date.getTime() + date.getTimezoneOffset() * 60000;
+  const kst = utc + 3600000 * 9;
+  const kstDate = new Date(kst);
+
+  const year = kstDate.getFullYear();
+  const month = kstDate.getMonth() + 1;
+  const day = kstDate.getDate();
+  const hours = kstDate.getHours();
+  const minutes = kstDate.getMinutes();
+
+  const formattedDateTime = `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}T${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+
   return formattedDateTime;
 };
 
