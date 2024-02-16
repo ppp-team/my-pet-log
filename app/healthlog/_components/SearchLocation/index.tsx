@@ -86,7 +86,7 @@ const SearchLocation = ({ appKey, onSelectPlace }: SearchLocationProps) => {
     <div className={styles.container}>
       <div className={styles.searchContainer}>
         <input className={styles.inputWrapper} type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="장소를 검색해보세요" />
-        <button className={styles.searchButton} onClick={searchPlaces}>
+        <button type="button" className={styles.searchButton} onClick={searchPlaces}>
           검색
         </button>
       </div>

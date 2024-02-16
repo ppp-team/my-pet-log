@@ -1,29 +1,37 @@
-import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 import SearchLocation from "@/app/healthlog/_components/SearchLocation";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
+import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 import React, { useEffect, useRef, useState } from "react";
-import { UseFormRegister, FieldValues, UseFormWatch } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue, UseFormWatch, FormState, FieldValues } from "react-hook-form";
 import * as styles from "./style.css";
 
+export interface FormValues {
+  type: string;
+  subtype: string;
+  memo: string;
+  isImportant: boolean;
+  kakaoLocationId?: number | null;
+}
 interface SubtypeDetailProps {
   visibleSubtype: keyof typeof subtypeOptions | "CUSTOM" | "WALK";
   register: UseFormRegister<FieldValues>;
   watch: UseFormWatch<FieldValues>;
-  errors: UseFormWatch<FieldValues>["errors"];
+  errors: FormState<FieldValues>["errors"];
+  setValue: UseFormSetValue<FieldValues>;
+  onLocationSelect: (id: number | null) => void;
 }
 
-const MAX_LENGTH = { subtype: 15, memo: 500 };
+const MAX_LENGTH = { type: 15, subtype: 15, memo: 500 };
 
-const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register, watch, errors }) => {
+const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register, watch, errors, setValue, onLocationSelect }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [kakaoLocationId, setKakaoLocationId] = useState<number | null>(null);
-  const [inputText, setInputText] = useState<string>("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
+    setValue("subtype", option);
     setDropdownOpen(false);
   };
 
@@ -39,6 +47,12 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
     };
   }, [dropdownRef]);
 
+  useEffect(() => {
+    if (selectedOption) {
+      setValue("subtype", selectedOption);
+    }
+  }, [selectedOption, setValue]);
+
   return (
     <div className={styles.container}>
       {visibleSubtype === "WALK" && (
@@ -47,8 +61,8 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
           <SearchLocation
             appKey={myKey}
             onSelectPlace={(place) => {
-              setKakaoLocationId(place.id);
-              setInputText(place.place_name);
+              onLocationSelect(place.id);
+              setValue("subtype", place.place_name);
             }}
           />
         </div>
@@ -59,25 +73,25 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
           <input
             className={styles.inputBox}
             placeholder="주요 항목을 직접 입력하세요"
-            {...register("subtype", {
+            {...register("type", {
               required: "내용을 입력해주세요",
-              maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
+              maxLength: { value: MAX_LENGTH.type, message: `최대 ${MAX_LENGTH.type}자까지 작성할 수 있습니다.` },
             })}
-            maxLength={MAX_LENGTH.subtype}
+            maxLength={MAX_LENGTH.type}
             autoFocus
           />
           {
             <p className={styles.p}>
-              {watch("subtype")?.length ?? "0"}/ {MAX_LENGTH.subtype}
+              {watch("type")?.length ?? "0"}/ {MAX_LENGTH.type}
             </p>
           }
-          {errors["subtype"] && <p className={styles.error}>{errors["subtype"].message?.toString()}</p>}
+          {errors.type && <p className={styles.error}>{errors.type.message?.toString()}</p>}
         </div>
       )}
       {["FEED", "HEALTH", "TREAT", "GROOMING"].includes(visibleSubtype) && (
         <div className={styles.selectWrapper} ref={dropdownRef}>
           <label>세부사항</label>
-          <button className={`${styles.selectBox} ${dropdownOpen ? styles.selectBoxOpen : ""}`} onClick={() => setDropdownOpen(!dropdownOpen)}>
+          <button type="button" className={`${styles.selectBox} ${dropdownOpen ? styles.selectBoxOpen : ""}`} onClick={() => setDropdownOpen(!dropdownOpen)}>
             {selectedOption || "세부사항을 선택하세요"}
             <DropdownIcon className={`${styles.dropdownIcon} ${dropdownOpen ? styles.dropdownIconOpen : ""}`} />
           </button>
@@ -111,7 +125,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
                   {watch("subtype")?.length ?? "0"}/ {MAX_LENGTH.subtype}
                 </p>
               }
-              {errors["subtype"] && <p className={styles.error}>{errors["subtype"].message?.toString()}</p>}
+              {errors.subtype && <p className={styles.error}>{errors.subtype.message?.toString()}</p>}
             </>
           )}
         </div>
@@ -131,7 +145,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
             {watch("memo")?.length ?? "0"}/ {MAX_LENGTH.memo}
           </p>
         }
-        {errors["memo"] && <p className={styles.error}>{errors["memo"].message?.toString()}</p>}
+        {errors.memo && <p className={styles.error}>{errors.memo.message?.toString()}</p>}
       </div>
       <div className={styles.checkboxWrapper}>
         <label htmlFor="isImportantCheckbox" className={styles.checkBox}>
