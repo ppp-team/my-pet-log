@@ -2,14 +2,14 @@ import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 import SearchLocation from "@/app/healthlog/_components/SearchLocation";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
 import React, { useEffect, useRef, useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, FieldValues, UseFormWatch } from "react-hook-form";
 import * as styles from "./style.css";
 
 interface SubtypeDetailProps {
   visibleSubtype: keyof typeof subtypeOptions | "CUSTOM" | "WALK";
-  register: UseFormRegister<any>;
-  watch: any;
-  errors: any;
+  register: UseFormRegister<FieldValues>;
+  watch: UseFormWatch<FieldValues>;
+  errors: UseFormWatch<FieldValues>["errors"];
 }
 
 const MAX_LENGTH = { subtype: 15, memo: 500 };
@@ -17,6 +17,8 @@ const MAX_LENGTH = { subtype: 15, memo: 500 };
 const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register, watch, errors }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [kakaoLocationId, setKakaoLocationId] = useState<number | null>(null);
+  const [inputText, setInputText] = useState<string>("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
 
@@ -45,7 +47,8 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
           <SearchLocation
             appKey={myKey}
             onSelectPlace={(place) => {
-              console.log(place.id);
+              setKakaoLocationId(place.id);
+              setInputText(place.place_name);
             }}
           />
         </div>

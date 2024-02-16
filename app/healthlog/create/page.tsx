@@ -1,7 +1,9 @@
 "use client";
 
+import { postLogs } from "@/app/_api/log";
 import BackHeader from "@/app/_components/BackHeader";
 import DateInput from "@/app/_components/DateInput";
+import convertTime12to24 from "@/app/_utils/convertTime12to24";
 import SelectMateDropdown from "@/app/healthlog/_components/SelectMateDropdown";
 import SubtypeDetail from "@/app/healthlog/_components/SubtypeDetail";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
@@ -9,28 +11,29 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./page.css";
 
-interface SubmitData {
-  // 폼 필드 속성 타입 추가
-}
-
 const Page = () => {
-  const [visibleSubtype, setVisibleSubtype] = useState<keyof typeof subtypeOptions | "CUSTOM" | "WALK" | null>(null);
-  const [selectedType, setSelectedType] = useState<keyof typeof subtypeOptions | "CUSTOM" | "WALK" | null>(null);
+  const [visibleSubtype, setVisibleSubtype] = useState<keyof typeof subtypeOptions | "CUSTOM" | "WALK" | null>("FEED");
+  const [selectedType, setSelectedType] = useState<string>("FEED");
+  const [selectedSubType, setSelectedSubType] = useState<string>("");
+  const [kakaoLocationId, setKakaoLocationId] = useState<number | null>(null);
   const [activeButtonGroup, setActiveButtonGroup] = useState("");
   const [selectedGuardianId, setSelectedGuardianId] = useState<string | number>("");
   const topSubtypeRef = useRef<HTMLDivElement>(null);
   const bottomSubtypeRef = useRef<HTMLDivElement>(null);
+  // const { mutate: postLog, isLoading, isError } = usePostLogsMutation();
+
+  const petId = 6;
 
   const {
-    register,
     handleSubmit,
+    register,
     setValue,
     getValues,
     watch,
     formState: { errors },
   } = useForm();
 
-  const buttonTypes: { type: keyof typeof subtypeOptions | "CUSTOM" | "WALK"; label: string }[] = [
+  const buttonTypes: { type: string; label: string }[] = [
     { type: "FEED", label: "사료" },
     { type: "HEALTH", label: "건강" },
     { type: "WALK", label: "산책" },
@@ -39,19 +42,36 @@ const Page = () => {
     { type: "CUSTOM", label: "직접 입력" },
   ];
 
-  const handleTypeButtonClick = (subtype: keyof typeof subtypeOptions | "CUSTOM" | "WALK", group: string) => {
-    if (visibleSubtype === subtype && activeButtonGroup === group) {
-      setVisibleSubtype(null);
+  const handleTypeButtonClick = (type: string, group: string) => {
+    if (selectedType === type && activeButtonGroup === group) {
+      setVisibleSubtype(type as keyof typeof subtypeOptions | "CUSTOM" | "WALK");
       setActiveButtonGroup("");
     } else {
-      setVisibleSubtype(subtype);
+      setSelectedType(type);
+      setVisibleSubtype(type as keyof typeof subtypeOptions | "CUSTOM" | "WALK");
       setActiveButtonGroup(group);
     }
   };
 
-  const onSubmit = (submitData: SubmitData) => {
-    console.log(submitData);
-    // 폼 제출 로직
+  const onSubmit = (data: any) => {
+    const date = data.date;
+    const time = convertTime12to24(data.time);
+    const datetime = `${date}T${time}`;
+
+    const logData = {
+      type: selectedType,
+      subType: selectedSubType,
+      isCustomLocation: selectedType === "WALK",
+      kakaoLocationId: selectedType === "WALK" ? kakaoLocationId : null,
+      datetime: datetime,
+      isComplete: true,
+      isImportant: data.isImportant,
+      memo: data.memo,
+      managerId: String(selectedGuardianId),
+    };
+
+    console.log(logData);
+    postLogs(petId, logData); // API 호출
   };
 
   useEffect(() => {
@@ -97,7 +117,6 @@ const Page = () => {
             <SelectMateDropdown
               onSelect={(guardianId) => {
                 setSelectedGuardianId(guardianId);
-                console.log(selectedGuardianId);
               }}
             />
           </div>
@@ -110,7 +129,7 @@ const Page = () => {
                   className={`${styles.typeButton} ${selectedType === type ? styles.typeButtonSelected : ""}`}
                   type="button"
                   onClick={() => {
-                    handleTypeButtonClick(type as keyof typeof subtypeOptions | "CUSTOM" | "WALK", "top");
+                    handleTypeButtonClick(type, "top");
                     setSelectedType(type);
                   }}
                 >
