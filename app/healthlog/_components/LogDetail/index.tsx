@@ -27,7 +27,7 @@ const LogDetail = ({ logId }: LogDetailProps) => {
         <div className={styles.wrapper}>
           <div className={styles.box}>
             <Image src={logDetailIconSrc} width={18} height={18} alt={"세부사항 아이콘"} />
-            <p>{logDetailData?.subType}</p>
+            <p>{logDetailData?.subType || "수정하기로 세부사항을 입력해보세요"}</p>
           </div>
           {logDetailData?.memo && (
             <div className={styles.box}>
@@ -36,7 +36,7 @@ const LogDetail = ({ logId }: LogDetailProps) => {
             </div>
           )}
         </div>
-        <button className={styles.editButton}>편집하기</button>
+        <button className={styles.editButton}>수정하기</button>
       </div>
     </>
   );
