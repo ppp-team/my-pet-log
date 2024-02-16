@@ -16,7 +16,7 @@ const buttonData = [
   { src: walkIconSrc, typeName: "WALK", text: "산책", colorClass: styles.thirdColorButton },
   { src: healthIconSrc, typeName: "HEALTH", text: "건강", colorClass: "" },
   { src: groomingIconSrc, typeName: "GROOMING", text: "위생/미용", colorClass: styles.secondColorButton },
-  { src: writeIconSrc, typeName: "CUSTOM", text: "직접 입력", colorClass: styles.thirdColorButton, link: "/healthlog/edit" },
+  { src: writeIconSrc, typeName: "CUSTOM", text: "직접 입력", colorClass: styles.thirdColorButton, link: "/healthlog/create" },
 ];
 
 const QuickButtons = () => {

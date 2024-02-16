@@ -17,6 +17,7 @@ const Page = () => {
   const [visibleSubtype, setVisibleSubtype] = useState<keyof typeof subtypeOptions | "CUSTOM" | "WALK" | null>(null);
   const [selectedType, setSelectedType] = useState<keyof typeof subtypeOptions | "CUSTOM" | "WALK" | null>(null);
   const [activeButtonGroup, setActiveButtonGroup] = useState("");
+  const [selectedGuardianId, setSelectedGuardianId] = useState<string | number>("");
   const topSubtypeRef = useRef<HTMLDivElement>(null);
   const bottomSubtypeRef = useRef<HTMLDivElement>(null);
 
@@ -93,7 +94,12 @@ const Page = () => {
           </div>
           <div className={styles.inputWrapper}>
             <label>담당 메이트</label>
-            <SelectMateDropdown />
+            <SelectMateDropdown
+              onSelect={(guardianId) => {
+                setSelectedGuardianId(guardianId);
+                console.log(selectedGuardianId);
+              }}
+            />
           </div>
 
           <div className={styles.inputWrapper}>
