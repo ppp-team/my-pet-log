@@ -93,7 +93,6 @@ const DiaryDetailPage = () => {
       console.log("delete");
     },
   });
-  console.log(comments);
   if (!diary) return;
 
   // const deleteDiary = () => {

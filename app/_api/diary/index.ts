@@ -1,9 +1,18 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { Diary, GetCommentsRequest, GetCommentsResponse, GetDiaryListRequest, GetDiaryListResponse, GetDiaryRequest, GetDiaryResponse } from "@/app/_types/diary/type";
+import {
+  Diary,
+  GetCommentsRequest,
+  GetCommentsResponse,
+  GetDiaryListRequest,
+  GetDiaryListResponse,
+  GetDiaryRequest,
+  GetDiaryResponse,
+  PostDiaryRequest,
+} from "@/app/_types/diary/type";
 
-export const postDiary = async ({ petId, data }: { petId: number; data: Diary }) => {
+export const postDiary = async ({ petId, data }: PostDiaryRequest) => {
   try {
     const formData = new FormData();
     const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
@@ -12,8 +21,7 @@ export const postDiary = async ({ petId, data }: { petId: number; data: Diary })
 
     return res.data;
   } catch (error: any) {
-    console.error(error.response);
-    return null;
+    throw Error("일기 생성 실패");
   }
 };
 

@@ -1,15 +1,28 @@
 "use client";
 
+import { postDiary } from "@/app/_api/diary";
+import BackHeader from "@/app/_components/BackHeader";
 import DateInput from "@/app/_components/DateInput";
+import ErrorMessage from "@/app/_components/ErrorMessage";
 import ImageInput from "@/app/diary/_components/ImageInput";
 import VideoInput from "@/app/diary/_components/VideoInput";
-import { FieldValues, UseFormRegister, useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
-import BackHeader from "@/app/_components/BackHeader";
-import ErrorMessage from "@/app/_components/ErrorMessage";
-import { postDiary } from "@/app/_api/diary";
+import { showToast } from "@/app/_components/Toast";
+
+interface Diary {
+  title: string;
+  content: string;
+  date: string;
+  image?: File[];
+  video?: File;
+}
 
 const MAX_LENGTH = { title: 15, content: 500 };
+
+const petId = 2;
 
 const EditPage = () => {
   const {
@@ -20,6 +33,21 @@ const EditPage = () => {
     watch,
     handleSubmit,
   } = useForm({ mode: "onChange" });
+
+  const router = useRouter();
+
+  const queryClient = useQueryClient();
+
+  const postDiaryMutation = useMutation({
+    mutationFn: (request: Diary) => postDiary({ petId, data: request }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
+      router.push("/diary");
+    },
+    onError: () => {
+      showToast("일기 생성에 실패했습니다.", false);
+    },
+  });
 
   return (
     <>
@@ -33,8 +61,7 @@ const EditPage = () => {
               content: data.content,
               date: data.date,
             };
-            const res = await postDiary({ petId: 2, data: request });
-            console.log("res", res);
+            postDiaryMutation.mutate(request);
           })}
         >
           <div className={styles.inputWrapper}>

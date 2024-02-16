@@ -7,6 +7,15 @@ export interface Diary {
   commentCount: number;
 }
 
+export interface Diaries {
+  diaryId: string;
+  title: string;
+  content: string;
+  thumbnailPath: null;
+  writer: Writer;
+  commentCount: number;
+}
+
 export interface Writer {
   id: string;
   nickname: string;
@@ -28,6 +37,7 @@ interface Tag {
   nickname: string;
   isCurrentUser: boolean;
 }
+
 export interface GetDiaryListResponse {
   content: [
     {
@@ -59,15 +69,6 @@ export interface GetDiaryListResponse {
   first: boolean;
   last: boolean;
   empty: boolean;
-}
-
-export interface Diaries {
-  diaryId: string;
-  title: string;
-  content: string;
-  thumbnailPath: null;
-  writer: Writer;
-  commentCount: number;
 }
 
 export interface GetDiaryListRequest {
@@ -139,4 +140,15 @@ export interface GetCommentsResponse {
   first: boolean;
   last: boolean;
   empty: boolean;
+}
+
+export interface PostDiaryRequest {
+  petId: number;
+  data: {
+    title: string;
+    content: string;
+    date: string;
+    image?: File[];
+    video?: File;
+  };
 }
