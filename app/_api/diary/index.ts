@@ -49,3 +49,12 @@ export const getComments = async ({ petId, diaryId }: GetDiaryRequest) => {
     return null;
   }
 };
+
+export const deleteDiary = async ({ petId, diaryId }: GetDiaryRequest) => {
+  try {
+    await instance.delete(`pets/${petId}/diaries/${diaryId}`);
+  } catch (error: any) {
+    console.error(error.response);
+    return null;
+  }
+};

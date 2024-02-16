@@ -94,7 +94,12 @@ export interface GetDiaryResponse {
   ];
   videos: string[];
   isCurrentUserLiked: boolean;
-  writer: Writer;
+  writer: {
+    id: string;
+    nickname: string;
+    profilePath: string;
+    isCurrentUser: boolean;
+  };
   commentCount: number;
   likeCount: number;
   pet: {

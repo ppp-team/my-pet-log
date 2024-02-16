@@ -14,9 +14,9 @@ import * as styles from "./style.css";
 import "./swiper.css";
 import SendIcon from "@/public/icons/send.svg?url";
 import BackHeader from "@/app/_components/BackHeader";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { getComments, getDiary } from "@/app/_api/diary";
+import { deleteDiary, getComments, getDiary } from "@/app/_api/diary";
 import { Comment } from "@/app/_types/diary/type";
 const COMMENT_DATA = [
   {
@@ -133,27 +133,35 @@ const Comment = ({ comment }: { comment: Comment }) => {
   );
 };
 const petId = 2;
+
 const DiaryDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
-
+  const queryClient = useQueryClient();
   const { _id: diaryId } = useParams();
 
   const { data: diary } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ petId, diaryId }) });
-
-  const { data: comments, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["comments", { petId, diaryId }],
-    queryFn: () => getComments({ petId, diaryId }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
-  });
-  console.log(comments);
+  console.log(diary);
+  // const { data: comments, fetchNextPage } = useInfiniteQuery({
+  //   queryKey: ["comments", { petId, diaryId }],
+  //   queryFn: () => getComments({ petId, diaryId }),
+  //   initialPageParam: 0,
+  //   getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
+  // });
+  // const deleteDiaryMutation = useMutation({
+  //   mutationFn: () => deleteDiary({ petId, diaryId }),
+  //   onSuccess: () => {
+  //     // queryClient.invalidateQueries({ queryKey: ["diary", { petId, diaryId }] });
+  //     console.log("delete");
+  //   },
+  // });
+  // console.log(comments);
   if (!diary) return;
 
-  const deleteDiary = () => {
-    //일기 삭제 api
-  };
+  // const deleteDiary = () => {
+  //   //일기 삭제 api
+  // };
 
   return (
     <>
@@ -209,7 +217,7 @@ const DiaryDetailPage = () => {
               </div>
               <div className={styles.profile}>
                 <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
-                  <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
+                  <div style={{ backgroundImage: `url(https://mypetlog.s3.ap-northeast-2.amazonaws.com/${diary.writer.profilePath}` }} className={styles.profileImage} />
                   <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{diary.writer.nickname}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -236,7 +244,7 @@ const DiaryDetailPage = () => {
             </div>
           </div>
         </section>
-        {isModalOpen && <Modal text="정말 일기를 삭제하시겠습니까?" buttonText="삭제" onClick={deleteDiary} onClose={closeModalFunc} />}
+        {isModalOpen && <Modal text="정말 일기를 삭제하시겠습니까?" buttonText="삭제" onClick={deleteDiaryMutation.mutate} onClose={closeModalFunc} />}
       </div>
     </>
   );
