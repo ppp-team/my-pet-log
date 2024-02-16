@@ -54,7 +54,7 @@ const Page = () => {
               <p className={nickname}>{invite.inviteeName}</p>
               <div className={state}>{invite.inviteStatus}</div>
             </div>
-            {invite.inviteStatus !== "거절" && (
+            {invite.inviteStatus !== "거절" ? (
               <button
                 className={button}
                 onClick={() => {
@@ -63,6 +63,15 @@ const Page = () => {
                 }}
               >
                 초대 취소
+              </button>
+            ) : (
+              <button
+                className={button}
+                onClick={() => {
+                  cancelMutation.mutate(invite.invitationId);
+                }}
+              >
+                확인
               </button>
             )}
           </section>

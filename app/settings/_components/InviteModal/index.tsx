@@ -3,8 +3,7 @@ import Image from "next/image";
 import LetterIcon from "@/public/images/letter.png";
 import { useModal } from "@/app/_hooks/useModal";
 import ModalContainer from "@/app/_components/ModalContainer";
-import InvitationForm from "@/app/_components/InvitationForm/InvitationForm";
-import { ERROR_MESSAGE, PLACEHOLDER } from "@/app/_constants/inputConstant";
+import InvitationForm from "@/app/settings/_components/InvitationForm";
 import CloseIcon from "@/public/icons/close.svg?url";
 import InviteCode from "./InviteCode";
 import { postInviteGuardian } from "@/app/_api/guardians";
@@ -47,18 +46,7 @@ const InviteModal = () => {
               <Image src={CloseIcon} alt="close icon" width={24} height={24} onClick={closeModalFunc} />
             </div>
             <h3 className={styles.title}>초대하고 싶은 펫메이트의 이메일을 입력해주세요.</h3>
-            <InvitationForm
-              formTitle="초대할 이메일"
-              inputPlaceholder={PLACEHOLDER.inviteEmail}
-              requiredErrorMessage={ERROR_MESSAGE.emailRequired}
-              invalidError={{
-                getIsInvalid: (value) => {
-                  return value === "failed" ? true : false;
-                },
-                message: ERROR_MESSAGE.emailCheck,
-              }}
-              submit={handleInviteConfirm}
-            />
+            <InvitationForm />
             <InviteCode />
           </section>
         </ModalContainer>

@@ -23,7 +23,7 @@ export const postInviteGuardian = async (petId: number, email: string) => {
     }
   } catch (error: any) {
     console.error(error.response.data);
-    return null;
+    throw new Error(error.response.data.message);
   }
 };
 
