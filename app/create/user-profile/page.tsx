@@ -52,9 +52,16 @@ const CreateUserProfilePage: NextPage = () => {
   const { mutate: postUserProfileMutation } = useMutation({
     mutationKey: ["postUserProfileKey"],
     mutationFn: ({ nickname, profileImage }: postUserProfilePropType) => postUserProfile({ nickname, profileImage }),
-    onSuccess: () => {
-      showToast("등록되었습니다!", true);
-      router.push("/no-pet-group");
+    onError: () => {
+      showToast("등록 실패했습니다. 잠시 후 다시 시도해주세요.", false);
+    },
+    onSuccess: (data) => {
+      if (data) {
+        showToast("등록되었습니다!", true);
+        router.push("/no-pet-group");
+      } else {
+        showToast("등록 실패했습니다. 잠시 후 다시 시도해주세요.", false);
+      }
     },
   });
 
