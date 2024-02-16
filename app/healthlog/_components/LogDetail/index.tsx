@@ -4,6 +4,7 @@ import logDetailIconSrc from "@/public/icons/log-detail-icon.svg?url";
 import logMemoIconSrc from "@/public/icons/log-edit-icon.svg?url";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import * as styles from "./style.css";
 
 interface LogDetailProps {
@@ -36,7 +37,9 @@ const LogDetail = ({ logId }: LogDetailProps) => {
             </div>
           )}
         </div>
-        <button className={styles.editButton}>수정하기</button>
+        <Link href="/healthlog/edit">
+          <button className={styles.editButton}>수정하기</button>
+        </Link>
       </div>
     </>
   );
