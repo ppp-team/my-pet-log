@@ -85,7 +85,7 @@ const Page = () => {
 
   return (
     <>
-      <BackHeader title="건강수첩 수정하기" />
+      <BackHeader title="건강수첩 작성하기" />
       <div className={styles.container}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems}>
           <div className={styles.inputWrapper}>
