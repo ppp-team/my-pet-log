@@ -14,18 +14,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
-      <body>
-        <QueryProvider>
-          <AuthContext>
-            <Template>
-              {children}
-              <ToastContainer />
-            </Template>
-            <div id="portal"></div>
-          </AuthContext>
-        </QueryProvider>
-      </body>
-    </html>
+    <>
+      <html lang="ko">
+        <body>
+          <QueryProvider>
+            <AuthContext>
+              <Template>
+                {children}
+                <ToastContainer />
+              </Template>
+              <div id="portal"></div>
+            </AuthContext>
+          </QueryProvider>
+        </body>
+      </html>
+    </>
   );
 }
