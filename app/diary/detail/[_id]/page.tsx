@@ -15,9 +15,10 @@ import "./swiper.css";
 import SendIcon from "@/public/icons/send.svg?url";
 import BackHeader from "@/app/_components/BackHeader";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { deleteDiary, getComments, getDiary } from "@/app/_api/diary";
 import { Comment } from "@/app/_types/diary/type";
+import { showToast } from "@/app/_components/Toast";
 
 const Comment = ({ comment }: { comment: Comment }) => {
   const [isKebabOpen, setIsKebabOpen] = useState(false);
@@ -77,6 +78,7 @@ const DiaryDetailPage = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const queryClient = useQueryClient();
   const { _id: diaryId } = useParams();
+  const router = useRouter();
 
   const { data: diary } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ petId, diaryId }) });
   const { data: comments, fetchNextPage } = useInfiniteQuery({
@@ -89,15 +91,15 @@ const DiaryDetailPage = () => {
   const deleteDiaryMutation = useMutation({
     mutationFn: () => deleteDiary({ petId, diaryId }),
     onSuccess: () => {
-      // queryClient.invalidateQueries({ queryKey: ["diary", { petId, diaryId }] });
-      console.log("delete");
+      queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
+      router.push("/diary");
+    },
+    onError: () => {
+      showToast("일기 삭제에 실패했습니다.", false);
+      closeModalFunc();
     },
   });
   if (!diary) return;
-
-  // const deleteDiary = () => {
-  //   //일기 삭제 api
-  // };
 
   return (
     <>
