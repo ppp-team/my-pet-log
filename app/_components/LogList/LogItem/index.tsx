@@ -1,12 +1,12 @@
 "use client";
 
+import { LogsType } from "@/app/_types/log/types";
 import LogDetail from "@/app/healthlog/_components/LogDetail";
 import starIconSrc from "@/public/icons/important-star-icon.svg?url";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as styles from "./style.css";
-import { LogsType } from "@/app/_types/log/types";
 
 interface LogItemProps {
   logItem: LogsType;
@@ -22,6 +22,7 @@ const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) =>
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
   const checkboxId = `checkbox-${logItem.logId}`;
+  const logItemRef = useRef<HTMLDivElement>(null);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
@@ -64,8 +65,21 @@ const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) =>
     }
   };
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (logItemRef.current && !logItemRef.current.contains(event.target as Node)) {
+        setShowDetails(false); // 외부 클릭 시 로그 디테일 닫기
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [logItemRef]);
+
   return (
-    <div className={styles.swipeArea}>
+    <div className={styles.swipeArea} ref={logItemRef}>
       <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className={styles.container}>
         <li className={styles.listContainer} onClick={toggleDetails}>
           <div className={styles.leftPart}>

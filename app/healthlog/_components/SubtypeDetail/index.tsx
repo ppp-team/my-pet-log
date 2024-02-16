@@ -24,6 +24,7 @@ interface SubtypeDetailProps {
 const MAX_LENGTH = { type: 15, subtype: 15, memo: 500 };
 
 const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register, watch, errors, setValue, onLocationSelect }) => {
+  const [isInputCleared, setIsInputCleared] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -33,6 +34,13 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
     setSelectedOption(option);
     setValue("subtype", option);
     setDropdownOpen(false);
+  };
+
+  const handleFocus = () => {
+    if (!isInputCleared) {
+      setValue("subtype", "");
+      setIsInputCleared(true);
+    }
   };
 
   useEffect(() => {
@@ -48,7 +56,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
   }, [dropdownRef]);
 
   useEffect(() => {
-    if (selectedOption) {
+    if (selectedOption !== "직접 입력") {
       setValue("subtype", selectedOption);
     }
   }, [selectedOption, setValue]);
@@ -119,6 +127,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
                 })}
                 maxLength={MAX_LENGTH.subtype}
                 autoFocus
+                onFocus={handleFocus}
               />
               {
                 <p className={styles.p}>
