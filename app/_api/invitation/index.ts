@@ -67,3 +67,17 @@ export const postCancel = async (invitationId: number) => {
     console.error(error.response.data);
   }
 };
+
+export const postRegister = async (inviteCode: string) => {
+  try {
+    const response = await instance.post("/my/invitations/register", {
+      inviteCode,
+    });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    return false;
+  }
+};

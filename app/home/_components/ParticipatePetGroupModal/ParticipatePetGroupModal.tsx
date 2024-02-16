@@ -7,6 +7,11 @@ import { useForm } from "react-hook-form";
 import InvitationInput from "@/app/_components/Invitation/InvitationInput";
 import InvitationInputError from "@/app/_components/Invitation/InvitationInputError";
 import InvitationSubmitButton from "@/app/_components/Invitation/InvitationSubmitButton";
+import { useMutation } from "@tanstack/react-query";
+import { postRegister } from "@/app/_api/invitation";
+import removeSpaces from "@/app/_utils/removeSpaces";
+import { useRouter } from "next/navigation";
+import { showToast } from "@/app/_components/Toast";
 
 export interface TInvitationCodeFormValues {
   inputValue: string;
@@ -18,6 +23,7 @@ interface ParticipatePetGroupModalProps {
 }
 
 const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProps) => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -25,7 +31,24 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
     formState: { errors },
   } = useForm<TInvitationCodeFormValues>({ mode: "onTouched" });
 
-  const onSubmit = (data: TInvitationCodeFormValues) => {};
+  const { mutate: registerMutation } = useMutation({
+    mutationFn: postRegister,
+    onSuccess: (data) => {
+      if (data) {
+        showToast("등록되었습니다!", true);
+        router.push("/home");
+      } else {
+        setError("inputValue", { type: "invalid", message: ERROR_MESSAGE.receivedInvitationCodeInvalid });
+      }
+    },
+    onError: () => {
+      setError("inputValue", { type: "invalid", message: ERROR_MESSAGE.receivedInvitationCodeInvalid });
+    },
+  });
+
+  const onSubmit = (data: TInvitationCodeFormValues) => {
+    registerMutation(removeSpaces(data.inputValue));
+  };
 
   return (
     <section className={styles.modalContainer}>
