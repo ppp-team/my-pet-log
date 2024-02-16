@@ -9,17 +9,19 @@ declare global {
 
 interface SearchLocationProps {
   appKey: string;
+  onSelectPlace: (place: Place) => void;
 }
 
 interface Place {
   y: number;
   x: number;
   place_name: string;
+  id: number;
 }
 
 type Status = "OK" | "ZERO_RESULT" | "ERROR";
 
-const SearchLocation = ({ appKey }: SearchLocationProps) => {
+const SearchLocation = ({ appKey, onSelectPlace }: SearchLocationProps) => {
   const [inputText, setInputText] = useState<string>("");
 
   useEffect(() => {
@@ -76,6 +78,7 @@ const SearchLocation = ({ appKey }: SearchLocationProps) => {
 
     window.kakao.maps.event.addListener(marker, "click", () => {
       setInputText(place.place_name);
+      onSelectPlace(place);
     });
   };
 

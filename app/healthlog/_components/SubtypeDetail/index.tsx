@@ -42,7 +42,12 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
       {visibleSubtype === "WALK" && (
         <div className={styles.inputWrapper}>
           <label>장소</label>
-          <SearchLocation appKey={myKey} />
+          <SearchLocation
+            appKey={myKey}
+            onSelectPlace={(place) => {
+              console.log(place.id);
+            }}
+          />
         </div>
       )}
       {visibleSubtype === "CUSTOM" && (
