@@ -147,6 +147,31 @@ export const commentContent = style({
   wordBreak: "break-all",
 });
 
+export const commentTextarea = style([
+  commentContent,
+  {
+    width: "100%",
+
+    padding: "0.8rem 1rem",
+
+    borderRadius: "10px",
+    border: "1.5px solid var(--GrayE2)",
+
+    ":focus": {
+      outline: "none",
+      border: "1px solid orange",
+    },
+  },
+]);
+
+export const commentEditButton = style({
+  color: "var(--GrayA4)",
+  fontSize: " 1.3rem",
+  textDecorationLine: "underline",
+
+  marginRight: "0.8rem",
+});
+
 const buttonCommon = {
   borderRadius: "5px",
   border: "1px solid var(--GrayE2)",
@@ -256,3 +281,8 @@ export const commentKebab = style([
     right: "0",
   },
 ]);
+
+export const commentEditForm = style({
+  display: "flex",
+  flexDirection: "column",
+});

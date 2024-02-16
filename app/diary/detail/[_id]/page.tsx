@@ -16,7 +16,7 @@ import SendIcon from "@/public/icons/send.svg?url";
 import BackHeader from "@/app/_components/BackHeader";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { deleteComment, deleteDiary, getComments, getDiary, postComment } from "@/app/_api/diary";
+import { deleteComment, deleteDiary, getComments, getDiary, postComment, putComment } from "@/app/_api/diary";
 import { Comment } from "@/app/_types/diary/type";
 import { showToast } from "@/app/_components/Toast";
 
@@ -25,6 +25,8 @@ const petId = 2;
 const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | string[] }) => {
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  const [isEditing, setIsEditing] = useState(false);
+  const [newCommentValue, setNewCommentValue] = useState("");
   const queryClient = useQueryClient();
 
   //댓글 삭제
@@ -35,11 +37,31 @@ const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | str
       showToast("댓글을 삭제했습니다.", true);
     },
     onError: (e) => {
-      console.log(e.message);
       showToast("댓글 삭제에 실패했습니다.", false);
     },
   });
 
+  //댓글 수정
+  const putCommentMutation = useMutation({
+    mutationFn: () => putComment({ petId, commentId: comment.commentId, content: newCommentValue }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
+      showToast("댓글을 수정했습니다.", true);
+    },
+    onError: (e) => {
+      showToast("댓글 수정에 실패했습니다.", false);
+    },
+  });
+
+  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewCommentValue(e.target.value);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setIsKebabOpen(false);
+    setNewCommentValue(comment.content);
+  };
   return (
     <>
       <div className={styles.commentContainer}>
@@ -47,14 +69,16 @@ const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | str
         <div className={styles.commentMain}>
           <div className={styles.commentHeader}>
             <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>
-              {comment.writer.nickname} <span style={{ color: " #A4A4A4", fontWeight: "400" }}>{comment.createdAt}</span>
+              {comment.writer.nickname} <span style={{ color: "var(--GrayA4)", fontWeight: "400" }}>{comment.createdAt}</span>
             </p>
             {comment.writer.isCurrentUser && (
               <div onBlur={() => setIsKebabOpen(false)} tabIndex={1} style={{ position: "relative" }}>
                 <Image src={KebabIcon} alt="kebab icon" width={24} height={24} onClick={() => setIsKebabOpen(!isKebabOpen)} />
                 {isKebabOpen && (
                   <ul className={styles.commentKebab}>
-                    <li className={styles.kebabList}>수정하기</li>
+                    <li className={styles.kebabList} onClick={handleEditClick}>
+                      수정하기
+                    </li>
                     <li
                       className={styles.kebabList}
                       onClick={() => {
@@ -69,7 +93,27 @@ const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | str
               </div>
             )}
           </div>
-          <p className={styles.commentContent}>{comment.content}</p>
+          {isEditing ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setIsEditing(false);
+                if (newCommentValue === comment.content) return; //변경사항이 없으면 리턴
+                putCommentMutation.mutate();
+              }}
+            >
+              <textarea className={styles.commentTextarea} value={newCommentValue} onChange={handleCommentChange} />
+              <button className={styles.commentEditButton} type="submit">
+                저장
+              </button>
+              <button className={styles.commentEditButton} type="button" onClick={() => setIsEditing(false)}>
+                취소
+              </button>
+            </form>
+          ) : (
+            <p className={styles.commentContent}>{comment.content}</p>
+          )}
+
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <button className={styles.recommentButton}>답글</button>
             <button className={styles.commentLikeButton}>

@@ -154,3 +154,7 @@ export interface DeleteCommentRequest {
   petId: number;
   commentId: number;
 }
+
+export interface PutCommentRequest extends DeleteCommentRequest {
+  content: string;
+}
