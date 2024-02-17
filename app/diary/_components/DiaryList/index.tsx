@@ -1,3 +1,4 @@
+"use client";
 import { getDiaryList } from "@/app/_api/diary";
 import { Diary } from "@/app/_types/diary/type";
 import EmptyDiaryList from "@/app/diary/_components/EmptyDiaryList";
@@ -34,12 +35,11 @@ const Diary = ({ diary }: { diary: Diary }) => {
 const PAGE_SIZE = 2;
 
 const DiaryList = () => {
-  const petId = 2;
   const router = useRouter();
-
+  const petId = Number(localStorage.getItem("petId"));
   const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ["diaries", petId],
-    queryFn: ({ pageParam }) => getDiaryList({ petId, page: pageParam, size: PAGE_SIZE }),
+    queryFn: ({ pageParam }) => getDiaryList({ page: pageParam, size: PAGE_SIZE }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });

@@ -68,7 +68,6 @@ export interface GetDiaryListResponse {
 }
 
 export interface GetDiaryListRequest {
-  petId: number;
   page: number | unknown;
   size: number;
 }

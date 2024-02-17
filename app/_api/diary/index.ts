@@ -1,20 +1,12 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import {
-  DeleteCommentRequest,
-  GetCommentsRequest,
-  GetCommentsResponse,
-  GetDiaryListRequest,
-  GetDiaryListResponse,
-  GetDiaryRequest,
-  GetDiaryResponse,
-  PostCommentRequest,
-  PostDiaryRequest,
-  PutCommentRequest,
-} from "@/app/_types/diary/type";
+import { Diary, GetDiaryListRequest } from "@/app/_types/diary/type";
+import { cookies } from "next/headers";
 
-export const postDiary = async ({ petId, data }: PostDiaryRequest) => {
+const petId = cookies().get("petId")?.value;
+
+export const postDiary = async ({ data }: { data: Diary }) => {
   try {
     const formData = new FormData();
     const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
@@ -27,7 +19,7 @@ export const postDiary = async ({ petId, data }: PostDiaryRequest) => {
   }
 };
 
-export const getDiaryList = async ({ petId, page, size }: GetDiaryListRequest): Promise<GetDiaryListResponse | null> => {
+export const getDiaryList = async ({ page, size }: GetDiaryListRequest) => {
   try {
     const res = await instance.get(`/pets/${petId}/diaries`, { params: { page, size } });
 
