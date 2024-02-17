@@ -4,7 +4,7 @@ import Image from "next/image";
 import MyPetInfo from "@/app/settings/_components/MyPetInfo";
 import { showToast } from "@/app/_components/Toast";
 import { useQuery } from "@tanstack/react-query";
-import { getPet } from "@/app/_api/pets";
+import { getPet, getCode } from "@/app/_api/pets";
 import { PetType } from "@/app/_types/pets/types";
 
 const petId = 7;
@@ -12,12 +12,15 @@ const petId = 7;
 const InviteCode = () => {
   const inviteCode = "seul1234";
 
-  const { data: petInfo, isLoading } = useQuery<PetType>({
+  const { data: petInfo } = useQuery<PetType>({
     queryKey: ["petInfo", petId],
     queryFn: () => getPet(petId),
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  const { data: code } = useQuery<string>({
+    queryKey: ["inviteCode"],
+    queryFn: () => getCode(petId),
+  });
 
   // 복사 버튼 클릭 시
   const handleCopyClick = () => {
@@ -37,7 +40,7 @@ const InviteCode = () => {
       <section className={styles.codeContainer}>
         {petInfo && <MyPetInfo petInfo={petInfo} />}
         <div className={styles.copyContainer}>
-          <span style={{ fontSize: "1.4rem", fontWeight: "500", color: "var(--Gray81)" }}>{inviteCode}</span>
+          <span style={{ fontSize: "1.4rem", fontWeight: "500", color: "var(--Gray81)" }}>{code}</span>
           <button className={styles.copyIcon} onClick={handleCopyClick}>
             <Image src={CopyIcon} alt="copy icon" width={14} height={14} />
             <span>복사하기</span>

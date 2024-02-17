@@ -1,10 +1,10 @@
 import * as styles from "./style.css";
 import CheckRigntIcon from "@/public/icons/chevron-right.svg?url";
 import Image from "next/image";
-import NoMyProfileImage from "@/public/images/person-profile-default.svg?url";
 import { useQuery } from "@tanstack/react-query";
 import { UserType } from "@/app/_types/user/types";
 import { getMe } from "@/app/_api/users";
+import { getImagePath } from "@/app/_utils/getPersonImagePath";
 
 const MyProfile = () => {
   const { data: user, isLoading } = useQuery<UserType>({
@@ -13,7 +13,7 @@ const MyProfile = () => {
   });
 
   if (isLoading) return <div>Loading...</div>;
-  const profileImageUrl = user?.profilePath ?? NoMyProfileImage;
+  const profileImageUrl = user && getImagePath(user.profilePath);
 
   return (
     <div className={styles.container}>

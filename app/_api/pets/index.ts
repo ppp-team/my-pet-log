@@ -24,6 +24,18 @@ export const getPets = async () => {
   }
 };
 
+export const getCode = async (petId: number) => {
+  try {
+    const response = await instance.get(`/my/pets/${petId}/code`);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error: any) {
+    console.error(error.response.data);
+    return null;
+  }
+};
+
 export const editPetRep = async (petId: string) => {
   try {
     const response = await instance.post(`/my/pets/${petId}/selectRep`);

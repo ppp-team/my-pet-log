@@ -1,85 +1,50 @@
 "use client";
 
-import sampleImageSrc from "@/public/icons/feather.svg?url";
-import React, { useEffect, useState, useRef } from "react";
+import { getGuardiansForLogs } from "@/app/_api/guardians";
+import { GuardianForLogsType } from "@/app/_types/guardians/types";
+import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useRef, useState } from "react";
 import * as styles from "./style.css";
 
-interface DropdownItem {
-  guardianId: string;
-  repStatus: "Y" | "N";
-  nickname: string;
-  profileImageUrl: string;
+interface SelectMateDropdownProps {
+  onSelect: (id: string) => void;
 }
 
-const MateSampleList: DropdownItem[] = [
-  {
-    guardianId: "1",
-    repStatus: "Y",
-    nickname: "초롱이누나",
-    profileImageUrl: sampleImageSrc,
-  },
-  {
-    guardianId: "2",
-    repStatus: "N",
-    nickname: "초롱이엄마",
-    profileImageUrl: sampleImageSrc,
-  },
-  {
-    guardianId: "3",
-    repStatus: "N",
-    nickname: "초롱이아빠",
-    profileImageUrl: sampleImageSrc,
-  },
-];
-
-const SelectMateDropdown = () => {
-  const [selectedMate, setSelectedMate] = useState<string>("");
-  const [filteredList, setFilteredList] = useState<DropdownItem[]>([]);
+const SelectMateDropdown = ({ onSelect }: SelectMateDropdownProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [selectedNickname, setSelectedNickname] = useState("");
+  const petId = 6; // 예시 petId, 실제 상황에 맞게 조정 필요
+
+  const { data: guardiansData } = useQuery({
+    queryKey: ["guardiansForLogs", petId],
+    queryFn: () => getGuardiansForLogs(petId),
+  });
 
   useEffect(() => {
-    setSelectedMate(MateSampleList[0].nickname);
-    setFilteredList(MateSampleList as DropdownItem[]);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setShowDropdown(false);
+    if (guardiansData) {
+      const currentUser = guardiansData.find((guardian) => guardian.isCurrentUser);
+      if (currentUser && !selectedNickname) {
+        setSelectedNickname(currentUser.nickname);
+        onSelect(currentUser.id);
       }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [dropdownRef]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchValue = e.target.value;
-    setSelectedMate(searchValue);
-    if (!searchValue) {
-      setFilteredList(MateSampleList as DropdownItem[]);
-      return;
     }
-    const filtered = MateSampleList.filter((mate) => mate.nickname.toLowerCase().includes(searchValue.toLowerCase()));
-    setFilteredList(filtered as DropdownItem[]);
-  };
+  }, [guardiansData, onSelect, selectedNickname]);
 
-  const handleSelectMate = (nickname: string) => {
-    setSelectedMate(nickname);
+  const handleSelectMate = (nickname: string, id: string) => {
+    setSelectedNickname(nickname);
     setShowDropdown(false);
+    onSelect(id);
   };
 
   return (
     <div ref={dropdownRef} className={styles.container}>
-      <input className={styles.inputBox} value={selectedMate} onChange={handleInputChange} onClick={() => setShowDropdown(true)} />
-      {showDropdown && (
+      <input className={styles.inputBox} value={selectedNickname} readOnly onClick={() => setShowDropdown(!showDropdown)} />
+      {showDropdown && guardiansData && (
         <ul className={styles.dropdownList}>
-          {filteredList.map((mate) => (
-            <li key={mate.guardianId} className={styles.dropdownItem} onClick={() => handleSelectMate(mate.nickname)}>
-              {mate.nickname}
+          {guardiansData.map((guardian: GuardianForLogsType) => (
+            <li key={guardian.id} className={styles.dropdownItem} onClick={() => handleSelectMate(guardian.nickname, guardian.id)}>
+              {guardian.nickname}
             </li>
           ))}
         </ul>
