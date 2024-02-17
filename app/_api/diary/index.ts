@@ -1,12 +1,12 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { Diary, GetDiaryListRequest } from "@/app/_types/diary/type";
+import { GetCommentsRequest, GetCommentsResponse, GetDiaryListRequest, GetDiaryResponse, PostCommentRequest, PutCommentRequest, postDiaryRequest } from "@/app/_types/diary/type";
 import { cookies } from "next/headers";
 
 const petId = cookies().get("petId")?.value;
 
-export const postDiary = async ({ data }: { data: Diary }) => {
+export const postDiary = async ({ data }: { data: postDiaryRequest }) => {
   try {
     const formData = new FormData();
     const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
@@ -30,7 +30,7 @@ export const getDiaryList = async ({ page, size }: GetDiaryListRequest) => {
   }
 };
 
-export const getDiary = async ({ petId, diaryId }: GetDiaryRequest): Promise<GetDiaryResponse | null> => {
+export const getDiary = async ({ diaryId }: { diaryId: string | string[] }): Promise<GetDiaryResponse | null> => {
   try {
     const res = await instance.get(`pets/${petId}/diaries/${diaryId}`);
 
@@ -41,9 +41,9 @@ export const getDiary = async ({ petId, diaryId }: GetDiaryRequest): Promise<Get
   }
 };
 
-export const getComments = async ({ petId, diaryId }: GetCommentsRequest): Promise<GetCommentsResponse | null> => {
+export const getComments = async ({ diaryId, page, size }: GetCommentsRequest): Promise<GetCommentsResponse | null> => {
   try {
-    const res = await instance.get(`pets/${petId}/diaries/${diaryId}/comments`);
+    const res = await instance.get(`pets/${petId}/diaries/${diaryId}/comments`, { params: { page, size } });
 
     return res.data;
   } catch (error: any) {
@@ -52,7 +52,7 @@ export const getComments = async ({ petId, diaryId }: GetCommentsRequest): Promi
   }
 };
 
-export const deleteDiary = async ({ petId, diaryId }: GetDiaryRequest) => {
+export const deleteDiary = async ({ diaryId }: { diaryId: string | string[] }) => {
   try {
     await instance.delete(`pets/${petId}/diaries/${diaryId}`);
   } catch (error: any) {
@@ -60,14 +60,14 @@ export const deleteDiary = async ({ petId, diaryId }: GetDiaryRequest) => {
   }
 };
 
-export const postComment = async ({ petId, diaryId, content }: PostCommentRequest) => {
+export const postComment = async ({ diaryId, content }: PostCommentRequest) => {
   await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
 };
 
-export const deleteComment = async ({ petId, commentId }: DeleteCommentRequest) => {
+export const deleteComment = async ({ commentId }: { commentId: number }) => {
   await instance.delete(`pets/${petId}/diaries/comments/${commentId}`);
 };
 
-export const putComment = async ({ petId, commentId, content }: PutCommentRequest) => {
+export const putComment = async ({ commentId, content }: PutCommentRequest) => {
   await instance.put(`pets/${petId}/diaries/comments/${commentId}`, { content });
 };

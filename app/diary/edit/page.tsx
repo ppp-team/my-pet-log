@@ -39,7 +39,7 @@ const EditPage = () => {
   const queryClient = useQueryClient();
 
   const postDiaryMutation = useMutation({
-    mutationFn: (request: Diary) => postDiary({ petId, data: request }),
+    mutationFn: (request: Diary) => postDiary({ data: request }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
       router.push("/diary");

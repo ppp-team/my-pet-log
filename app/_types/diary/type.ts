@@ -11,6 +11,12 @@ export interface Diary {
   commentCount: number;
 }
 
+export interface postDiaryRequest {
+  title: string;
+  content: string;
+  date: string;
+}
+
 export interface Writer {
   id: string;
   nickname: string;
@@ -144,16 +150,11 @@ export interface PostDiaryRequest {
 }
 
 export interface PostCommentRequest {
-  petId: number;
   diaryId: string | string[];
   content: string;
 }
 
-export interface DeleteCommentRequest {
-  petId: number;
+export interface PutCommentRequest {
   commentId: number;
-}
-
-export interface PutCommentRequest extends DeleteCommentRequest {
   content: string;
 }

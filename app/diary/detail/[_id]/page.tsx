@@ -31,7 +31,7 @@ const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | str
 
   //댓글 삭제
   const deleteCommentMutation = useMutation({
-    mutationFn: (commentId: number) => deleteComment({ petId, commentId }),
+    mutationFn: (commentId: number) => deleteComment({ commentId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
       showToast("댓글을 삭제했습니다.", true);
@@ -43,7 +43,7 @@ const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | str
 
   //댓글 수정
   const putCommentMutation = useMutation({
-    mutationFn: () => putComment({ petId, commentId: comment.commentId, content: newCommentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
+    mutationFn: () => putComment({ commentId: comment.commentId, content: newCommentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
       showToast("댓글을 수정했습니다.", true);
@@ -141,11 +141,11 @@ const DiaryDetailPage = () => {
   const router = useRouter();
 
   //일기 상세 조회
-  const { data: diary } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ petId, diaryId }) });
+  const { data: diary } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ diaryId }) });
 
   //일기 삭제
   const deleteDiaryMutation = useMutation({
-    mutationFn: () => deleteDiary({ petId, diaryId }),
+    mutationFn: () => deleteDiary({ diaryId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
       router.push("/diary");
@@ -159,14 +159,14 @@ const DiaryDetailPage = () => {
   //댓글 조회
   const { data: comments, fetchNextPage } = useInfiniteQuery({
     queryKey: ["comments", { petId, diaryId }],
-    queryFn: ({ pageParam }) => getComments({ petId, diaryId, page: pageParam, size: PAGE_SIZE }),
+    queryFn: ({ pageParam }) => getComments({ diaryId, page: pageParam, size: PAGE_SIZE }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
   //댓글 생성
   const postCommentMutation = useMutation({
-    mutationFn: () => postComment({ petId, diaryId, content: commentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
+    mutationFn: () => postComment({ diaryId, content: commentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
       setCommentValue("");
