@@ -5,6 +5,8 @@ import { Options } from "vanilla-calendar-pro";
 import { UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import OptionalMessage from "@/app/_components/PetRegister/component/OptionalCheck";
 import { IFormInput } from "@/app/_components/PetRegister";
+import CalendarIcon from "@/public/icons/calendarIcon.svg?url";
+import Image from "next/image";
 
 interface DateInputProps {
   register: UseFormRegister<IFormInput>;
@@ -41,7 +43,8 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
 
   return (
     <div className={styles.inputWrapper}>
-      <div style={{ display: "flex", gap: "1rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
+      <div style={{ display: "flex", gap: "1rem", position: "relative" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
+        <Image src={CalendarIcon} alt="calendar icon" width={20} height={20} style={{ position: "absolute", right: "1.4rem", top: "1.3rem" }} />
         <input className={styles.input} value={dateValue} readOnly {...register(id)} disabled={isDisabled} />
       </div>
       {isCalendarOpen && (

@@ -36,14 +36,14 @@ type PetFormType = "register" | "edit";
 const PetRegister = ({ type }: { type: PetFormType }) => {
   const [profileImage, setProfileImage] = useState<string>(DefaultImage);
   const [section, setSection] = useState(1);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [typeOpen, setTypeOpen] = useState(false);
+  const [breedOpen, setBreedOpen] = useState(false); //모달상태
+  const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
   const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
   const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
   const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
-  const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요
+  const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
 
   const {
     register,
@@ -91,7 +91,8 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setDropdownOpen(false);
+        setBreedOpen(false);
+        setTypeOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -116,7 +117,7 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
   const handleBreedClick = (breed: string) => {
     setValue("breed", breed);
     setSelectedBreed(breed);
-    setDropdownOpen((prev) => !prev);
+    setBreedOpen((prev) => !prev);
   };
 
   //중성화
@@ -206,12 +207,12 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
       {/* 품종 */}
       <label className={styles.label}>품종*</label>
       {selectedType !== "기타" && (
-        <button className={`${styles.selectBox} ${dropdownOpen ? styles.selectBoxOpen : ""}`} onClick={() => setDropdownOpen(!dropdownOpen)}>
+        <button className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
           {selectedBreed || "품종을 선택하세요"}
-          <DropdownIcon className={`${styles.dropdownIcon} ${dropdownOpen ? styles.dropdownIconOpen : ""}`} />
+          <DropdownIcon className={`${styles.dropdownIcon} ${breedOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
       )}
-      {dropdownOpen && selectedType !== "기타" && (
+      {breedOpen && selectedType !== "기타" && (
         <ul className={styles.optionsList} ref={dropdownRef}>
           {petOptions[selectedType]?.map((breed: string, index: number) => (
             <li key={index} value={breed}>
