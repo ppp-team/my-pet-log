@@ -6,6 +6,7 @@ import DateInput from "@/app/_components/DateInput";
 import convertTime12to24 from "@/app/_utils/convertTime12to24";
 import SelectMateDropdown from "@/app/healthlog/_components/SelectMateDropdown";
 import SubtypeDetail from "@/app/healthlog/_components/SubtypeDetail";
+import { buttonTypes } from "@/public/data/buttonTypes";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -30,15 +31,6 @@ const Page = () => {
     watch,
     formState: { errors },
   } = useForm<FieldValues>();
-
-  const buttonTypes: { type: string; label: string }[] = [
-    { type: "FEED", label: "사료" },
-    { type: "HEALTH", label: "건강" },
-    { type: "WALK", label: "산책" },
-    { type: "TREAT", label: "간식/영양제" },
-    { type: "GROOMING", label: "위생/미용" },
-    { type: "CUSTOM", label: "직접 입력" },
-  ];
 
   const handleTypeButtonClick = (type: string, group: string) => {
     if (selectedType === type && activeButtonGroup === group) {
