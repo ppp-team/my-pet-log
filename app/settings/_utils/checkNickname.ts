@@ -1,12 +1,16 @@
 import { UseFormSetValue, UseFormSetError, UseFormWatch } from "react-hook-form";
-
 interface FormValues {
   nickname: string;
   image: string;
   isNicknameConfirmed: boolean;
 }
 
-export const checkNickname = (setValue: UseFormSetValue<FormValues>, setError: UseFormSetError<FormValues>, watch: UseFormWatch<FormValues>) => {
+export const checkNickname = (
+  setValue: UseFormSetValue<FormValues>,
+  setError: UseFormSetError<FormValues>,
+  watch: UseFormWatch<FormValues>,
+  mutate: (nickname: string) => void,
+) => {
   const nickname = watch("nickname").replace(/\s+/g, "");
   setValue("nickname", nickname);
 
@@ -20,11 +24,5 @@ export const checkNickname = (setValue: UseFormSetValue<FormValues>, setError: U
     return;
   }
 
-  // 닉네임 중복 검사 로직
-  const isConfirmed = true; // 실제로는 API 호출 결과 사용
-  if (!isConfirmed) {
-    setError("nickname", { type: "duplicated", message: "이미 사용 중인 닉네임입니다." });
-  } else {
-    setValue("isNicknameConfirmed", true);
-  }
+  mutate(nickname);
 };

@@ -25,6 +25,9 @@ export const postCheckNickname = async (nickname: string) => {
       return true;
     }
   } catch (error: any) {
+    if (error.response.status === 409) {
+      return false;
+    }
     return false;
   }
 };
@@ -49,6 +52,7 @@ export const postUserProfile = async ({ nickname, profileImage }: postUserProfil
       return true;
     }
   } catch (error: any) {
+    console.error(error.response.data);
     return false;
   }
 };

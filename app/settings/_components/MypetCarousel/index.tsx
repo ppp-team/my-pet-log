@@ -53,9 +53,11 @@ const MyPetCarousel = () => {
             </div>
           </SwiperSlide>
         ))}
-        <SwiperSlide className={petadd}>
-          <Image src={AddIcon} alt="add icon" width={36} height={36} />
-          <span>반려동물 추가</span>
+        <SwiperSlide>
+          <Link href="/settings/pet-register" className={petadd}>
+            <Image src={AddIcon} alt="add icon" width={36} height={36} />
+            <span>반려동물 추가</span>
+          </Link>
         </SwiperSlide>
       </Swiper>
     </div>

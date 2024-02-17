@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const title = style({
-  margin: "0 1.6rem 2rem",
+  margin: "2rem 1.6rem",
 
   color: "var(--Gray72)",
   fontSize: "1.6rem",
@@ -20,8 +20,13 @@ export const container = style({
 });
 
 export const petadd = style({
+  width: "100%",
+  height: "100%",
+
   display: "flex",
   flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
   gap: "0.5rem",
 
   fontSize: "1.4rem",
