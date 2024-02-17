@@ -1,71 +1,39 @@
-import AddIcon from "@/public/icons/add.svg?url";
+"use client";
+import { getPets } from "@/app/_api/pets";
 import * as styles from "@/app/_components/SelectPet/style.css";
-import { currentPetAtom } from "@/app/_states/atom";
-import { useRouter } from "next/navigation";
+import { PetType, PetsType } from "@/app/_types/petGroup/types";
+import calculateAge from "@/app/_utils/calculateAge";
+import AddIcon from "@/public/icons/add.svg?url";
 import NoPetProfileImage from "@/public/images/pet-profile-default.svg?url";
-import { useAtom } from "jotai";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const PET_DATA = [
-  {
-    id: 1,
-    name: "해피",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Golde33443.jpg/560px-Golde33443.jpg",
-    gender: "남아",
-    type: "말티즈",
-    age: "11년 2개월",
-  },
-  ,
-  {
-    id: 2,
-    name: "은행",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Cat_and_mouse.jpg/340px-Cat_and_mouse.jpg",
-    gender: "남아",
-    type: "렉돌",
-    age: "6년 5개월",
-  },
-  {
-    id: 3,
-    name: "나나",
-    image: null,
-    gender: "여아",
-    type: "롭이어",
-    age: "2개월",
-  },
-];
-interface PetData {
-  id: number;
-  name: string;
-  image: string;
-  gender: string;
-  type: string;
-  age: string;
-}
-const Pet = ({ pet }: { pet: PetData }) => {
-  const [currentPet, setCurrentPet] = useAtom(currentPetAtom);
+const Pet = ({ pet }: { pet: PetType }) => {
   const router = useRouter();
 
   return (
     <div
       className={styles.container}
       onClick={() => {
-        setCurrentPet("해피");
-        router.push("/diary");
+        router.push("/settings");
       }}
     >
-      <div className={styles.profile} style={{ backgroundImage: `url(${pet.image ?? NoPetProfileImage}` }} />
+      <div className={styles.profile} style={{ backgroundImage: `url(${pet.petImageUrl ?? NoPetProfileImage}` }} />
 
       <div className={styles.text}>
         <h3 style={{ fontSize: "1.6rem", fontWeight: "700" }}>{pet.name}</h3>
         <p style={{ fontSize: "1.3rem", fontWeight: "500" }}>
-          {pet.type} • {pet.gender} • {pet.age}
+          {pet.breed} • {pet.gender === "MALE" ? "남아" : "여아"} • {calculateAge(pet.birth)}
         </p>
       </div>
     </div>
   );
 };
+const SelectPet = ({ type, data }: { type: string; data: PetsType | null }) => {
+  const { data: pets } = useQuery<PetsType | null>({ queryKey: ["pets"], queryFn: () => getPets(), initialData: data });
 
-const SelectPet = ({ type }: { type: string }) => {
   return (
     <>
       <div className={styles.root}>
@@ -79,12 +47,12 @@ const SelectPet = ({ type }: { type: string }) => {
         </div>
 
         <div className={styles.petList}>
-          {PET_DATA.map((pet) => pet && <Pet pet={pet} key={pet.id} />)}
-          <div className={styles.container} style={{ justifyContent: "center" }}>
+          {pets?.data.map((pet) => pet && <Pet pet={pet} key={pet.petId} />)}
+          <Link href={"/settings/pet-register"} className={styles.container} style={{ justifyContent: "center" }}>
             <div className={styles.addButton}>
-              <Image src={AddIcon} alt="add icon" width={16} height={16} style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
+              <Image src={AddIcon} alt="add icon" width={16} height={16} className={styles.addIcon} />
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </>
