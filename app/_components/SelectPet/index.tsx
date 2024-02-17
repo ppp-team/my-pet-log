@@ -32,8 +32,8 @@ const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
     </div>
   );
 };
-const SelectPet = ({ type, path, data }: { type: string; path: string; data: PetsType | null }) => {
-  const { data: pets } = useQuery<PetsType | null>({ queryKey: ["pets"], queryFn: () => getPets(), initialData: data });
+const SelectPet = ({ type, path }: { type: string; path: string }) => {
+  const { data: pets } = useQuery<PetsType | null>({ queryKey: ["pets"], queryFn: () => getPets() });
 
   return (
     <>
