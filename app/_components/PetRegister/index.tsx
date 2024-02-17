@@ -69,7 +69,6 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
       firstMeetDate: data.firstMeet,
       weight: data.weight,
       registeredNumber: data.registeredNumber,
-      petImageUrl: data.image,
     };
     console.log("request", request);
 

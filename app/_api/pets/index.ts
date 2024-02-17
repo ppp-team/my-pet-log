@@ -6,22 +6,27 @@ import { PetRegisterType } from "@/app/_types/pets/types";
 export const postPet = async ({ data }: { data: PetRegisterType }) => {
   try {
     const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("type", data.type);
-    formData.append("breed", data.breed);
-    formData.append("gender", data.gender);
-    formData.append("isNeutered", JSON.stringify(data.isNeutered));
-    formData.append("birth", data.birth || "");
-    formData.append("firstMeetDate", data.firstMeetDate || "");
-    formData.append("weight", data.weight?.toString() || "");
-    formData.append("registeredNumber", data.registeredNumber?.toString() || "");
-    formData.append("petImageUrl", data.petImageUrl || "");
+    const request = {
+      name: data.name,
+      type: data.type,
+      breed: data.breed,
+      gender: data.gender,
+      isNeutered: data.isNeutered,
+      birth: data.birth,
+      firstMeetDate: data.firstMeetDate,
+      weight: data.weight,
+      registeredNumber: data.registeredNumber,
+    };
+
+    formData.append("petImage", data.petImage || null);
+    formData.append("petRequest", JSON.stringify(request));
 
     const res = await instance.post(`/my/pets`, formData, { headers: { "Content-Type": "multipart/form-data" } });
 
+    console.log("petImage:", data.petImage);
     return res.data;
   } catch (error: any) {
-    console.error(error.response);
+    console.error(error);
     return null;
   }
 };

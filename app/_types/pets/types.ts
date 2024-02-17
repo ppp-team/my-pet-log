@@ -30,5 +30,5 @@ export interface PetRegisterType {
   firstMeetDate: string | null;
   weight: number | null;
   registeredNumber: string | null;
-  petImageUrl: string | null;
+  petImage: string | null;
 }
