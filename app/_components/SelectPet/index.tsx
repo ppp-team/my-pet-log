@@ -8,14 +8,17 @@ import NoPetProfileImage from "@/public/images/pet-profile-default.svg?url";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const Pet = ({ pet }: { pet: PetType }) => {
+const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
+  const router = useRouter();
   return (
     <div
       className={styles.container}
       onClick={() => {
         editPetRep(pet.petId);
         localStorage.setItem("petId", pet.petId);
+        router.push(path);
       }}
     >
       <div className={styles.profile} style={{ backgroundImage: `url(${pet.petImageUrl ?? NoPetProfileImage}` }} />
@@ -48,9 +51,9 @@ const SelectPet = ({ type, path, data }: { type: string; path: string; data: Pet
           {pets?.data.map(
             (pet) =>
               pet && (
-                <Link href={path} key={pet.petId}>
-                  <Pet pet={pet} />
-                </Link>
+                // <Link href={path} >
+                <Pet pet={pet} path={path} key={pet.petId} />
+                // </Link>
               ),
           )}
           <Link href={"/settings/pet-register"} className={styles.container} style={{ justifyContent: "center" }}>
