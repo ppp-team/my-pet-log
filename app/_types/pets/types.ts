@@ -19,3 +19,16 @@ export interface PetsType {
   count: number;
   data: PetType[];
 }
+
+export interface PetRegisterType {
+  name: string;
+  type: string;
+  breed: string;
+  gender: "FEMALE" | "MALE";
+  isNeutered: boolean | null;
+  birth: string | null;
+  firstMeetDate: string | null;
+  weight: number | null;
+  registeredNumber: string | null;
+  petImageUrl: string | null;
+}

@@ -93,7 +93,7 @@ export const PET_PLACEHOLDER = {
   breed: "품종 입력",
   date: "날짜 선택",
   weight: "숫자",
-  registNumber: "등록번호 입력",
+  registeredNumber: "등록번호 입력",
 };
 
 export const PET_ERROR_MESSAGE = {
@@ -109,7 +109,7 @@ export const PET_ERROR_MESSAGE = {
 
   weightInvalid: "소수점 두자리 이하의 숫자만 입력할 수 있습니다.",
 
-  registNumberInvalid: "숫자만 입력할 수 있습니다.",
+  registeredNumberInvalid: "숫자만 입력할 수 있습니다.",
 };
 
 export const PET_NAME_RULES = {
@@ -117,10 +117,10 @@ export const PET_NAME_RULES = {
   maxLength: { value: 10, message: PET_ERROR_MESSAGE.nameInvalid },
 };
 
-export const PET_REGISTNUMBER_RULES = {
+export const PET_REGISTERNUMBER_RULES = {
   pattern: {
     value: /^[0-9]+$/,
-    message: PET_ERROR_MESSAGE.registNumberInvalid,
+    message: PET_ERROR_MESSAGE.registeredNumberInvalid,
   },
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
+import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTERNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
 import { useState, useEffect, useRef } from "react";
 import * as styles from "./style.css";
 import DefaultImage from "@/public/images/pet-profile-default.svg?url";
@@ -15,19 +15,20 @@ import OptionalMessage from "./component/OptionalCheck";
 import CloseIcon from "@/public/icons/close.svg?url";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import { useRouter } from "next/navigation";
+import { postPet } from "@/app/_api/pets";
 
 export interface IFormInput {
   petName: string;
   image: string;
   type: string;
   breed: string;
-  gender: string;
+  gender: "MALE" | "FEMALE";
   neutering: boolean | null;
   birthday: string | null;
   firstMeet: string | null;
   name: string;
   weight: number | null;
-  registNumber: number | null;
+  registeredNumber: string | null;
   id: string | number | null;
 }
 
@@ -57,7 +58,24 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
   const router = useRouter();
 
   //전체 폼 제출
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const request = {
+      name: data.petName,
+      type: data.type,
+      breed: data.breed,
+      gender: data.gender,
+      isNeutered: data.neutering,
+      birth: data.birthday,
+      firstMeetDate: data.firstMeet,
+      weight: data.weight,
+      registeredNumber: data.registeredNumber,
+      petImageUrl: data.image,
+    };
+    console.log("request", request);
+
+    const res = await postPet({ data: request });
+    console.log("res", res);
+  };
 
   //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
   let isSectionValid = false;
@@ -127,7 +145,7 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
   };
 
   //성별 클릭여부
-  const handleGenderChange = (value: string) => {
+  const handleGenderChange = (value: "MALE" | "FEMALE") => {
     setSelectedGender(value);
     setValue("gender", value);
   };
@@ -251,21 +269,21 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
       <label className={styles.label}>성별*</label>
       <div className={styles.radioContainer}>
         <div className={styles.leftRadio}>
-          <input type="radio" id="male" value="male" checked={selectedGender === "male"} onClick={() => handleGenderChange("male")} {...register("gender", PET_GENDER_RULES)} />
-          <label className={`${styles.radioOption} ${selectedGender === "male" && styles.leftSelected}`} htmlFor="male">
+          <input type="radio" id="MALE" value="MALE" checked={selectedGender === "MALE"} onClick={() => handleGenderChange("MALE")} {...register("gender", PET_GENDER_RULES)} />
+          <label className={`${styles.radioOption} ${selectedGender === "MALE" && styles.leftSelected}`} htmlFor="MALE">
             남
           </label>
         </div>
         <div className={styles.rightRadio}>
           <input
             type="radio"
-            id="female"
-            value="female"
-            checked={selectedGender === "female"}
-            onClick={() => handleGenderChange("female")}
+            id="FEMALE"
+            value="FEMALE"
+            checked={selectedGender === "FEMALE"}
+            onClick={() => handleGenderChange("FEMALE")}
             {...register("gender", PET_GENDER_RULES)}
           />
-          <label className={`${styles.radioOption} ${selectedGender === "female" && styles.rightSelected}`} htmlFor="female">
+          <label className={`${styles.radioOption} ${selectedGender === "FEMALE" && styles.rightSelected}`} htmlFor="FEMALE">
             여
           </label>
         </div>
@@ -305,8 +323,8 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
 
       {/* 동물등록번호 */}
       <label className={styles.label}>동물등록번호</label>
-      <input className={styles.writeInput} {...register("registNumber", PET_REGISTNUMBER_RULES)} placeholder={PET_PLACEHOLDER.registNumber} />
-      {errors.registNumber && <ErrorMessage message={errors.registNumber.message} />}
+      <input className={styles.writeInput} {...register("registeredNumber", PET_REGISTERNUMBER_RULES)} placeholder={PET_PLACEHOLDER.registeredNumber} />
+      {errors.registeredNumber && <ErrorMessage message={errors.registeredNumber.message} />}
 
       {/* 삭제하기 버튼 */}
       {type === "edit" && deleteButton}

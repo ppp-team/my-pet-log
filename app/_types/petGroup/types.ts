@@ -11,7 +11,7 @@ export interface PetType {
   isNeutered: "Y" | "N";
   birth: string; //태어난
   weight: string;
-  registNumber: string;
+  registeredNumber: string;
   repStatus: "REPRESENTATIVE" | "NORMAL";
   petImageUrl: string | null;
 }
