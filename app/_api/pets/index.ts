@@ -1,6 +1,7 @@
 "use server";
 
 import instance from "@/app/_api/axios";
+import { cookies } from "next/headers";
 
 export const getPet = async (petId: number) => {
   try {
@@ -41,6 +42,7 @@ export const editPetRep = async (petId: string) => {
     const response = await instance.post(`/my/pets/${petId}/selectRep`);
 
     if (response.status === 200) {
+      cookies().set("petId", petId);
       return response.data;
     } else {
       throw new Error("User data not found");
