@@ -1,5 +1,5 @@
 "use client";
-import { getPets } from "@/app/_api/pets";
+import { editPetRep, getPets } from "@/app/_api/pets";
 import * as styles from "@/app/_components/SelectPet/style.css";
 import { PetType, PetsType } from "@/app/_types/petGroup/types";
 import calculateAge from "@/app/_utils/calculateAge";
@@ -8,16 +8,14 @@ import NoPetProfileImage from "@/public/images/pet-profile-default.svg?url";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const Pet = ({ pet }: { pet: PetType }) => {
-  const router = useRouter();
-
   return (
     <div
       className={styles.container}
       onClick={() => {
-        router.push("/settings");
+        editPetRep(pet.petId);
+        localStorage.setItem("petId", pet.petId);
       }}
     >
       <div className={styles.profile} style={{ backgroundImage: `url(${pet.petImageUrl ?? NoPetProfileImage}` }} />
@@ -31,7 +29,7 @@ const Pet = ({ pet }: { pet: PetType }) => {
     </div>
   );
 };
-const SelectPet = ({ type, data }: { type: string; data: PetsType | null }) => {
+const SelectPet = ({ type, path, data }: { type: string; path: string; data: PetsType | null }) => {
   const { data: pets } = useQuery<PetsType | null>({ queryKey: ["pets"], queryFn: () => getPets(), initialData: data });
 
   return (
@@ -47,7 +45,14 @@ const SelectPet = ({ type, data }: { type: string; data: PetsType | null }) => {
         </div>
 
         <div className={styles.petList}>
-          {pets?.data.map((pet) => pet && <Pet pet={pet} key={pet.petId} />)}
+          {pets?.data.map(
+            (pet) =>
+              pet && (
+                <Link href={path} key={pet.petId}>
+                  <Pet pet={pet} />
+                </Link>
+              ),
+          )}
           <Link href={"/settings/pet-register"} className={styles.container} style={{ justifyContent: "center" }}>
             <div className={styles.addButton}>
               <Image src={AddIcon} alt="add icon" width={16} height={16} className={styles.addIcon} />

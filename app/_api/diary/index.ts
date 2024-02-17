@@ -2,8 +2,11 @@
 
 import instance from "@/app/_api/axios";
 import { Diary, GetDiaryListRequest } from "@/app/_types/diary/type";
+import { cookies } from "next/headers";
 
-export const postDiary = async ({ petId, data }: { petId: number; data: Diary }) => {
+const petId = cookies().get("petId")?.value;
+
+export const postDiary = async ({ data }: { data: Diary }) => {
   try {
     const formData = new FormData();
     const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
@@ -17,7 +20,7 @@ export const postDiary = async ({ petId, data }: { petId: number; data: Diary })
   }
 };
 
-export const getDiaryList = async ({ petId, page, size }: GetDiaryListRequest) => {
+export const getDiaryList = async ({ page, size }: GetDiaryListRequest) => {
   try {
     const res = await instance.get(`/pets/${petId}/diaries`, { params: { page, size } });
 
