@@ -35,7 +35,6 @@ export const dropdownList = style({
   width: "100%",
 
   position: "absolute",
-  padding: "0 1rem",
 
   display: "flex",
   flexDirection: "column",
@@ -50,6 +49,8 @@ export const dropdownList = style({
 
 export const dropdownItem = style({
   height: "4rem",
+
+  padding: "0 1rem",
 
   display: "flex",
   alignItems: "center",

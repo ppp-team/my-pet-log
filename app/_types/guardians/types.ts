@@ -9,3 +9,9 @@ export interface GuardiansType {
   count: number;
   data: GuardianType[];
 }
+
+export interface GuardianForLogsType {
+  id: string;
+  nickname: string;
+  isCurrentUser: boolean;
+}
