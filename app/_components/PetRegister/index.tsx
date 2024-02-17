@@ -188,21 +188,23 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
 
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
-      <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
-        {selectedType || "타입을 선택하세요"}
-        <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
-      </button>
-      {typeOpen && (
-        <ul className={styles.optionsList} ref={dropdownRef}>
-          {Object.keys(petOptions).map((type: string, index: number) => (
-            <li key={index} value={type}>
-              <button type="button" className={styles.optionButton} onClick={() => handleTypeClick(type)} {...register("type")}>
-                {type}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      <div>
+        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
+          {selectedType || "타입을 선택하세요"}
+          <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
+        </button>
+        {typeOpen && (
+          <ul className={styles.optionsList} ref={dropdownRef}>
+            {Object.keys(petOptions).map((type: string, index: number) => (
+              <li key={index} value={type}>
+                <button type="button" className={styles.optionButton} onClick={() => handleTypeClick(type)} {...register("type")}>
+                  {type}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       {/* 품종 */}
       <label className={styles.label}>품종*</label>
@@ -223,6 +225,7 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
           ))}
         </ul>
       )}
+
       {selectedType === "기타" && (
         <>
           <input
@@ -235,6 +238,7 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
           />
         </>
       )}
+
       <button className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
         다음
       </button>

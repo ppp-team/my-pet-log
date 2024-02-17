@@ -107,7 +107,9 @@ export const PET_ERROR_MESSAGE = {
 
   genderRequired: "성별을 선택해주세요!",
 
-  numberInvalid: "소수점 두자리 이하의 숫자만 입력할 수 있습니다.",
+  weightInvalid: "소수점 두자리 이하의 숫자만 입력할 수 있습니다.",
+
+  registNumberInvalid: "숫자만 입력할 수 있습니다.",
 };
 
 export const PET_NAME_RULES = {
@@ -118,7 +120,7 @@ export const PET_NAME_RULES = {
 export const PET_REGISTNUMBER_RULES = {
   pattern: {
     value: /^[0-9]+$/,
-    message: PET_ERROR_MESSAGE.numberInvalid,
+    message: PET_ERROR_MESSAGE.registNumberInvalid,
   },
 };
 
@@ -129,6 +131,6 @@ export const PET_GENDER_RULES = {
 export const PET_WEIGHT_RULES = {
   pattern: {
     value: /^\d+(\.\d{0,2})?$/,
-    message: PET_ERROR_MESSAGE.numberInvalid,
+    message: PET_ERROR_MESSAGE.weightInvalid,
   },
 };
