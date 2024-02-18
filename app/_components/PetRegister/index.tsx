@@ -16,6 +16,8 @@ import CloseIcon from "@/public/icons/close.svg?url";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import { useRouter } from "next/navigation";
 import { postPet } from "@/app/_api/pets";
+import { useModal } from "@/app/_hooks/useModal";
+import Modal from "@/app/_components/Modal";
 
 export interface IFormInput {
   petName: string;
@@ -33,6 +35,7 @@ export interface IFormInput {
 }
 
 const PetRegister = () => {
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [profileImage, setProfileImage] = useState<File | string | null>(DefaultImage);
   const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
@@ -54,6 +57,10 @@ const PetRegister = () => {
   } = useForm<IFormInput>({ mode: "onTouched" });
 
   const router = useRouter();
+  const handleCloseModal = () => {
+    closeModalFunc();
+    router.push("/settings");
+  };
 
   //전체 폼 제출
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
@@ -79,6 +86,9 @@ const PetRegister = () => {
     // FormData에 데이터가 올바르게 추가되었는지 확인
     console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
     const res = await postPet({ formData });
+    if (res !== null) {
+      return openModalFunc();
+    }
 
     console.log("res", res);
   };
@@ -337,6 +347,7 @@ const PetRegister = () => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>
+      {isModalOpen && <Modal text={"등록이 완료되었습니다!"} buttonText={"확인"} onClick={handleCloseModal} onClose={handleCloseModal} />}
     </>
   );
 };
