@@ -31,12 +31,12 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
     formState: { errors },
   } = useForm<TInvitationCodeFormValues>({ mode: "onTouched" });
 
-  const { mutate: registerMutation } = useMutation({
+  const { mutate: registerMutation, isPending: isRegisterPending } = useMutation({
     mutationFn: postRegister,
     onSuccess: (data) => {
       if (data) {
         showToast("등록되었습니다!", true);
-        router.push("/home");
+        router.push("/home/select");
       } else {
         setError("inputValue", { type: "invalid", message: ERROR_MESSAGE.receivedInvitationCodeInvalid });
       }
