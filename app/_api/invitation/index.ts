@@ -33,7 +33,7 @@ export const postAcceptance = async (invitationId: number) => {
     });
 
     if (response.status === 200) {
-      return true;
+      return invitationId;
     }
   } catch (error: any) {
     console.error(error.response.data);
