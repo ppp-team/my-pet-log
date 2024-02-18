@@ -22,7 +22,14 @@ import { showToast } from "@/app/_components/Toast";
 
 const petId = 2;
 
-const Comment = ({ comment, diaryId }: { comment: Comment; diaryId: string | string[] }) => {
+interface CommentProps {
+  comment: Comment;
+  diaryId: string | string[];
+  pageNum: number;
+  contentNum: number;
+}
+
+const Comment = ({ comment, diaryId, pageNum, contentNum }: CommentProps) => {
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [isEditing, setIsEditing] = useState(false);
@@ -274,7 +281,9 @@ const DiaryDetailPage = () => {
         <section>
           <div className={styles.commentsCount}>댓글({diary.commentCount})</div>
           <div style={{ minHeight: "10rem" }}>
-            {comments?.pages.map((v) => v?.content.map((comment) => <Comment diaryId={diaryId} comment={comment} key={comment.commentId} />))}
+            {comments?.pages.map((v, pageNum) =>
+              v?.content.map((comment, contentNum) => <Comment diaryId={diaryId} comment={comment} pageNum={pageNum} contentNum={contentNum} key={comment.commentId} />),
+            )}
           </div>
           <button onClick={() => fetchNextPage()}>댓글 더 불러오기</button>
           <div className={styles.commentInputContainer}>
