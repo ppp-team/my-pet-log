@@ -1,9 +1,8 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { PetRegisterType } from "@/app/_types/pets/types";
 
-export const postPet = async ({ formData }: { data: PetRegisterType }) => {
+export const postPet = async ({ formData }: { formData: FormData }) => {
   try {
     console.log("formData:", formData.get("petImage"));
     const res = await instance.post(`/my/pets`, formData, {

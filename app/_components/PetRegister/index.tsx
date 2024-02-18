@@ -19,7 +19,7 @@ import { postPet } from "@/app/_api/pets";
 
 export interface IFormInput {
   petName: string;
-  image: string;
+  image: File;
   type: string;
   breed: string;
   gender: "MALE" | "FEMALE";
@@ -33,7 +33,7 @@ export interface IFormInput {
 }
 
 const PetRegister = () => {
-  const [profileImage, setProfileImage] = useState<string>(DefaultImage);
+  const [profileImage, setProfileImage] = useState<File | string | null>(DefaultImage);
   const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
