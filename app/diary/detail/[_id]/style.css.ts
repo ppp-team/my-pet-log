@@ -46,6 +46,7 @@ export const image = style({
   border: "1px solid var(--GrayB5)",
 
   backgroundSize: "cover",
+  backgroundPosition: "center",
 });
 
 export const profile = style({

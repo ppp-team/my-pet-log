@@ -15,6 +15,8 @@ export interface postDiaryRequest {
   title: string;
   content: string;
   date: string;
+  images?: File[];
+  video?: File;
 }
 
 export interface Writer {

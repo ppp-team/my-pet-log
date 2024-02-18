@@ -6,11 +6,8 @@ import { cookies } from "next/headers";
 
 const petId = cookies().get("petId")?.value;
 
-export const postDiary = async ({ data }: { data: postDiaryRequest }) => {
+export const postDiary = async ({ formData }: { formData: FormData }) => {
   try {
-    const formData = new FormData();
-    const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
-    formData.append("request", blob);
     const res = await instance.post(`/pets/${petId}/diaries`, formData, { headers: { "Content-Type": "multipart/form-data" } });
 
     return res.data;

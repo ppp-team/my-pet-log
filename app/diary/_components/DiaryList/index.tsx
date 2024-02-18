@@ -26,7 +26,7 @@ const Diary = ({ diary }: { diary: Diary }) => {
             <p className={styles.description}>{diary.content}</p>
           </div>
         </div>
-        {diary.thumbnailPath ? <div className={styles.diaryImage} style={{ backgroundImage: `url(${diary.thumbnailPath})` }} /> : <div className={styles.diaryImage}></div>}
+        <div className={styles.diaryImage} style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${diary.thumbnailPath})` }} />
       </div>
     </Link>
   );

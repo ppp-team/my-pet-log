@@ -234,7 +234,7 @@ const DiaryDetailPage = () => {
                 >
                   {diary.images.map((image, idx) => (
                     <SwiperSlide key={idx}>
-                      <div className={styles.image} style={{ backgroundImage: `url(${image.path})` }}></div>
+                      <div className={styles.image} style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${image.path})` }}></div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
