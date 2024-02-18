@@ -32,9 +32,7 @@ export interface IFormInput {
   id: string | number | null;
 }
 
-type PetFormType = "register" | "edit";
-
-const PetRegister = ({ type }: { type: PetFormType }) => {
+const PetRegister = () => {
   const [profileImage, setProfileImage] = useState<string>(DefaultImage);
   const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
@@ -168,28 +166,6 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
   const handleDelete = () => {
     console.log("동물 삭제");
   };
-
-  // 타입에 따라 타이틀 변경하고 삭제하기 버튼 렌더링
-  let headerTitle = "";
-  let deleteButton = null;
-  let submitText = "";
-  switch (type) {
-    case "register":
-      headerTitle = "마이펫 정보 입력";
-      submitText = "작성 완료";
-      break;
-    case "edit":
-      headerTitle = "마이펫 정보 수정";
-      submitText = "수정 완료";
-      deleteButton = (
-        <div className={styles.deleteButtonWrapper}>
-          <button className={styles.deleteButton} onClick={handleDelete}>
-            동물 삭제하기
-          </button>
-        </div>
-      );
-      break;
-  }
 
   const section1 = (
     <>
@@ -335,11 +311,13 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
       {errors.registeredNumber && <ErrorMessage message={errors.registeredNumber.message} />}
 
       {/* 삭제하기 버튼 */}
-      {type === "edit" && deleteButton}
+      <div className={styles.deleteButtonWrapper}>
+        <button className={styles.deleteButton} onClick={handleDelete}>
+          동물 삭제하기
+        </button>
+      </div>
 
-      <button className={styles.button} type="submit">
-        {submitText}
-      </button>
+      <button className={styles.button}>작성완료</button>
     </>
   );
 
@@ -351,7 +329,7 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
             <Image src={BackIcon} alt="backward icon" width={25} height={25} />
           </div>
         )}
-        {headerTitle}
+        마이펫 정보 입력
         <div className={styles.closeIcon} onClick={() => router.push("/")}>
           <Image src={CloseIcon} alt="close icon" width={25} height={25} />
         </div>
