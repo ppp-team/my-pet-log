@@ -160,3 +160,9 @@ export interface PutCommentRequest {
   commentId: number;
   content: string;
 }
+
+export interface getSearchDiaryRequest {
+  page: number | unknown;
+  size: number;
+  keyword: string | null;
+}

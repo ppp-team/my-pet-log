@@ -1,7 +1,17 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { GetCommentsRequest, GetCommentsResponse, GetDiaryListRequest, GetDiaryResponse, PostCommentRequest, PutCommentRequest, postDiaryRequest } from "@/app/_types/diary/type";
+import {
+  GetCommentsRequest,
+  GetCommentsResponse,
+  GetDiaryListRequest,
+  GetDiaryListResponse,
+  GetDiaryResponse,
+  PostCommentRequest,
+  PutCommentRequest,
+  getSearchDiaryRequest,
+  postDiaryRequest,
+} from "@/app/_types/diary/type";
 import { cookies } from "next/headers";
 
 const petId = cookies().get("petId")?.value;
@@ -67,4 +77,14 @@ export const deleteComment = async ({ commentId }: { commentId: number }) => {
 
 export const putComment = async ({ commentId, content }: PutCommentRequest) => {
   await instance.put(`pets/${petId}/diaries/comments/${commentId}`, { content });
+};
+
+export const getSearchDiary = async ({ page, size, keyword }: getSearchDiaryRequest): Promise<GetDiaryListResponse | null> => {
+  try {
+    const res = await instance.get(`pets/${petId}/diaries/search`, { params: { page, size, keyword } });
+    return res.data;
+  } catch (error: any) {
+    console.error(error.response);
+    return null;
+  }
 };
