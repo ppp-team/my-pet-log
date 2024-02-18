@@ -67,6 +67,10 @@ export const deleteDiary = async ({ diaryId }: { diaryId: string | string[] }) =
   }
 };
 
+export const postDiaryLike = async ({ diaryId }: { diaryId: string | string[] }) => {
+  await instance.post(`pets/${petId}/diaries/${diaryId}/like`);
+};
+
 export const postComment = async ({ diaryId, content }: PostCommentRequest) => {
   await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
 };

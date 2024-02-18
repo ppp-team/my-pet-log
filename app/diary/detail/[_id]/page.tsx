@@ -16,7 +16,7 @@ import SendIcon from "@/public/icons/send.svg?url";
 import BackHeader from "@/app/_components/BackHeader";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { deleteComment, deleteDiary, getComments, getDiary, postComment, putComment } from "@/app/_api/diary";
+import { deleteComment, deleteDiary, getComments, getDiary, postComment, postDiaryLike, putComment } from "@/app/_api/diary";
 import { Comment } from "@/app/_types/diary/type";
 import { showToast } from "@/app/_components/Toast";
 
@@ -177,6 +177,20 @@ const DiaryDetailPage = () => {
     },
   });
 
+  //일기 좋아요
+  const postDiaryLikeMutation = useMutation({
+    mutationFn: () => postDiaryLike({ diaryId }),
+  });
+
+  const handleDiaryLike = () => {
+    postDiaryLikeMutation.mutate();
+    if (!diary) return;
+    const newDiary = { ...diary };
+    newDiary.isCurrentUserLiked = !diary?.isCurrentUserLiked;
+    newDiary.likeCount = diary?.isCurrentUserLiked ? diary.likeCount - 1 : diary.likeCount + 1;
+    queryClient.setQueryData(["diary", { petId, diaryId }], newDiary);
+  };
+
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentValue(e.target.value);
   };
@@ -241,11 +255,13 @@ const DiaryDetailPage = () => {
               </div>
               <div className={styles.profile}>
                 <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
-                  <div style={{ backgroundImage: `url(https://mypetlog.s3.ap-northeast-2.amazonaws.com/${diary.writer.profilePath}` }} className={styles.profileImage} />
+                  <div style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${diary.writer.profilePath}` }} className={styles.profileImage} />
                   <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{diary.writer.nickname}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <LikeIcon color={diary.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
+                  <button onClick={handleDiaryLike}>
+                    <LikeIcon color={diary.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
+                  </button>
                   <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{diary.likeCount}</p>
                 </div>
               </div>
