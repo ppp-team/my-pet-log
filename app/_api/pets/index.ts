@@ -3,34 +3,20 @@
 import instance from "@/app/_api/axios";
 import { PetRegisterType } from "@/app/_types/pets/types";
 
-export const postPet = async ({ data }: { data: PetRegisterType }) => {
+export const postPet = async ({ formData }: { data: PetRegisterType }) => {
   try {
-    const formData = new FormData();
-    const request = {
-      name: data.name,
-      type: data.type,
-      breed: data.breed,
-      gender: data.gender,
-      isNeutered: data.isNeutered,
-      birth: data.birth,
-      firstMeetDate: data.firstMeetDate,
-      weight: data.weight,
-      registeredNumber: data.registeredNumber,
-    };
+    console.log("formData:", formData.get("petImage"));
+    const res = await instance.post(`/my/pets`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
-    formData.append("petImage", data.petImage || null);
-    formData.append("petRequest", JSON.stringify(request));
-
-    const res = await instance.post(`/my/pets`, formData, { headers: { "Content-Type": "multipart/form-data" } });
-
-    console.log("petImage:", data.petImage);
+    // 응답 데이터 반환
     return res.data;
   } catch (error: any) {
     console.error(error);
     return null;
   }
 };
-
 export const getPet = async (petId: number) => {
   try {
     const response = await instance.get(`/my/pets/${petId}`);

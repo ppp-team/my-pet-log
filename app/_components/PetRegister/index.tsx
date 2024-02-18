@@ -72,7 +72,16 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
     };
     console.log("request", request);
 
-    const res = await postPet({ data: request });
+    const formData = new FormData();
+
+    const blob = new Blob([JSON.stringify(request)], { type: "application/json" });
+    formData.append("petRequest", blob);
+    formData.append("petImage", data.image);
+
+    // FormData에 데이터가 올바르게 추가되었는지 확인
+    console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
+    const res = await postPet({ formData });
+
     console.log("res", res);
   };
 
@@ -97,7 +106,7 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
     const files = event.target.files;
     if (!files) return;
     setProfileImage(URL.createObjectURL(files[0]));
-    setValue("image", URL.createObjectURL(files[0]));
+    setValue("image", files[0]);
   };
 
   useEffect(() => {
@@ -188,7 +197,7 @@ const PetRegister = ({ type }: { type: PetFormType }) => {
         <div
           className={styles.image}
           style={{
-            backgroundImage: `url(${watch("image") || DefaultImage})`,
+            backgroundImage: `url(${profileImage || DefaultImage})`,
           }}
         >
           <label htmlFor="image">
