@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-export const container = style({ paddingLeft: "2rem" });
+export const container = style({ padding: "0 2rem" });
 
 export const subtitle = style({ marginBottom: "1.2rem", fontSize: "1.6rem", fontWeight: "500", color: "#000" });
 
@@ -56,3 +56,16 @@ export const responseButton = style({
 export const acceptButton = style([responseButton, { border: "1px solid transparent", backgroundColor: "#FF8743", color: "white" }]);
 
 export const declineButton = style([responseButton, { border: "1px solid #FF8743", backgroundColor: "white", color: "#FF8743" }]);
+
+export const noInvitationContainer = style({
+  display: "grid",
+  gap: "1.2rem",
+  justifyItems: "center",
+  padding: "6rem 0",
+});
+
+export const noInvitationTitle = style({
+  fontSize: "1.6rem",
+  fontWeight: "400",
+  color: "var(--Gray81)",
+});

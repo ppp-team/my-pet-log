@@ -60,25 +60,32 @@ const ReceivedInvitationList = () => {
   return (
     <section className={styles.container}>
       <p className={styles.subtitle}>초대 받은 내역</p>
-      <Swiper className="mySwiper" slidesPerView={"auto"} spaceBetween={20}>
-        {invites?.map((invitation) => (
-          <SwiperSlide key={invitation.invitationId} className={styles.itemOverride}>
-            <div className={styles.item}>
-              <Image className={styles.petImage} src={invitation.petImageUrl ?? petProfileDefaultSrc} alt="펫 프로필 이미지" width={48} height={48} />
-              <p className={styles.petName}>{invitation.petName}</p>
-              <p className={styles.invitedDate}>{invitation.invitedAt} 전</p>
-              <div className={styles.responseContainer}>
-                <button className={styles.acceptButton} onClick={() => acceptMutation(invitation.invitationId)} disabled={IsAcceptPending}>
-                  수락
-                </button>
-                <button className={styles.declineButton} onClick={() => refuseMutation(invitation.invitationId)} disabled={isRefusePending}>
-                  거절
-                </button>
+
+      {!invites?.length || invites?.length < 1 ? (
+        <div className={styles.noInvitationContainer}>
+          <h1 className={styles.noInvitationTitle}>초대 받은 내역이 없습니다.</h1>
+        </div>
+      ) : (
+        <Swiper className="mySwiper" slidesPerView={"auto"} spaceBetween={20}>
+          {invites?.map((invitation) => (
+            <SwiperSlide key={invitation.invitationId} className={styles.itemOverride}>
+              <div className={styles.item}>
+                <Image className={styles.petImage} src={invitation.petImageUrl ?? petProfileDefaultSrc} alt="펫 프로필 이미지" width={48} height={48} />
+                <p className={styles.petName}>{invitation.petName}</p>
+                <p className={styles.invitedDate}>{invitation.invitedAt} 전</p>
+                <div className={styles.responseContainer}>
+                  <button className={styles.acceptButton} onClick={() => acceptMutation(invitation.invitationId)} disabled={IsAcceptPending}>
+                    수락
+                  </button>
+                  <button className={styles.declineButton} onClick={() => refuseMutation(invitation.invitationId)} disabled={isRefusePending}>
+                    거절
+                  </button>
+                </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </section>
   );
 };
