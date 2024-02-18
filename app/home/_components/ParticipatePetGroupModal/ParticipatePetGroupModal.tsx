@@ -70,7 +70,7 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
             register={register}
           />
           <InvitationInputError errorMessage={errors?.inputValue?.message} />
-          <InvitationSubmitButton />
+          <InvitationSubmitButton isDisable={isRegisterPending} />
         </form>
       </div>
       <ReceivedInvitationList />
