@@ -31,7 +31,7 @@ export const postLogs = async (petId: number, logData: PostLogType) => {
 
 export const putLogs = async (petId: number, logId: number, logData: PostLogType) => {
   try {
-    const response = await instance.post(`/pets/${petId}/logs/${logId}`, logData);
+    const response = await instance.put(`/pets/${petId}/logs/${logId}`, logData);
     if (response.status === 200) {
       return response.data;
     }
