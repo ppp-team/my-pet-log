@@ -1,6 +1,6 @@
 "use client";
 
-import { putLogs } from "@/app/_api/log";
+import { getLogDetail, putLogs } from "@/app/_api/log";
 import BackHeader from "@/app/_components/BackHeader";
 import DateInput from "@/app/_components/DateInput";
 import convertTime12to24 from "@/app/_utils/convertTime12to24";
@@ -77,10 +77,22 @@ const Page = () => {
   };
 
   useEffect(() => {
-    if (logId) {
-      console.log(`Fetching log details for logId: ${logId}`);
-    }
-  }, [logId]);
+    const fetchLogDetail = async () => {
+      if (logId && petId) {
+        const detail = await getLogDetail(petId, logId);
+        if (detail) {
+          setValue("date", detail.date);
+          setValue("time", detail.time);
+          setValue("type", detail.type);
+          setValue("subType", detail.subType);
+          setValue("memo", detail.memo);
+          setValue("isImportant", detail.isImportant);
+        }
+      }
+    };
+
+    fetchLogDetail();
+  }, [logId, petId, setValue]);
 
   useEffect(() => {
     setValue("memo", "");
