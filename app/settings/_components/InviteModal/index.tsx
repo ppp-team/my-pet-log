@@ -6,27 +6,9 @@ import ModalContainer from "@/app/_components/ModalContainer";
 import InvitationForm from "@/app/settings/_components/InvitationForm";
 import CloseIcon from "@/public/icons/close.svg?url";
 import InviteCode from "./InviteCode";
-import { postInviteGuardian } from "@/app/_api/guardians";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-const petId = 7;
 
 const InviteModal = () => {
-  const queryClient = useQueryClient();
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
-
-  const inviteMutation = useMutation({
-    mutationFn: (email: string) => postInviteGuardian(petId, email),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["my-invitations"] });
-    },
-  });
-
-  const handleInviteConfirm = async (value: string) => {
-    closeModalFunc();
-
-    inviteMutation.mutate(value);
-  };
 
   return (
     <header className={styles.header}>

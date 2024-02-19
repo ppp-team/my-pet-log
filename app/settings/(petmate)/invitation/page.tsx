@@ -10,6 +10,7 @@ import { useState } from "react";
 import { MyInvitationType } from "@/app/_types/invitaion/types";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import Image from "next/image";
+import EmptyMyInvitation from "@/app/settings/_components/EmptyMyInvitation";
 
 const Page = () => {
   const queryClient = useQueryClient();
@@ -32,7 +33,6 @@ const Page = () => {
 
   const handleConfirm = () => {
     closeModalFunc();
-    // 초대 취소 로직 구현...
 
     if (selectedGuardianId !== null) {
       cancelMutation.mutate(selectedGuardianId);
@@ -42,37 +42,41 @@ const Page = () => {
   return (
     <>
       <InviteModal />
-      <main className={container}>
-        {invites.map((invite) => (
-          <section key={invite.invitationId} className={memberlist}>
-            <div className={profileWrapper}>
-              <Image className={profileImg} src={getImagePath(invite.profilePath)} alt="profile icon" width={40} height={40} />
-              <p className={nickname}>{invite.inviteeName}</p>
-              <div className={state}>{invite.inviteStatus}</div>
-            </div>
-            {invite.inviteStatus !== "거절" ? (
-              <button
-                className={button}
-                onClick={() => {
-                  setSelectedGuardianId(invite.invitationId);
-                  openModalFunc();
-                }}
-              >
-                초대 취소
-              </button>
-            ) : (
-              <button
-                className={button}
-                onClick={() => {
-                  cancelMutation.mutate(invite.invitationId);
-                }}
-              >
-                확인
-              </button>
-            )}
-          </section>
-        ))}
-      </main>
+      {invites.length === 0 ? (
+        <EmptyMyInvitation />
+      ) : (
+        <main className={container}>
+          {invites.map((invite) => (
+            <section key={invite.invitationId} className={memberlist}>
+              <div className={profileWrapper}>
+                <Image className={profileImg} src={getImagePath(invite.profilePath)} alt="profile icon" width={40} height={40} />
+                <p className={nickname}>{invite.inviteeName}</p>
+                <div className={state}>{invite.inviteStatus}</div>
+              </div>
+              {invite.inviteStatus !== "거절" ? (
+                <button
+                  className={button}
+                  onClick={() => {
+                    setSelectedGuardianId(invite.invitationId);
+                    openModalFunc();
+                  }}
+                >
+                  초대 취소
+                </button>
+              ) : (
+                <button
+                  className={button}
+                  onClick={() => {
+                    cancelMutation.mutate(invite.invitationId);
+                  }}
+                >
+                  확인
+                </button>
+              )}
+            </section>
+          ))}
+        </main>
+      )}
       {isModalOpen && <Modal text="정말 초대를 취소하시겠습니까?" buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
     </>
   );
