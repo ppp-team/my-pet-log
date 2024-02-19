@@ -44,8 +44,12 @@ const CreateUserProfilePage: NextPage = () => {
     onError: () => {
       setError("nickname", { type: "duplicated", message: ERROR_MESSAGE.nicknameDuplicate });
     },
-    onSuccess: () => {
-      setValue("isNicknameConfirmed", true);
+    onSuccess: (data) => {
+      if (data) {
+        setValue("isNicknameConfirmed", true);
+      } else {
+        setError("nickname", { type: "duplicated", message: ERROR_MESSAGE.nicknameDuplicate });
+      }
     },
   });
 
