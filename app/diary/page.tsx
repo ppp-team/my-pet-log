@@ -29,7 +29,7 @@ const DiaryPgae = async () => {
           <Image src={SearchIconURL} alt="search icon" width={16} height={16} className={searchIcon} />
         </Link>
         <DiaryList petId={petId} />
-        <Link href={"/diary/edit"}>
+        <Link href={"/diary/create"}>
           <Image src={WriteIconURL} alt="write icon" width={60} height={60} className={writeIcon} />
         </Link>
       </div>

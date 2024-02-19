@@ -1,4 +1,4 @@
-import DiaryDetail from "@/app/diary/_components/DiaryDetail/DiaryDetail";
+import DiaryDetail from "@/app/diary/_components/DiaryDetail";
 import { cookies } from "next/headers";
 
 const DiaryDetailPage = () => {

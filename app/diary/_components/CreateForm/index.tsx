@@ -2,17 +2,19 @@
 
 import { postDiary } from "@/app/_api/diary";
 import BackHeader from "@/app/_components/BackHeader";
-import DateInput from "@/app/_components/DateInput";
+import DateInput from "@/app/diary/_components/DateInput";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import ImageInput from "@/app/diary/_components/ImageInput";
 import VideoInput from "@/app/diary/_components/VideoInput";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import * as styles from "@/app/diary/_components/CreateForm/style.css";
+import * as styles from "./style.css";
 import { showToast } from "@/app/_components/Toast";
 import { useAtom } from "jotai";
 import { diaryImagesAtom } from "@/app/_states/atom";
+import { FormInput } from "@/app/diary/_components/EditForm";
+import { getPrettyToday } from "@/app/_utils/getPrettyToday";
 
 interface Diary {
   title: string;
@@ -43,7 +45,7 @@ const CreateForm = ({ petId }: { petId: number }) => {
     getValues,
     watch,
     handleSubmit,
-  } = useForm({ mode: "onChange" });
+  } = useForm<FormInput>({ mode: "onChange", defaultValues: { date: getPrettyToday() } });
 
   const [diaryImages, setDiaryImages] = useAtom(diaryImagesAtom);
 

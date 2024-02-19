@@ -108,7 +108,7 @@ export const getSearchDiary = async ({ page, size, keyword }: getSearchDiaryRequ
   }
 };
 
-export const putDiary = async ({ diaryId }: { diaryId: string | string[] }) => {
+export const putDiary = async ({ diaryId, formData }: { diaryId: string | string[]; formData: FormData }) => {
   const petId = cookies().get("petId")?.value;
-  await instance.put(`pets/${petId}/diaries/${diaryId}`);
+  await instance.put(`pets/${petId}/diaries/${diaryId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
 };

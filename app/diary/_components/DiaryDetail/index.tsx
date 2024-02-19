@@ -239,9 +239,14 @@ const DiaryDetail = ({ petId }: { petId: number }) => {
               <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} onClick={() => setIsKebabOpen(!isKebabOpen)} />
               {isKebabOpen && (
                 <ul className={styles.kebabModal}>
-                  <Link href={`/diary/edit?diaryId=${diary.diaryId}&`}>
-                    <li className={styles.kebabList}>수정하기</li>
-                  </Link>
+                  <li
+                    className={styles.kebabList}
+                    onClick={() => {
+                      router.push(`/diary/edit/${diary.diaryId}`);
+                    }}
+                  >
+                    수정하기
+                  </li>
                   <li
                     className={styles.kebabList}
                     onClick={() => {
