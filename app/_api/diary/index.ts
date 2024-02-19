@@ -107,3 +107,8 @@ export const getSearchDiary = async ({ page, size, keyword }: getSearchDiaryRequ
     return null;
   }
 };
+
+export const putDiary = async ({ diaryId }: { diaryId: string | string[] }) => {
+  const petId = cookies().get("petId")?.value;
+  await instance.put(`pets/${petId}/diaries/${diaryId}`);
+};
