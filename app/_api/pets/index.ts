@@ -17,6 +17,7 @@ export const postPet = async ({ formData }: { formData: FormData }) => {
     return null;
   }
 };
+
 export const getPet = async (petId: number) => {
   try {
     const response = await instance.get(`/my/pets/${petId}`);
