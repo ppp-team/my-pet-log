@@ -9,7 +9,6 @@ interface FormData {
 
 interface SocialData {
   email: string;
-  type: string;
 }
 
 export const postLogin = async ({ email, password }: FormData) => {
@@ -21,6 +20,7 @@ export const postLogin = async ({ email, password }: FormData) => {
 
     if (res.status === 200) {
       cookies().set("accessToken", res.data.access_token);
+      cookies().set("refreshToken", res.data.refresh_token);
       return "signin success";
     }
   } catch (error: any) {
@@ -29,15 +29,15 @@ export const postLogin = async ({ email, password }: FormData) => {
   }
 };
 
-export const postSocial = async ({ email, type }: SocialData) => {
+export const postSocial = async ({ email }: SocialData) => {
   try {
-    const res = await instance.post("/auth/oauth/login", {
+    const res = await instance.post("/auth/login/social", {
       email,
-      type,
     });
 
     if (res.status === 200) {
       cookies().set("accessToken", res.data.access_token);
+      cookies().set("refreshToken", res.data.refresh_token);
       return "signin success";
     }
   } catch (error: any) {
@@ -61,6 +61,7 @@ export const postLogout = async () => {
 
     if (res.status === 204) {
       cookies().delete("accessToken");
+      cookies().delete("refreshToken");
       return true;
     }
   } catch (error: any) {

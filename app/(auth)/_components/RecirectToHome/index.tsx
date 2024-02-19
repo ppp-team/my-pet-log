@@ -21,17 +21,15 @@ export default function RedirectToHome() {
     if (!session) return;
 
     try {
-      const { accessToken, refreshToken } = await postSocial({ email: socialEmail, type });
+      const { accessToken, refreshToken } = await postSocial({ email: socialEmail });
       setUserAccessToken(accessToken);
       setUserRefreshToken(refreshToken);
       setIsLoggedIn(true);
     } catch (error) {
       console.error(error);
       setIsLoggedIn(false);
-    } finally {
-      router.replace("/");
     }
-  }, [socialEmail]);
+  }, [session, setIsLoggedIn, setUserAccessToken, setUserRefreshToken, socialEmail]);
 
   useEffect(() => {
     handleUserInfo();
