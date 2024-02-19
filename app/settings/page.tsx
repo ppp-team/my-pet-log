@@ -44,7 +44,7 @@ const Page = () => {
           </span>
         </div>
       </div>
-      {isModalOpen && <Modal text="로그아웃 하시겠습니까??" buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
+      {isModalOpen && <Modal text="로그아웃 하시겠습니까?" buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
     </>
   );
 };
