@@ -3,6 +3,8 @@ import { style } from "@vanilla-extract/css";
 export const root = style({
   display: "flex",
   flexDirection: "column",
+
+  marginTop: "5.6rem",
 });
 
 export const header = style({
@@ -18,7 +20,7 @@ export const header = style({
 });
 
 export const petInfo = style({
-  color: "#C2C2C2",
+  color: "var(--GrayC2)",
   fontSize: "1.4rem",
   fontWeight: "500",
 });
@@ -30,8 +32,8 @@ export const main = style({
 
   padding: "2.4rem 1.6rem 1.4rem",
 
-  borderTop: "1px solid #E8E8E8",
-  borderBottom: "1px solid #E8E8E8",
+  borderTop: "1px solid var(--GrayE8)",
+  borderBottom: "1px solid var(--GrayE8)",
 
   position: "relative",
 });
@@ -41,9 +43,10 @@ export const image = style({
   height: "23.8rem",
 
   borderRadius: "10px",
-  border: "1px solid #B5B5B5",
+  border: "1px solid var(--GrayB5)",
 
   backgroundSize: "cover",
+  backgroundPosition: "center",
 });
 
 export const profile = style({
@@ -65,11 +68,11 @@ export const swiperFraction = style({
 
   backgroundColor: "rgba(0,0,0,0.5)",
 
-  color: "white",
+  color: "var(--White)",
   fontWeight: "500",
   textAlign: "center",
 
-  zIndex: "2",
+  zIndex: "1",
 });
 
 export const profileImage = style({
@@ -80,6 +83,9 @@ export const profileImage = style({
 
   border: "1px solid var(--MainOrange)",
   borderRadius: "50%",
+
+  backgroundSize: "cover",
+  backgroundPosition: "center",
 });
 
 export const content = style({
@@ -87,7 +93,7 @@ export const content = style({
 
   fontSize: "1.4rem",
   lineHeight: "1.8rem",
-  color: "#1F1F1F",
+  color: "var(--Gray1F)",
 
   wordBreak: "break-word",
 });
@@ -97,10 +103,10 @@ export const commentsCount = style({
 
   padding: "1.4rem 1.6rem",
 
-  borderBottom: "1px solid #E8E8E8",
+  borderBottom: "1px solid var(--GrayE8)",
 
   fontSize: "1.4rem",
-  color: "#818181",
+  color: "var(--Gray81)",
 });
 
 export const kebab = style({
@@ -118,7 +124,7 @@ export const commentContainer = style({
 
   padding: "1.6rem",
 
-  borderBottom: "1px solid #E8E8E8",
+  borderBottom: "1px solid var(--GrayE8)",
 });
 
 export const commentMain = style({
@@ -142,13 +148,39 @@ export const commentContent = style({
   wordBreak: "break-all",
 });
 
+export const commentTextarea = style([
+  commentContent,
+  {
+    width: "100%",
+
+    padding: "0.8rem 1rem",
+
+    borderRadius: "10px",
+    border: "1.5px solid var(--GrayE2)",
+
+    ":focus": {
+      outline: "none",
+      border: "1px solid orange",
+    },
+  },
+]);
+
+export const commentEditButton = style({
+  color: "var(--GrayA4)",
+  fontSize: " 1.3rem",
+  textDecorationLine: "underline",
+
+  marginRight: "0.8rem",
+});
+
 const buttonCommon = {
   borderRadius: "5px",
-  border: "1px solid #E2E2E2",
+  border: "1px solid var(--GrayE2)",
 
-  color: "#818181",
+  color: "var(--Gray81)",
   fontSize: "1.3rem",
 };
+
 export const recommentButton = style({
   padding: "0.4rem 1rem",
 
@@ -173,11 +205,11 @@ export const commentInputContainer = style({
   gap: "0.9rem",
 
   position: "sticky",
-  bottom: 0,
+  bottom: "5.6rem",
 
   padding: "1rem 1.6rem",
 
-  backgroundColor: "white",
+  backgroundColor: "var(--White)",
 });
 
 export const commentInput = style({
@@ -189,7 +221,7 @@ export const commentInput = style({
   borderRadius: "20px",
   border: "none",
 
-  backgroundColor: " #F4F4F4",
+  backgroundColor: " var(--GrayF4)",
 
   ":focus": {
     outline: "none",
@@ -204,4 +236,55 @@ export const sendIcon = style({
   transform: "translate(-50%,-50%)",
 
   cursor: "pointer",
+});
+export const commonKebab = style({
+  width: "11rem",
+  padding: "0.4rem 0.5rem",
+
+  borderRadius: "7px",
+  background: "rgba(255, 255, 255, 0.95)",
+  boxShadow: "0px 4px 6px 5px rgba(105, 105, 105, 0.07)",
+
+  zIndex: 111,
+});
+
+export const kebabModal = style([
+  commonKebab,
+  {
+    position: "absolute",
+    bottom: "-5rem",
+    right: "1.2rem",
+  },
+]);
+
+export const kebabList = style({
+  padding: "0.6rem 2.5rem",
+
+  borderRadius: "5px",
+
+  fontSize: "1.4rem",
+  fontWeight: "500",
+  lineHeight: " 2rem",
+  textAlign: "center",
+
+  ":hover": {
+    backgroundColor: "var(--LightOrange)",
+
+    color: "var(--OrangeED)",
+    fontWeight: "600",
+  },
+});
+
+export const commentKebab = style([
+  commonKebab,
+  {
+    position: "absolute",
+    top: 0,
+    right: "0",
+  },
+]);
+
+export const commentEditForm = style({
+  display: "flex",
+  flexDirection: "column",
 });

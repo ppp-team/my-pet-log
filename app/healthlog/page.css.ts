@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 export const container = style({
   width: "100%",
 
-  paddingTop: "2.4rem",
+  marginTop: "2.4rem",
 
   display: "flex",
   flexDirection: "column",
@@ -20,6 +20,7 @@ export const calendarBox = style({
   height: "30rem",
 
   margin: "2.4rem 1.6rem",
+  padding: "1rem",
 
   display: "flex",
   justifyContent: "center",
@@ -39,4 +40,13 @@ export const quickButtonsContainer = style({
   whiteSpace: "nowrap",
   overflowX: "auto",
   margin: "1rem 0",
+
+  selectors: {
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+
+  scrollbarWidth: "none",
+  msOverflowStyle: "none",
 });
