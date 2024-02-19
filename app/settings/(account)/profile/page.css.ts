@@ -121,7 +121,7 @@ export const length = style({
 
 export const button = style({
   padding: "1.3rem 0",
-  marginTop: "2.4rem",
+  marginTop: "3.2rem",
 
   borderRadius: "30px",
 
