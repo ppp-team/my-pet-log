@@ -37,7 +37,7 @@ const LogDetail = ({ logId }: LogDetailProps) => {
             </div>
           )}
         </div>
-        <Link href="/healthlog/edit">
+        <Link href={`/healthlog/edit/${logDetailData?.logId}`}>
           <button className={styles.editButton}>수정하기</button>
         </Link>
       </div>

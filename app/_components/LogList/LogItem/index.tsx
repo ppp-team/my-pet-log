@@ -112,7 +112,7 @@ const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemPr
         </li>
         {currentTranslate === -SWIPE_BUTTON_WIDTH && (
           <div className={styles.swipeButtons}>
-            <Link href="/healthlog/edit">
+            <Link href={`/healthlog/edit/${logItem.logId}`}>
               <button
                 className={styles.editButton}
                 onTouchEnd={(e) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { postLogs } from "@/app/_api/log";
+import { putLogs } from "@/app/_api/log";
 import BackHeader from "@/app/_components/BackHeader";
 import DateInput from "@/app/_components/DateInput";
 import convertTime12to24 from "@/app/_utils/convertTime12to24";
@@ -8,6 +8,7 @@ import SelectMateDropdown from "@/app/healthlog/_components/SelectMateDropdown";
 import SubtypeDetail from "@/app/healthlog/_components/SubtypeDetail";
 import { buttonTypes } from "@/public/data/buttonTypes";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as styles from "./page.css";
@@ -18,6 +19,8 @@ const Page = () => {
   const [kakaoLocationId, setKakaoLocationId] = useState<number | null>(null);
   const [activeButtonGroup, setActiveButtonGroup] = useState("");
   const [selectedGuardianId, setSelectedGuardianId] = useState<string>("");
+  const router = useRouter();
+  const { logId } = router.query;
   const topSubtypeRef = useRef<HTMLDivElement>(null);
   const bottomSubtypeRef = useRef<HTMLDivElement>(null);
   const petId = Number(localStorage.getItem("petId"));
@@ -69,9 +72,15 @@ const Page = () => {
       managerId: selectedGuardianId,
     };
 
-    console.log(logData);
-    postLogs(petId, logData);
+    console.log(petId, logId, logData);
+    putLogs(petId, logId, logData);
   };
+
+  useEffect(() => {
+    if (logId) {
+      console.log(`Fetching log details for logId: ${logId}`);
+    }
+  }, [logId]);
 
   useEffect(() => {
     setValue("memo", "");
