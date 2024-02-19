@@ -61,6 +61,12 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
     }
   }, [selectedOption, setValue]);
 
+  useEffect(() => {
+    if (visibleSubtype === "CUSTOM") {
+      setValue("type", "CUSTOM");
+    }
+  }, [visibleSubtype, setValue]);
+
   return (
     <div className={styles.container}>
       {visibleSubtype === "WALK" && (
@@ -81,19 +87,19 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
           <input
             className={styles.inputBox}
             placeholder="주요 항목을 직접 입력하세요"
-            {...register("type", {
+            {...register("subtype", {
               required: "내용을 입력해주세요",
-              maxLength: { value: MAX_LENGTH.type, message: `최대 ${MAX_LENGTH.type}자까지 작성할 수 있습니다.` },
+              maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
             })}
-            maxLength={MAX_LENGTH.type}
+            maxLength={MAX_LENGTH.subtype}
             autoFocus
           />
           {
             <p className={styles.p}>
-              {watch("type")?.length ?? "0"}/ {MAX_LENGTH.type}
+              {watch("subtype")?.length ?? "0"}/ {MAX_LENGTH.subtype}
             </p>
           }
-          {errors.type && <p className={styles.error}>{errors.type.message?.toString()}</p>}
+          {errors.subtype && <p className={styles.error}>{errors.subtype.message?.toString()}</p>}
         </div>
       )}
       {["FEED", "HEALTH", "TREAT", "GROOMING"].includes(visibleSubtype) && (
