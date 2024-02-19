@@ -4,8 +4,7 @@ import logDetailIconSrc from "@/public/icons/log-detail-icon.svg?url";
 import logMemoIconSrc from "@/public/icons/log-edit-icon.svg?url";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import * as styles from "./style.css";
 
 interface LogDetailProps {

@@ -31,6 +31,7 @@ export interface LogDetailType {
   type: string;
   subType: string;
   memo: string | null;
+  isImportant: boolean;
   location?: {
     isCustomLocation: boolean;
     kakaoLocationId: number | null;
