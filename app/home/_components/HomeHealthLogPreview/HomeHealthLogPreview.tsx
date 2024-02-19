@@ -17,6 +17,6 @@ const HomeHealthLogPreview = () => {
     enabled: !!petId,
   });
 
-  return <div>{logsData && <LogList logsData={logsData} />}</div>;
+  return <div>{logsData && <LogList logsData={logsData} petId={petId} />}</div>;
 };
 export default HomeHealthLogPreview;

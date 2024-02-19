@@ -29,9 +29,6 @@ const Page = () => {
   const logId = Number(segments[segments.length - 1]);
   const petId = Number(localStorage.getItem("petId"));
 
-  console.log(logId);
-  console.log(petId);
-
   const { data: logDetailData, error } = useQuery<LogDetailType, Error>({
     queryKey: ["LogDetail", petId, logId],
     queryFn: () => getLogDetail(Number(petId), Number(logId)),
