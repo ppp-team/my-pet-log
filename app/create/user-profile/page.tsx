@@ -51,7 +51,7 @@ const CreateUserProfilePage: NextPage = () => {
 
   const { mutate: postUserProfileMutation } = useMutation({
     mutationKey: ["postUserProfileKey"],
-    mutationFn: ({ nickname, profileImage }: postUserProfilePropType) => postUserProfile({ nickname, profileImage }),
+    mutationFn: (formData: FormData) => postUserProfile({ formData }),
     onError: () => {
       showToast("등록 실패했습니다. 잠시 후 다시 시도해주세요.", false);
     },
@@ -99,10 +99,12 @@ const CreateUserProfilePage: NextPage = () => {
     } else if (!isNicknameConfirmed) {
       setError("nickname", { type: "isNotConfirmed", message: ERROR_MESSAGE.nicknameNotConfirmed });
     } else {
-      postUserProfileMutation({
-        nickname: removeSpacesNickname,
-        profileImage: data.profileImage,
-      });
+      const formData = new FormData();
+      formData.append("nickname", removeSpacesNickname);
+      if (data?.profileImage) {
+        formData.append("profileImage", data.profileImage);
+      }
+      postUserProfileMutation(formData);
     }
   };
 
