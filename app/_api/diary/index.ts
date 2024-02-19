@@ -83,6 +83,10 @@ export const putComment = async ({ commentId, content }: PutCommentRequest) => {
   await instance.put(`pets/${petId}/diaries/comments/${commentId}`, { content });
 };
 
+export const postCommentLike = async ({ commentId }: { commentId: number }) => {
+  await instance.get(`pets/${petId}/comments/${commentId}/like`);
+};
+
 export const getSearchDiary = async ({ page, size, keyword }: getSearchDiaryRequest): Promise<GetDiaryListResponse | null> => {
   try {
     const res = await instance.get(`pets/${petId}/diaries/search`, { params: { page, size, keyword } });

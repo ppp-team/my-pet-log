@@ -14,10 +14,10 @@ import * as styles from "./style.css";
 import "./swiper.css";
 import SendIcon from "@/public/icons/send.svg?url";
 import BackHeader from "@/app/_components/BackHeader";
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { deleteComment, deleteDiary, getComments, getDiary, postComment, postDiaryLike, putComment } from "@/app/_api/diary";
-import { Comment } from "@/app/_types/diary/type";
+import { deleteComment, deleteDiary, getComments, getDiary, postComment, postCommentLike, postDiaryLike, putComment } from "@/app/_api/diary";
+import { Comment, GetCommentsResponse } from "@/app/_types/diary/type";
 import { showToast } from "@/app/_components/Toast";
 
 const petId = 2;
@@ -59,6 +59,20 @@ const Comment = ({ comment, diaryId, pageNum, contentNum }: CommentProps) => {
       showToast("댓글 수정에 실패했습니다.", false);
     },
   });
+
+  //댓글 좋아요
+  const postDiaryLikeMutation = useMutation({
+    mutationFn: () => postCommentLike({ commentId: comment.commentId }),
+  });
+
+  const handleCommentLike = () => {
+    postDiaryLikeMutation.mutate();
+    const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
+    if (!newComments) return;
+    newComments.pages[pageNum].content[contentNum].isCurrentUserLiked = !comment?.isCurrentUserLiked;
+    newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount - 1 : comment.likeCount + 1;
+    queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+  };
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNewCommentValue(e.target.value);
@@ -121,10 +135,11 @@ const Comment = ({ comment, diaryId, pageNum, contentNum }: CommentProps) => {
             <pre className={styles.commentContent}>{comment.content.replaceAll("<br>", "\n")}</pre>
           )}
 
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <button className={styles.recommentButton}>답글</button>
-            <button className={styles.commentLikeButton}>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            {/* <button className={styles.recommentButton}>답글</button> */}
+            <button className={styles.commentLikeButton} onClick={handleCommentLike}>
               <LikeIcon color={comment.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} />
+              {comment.likeCount}
             </button>
           </div>
         </div>

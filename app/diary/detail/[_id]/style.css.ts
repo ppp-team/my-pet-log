@@ -180,6 +180,7 @@ const buttonCommon = {
   color: "var(--Gray81)",
   fontSize: "1.3rem",
 };
+
 export const recommentButton = style({
   padding: "0.4rem 1rem",
 
