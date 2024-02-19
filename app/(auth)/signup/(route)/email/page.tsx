@@ -1,6 +1,5 @@
 import * as styles from "./style.css";
 import SignUpForm from "@/app/(auth)/_components/SignForm/SignupForm";
-import React from "react";
 
 const page = () => {
   return (
