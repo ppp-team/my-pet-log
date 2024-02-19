@@ -14,7 +14,7 @@ const SelectMateDropdown = ({ onSelect }: SelectMateDropdownProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [selectedNickname, setSelectedNickname] = useState("");
-  const petId = 6; // 예시 petId, 실제 상황에 맞게 조정 필요
+  const petId = Number(localStorage.getItem("petId"));
 
   const { data: guardiansData } = useQuery({
     queryKey: ["guardiansForLogs", petId],

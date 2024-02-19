@@ -22,7 +22,7 @@ const buttonData = [
 const QuickButtons = () => {
   const { mutate: postLog } = usePostLogsMutation();
 
-  const petId = 6;
+  const petId = Number(localStorage.getItem("petId"));
   const managerId = "sohee11289110";
 
   const handleButtonClick = (typeName: string) => {

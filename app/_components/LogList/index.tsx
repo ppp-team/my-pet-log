@@ -14,7 +14,7 @@ const LogList: React.FC<LogListType> = ({ logsData: initialLogsData }) => {
   const [selectedLog, setSelectedLog] = useState<LogsType | null>(null);
   const [logsData, setLogsData] = useState(initialLogsData);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
-  const petId = 6;
+  const petId = Number(localStorage.getItem("petId"));
 
   const deleteLogMutation = useMutation({
     mutationFn: (logId: number) => deleteLog(petId, logId),

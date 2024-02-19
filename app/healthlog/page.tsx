@@ -10,8 +10,7 @@ import { useState } from "react";
 import * as styles from "./page.css";
 
 const Page = () => {
-  const petId = 6;
-
+  const petId = Number(localStorage.getItem("petId"));
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
   const [year, month, day] = selectedDate.split("-");

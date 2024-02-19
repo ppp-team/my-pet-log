@@ -20,8 +20,7 @@ const Page = () => {
   const [selectedGuardianId, setSelectedGuardianId] = useState<string>("");
   const topSubtypeRef = useRef<HTMLDivElement>(null);
   const bottomSubtypeRef = useRef<HTMLDivElement>(null);
-
-  const petId = 6;
+  const petId = Number(localStorage.getItem("petId"));
 
   const {
     handleSubmit,

@@ -12,7 +12,7 @@ interface LogDetailProps {
 }
 
 const LogDetail = ({ logId }: LogDetailProps) => {
-  const petId = 6;
+  const petId = Number(localStorage.getItem("petId"));
 
   const { data: logDetailData, error } = useQuery<LogDetailType, Error>({
     queryKey: ["LogDetail", petId, logId],

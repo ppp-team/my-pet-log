@@ -24,8 +24,7 @@ const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) =>
   const [isSwiping, setIsSwiping] = useState(false);
   const checkboxId = `checkbox-${logItem.logId}`;
   const logItemRef = useRef<HTMLDivElement>(null);
-
-  const petId = 6;
+  const petId = Number(localStorage.getItem("petId"));
 
   const handleCheckboxChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
