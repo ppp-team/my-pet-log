@@ -61,16 +61,17 @@ const Comment = ({ comment, diaryId, pageNum, contentNum }: CommentProps) => {
   });
 
   //댓글 좋아요
-  const postDiaryLikeMutation = useMutation({
+  const postCommentLikeMutation = useMutation({
     mutationFn: () => postCommentLike({ commentId: comment.commentId }),
   });
 
   const handleCommentLike = () => {
-    postDiaryLikeMutation.mutate();
+    postCommentLikeMutation.mutate();
+
     const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
     if (!newComments) return;
     newComments.pages[pageNum].content[contentNum].isCurrentUserLiked = !comment?.isCurrentUserLiked;
-    newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount - 1 : comment.likeCount + 1;
+    newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount + 1 : comment.likeCount - 1;
     queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
   };
 

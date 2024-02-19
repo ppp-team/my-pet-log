@@ -35,7 +35,8 @@ export const closeIcon = style({
 
 //폼
 export const formContainer = style({
-  padding: "5rem 1.5rem",
+  padding: "5rem 1.6rem",
+  width: "100%",
 
   display: "flex",
   flexDirection: "column",
@@ -98,6 +99,7 @@ export const label = style({
 
 export const input = style({
   padding: "1.3rem 1.8rem",
+  marginBottom: "0.8rem",
 
   borderRadius: "10px",
   border: "1.5px solid #e2e2e2",
@@ -136,6 +138,7 @@ export const inputWrapper = style({
 
 // 타입, 품종
 export const selectBox = style({
+  width: "100%",
   padding: "1.3rem 1.8rem",
   marginBottom: "0.8rem",
 
@@ -184,7 +187,6 @@ export const selectWrapper = style({
 
 export const selectBoxOpen = style({
   backgroundColor: "var(--White)",
-  // color: "var(--MainOrange)",
 });
 
 export const dropdownIcon = style({
@@ -197,21 +199,15 @@ export const dropdownIcon = style({
 export const dropdownIconOpen = style({
   transform: "rotate(180deg)",
 
-  fill: "var(--White)",
+  fill: "var(--MainOrange)",
 });
 
 export const optionsList = style({
   width: "100%",
+  padding: "0",
 
   display: "flex",
   flexDirection: "column",
-
-  position: "absolute",
-  top: "7.9rem",
-  left: "0",
-
-  padding: "0",
-  margin: "0",
 
   listStyle: "none",
 

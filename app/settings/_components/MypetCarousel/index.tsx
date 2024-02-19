@@ -27,6 +27,8 @@ const MyPetCarousel = () => {
   const petList = pets?.data ?? [];
   if (isLoading) return <div>Loading...</div>;
 
+  console.log("petList:", petList);
+
   return (
     <div>
       <div className={title}>마이펫 관리하기</div>

@@ -3,6 +3,20 @@
 import instance from "@/app/_api/axios";
 import { cookies } from "next/headers";
 
+export const postPet = async ({ formData }: { formData: FormData }) => {
+  try {
+    console.log("formData:", formData.get("petImage"));
+    const res = await instance.post(`/my/pets`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    // 응답 데이터 반환
+    return res.data;
+  } catch (error: any) {
+    console.error(error);
+    return null;
+  }
+};
 export const getPet = async (petId: number) => {
   try {
     const response = await instance.get(`/my/pets/${petId}`);
