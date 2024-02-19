@@ -2,15 +2,17 @@
 
 import TitleHeader from "@/app/_components/TitleHeader";
 import * as styles from "./page.css";
-import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 import { InvitationType } from "@/app/_types/invitaion/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getInvitations, postAcceptance, postRefusal } from "@/app/_api/invitation";
+import Image from "next/image";
+import { getImagePath } from "@/app/_utils/getPetImagePath";
+import EmptyRecivedInvitation from "@/app/settings/_components/EmptyRecivedInvitation";
 
 const Page = () => {
   const queryClient = useQueryClient();
 
-  const { data: invites, isLoading } = useQuery<InvitationType[]>({
+  const { data: invites } = useQuery<InvitationType[]>({
     queryKey: ["invites"],
     queryFn: () => getInvitations(),
   });
@@ -36,7 +38,7 @@ const Page = () => {
     refuseMutation.mutate(invitationId);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (invites?.length === 0) return <EmptyRecivedInvitation />;
 
   return (
     <>
@@ -44,12 +46,7 @@ const Page = () => {
       <main className={styles.container}>
         {invites?.map((invitation) => (
           <section key={invitation.invitationId} className={styles.list}>
-            <div
-              className={styles.profileImg}
-              style={{
-                backgroundImage: `url(${invitation.petImageUrl ?? NoProfileImage})`,
-              }}
-            />
+            <Image className={styles.profileImg} src={getImagePath(invitation.petImageUrl)} alt="pet image" width={40} height={40} />
             <div className={styles.infoContainer}>
               <div className={styles.text}>
                 <span className={styles.petname}>{invitation.petName}</span>
