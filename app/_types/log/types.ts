@@ -12,7 +12,6 @@ export interface LogsType {
 }
 
 export interface LogType {
-  // petId: number;
   type: string;
   subType: string | null;
   isCustomLocation: boolean;

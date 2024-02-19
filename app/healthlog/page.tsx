@@ -3,13 +3,10 @@
 import { getLogs } from "@/app/_api/log";
 import LogList from "@/app/_components/LogList";
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
-// import { currentPetAtom } from "@/app/_states/atom";
 import LogWriteButton from "@/app/healthlog/_components/LogWriteButton";
 import QuickButtons from "@/app/healthlog/_components/QuickButtons";
 import { useQuery } from "@tanstack/react-query";
-// import { useAtom } from "jotai";
 import { useState } from "react";
-// import { redirect } from "next/navigation";
 import * as styles from "./page.css";
 
 const Page = () => {
@@ -18,11 +15,6 @@ const Page = () => {
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
   const [year, month, day] = selectedDate.split("-");
-  // const [petId, setPetId] = useAtom(currentPetAtom);
-
-  // if (!petId) {
-  //   return redirect("/diary/select");
-  // }
 
   const { data: logsData } = useQuery({
     queryKey: ["Logs", petId, year, month, day],

@@ -29,6 +29,18 @@ export const postLogs = async (petId: number, logData: LogType) => {
   }
 };
 
+export const putLogs = async (petId: number, logId: number, logData: LogType) => {
+  try {
+    const response = await instance.post(`/pets/${petId}/logs/${logId}`, logData);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error: any) {
+    console.error(error.response ? error.response.data : error.message);
+    return [];
+  }
+};
+
 export const getLogDetail = async (petId: number, logId: number) => {
   try {
     const response = await instance.get(`/pets/${petId}/logs/${logId}`);
