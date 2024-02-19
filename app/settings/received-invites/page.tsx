@@ -40,7 +40,7 @@ const Page = () => {
 
   return (
     <>
-      <TitleHeader title="초대 받은 내역" redirectPath="/settings" />
+      <TitleHeader title="초대 받은 내역" />
       <main className={styles.container}>
         {invites?.map((invitation) => (
           <section key={invitation.invitationId} className={styles.list}>
