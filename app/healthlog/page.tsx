@@ -47,7 +47,7 @@ const Page = () => {
         <div className={styles.quickButtonsContainer}>
           <QuickButtons />
         </div>
-        <div>{logsData && <LogList logsData={logsData} />}</div>
+        <div>{logsData && <LogList logsData={logsData} petId={petId} />}</div>
         <LogWriteButton />
       </div>
     </>
