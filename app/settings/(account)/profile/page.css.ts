@@ -10,27 +10,25 @@ export const formContainer = style({
 export const profile = style({
   marginBottom: "5rem",
 
+  position: "relative",
+
   display: "flex",
   justifyContent: "center",
 });
 
 export const image = style({
-  width: "12.6rem",
-  height: "12.6rem",
-
   position: "relative",
+  overflow: "hidden",
+  objectFit: "cover",
 
   borderRadius: "50%",
-
-  backgroundSize: "cover",
-  backgroundPosition: "center",
 
   cursor: "pointer",
 });
 
 export const cameraIcon = style({
   position: "absolute",
-  right: "0",
+  transform: "translateX(5rem)",
   bottom: "0.5rem",
 
   padding: "0.4rem",
@@ -94,8 +92,7 @@ export const checkNicknameButton = style({
 
   position: "absolute",
   right: "0.9rem",
-  top: "50%",
-  transform: "translateY(-50%)",
+  top: "1rem",
 
   borderRadius: "5px",
 
@@ -130,4 +127,12 @@ export const button = style({
 
   color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
+});
+
+export const inputError = style({
+  border: "1.5px solid var(--Red)",
+});
+
+export const inputSuccess = style({
+  border: "1.5px solid var(--Green)",
 });
