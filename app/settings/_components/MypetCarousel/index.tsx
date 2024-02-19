@@ -27,6 +27,8 @@ const MyPetCarousel = () => {
   const petList = pets?.data ?? [];
   if (isLoading) return <div>Loading...</div>;
 
+  console.log("petList:", petList);
+
   return (
     <div>
       <div className={title}>마이펫 관리하기</div>
@@ -53,9 +55,11 @@ const MyPetCarousel = () => {
             </div>
           </SwiperSlide>
         ))}
-        <SwiperSlide className={petadd}>
-          <Image src={AddIcon} alt="add icon" width={36} height={36} />
-          <span>반려동물 추가</span>
+        <SwiperSlide>
+          <Link href="/settings/pet-register" className={petadd}>
+            <Image src={AddIcon} alt="add icon" width={36} height={36} />
+            <span>반려동물 추가</span>
+          </Link>
         </SwiperSlide>
       </Swiper>
     </div>

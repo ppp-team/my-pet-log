@@ -14,3 +14,45 @@ export const getMe = async () => {
     return null;
   }
 };
+
+export const postCheckNickname = async (nickname: string) => {
+  try {
+    const response = await instance.post("/users/check/nickname", {
+      nickname,
+    });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    if (error.response.status === 409) {
+      return false;
+    }
+    return false;
+  }
+};
+
+export interface postUserProfilePropType {
+  nickname: string;
+  profileImage?: string;
+}
+
+export const postUserProfile = async ({ nickname, profileImage }: postUserProfilePropType) => {
+  try {
+    const response = await instance.post(
+      "/users/profile",
+      {
+        profileImage,
+        nickname,
+      },
+      { headers: { "Content-Type": "multipart/form-data" } },
+    );
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    console.error(error.response.data);
+    return false;
+  }
+};

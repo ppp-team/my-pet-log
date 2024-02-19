@@ -5,7 +5,7 @@ import wrtieIconSrc from "@/public/icons/log-edit-icon.svg?url";
 
 const LogWriteButton = () => {
   return (
-    <Link href="/healthlog/edit">
+    <Link href="/healthlog/create">
       <button className={styles.button}>
         <Image src={wrtieIconSrc} width={24} height={24} alt={"입력 아이콘 이미지"} />
       </button>

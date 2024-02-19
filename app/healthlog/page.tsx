@@ -1,20 +1,26 @@
 "use client";
 
-import VanillaCalendar from "@/app/_components/VanillaCalendar";
+import { getLogs } from "@/app/_api/log";
 import LogList from "@/app/_components/LogList";
+import VanillaCalendar from "@/app/_components/VanillaCalendar";
 import LogWriteButton from "@/app/healthlog/_components/LogWriteButton";
 import QuickButtons from "@/app/healthlog/_components/QuickButtons";
-import { currentPetAtom } from "@/app/_states/atom";
-import { useAtom } from "jotai";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import * as styles from "./page.css";
 
 const Page = () => {
+  const petId = 6;
+
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
-  const [currentPet, setCurrentPet] = useAtom(currentPetAtom); //추후에 localStorage로 바꿔야할듯
+  const [year, month, day] = selectedDate.split("-");
 
-  // if (!currentPet) return redirect("/healthlog/select");
+  const { data: logsData } = useQuery({
+    queryKey: ["Logs", petId, year, month, day],
+    queryFn: () => getLogs(Number(petId), Number(year), Number(month), Number(day)),
+    enabled: !!petId,
+  });
 
   return (
     <>
@@ -32,7 +38,7 @@ const Page = () => {
               },
               actions: {
                 clickDay(event, self) {
-                  setSelectedDate(self.selectedDates.join(", "));
+                  setSelectedDate(self.selectedDates.join("-"));
                 },
               },
             }}
@@ -42,9 +48,7 @@ const Page = () => {
         <div className={styles.quickButtonsContainer}>
           <QuickButtons />
         </div>
-        <div>
-          <LogList />
-        </div>
+        <div>{logsData && <LogList logsData={logsData} />}</div>
         <LogWriteButton />
       </div>
     </>
