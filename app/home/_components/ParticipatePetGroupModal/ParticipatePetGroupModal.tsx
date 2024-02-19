@@ -22,6 +22,7 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
       </p>
       <div className={styles.formWrapper}>
         <InvitationForm
+          submit={() => {}}
           formTitle="초대 코드"
           inputPlaceholder={PLACEHOLDER.receivedInvitationCode}
           requiredErrorMessage={ERROR_MESSAGE.receivedInvitationCodeRequired}
