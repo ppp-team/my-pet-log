@@ -110,13 +110,13 @@ export const email = style([
   },
 ]);
 
-//슬추수
 export const length = style({
-  marginTop: "1rem",
+  position: "absolute",
+  top: "5.2rem",
+  right: 0,
 
   fontSize: "1.4rem",
   fontWeight: "600",
-  color: "var(--MainOrange)",
 });
 
 export const button = style({
@@ -135,4 +135,9 @@ export const inputError = style({
 
 export const inputSuccess = style({
   border: "1.5px solid var(--Green)",
+});
+
+export const nicknameText = style({
+  display: "flex",
+  justifyContent: "space-between",
 });

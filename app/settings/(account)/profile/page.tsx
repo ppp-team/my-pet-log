@@ -139,13 +139,15 @@ const Page = () => {
             },
           })}
         />
-        {errors.nickname && errors.nickname.type === "success" && <ConfirmMessage message={errors.nickname.message} />}
-        {errors.nickname && errors.nickname.type !== "success" && <ErrorMessage message={errors.nickname.message} />}
+        <div className={styles.nicknameText}>
+          {errors.nickname && errors.nickname.type === "success" && <ConfirmMessage message={errors.nickname.message} />}
+          {errors.nickname && errors.nickname.type !== "success" && <ErrorMessage message={errors.nickname.message} />}
+          <span className={styles.length}>{nicknameValue} / 10</span>
+        </div>
         <button className={styles.checkNicknameButton} type="button" onClick={handleCheckNickname}>
           중복확인
         </button>
       </div>
-      <span className={styles.length}>{nicknameValue} / 10</span>
       <button className={styles.button} type="submit">
         확인
       </button>
