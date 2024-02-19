@@ -3,7 +3,6 @@
 import Modal from "@/app/_components/Modal";
 import { container, memberlist, profileWrapper, profileImg, nickname, button } from "@/app/settings/(petmate)/petmate.css";
 import { useModal } from "@/app/_hooks/useModal";
-import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 import MemberList from "@/app/settings/_components/MemberList";
 import { useRouter } from "next/navigation";
 import { GuardiansType } from "@/app/_types/guardians/types";
@@ -11,6 +10,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { getGuardians, deleteGuardians } from "@/app/_api/guardians";
 import { UserType } from "@/app/_types/user/types";
 import { getMe } from "@/app/_api/users";
+import { getImagePath } from "@/app/_utils/getPersonImagePath";
+import Image from "next/image";
 
 const petId = 7;
 
@@ -63,11 +64,12 @@ const Page = () => {
     }
   };
 
+  if (!user) return <></>;
   return (
     <main className={container}>
       <section className={memberlist}>
         <div className={profileWrapper}>
-          <div className={profileImg} style={{ backgroundImage: `url(${user?.profilePath ?? NoProfileImage})` }} />
+          <Image className={profileImg} src={getImagePath(user.profilePath)} alt="profile icon" width={40} height={40} />
           <p className={nickname}>{user?.nickname} (나)</p>
         </div>
         <button className={button} onClick={() => (isLeader ? openModal1() : openModal2())}>

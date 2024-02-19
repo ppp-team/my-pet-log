@@ -4,11 +4,12 @@ import { container, memberlist, profileWrapper, profileImg, nickname, state, but
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import InviteModal from "@/app/settings/_components/InviteModal";
-import NoProfileImage from "@/public/images/person-profile-default.svg?url";
 import { postCancel, getMyInvitations } from "@/app/_api/invitation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { MyInvitationType } from "@/app/_types/invitaion/types";
+import { getImagePath } from "@/app/_utils/getPersonImagePath";
+import Image from "next/image";
 
 const Page = () => {
   const queryClient = useQueryClient();
@@ -45,16 +46,11 @@ const Page = () => {
         {invites.map((invite) => (
           <section key={invite.invitationId} className={memberlist}>
             <div className={profileWrapper}>
-              <div
-                className={profileImg}
-                style={{
-                  backgroundImage: `url(${invite.profilePath ?? NoProfileImage})`,
-                }}
-              />
+              <Image className={profileImg} src={getImagePath(invite.profilePath)} alt="profile icon" width={40} height={40} />
               <p className={nickname}>{invite.inviteeName}</p>
               <div className={state}>{invite.inviteStatus}</div>
             </div>
-            {invite.inviteStatus !== "거절" && (
+            {invite.inviteStatus !== "거절" ? (
               <button
                 className={button}
                 onClick={() => {
@@ -63,6 +59,15 @@ const Page = () => {
                 }}
               >
                 초대 취소
+              </button>
+            ) : (
+              <button
+                className={button}
+                onClick={() => {
+                  cancelMutation.mutate(invite.invitationId);
+                }}
+              >
+                확인
               </button>
             )}
           </section>

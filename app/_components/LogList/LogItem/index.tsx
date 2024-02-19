@@ -1,43 +1,43 @@
 "use client";
 
+import { LogsType } from "@/app/_types/log/types";
 import LogDetail from "@/app/healthlog/_components/LogDetail";
 import starIconSrc from "@/public/icons/important-star-icon.svg?url";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as styles from "./style.css";
-
-export type TasksType = {
-  logId: number;
-  isComplete: boolean;
-  isImportant: boolean;
-  taskName: string;
-  time: string;
-  manager: {
-    id: string;
-    nickname: string;
-    isCurrentUser: boolean;
-  };
-};
+import { checkLog } from "@/app/_api/log";
 
 interface LogItemProps {
-  taskItem: TasksType;
-  onDelete: () => void;
+  logItem: LogsType;
+  onDelete: (logItem: LogsType) => void;
 }
 
 const SWIPE_BUTTON_WIDTH = 132;
 
-const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) => {
-  const [isChecked, setIsChecked] = useState(taskItem.isComplete);
+const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) => {
+  const [isChecked, setIsChecked] = useState(logItem.isComplete);
   const [showDetails, setShowDetails] = useState(false);
   const [startX, setStartX] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
-  const checkboxId = `checkbox-${taskItem.logId}`;
+  const checkboxId = `checkbox-${logItem.logId}`;
+  const logItemRef = useRef<HTMLDivElement>(null);
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const petId = 6;
+
+  const handleCheckboxChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
-    setIsChecked(event.target.checked);
+    const newCheckedState = event.target.checked;
+    setIsChecked(newCheckedState);
+
+    try {
+      await checkLog(petId, logItem.logId);
+    } catch (error) {
+      console.error("Failed to update log check status", error);
+      setIsChecked(!newCheckedState);
+    }
   };
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -76,8 +76,21 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
     }
   };
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (logItemRef.current && !logItemRef.current.contains(event.target as Node)) {
+        setShowDetails(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [logItemRef]);
+
   return (
-    <div className={styles.swipeArea}>
+    <div className={styles.swipeArea} ref={logItemRef}>
       <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className={styles.container}>
         <li className={styles.listContainer} onClick={toggleDetails}>
           <div className={styles.leftPart}>
@@ -88,14 +101,14 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
 
             <div className={styles.taskAndTimeBox}>
               <div className={styles.checkStar}>
-                {taskItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt="중요 표시" />}
-                <span className={styles.taskName}>{taskItem.taskName}</span>
+                {logItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt="중요 표시" />}
+                <span className={styles.taskName}>{logItem.taskName}</span>
               </div>
-              <span className={styles.time}>{taskItem.time}</span>
+              <span className={styles.time}>{logItem.time}</span>
             </div>
           </div>
           <div className={styles.manager}>
-            <span>{taskItem.manager.nickname}</span>
+            <span>{logItem.manager.nickname}</span>
           </div>
         </li>
         {currentTranslate === -SWIPE_BUTTON_WIDTH && (
@@ -117,11 +130,11 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
               className={styles.deleteButton}
               onTouchEnd={(e) => {
                 e.stopPropagation();
-                onDelete();
+                onDelete(logItem);
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                onDelete();
+                onDelete(logItem);
               }}
             >
               삭제
@@ -132,7 +145,7 @@ const LogItem: React.FC<LogItemProps> = ({ taskItem, onDelete }: LogItemProps) =
 
       {showDetails && (
         <div className={styles.logDetailContainer}>
-          <LogDetail />
+          <LogDetail logId={logItem.logId} />
         </div>
       )}
     </div>

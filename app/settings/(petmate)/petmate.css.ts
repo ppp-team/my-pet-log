@@ -26,12 +26,8 @@ export const profileWrapper = style({
 });
 
 export const profileImg = style({
-  width: "4rem",
-  height: "4rem",
-
   borderRadius: "50%",
   border: "1px solid var(--MainOrange)",
-  backgroundSize: "contain",
 });
 
 export const nickname = style({
