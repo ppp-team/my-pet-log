@@ -121,7 +121,7 @@ export const length = style({
 
 export const button = style({
   padding: "1.3rem 0",
-  marginTop: "3.2rem",
+  marginTop: "2rem",
 
   borderRadius: "30px",
 
@@ -138,6 +138,8 @@ export const inputSuccess = style({
 });
 
 export const nicknameText = style({
+  height: "1.9rem",
+
   display: "flex",
   justifyContent: "space-between",
 });
