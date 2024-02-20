@@ -43,13 +43,9 @@ const LogList: React.FC<LogListPropsType> = ({ petId, logsData, selectedDate }) 
   return (
     <>
       <div>
-        <p className={styles.date}>{logsData.date}</p>
-        {logsData.logs && logsData.logs.length > 0 ? (
-          <ul>
-            {logsData.logs.map((logItem: LogsType) => (
-              <LogItem petId={petId} logItem={logItem} key={logItem.logId} onDelete={() => handleDelete(logItem)} />
-            ))}
-          </ul>
+        <p className={styles.date}>{logsData?.date}</p>
+        {logsData?.logs && logsData?.logs.length > 0 ? (
+          <ul>{logsData?.logs.map((logItem: LogsType) => <LogItem petId={petId} logItem={logItem} key={logItem.logId} onDelete={() => handleDelete(logItem)} />)}</ul>
         ) : (
           <EmptyHealthLog />
         )}
