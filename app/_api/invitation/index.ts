@@ -23,6 +23,7 @@ export const getMyInvitations = async () => {
     }
   } catch (error: any) {
     console.error(error.response.data);
+    return null;
   }
 };
 

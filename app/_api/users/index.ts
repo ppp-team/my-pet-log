@@ -25,10 +25,11 @@ export const postCheckNickname = async (nickname: string) => {
       return true;
     }
   } catch (error: any) {
-    if (error.response.status === 409) {
-      return false;
+    console.log(error.response);
+    if (error.response?.status === 409) {
+      throw new Error("이미 사용 중인 닉네임입니다.");
     }
-    return false;
+    throw error;
   }
 };
 
@@ -54,5 +55,35 @@ export const postUserProfile = async ({ nickname, profileImage }: postUserProfil
   } catch (error: any) {
     console.error(error.response.data);
     return false;
+  }
+};
+
+export const putUserProfile = async ({ formData }: { formData: FormData }) => {
+  try {
+    const response = await instance.put("/users/profile", formData, { headers: { "Content-Type": "multipart/form-data" } });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    console.error(error.response.data);
+    return null;
+  }
+};
+
+export const postCheckPassword = async (password: string) => {
+  try {
+    const response = await instance.post("/users/password/validation", {
+      password,
+    });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    if (error.response?.status === 400) {
+      throw new Error(error.response.data.message);
+    }
+    throw error;
   }
 };

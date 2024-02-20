@@ -10,27 +10,25 @@ export const formContainer = style({
 export const profile = style({
   marginBottom: "5rem",
 
+  position: "relative",
+
   display: "flex",
   justifyContent: "center",
 });
 
 export const image = style({
-  width: "12.6rem",
-  height: "12.6rem",
-
   position: "relative",
+  overflow: "hidden",
+  objectFit: "cover",
 
   borderRadius: "50%",
-
-  backgroundSize: "cover",
-  backgroundPosition: "center",
 
   cursor: "pointer",
 });
 
 export const cameraIcon = style({
   position: "absolute",
-  right: "0",
+  transform: "translateX(5rem)",
   bottom: "0.5rem",
 
   padding: "0.4rem",
@@ -94,8 +92,7 @@ export const checkNicknameButton = style({
 
   position: "absolute",
   right: "0.9rem",
-  top: "50%",
-  transform: "translateY(-50%)",
+  top: "1rem",
 
   borderRadius: "5px",
 
@@ -113,21 +110,36 @@ export const email = style([
   },
 ]);
 
-//슬추수
 export const length = style({
-  marginTop: "1rem",
+  position: "absolute",
+  top: "5.2rem",
+  right: 0,
 
   fontSize: "1.4rem",
   fontWeight: "600",
-  color: "var(--MainOrange)",
 });
 
 export const button = style({
   padding: "1.3rem 0",
-  marginTop: "2.4rem",
+  marginTop: "2rem",
 
   borderRadius: "30px",
 
   color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
+});
+
+export const inputError = style({
+  border: "1.5px solid var(--Red)",
+});
+
+export const inputSuccess = style({
+  border: "1.5px solid var(--Green)",
+});
+
+export const nicknameText = style({
+  height: "1.9rem",
+
+  display: "flex",
+  justifyContent: "space-between",
 });

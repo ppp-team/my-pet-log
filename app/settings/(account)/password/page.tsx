@@ -4,6 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { CURRENT_PASSWORD_RULES, ERROR_MESSAGE, NEW_PASSWORD_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import * as styles from "@/app/settings/(account)/password/page.css";
 import ErrorMessage from "@/app/_components/ErrorMessage";
+import { useMutation } from "@tanstack/react-query";
+import { postCheckPassword, putUserProfile } from "@/app/_api/users";
+import { showToast } from "@/app/_components/Toast";
 
 interface IFormInput {
   password: string;
@@ -21,10 +24,7 @@ const newPasswordCheckRules = (newPassword: string) => ({
 
 // 새 비밀번호와 새 비밀번호 확인이 같은 지 검증
 const validatePasswordMatch = (value: string, newPassword: string) => {
-  if (value !== newPassword) {
-    return ERROR_MESSAGE.confirmPasswordCheck;
-  }
-  return true;
+  return value === newPassword || ERROR_MESSAGE.confirmPasswordCheck;
 };
 
 const Page = () => {
@@ -33,10 +33,36 @@ const Page = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    setError,
   } = useForm<IFormInput>({ mode: "onTouched" });
-
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
   const newPassword = watch("newPassword");
+
+  const updatePasswordMutation = useMutation({
+    mutationFn: (formData: FormData) => putUserProfile({ formData }),
+    onSuccess: () => {
+      showToast("비밀번호가 변경 됐습니다!", true);
+    },
+    onError: () => {
+      showToast("등록 실패했습니다. 잠시 후 다시 시도해주세요.", false);
+    },
+  });
+
+  const validatePasswordMutation = useMutation({
+    mutationFn: (password: string) => postCheckPassword(password),
+    onSuccess: () => {
+      const formData = new FormData();
+
+      formData.append("password", newPassword);
+      updatePasswordMutation.mutate(formData);
+    },
+    onError: (error) => {
+      setError("password", { type: "duplicated", message: error.message });
+    },
+  });
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    validatePasswordMutation.mutate(data.password);
+  };
 
   return (
     <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
