@@ -26,6 +26,7 @@ const headerButtonBase = style({
 export const userProfileLink = style({
   display: "grid",
   alignItems: "center",
+  justifyItems: "flex-end",
   height: "100%",
 });
 

@@ -42,9 +42,9 @@ const MobilePetGroupDropdown = () => {
   });
 
   /**
-   * @type {dropdownMenuItemType} currentPetGroupId로 리스트에서 repStatus === "REPRESENTATIVE"인 currentPetGroup 추출하고 없으면 리스트 첫번째
+   * @type {dropdownMenuItemType} currentPetGroupId로 리스트에서 repStatus === "REPRESENTATIVE"인 currentPetGroup 추출하고 없으면 null
    */
-  const currentPetGroup: dropdownMenuItemType = parsedPetGroupList.find((petGroup) => petGroup.isSelected === true) ?? parsedPetGroupList[0];
+  const currentPetGroup: dropdownMenuItemType | null = parsedPetGroupList.find((petGroup) => petGroup.isSelected === true) ?? null;
 
   /**
    * @type {Array<dropdownMenuItemType>} currentPetGroup 제외하고 나머지 리스트 + 동물 관리 버튼
@@ -71,7 +71,7 @@ const MobilePetGroupDropdown = () => {
     id === SETTING_BUTTON.petId ? router.push(id) : handleEditPet(id);
   };
 
-  if (!currentPetGroup) return <></>;
+  if (!currentPetGroup) return <div></div>;
   return (
     <Dropdown placement="bottom-start">
       <DropdownTrigger>
