@@ -10,9 +10,12 @@ declare global {
 interface SearchLocationProps {
   appKey: string;
   onSelectPlace: (place: Place) => void;
+  selectedPlaceId?: number | null;
+  selectedPlacePosition?: { y: number; x: number } | null;
+  initialSubType?: string;
 }
 
-interface Place {
+export interface Place {
   y: number;
   x: number;
   place_name: string;
@@ -21,11 +24,11 @@ interface Place {
 
 type Status = "OK" | "ZERO_RESULT" | "ERROR";
 
-const SearchLocation = ({ appKey, onSelectPlace }: SearchLocationProps) => {
+const SearchLocation = ({ appKey, onSelectPlace, selectedPlaceId, selectedPlacePosition, initialSubType }: SearchLocationProps) => {
   const [inputText, setInputText] = useState<string>("");
+  const [map, setMap] = useState<any>(null);
 
   useEffect(() => {
-    // 카카오 맵 스크립트 로딩
     const script = document.createElement("script");
     script.async = true;
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&libraries=services&autoload=false`;
@@ -38,7 +41,8 @@ const SearchLocation = ({ appKey, onSelectPlace }: SearchLocationProps) => {
           center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
           level: 3,
         };
-        new window.kakao.maps.Map(container, options);
+        const initialMap = new window.kakao.maps.Map(container, options);
+        setMap(initialMap);
       });
     };
 
@@ -46,6 +50,17 @@ const SearchLocation = ({ appKey, onSelectPlace }: SearchLocationProps) => {
       document.head.removeChild(script);
     };
   }, [appKey]);
+
+  useEffect(() => {
+    if (selectedPlacePosition && map) {
+      const center = new window.kakao.maps.LatLng(selectedPlacePosition.y, selectedPlacePosition.x);
+      map.setCenter(center);
+      new window.kakao.maps.Marker({
+        map: map,
+        position: center,
+      });
+    }
+  }, [selectedPlacePosition, map]);
 
   const searchPlaces = () => {
     window.kakao.maps.load(() => {
@@ -85,7 +100,7 @@ const SearchLocation = ({ appKey, onSelectPlace }: SearchLocationProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.searchContainer}>
-        <input className={styles.inputWrapper} type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="장소를 검색해보세요" />
+        <input className={styles.inputWrapper} type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder={initialSubType || "장소를 검색해보세요"} />
         <button type="button" className={styles.searchButton} onClick={searchPlaces}>
           검색
         </button>

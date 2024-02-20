@@ -177,6 +177,7 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
                   setValue={setValue}
                   onLocationSelect={handleLocationSelect}
                   initialSubType={logDetailData?.subType}
+                  initialLocation={logDetailData?.location}
                 />
               )}
             </div>
