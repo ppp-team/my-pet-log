@@ -3,21 +3,22 @@
 import { NextPage } from "next";
 import * as styles from "./page.css";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FormEvent } from "react";
 import Image from "next/image";
-import userProfileDefaultImageSrc from "@/public/images/user-profile-default.svg?url";
+import userProfileDefaultNoCameraImageSrc from "@/public/icons/user-profile-default-no-camera.svg?url";
+import cameraIconSrc from "@/public/icons/camera.svg?url";
 import { ERROR_MESSAGE, NICKNAME_RULES, PLACEHOLDER } from "@/app/_constants/inputConstant";
 import removeSpaces from "@/app/_utils/removeSpaces";
 import { getNicknameHintState } from "@/app/_components/getNicknameHintState/getNicknameHintState";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getMe, postCheckNickname, postUserProfile, postUserProfilePropType } from "@/app/_api/users";
+import { getMe, postCheckNickname, postUserProfile } from "@/app/_api/users";
 import { UserType } from "@/app/_types/users/types";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/app/_components/Toast";
 
 interface IForm {
   nickname: string;
-  profileImage: string;
+  profileImage: File;
+  profileImagePreviewUrl: string;
   isNicknameConfirmed: boolean;
 }
 
@@ -69,10 +70,14 @@ const CreateUserProfilePage: NextPage = () => {
     },
   });
 
-  const onChangeProfileImage = (e: FormEvent<HTMLInputElement>) => {
-    const files = e.currentTarget.files;
-    if (!files) return;
-    setValue("profileImage", URL.createObjectURL(files[0]));
+  const onChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setValue("profileImage", file);
+      const profileImagePreviewUrl = URL.createObjectURL(file);
+      setValue("profileImagePreviewUrl", profileImagePreviewUrl);
+      return () => URL.revokeObjectURL(profileImagePreviewUrl);
+    }
   };
 
   const onClickCheckNickname = async () => {
@@ -122,14 +127,15 @@ const CreateUserProfilePage: NextPage = () => {
     <main className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <fieldset className={styles.userProfileImageContainer}>
-          <label htmlFor="profileImage" style={{ cursor: "pointer" }}>
+          <label className={styles.userProfileLabel} htmlFor="profileImage">
             <Image
-              className={`${styles.userProfileImageDefault} ${watch("profileImage")?.length >= 1 && styles.userProfileImage}`}
-              src={watch("profileImage")?.length >= 1 ? watch("profileImage") : userProfileDefaultImageSrc}
+              className={`${styles.userProfileImageDefault} ${watch("profileImagePreviewUrl") && styles.userProfileImage}`}
+              src={watch("profileImagePreviewUrl") ?? userProfileDefaultNoCameraImageSrc}
               alt="유저 프로필 이미지"
               width={126}
               height={124}
             />
+            <Image className={styles.cameraIcon} src={cameraIconSrc} alt="camera icon" width={40} height={40} />
           </label>
           <input
             id="profileImage"
