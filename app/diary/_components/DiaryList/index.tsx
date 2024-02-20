@@ -18,7 +18,7 @@ const DiaryList = ({ petId }: { petId: number }) => {
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
-  if (!data?.pages[0]) return <EmptyDiaryList />;
+  if (!data?.pages[0].content.length) return <EmptyDiaryList />;
 
   return (
     <div className={root}>
