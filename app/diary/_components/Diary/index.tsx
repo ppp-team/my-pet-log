@@ -1,7 +1,6 @@
 "use client";
 import { Diary as DiaryType, GetDiaryListResponse } from "@/app/_types/diary/type";
 import CommentIconURL from "@/public/icons/message.svg?url";
-import { InfiniteData } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./style.css";
@@ -26,11 +25,8 @@ export const Diary = ({ diary }: { diary: DiaryType }) => {
     </Link>
   );
 };
-interface a {
-  date: string;
-  diaries: DiaryType[];
-}
-export const Diaries = ({ data }: { data: a[] | undefined }) => {
+
+export const Diaries = ({ data }: { data: GetDiaryListResponse["content"] | undefined }) => {
   if (!data) return;
   return (
     <section className={styles.container}>

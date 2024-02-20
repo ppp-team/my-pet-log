@@ -1,20 +1,20 @@
 "use client";
 
-import { getDiary, postDiary, putDiary } from "@/app/_api/diary";
+import { getDiary, putDiary } from "@/app/_api/diary";
 import BackHeader from "@/app/_components/BackHeader";
-import DateInput from "@/app/diary/_components/DateInput";
 import ErrorMessage from "@/app/_components/ErrorMessage";
+import { showToast } from "@/app/_components/Toast";
+import { deletedImagesAtom, diaryImagesAtom } from "@/app/_states/atom";
+import * as styles from "@/app/diary/_components/CreateForm/style.css";
+import DateInput from "@/app/diary/_components/DateInput";
+import { ContentInput, TitleInput } from "@/app/diary/_components/FormInput";
 import ImageInput from "@/app/diary/_components/ImageInput";
 import VideoInput from "@/app/diary/_components/VideoInput";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useForm } from "react-hook-form";
-import * as styles from "@/app/diary/_components/CreateForm/style.css";
-import { showToast } from "@/app/_components/Toast";
 import { useAtom } from "jotai";
-import { deletedImagesAtom, diaryImagesAtom } from "@/app/_states/atom";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ContentInput, TitleInput } from "@/app/diary/_components/FormInput";
+import { useForm } from "react-hook-form";
 
 interface Diary {
   title: string;
@@ -36,11 +36,10 @@ export interface DiaryImagesType {
   path: string;
 }
 
-const EditForm = ({ petId }: { petId: number }) => {
+const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
   const [oldImages, setOldImages] = useState<DiaryImagesType[]>([]);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { _id: diaryId } = useParams();
   const { data: diary, isSuccess } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ diaryId }) });
 
   const putDiaryMutation = useMutation({

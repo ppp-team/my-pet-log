@@ -81,12 +81,12 @@ export interface GetDiaryListRequest {
 }
 
 export interface GetCommentsRequest extends GetDiaryListRequest {
-  diaryId: string | string[];
+  diaryId: number;
 }
 
 export interface GetDiaryRequest {
   petId: number;
-  diaryId: string | string[];
+  diaryId: number;
 }
 
 export interface GetDiaryResponse {
@@ -152,7 +152,7 @@ export interface PostDiaryRequest {
 }
 
 export interface PostCommentRequest {
-  diaryId: string | string[];
+  diaryId: number;
   content: string;
 }
 

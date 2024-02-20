@@ -23,7 +23,7 @@ import Link from "next/link";
 
 interface CommentProps {
   comment: Comment;
-  diaryId: string | string[];
+  diaryId: number;
   pageNum: number;
   contentNum: number;
   petId: number;
@@ -154,13 +154,12 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
 
 const PAGE_SIZE = 5;
 
-const DiaryDetail = ({ petId }: { petId: number }) => {
+const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const [commentValue, setCommentValue] = useState("");
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const queryClient = useQueryClient();
-  const { _id: diaryId } = useParams();
   const router = useRouter();
 
   //일기 상세 조회
@@ -222,7 +221,7 @@ const DiaryDetail = ({ petId }: { petId: number }) => {
     if (commentValue.trim() == "") return;
     postCommentMutation.mutate();
   };
-  if (!diary) return;
+  if (!diary) return <>없음</>;
 
   return (
     <>

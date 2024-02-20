@@ -1,6 +1,6 @@
 import * as styles from "@/app/diary/_components/CreateForm/style.css";
 import { FormInput } from "@/app/diary/_components/EditForm";
-import { UseFormRegister, UseFormSetError, UseFormStateProps, UseFormWatch } from "react-hook-form";
+import { UseFormRegister, UseFormWatch } from "react-hook-form";
 const MAX_LENGTH = { title: 15, content: 500 };
 
 interface InputProps {
