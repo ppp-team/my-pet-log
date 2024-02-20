@@ -23,7 +23,7 @@ const HomePage: NextPage = async () => {
   // 통신 완료 후 동물이 하나도 없을 경우
   if (pets && pets.data.length === 0) return redirect("/no-pet-group");
   // 통신 완료 후 메인 동물이 없을 경우
-  if (!currentPet) return redirect("/home/select");
+  if (!currentPet) return redirect("/home-select");
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

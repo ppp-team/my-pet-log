@@ -31,7 +31,7 @@ const ReceivedInvitationList = () => {
         queryClient.invalidateQueries({ queryKey: ["invites"] });
         const petName = invites?.find((item) => item.invitationId === data)?.petName;
         showToast(petName ? `${petName}의 집사가 되었어요!` : "집사가 되었어요!", true);
-        router.push("/home/select");
+        router.push("/home-select");
         /**
          * TODO 첫번째 펫그룹 참여 시 홈으로 보낼 것인지 or 따로 버튼을 만들지 논의 후 처리
          */
