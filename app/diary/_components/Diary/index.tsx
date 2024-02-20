@@ -7,7 +7,7 @@ import * as styles from "./style.css";
 
 export const Diary = ({ diary }: { diary: DiaryType }) => {
   return (
-    <Link href={`/diary/detail/${diary.diaryId}`}>
+    <Link href={`/diary/detail/${diary.diaryId}`} scroll={false}>
       <div className={styles.diaryWrapper}>
         <div className={styles.contents}>
           <div style={{ display: "flex", alignItems: "center" }}>

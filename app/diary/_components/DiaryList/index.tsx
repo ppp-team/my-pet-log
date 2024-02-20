@@ -22,7 +22,7 @@ const DiaryList = ({ petId }: { petId: number }) => {
 
   return (
     <div className={root}>
-      <Link href="/diary/search" style={{ position: "relative" }}>
+      <Link href="/diary/search" style={{ position: "relative" }} scroll={false}>
         <div className={search} />
         <Image src={SearchIconURL} alt="search icon" width={16} height={16} className={searchIcon} />
       </Link>
@@ -32,7 +32,7 @@ const DiaryList = ({ petId }: { petId: number }) => {
         </div>
       ))}
       <button onClick={() => fetchNextPage()}>더 불러오기</button>
-      <Link href={"/diary/create"}>
+      <Link href={"/diary/create"} scroll={false}>
         <Image src={WriteIconURL} alt="write icon" width={60} height={60} className={writeIcon} />
       </Link>
     </div>
