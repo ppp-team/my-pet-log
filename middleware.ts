@@ -12,6 +12,10 @@ export function middleware(request: NextRequest) {
     if (path === "/diary/select" && !petId) return;
     if (path === "/diary/select" && petId) return NextResponse.redirect(new URL("/diary", request.url));
     if (path.startsWith("/diary") && !petId) return NextResponse.redirect(new URL("/diary/select", request.url));
+
+    if (path === "/healthlog/select" && !petId) return;
+    if (path === "/healthlog/select" && petId) return NextResponse.redirect(new URL("/healthlog", request.url));
+    if (path.startsWith("/healthlog") && !petId) return NextResponse.redirect(new URL("/healthlog/select", request.url));
   } else {
     if (path === "/" || path.startsWith("/login") || path.startsWith("/signup")) {
     } else return NextResponse.redirect(new URL("/login", request.url));

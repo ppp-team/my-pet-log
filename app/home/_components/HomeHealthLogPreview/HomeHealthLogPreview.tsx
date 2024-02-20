@@ -9,8 +9,7 @@ const HomeHealthLogPreview = () => {
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
   const [year, month, day] = selectedDate.split("-");
-
-  const petId = 6;
+  const petId = Number(localStorage.getItem("petId"));
 
   const { data: logsData } = useQuery({
     queryKey: ["Logs", petId, year, month, day],
@@ -18,6 +17,6 @@ const HomeHealthLogPreview = () => {
     enabled: !!petId,
   });
 
-  return <div>{logsData && <LogList logsData={logsData} />}</div>;
+  return <div>{logsData && <LogList logsData={logsData} petId={petId} />}</div>;
 };
 export default HomeHealthLogPreview;

@@ -4,7 +4,7 @@ import logDetailIconSrc from "@/public/icons/log-detail-icon.svg?url";
 import logMemoIconSrc from "@/public/icons/log-edit-icon.svg?url";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import * as styles from "./style.css";
 
 interface LogDetailProps {
@@ -12,7 +12,8 @@ interface LogDetailProps {
 }
 
 const LogDetail = ({ logId }: LogDetailProps) => {
-  const petId = 6;
+  const petId = Number(localStorage.getItem("petId"));
+  const router = useRouter();
 
   const { data: logDetailData, error } = useQuery<LogDetailType, Error>({
     queryKey: ["LogDetail", petId, logId],
@@ -21,6 +22,10 @@ const LogDetail = ({ logId }: LogDetailProps) => {
   });
 
   if (error) return <div>Error loading log details: {error.message}</div>;
+
+  const handleEditButtonClick = () => {
+    router.push(`/healthlog/edit/${logId}`);
+  };
 
   return (
     <>
@@ -37,9 +42,10 @@ const LogDetail = ({ logId }: LogDetailProps) => {
             </div>
           )}
         </div>
-        <Link href="/healthlog/edit">
-          <button className={styles.editButton}>수정하기</button>
-        </Link>
+
+        <button className={styles.editButton} onClick={handleEditButtonClick}>
+          수정하기
+        </button>
       </div>
     </>
   );

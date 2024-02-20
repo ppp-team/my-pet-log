@@ -10,13 +10,14 @@ import * as styles from "./style.css";
 import { checkLog } from "@/app/_api/log";
 
 interface LogItemProps {
+  petId: number;
   logItem: LogsType;
   onDelete: (logItem: LogsType) => void;
 }
 
 const SWIPE_BUTTON_WIDTH = 132;
 
-const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) => {
+const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemProps) => {
   const [isChecked, setIsChecked] = useState(logItem.isComplete);
   const [showDetails, setShowDetails] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -24,8 +25,6 @@ const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) =>
   const [isSwiping, setIsSwiping] = useState(false);
   const checkboxId = `checkbox-${logItem.logId}`;
   const logItemRef = useRef<HTMLDivElement>(null);
-
-  const petId = 6;
 
   const handleCheckboxChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
@@ -113,7 +112,7 @@ const LogItem: React.FC<LogItemProps> = ({ logItem, onDelete }: LogItemProps) =>
         </li>
         {currentTranslate === -SWIPE_BUTTON_WIDTH && (
           <div className={styles.swipeButtons}>
-            <Link href="/healthlog/edit">
+            <Link href={`/healthlog/edit/${logItem.logId}`}>
               <button
                 className={styles.editButton}
                 onTouchEnd={(e) => {
