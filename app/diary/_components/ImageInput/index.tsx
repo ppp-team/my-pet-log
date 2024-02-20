@@ -6,8 +6,10 @@ import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { IoIosCloseCircle } from "react-icons/io";
 import { LuImageOff, LuImagePlus } from "react-icons/lu";
 import * as styles from "./style.css";
+import { useAtom } from "jotai";
+import { diaryImagesAtom } from "@/app/_states/atom";
 
-interface ImagesType {
+export interface ImagesType {
   name: string;
   file: File;
   url: string;
@@ -20,7 +22,7 @@ export interface InputProps {
 }
 
 const ImageInput = ({ register, setValue }: InputProps) => {
-  const [images, setImages] = useState<ImagesType[]>([]);
+  const [images, setImages] = useAtom(diaryImagesAtom);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +41,7 @@ const ImageInput = ({ register, setValue }: InputProps) => {
 
   const deleteImage = (name: string) => {
     setImages((prev) => prev.filter((v) => v.name !== name));
-    setValue("image", null);
+    setValue("images", null);
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -60,16 +62,16 @@ const ImageInput = ({ register, setValue }: InputProps) => {
         <label className={styles.label}>이미지</label>
         <div className={styles.container}>
           <input
-            id="image"
+            id="images"
             style={{ display: "none" }}
             type="file"
             multiple
             accept="image/*"
-            {...register("image")}
+            {...register("images")}
             onChange={handleImageChange}
             disabled={images.length >= MAX_IMAGES}
-          />{" "}
-          <label htmlFor="image" className={`${styles.input} ${images.length >= MAX_IMAGES && styles.disabledInput}`}>
+          />
+          <label htmlFor="images" className={`${styles.input} ${images.length >= MAX_IMAGES && styles.disabledInput}`}>
             {images.length >= MAX_IMAGES ? <LuImageOff className={styles.addIcon} /> : <LuImagePlus className={styles.addIcon} />}
           </label>
           <DragDropContext onDragEnd={onDragEnd}>

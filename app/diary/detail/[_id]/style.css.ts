@@ -46,6 +46,7 @@ export const image = style({
   border: "1px solid var(--GrayB5)",
 
   backgroundSize: "cover",
+  backgroundPosition: "center",
 });
 
 export const profile = style({
@@ -82,6 +83,9 @@ export const profileImage = style({
 
   border: "1px solid var(--MainOrange)",
   borderRadius: "50%",
+
+  backgroundSize: "cover",
+  backgroundPosition: "center",
 });
 
 export const content = style({
@@ -144,6 +148,31 @@ export const commentContent = style({
   wordBreak: "break-all",
 });
 
+export const commentTextarea = style([
+  commentContent,
+  {
+    width: "100%",
+
+    padding: "0.8rem 1rem",
+
+    borderRadius: "10px",
+    border: "1.5px solid var(--GrayE2)",
+
+    ":focus": {
+      outline: "none",
+      border: "1px solid orange",
+    },
+  },
+]);
+
+export const commentEditButton = style({
+  color: "var(--GrayA4)",
+  fontSize: " 1.3rem",
+  textDecorationLine: "underline",
+
+  marginRight: "0.8rem",
+});
+
 const buttonCommon = {
   borderRadius: "5px",
   border: "1px solid var(--GrayE2)",
@@ -151,6 +180,7 @@ const buttonCommon = {
   color: "var(--Gray81)",
   fontSize: "1.3rem",
 };
+
 export const recommentButton = style({
   padding: "0.4rem 1rem",
 
@@ -253,3 +283,8 @@ export const commentKebab = style([
     right: "0",
   },
 ]);
+
+export const commentEditForm = style({
+  display: "flex",
+  flexDirection: "column",
+});

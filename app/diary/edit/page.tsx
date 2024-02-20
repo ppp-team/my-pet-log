@@ -1,17 +1,43 @@
 "use client";
 
+import { postDiary } from "@/app/_api/diary";
+import BackHeader from "@/app/_components/BackHeader";
 import DateInput from "@/app/_components/DateInput";
+import ErrorMessage from "@/app/_components/ErrorMessage";
 import ImageInput from "@/app/diary/_components/ImageInput";
 import VideoInput from "@/app/diary/_components/VideoInput";
-import { FieldValues, UseFormRegister, useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
-import BackHeader from "@/app/_components/BackHeader";
-import ErrorMessage from "@/app/_components/ErrorMessage";
-import { postDiary } from "@/app/_api/diary";
+import { showToast } from "@/app/_components/Toast";
+import { useAtom } from "jotai";
+import { diaryImagesAtom } from "@/app/_states/atom";
+
+interface Diary {
+  title: string;
+  content: string;
+  date: string;
+}
 
 const MAX_LENGTH = { title: 15, content: 500 };
 
+const petId = 2;
+
 const EditPage = () => {
+  const queryClient = useQueryClient();
+  const postDiaryMutation = useMutation({
+    mutationFn: (formData: FormData) => postDiary({ formData }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
+      router.push("/diary");
+      setDiaryImages([]);
+    },
+    onError: () => {
+      showToast("일기 생성에 실패했습니다.", false);
+    },
+  });
+
   const {
     register,
     formState: { errors },
@@ -21,6 +47,10 @@ const EditPage = () => {
     handleSubmit,
   } = useForm({ mode: "onChange" });
 
+  const [diaryImages, setDiaryImages] = useAtom(diaryImagesAtom);
+
+  const router = useRouter();
+
   return (
     <>
       <BackHeader title="육아일기 글작성" />
@@ -28,13 +58,21 @@ const EditPage = () => {
         <form
           className={styles.form}
           onSubmit={handleSubmit(async (data) => {
-            const request = {
+            const formData = new FormData();
+
+            const request: Diary = {
               title: data.title,
               content: data.content,
               date: data.date,
             };
-            const res = await postDiary({ petId: 2, data: request });
-            console.log("res", res);
+            const blob = new Blob([JSON.stringify(request)], { type: "application/json" });
+            formData.append("request", blob);
+
+            if (diaryImages) {
+              diaryImages.forEach((v) => formData.append("images", v.file));
+            }
+
+            postDiaryMutation.mutate(formData);
           })}
         >
           <div className={styles.inputWrapper}>
