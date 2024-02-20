@@ -50,7 +50,7 @@ const ReceivedInvitationList = () => {
     onSuccess: (data) => {
       if (data) {
         queryClient.invalidateQueries({ queryKey: ["invites"] });
-        showToast("초대를 거절했습니다.", true);
+        showToast("초대가 거절되었습니다.", true);
       } else {
         showToast("초대 거절에 실패했습니다. 잠시 후 다시 시도해주세요.", false);
       }
