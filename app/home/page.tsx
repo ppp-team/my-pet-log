@@ -1,12 +1,12 @@
-import { NextPage } from "next";
 import * as styles from "./page.css";
 import HomePetProfile from "@/app/home/_components/HomePetProfile/HomePetProfile";
 import HomeHealthLogPreview from "@/app/home/_components/HomeHealthLogPreview/HomeHealthLogPreview";
-import { UserType } from "../_types/users/types";
-import { getMe } from "../_api/users";
+import { NextPage } from "next";
+import { UserType } from "@/app/_types/users/types";
+import { getMe } from "@/app/_api/users";
 import { redirect } from "next/navigation";
-import { getPets } from "../_api/pets";
-import { PetType, PetsType } from "../_types/petGroup/types";
+import { getPets } from "@/app/_api/pets";
+import { PetType, PetsType } from "@/app/_types/petGroup/types";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 
 const HomePage: NextPage = async () => {
