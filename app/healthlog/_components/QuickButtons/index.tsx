@@ -1,4 +1,6 @@
+import { getMe } from "@/app/_api/users";
 import { usePostLogsMutation } from "@/app/_hooks/usePostLogMutation";
+import { UserType } from "@/app/_types/user/types";
 import getKRDateTime from "@/app/_utils/getKRDateTime";
 import feedIconSrc from "@/public/icons/feed-icon.svg?url";
 import groomingIconSrc from "@/public/icons/grooming-icon.svg?url";
@@ -6,6 +8,7 @@ import healthIconSrc from "@/public/icons/health-icon.svg?url";
 import treatIconSrc from "@/public/icons/treat-icon.svg?url";
 import walkIconSrc from "@/public/icons/walk-icon.svg?url";
 import writeIconSrc from "@/public/icons/write-pencil-icon.svg?url";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./style.css";
@@ -21,9 +24,12 @@ const buttonData = [
 
 const QuickButtons = () => {
   const { mutate: postLog } = usePostLogsMutation();
+  const { data: user } = useQuery<UserType>({
+    queryKey: ["me"],
+    queryFn: () => getMe(),
+  });
 
-  const petId = 6;
-  const managerId = "sohee11289110";
+  const petId = Number(localStorage.getItem("petId"));
 
   const handleButtonClick = (typeName: string) => {
     const formattedDateTime = getKRDateTime();
@@ -41,7 +47,7 @@ const QuickButtons = () => {
         isComplete: true,
         isImportant: false,
         memo: null,
-        managerId: managerId,
+        managerId: String(user?.id),
       },
       date: { year, month, day },
     };

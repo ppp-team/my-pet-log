@@ -68,7 +68,7 @@ export const profileImg = style({
 
   borderRadius: "50%",
   border: "2px solid var(--MainOrange)",
-  backgroundSize: "contain",
+  objectFit: "cover",
 });
 
 export const petname = style({

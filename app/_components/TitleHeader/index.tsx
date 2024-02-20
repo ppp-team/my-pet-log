@@ -6,17 +6,16 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface TitleHeaderProps {
-  title: string; // 제목
-  redirectPath: string; // x 아이콘 클릭 시 갈 경로
+  title: string;
 }
 
-const TitleHeader = ({ title, redirectPath }: TitleHeaderProps) => {
+const TitleHeader = ({ title }: TitleHeaderProps) => {
   const router = useRouter();
 
   return (
     <header className={styles.header}>
       {title}
-      <div className={styles.closeIcon} onClick={() => router.push(redirectPath)}>
+      <div className={styles.closeIcon} onClick={() => router.back()}>
         <Image src={CloseIcon} alt="close icon" width={25} height={25} />
       </div>
     </header>

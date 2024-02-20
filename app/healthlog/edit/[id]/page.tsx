@@ -1,13 +1,16 @@
 "use client";
 
-import { postLogs } from "@/app/_api/log";
+import { getLogDetail, putLogs } from "@/app/_api/log";
 import BackHeader from "@/app/_components/BackHeader";
 import DateInput from "@/app/_components/DateInput";
+import { LogDetailType } from "@/app/_types/log/types";
 import convertTime12to24 from "@/app/_utils/convertTime12to24";
 import SelectMateDropdown from "@/app/healthlog/_components/SelectMateDropdown";
 import SubtypeDetail from "@/app/healthlog/_components/SubtypeDetail";
 import { buttonTypes } from "@/public/data/buttonTypes";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
+import { useQuery } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as styles from "./page.css";
@@ -21,7 +24,16 @@ const Page = () => {
   const topSubtypeRef = useRef<HTMLDivElement>(null);
   const bottomSubtypeRef = useRef<HTMLDivElement>(null);
 
-  const petId = 6;
+  const pathname = usePathname();
+  const segments = pathname.split("/");
+  const logId = Number(segments[segments.length - 1]);
+  const petId = Number(localStorage.getItem("petId"));
+
+  const { data: logDetailData, error } = useQuery<LogDetailType, Error>({
+    queryKey: ["LogDetail", petId, logId],
+    queryFn: () => getLogDetail(Number(petId), Number(logId)),
+    enabled: !!petId,
+  });
 
   const {
     handleSubmit,
@@ -70,9 +82,20 @@ const Page = () => {
       managerId: selectedGuardianId,
     };
 
-    console.log(logData);
-    postLogs(petId, logData);
+    console.log(petId, logId, logData);
+    putLogs(petId, logId, logData);
   };
+
+  useEffect(() => {
+    if (logDetailData) {
+      setValue("date", logDetailData.date);
+      setValue("time", logDetailData.time);
+      setValue("type", logDetailData.type);
+      setValue("subType", logDetailData.subType);
+      setValue("memo", logDetailData.memo);
+      setValue("isImportant", logDetailData.isImportant);
+    }
+  }, [logDetailData, setValue]);
 
   useEffect(() => {
     setValue("memo", "");
@@ -103,6 +126,8 @@ const Page = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [activeButtonGroup]);
+
+  if (error) return <div>Error occurred!</div>;
 
   return (
     <>

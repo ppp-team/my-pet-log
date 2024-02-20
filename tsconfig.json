@@ -15,15 +15,15 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next",
-      },
+        "name": "next"
+      }
     ],
     "paths": {
       "@/*": ["./*"],
-      "@nextui-org/react": ["./node_modules/@nextui-org/react/dist/index.d.ts"],
+      "@nextui-org/react": ["./node_modules/@nextui-org/react/dist/index.d.ts"]
     },
-    "typeRoots": ["./node_modules/@types", "./custom-typings"],
+    "typeRoots": ["./node_modules/@types", "./custom-typings"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 "use server";
 
 import instance from "@/app/_api/axios";
-import { LogType } from "@/app/_types/log/types";
+import { PostLogType } from "@/app/_types/log/types";
 
 export const getLogs = async (petId: number, year: number, month: number, day: number) => {
   try {
@@ -17,7 +17,7 @@ export const getLogs = async (petId: number, year: number, month: number, day: n
   }
 };
 
-export const postLogs = async (petId: number, logData: LogType) => {
+export const postLogs = async (petId: number, logData: PostLogType) => {
   try {
     const response = await instance.post(`/pets/${petId}/logs`, logData);
     if (response.status === 200) {
@@ -29,9 +29,9 @@ export const postLogs = async (petId: number, logData: LogType) => {
   }
 };
 
-export const putLogs = async (petId: number, logId: number, logData: LogType) => {
+export const putLogs = async (petId: number, logId: number, logData: PostLogType) => {
   try {
-    const response = await instance.post(`/pets/${petId}/logs/${logId}`, logData);
+    const response = await instance.put(`/pets/${petId}/logs/${logId}`, logData);
     if (response.status === 200) {
       return response.data;
     }

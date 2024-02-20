@@ -23,6 +23,7 @@ export const getMyInvitations = async () => {
     }
   } catch (error: any) {
     console.error(error.response.data);
+    return null;
   }
 };
 
@@ -33,7 +34,7 @@ export const postAcceptance = async (invitationId: number) => {
     });
 
     if (response.status === 200) {
-      return true;
+      return invitationId;
     }
   } catch (error: any) {
     console.error(error.response.data);
@@ -65,5 +66,19 @@ export const postCancel = async (invitationId: number) => {
     }
   } catch (error: any) {
     console.error(error.response.data);
+  }
+};
+
+export const postRegister = async (inviteCode: string) => {
+  try {
+    const response = await instance.post("/my/invitations/register", {
+      inviteCode,
+    });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    return false;
   }
 };

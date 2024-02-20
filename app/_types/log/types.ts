@@ -1,3 +1,10 @@
+export interface GetLogsListType {
+  logsData: {
+    date: string;
+    logs: LogsType[];
+  };
+}
+
 export interface LogsType {
   logId: number;
   taskName: string;
@@ -9,9 +16,29 @@ export interface LogsType {
     nickname: string;
     isCurrentUser: boolean;
   };
+  detail: {
+    type: string;
+    subType: string;
+    memo: string | null;
+  };
 }
 
-export interface LogType {
+export interface LogDetailType {
+  logId: number;
+  date: string;
+  time: string;
+  managerId: string;
+  type: string;
+  subType: string;
+  memo: string | null;
+  isImportant: boolean;
+  location?: {
+    isCustomLocation: boolean;
+    kakaoLocationId: number | null;
+  };
+}
+
+export interface PostLogType {
   type: string;
   subType: string | null;
   isCustomLocation: boolean;
@@ -21,18 +48,4 @@ export interface LogType {
   isImportant: boolean;
   memo: string | null;
   managerId: string;
-}
-
-export interface LogListType {
-  logsData: {
-    date: string;
-    logs: LogsType[];
-  };
-}
-
-export interface LogDetailType {
-  logId: number;
-  type: string;
-  subType: string;
-  memo: string;
 }

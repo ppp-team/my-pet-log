@@ -10,6 +10,7 @@ import { buttonTypes } from "@/public/data/buttonTypes";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import * as styles from "./page.css";
 
 const Page = () => {
@@ -20,8 +21,8 @@ const Page = () => {
   const [selectedGuardianId, setSelectedGuardianId] = useState<string>("");
   const topSubtypeRef = useRef<HTMLDivElement>(null);
   const bottomSubtypeRef = useRef<HTMLDivElement>(null);
-
-  const petId = 6;
+  const petId = Number(localStorage.getItem("petId"));
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -69,9 +70,13 @@ const Page = () => {
       memo: data.memo,
       managerId: selectedGuardianId,
     };
-
-    console.log(logData);
-    postLogs(petId, logData);
+    try {
+      console.log(logData);
+      postLogs(petId, logData);
+      router.push("/healthlog");
+    } catch (error) {
+      console.error("로그 등록 실패:", error);
+    }
   };
 
   useEffect(() => {

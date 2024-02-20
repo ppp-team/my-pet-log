@@ -11,13 +11,17 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
   return (
     <section>
       <nav>
-        <TitleHeader title="나의 프로필" redirectPath="/settings" />
+        <TitleHeader title="나의 프로필" />
         <ul className={styles.navList}>
           <li className={`${pathname === "/settings/profile" ? styles.active : styles.noActive}`}>
-            <Link href="/settings/profile">프로필 설정</Link>
+            <Link href="/settings/profile" replace>
+              프로필 설정
+            </Link>
           </li>
           <li className={`${pathname === "/settings/password" ? styles.active : styles.noActive}`}>
-            <Link href="/settings/password">비밀번호 변경</Link>
+            <Link href="/settings/password" replace>
+              비밀번호 변경
+            </Link>
           </li>
         </ul>
       </nav>
