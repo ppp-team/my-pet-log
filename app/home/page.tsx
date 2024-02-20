@@ -1,28 +1,18 @@
-"use client";
-
 import { NextPage } from "next";
 import * as styles from "./page.css";
 import HomePetProfile from "@/app/home/_components/HomePetProfile/HomePetProfile";
 import HomeHealthLogPreview from "@/app/home/_components/HomeHealthLogPreview/HomeHealthLogPreview";
-import { useQuery } from "@tanstack/react-query";
 import { UserType } from "../_types/users/types";
 import { getMe } from "../_api/users";
 import { redirect } from "next/navigation";
 import { getPets } from "../_api/pets";
 import { PetType, PetsType } from "../_types/petGroup/types";
+import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 
-const HomePage: NextPage = () => {
-  const { data: user } = useQuery<UserType>({
-    queryKey: ["me"],
-    queryFn: () => getMe(),
-  });
-
-  const { data: pets } = useQuery<PetsType>({
-    queryKey: ["pets"],
-    queryFn: () => getPets(),
-    enabled: !!user,
-  });
-
+const HomePage: NextPage = async () => {
+  const queryClient = new QueryClient();
+  const user = await queryClient.fetchQuery<UserType>({ queryKey: ["me"], queryFn: () => getMe() });
+  const pets = await queryClient.fetchQuery<PetsType>({ queryKey: ["pets"], queryFn: () => getPets() });
   const currentPet: PetType | null = pets?.data ? pets.data.find((pet) => pet.repStatus === "REPRESENTATIVE") ?? null : null;
 
   // 통신 완료 후 유저 프로필이 없을 경우
@@ -33,10 +23,12 @@ const HomePage: NextPage = () => {
   if (!currentPet) return redirect("/home/select");
 
   return (
-    <main className={styles.container}>
-      <HomePetProfile />
-      <HomeHealthLogPreview />
-    </main>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <main className={styles.container}>
+        <HomePetProfile />
+        <HomeHealthLogPreview />
+      </main>
+    </HydrationBoundary>
   );
 };
 export default HomePage;
