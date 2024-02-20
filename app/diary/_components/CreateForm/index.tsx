@@ -2,28 +2,25 @@
 
 import { postDiary } from "@/app/_api/diary";
 import BackHeader from "@/app/_components/BackHeader";
+import { showToast } from "@/app/_components/Toast";
+import { diaryImagesAtom } from "@/app/_states/atom";
+import { getPrettyToday } from "@/app/_utils/getPrettyToday";
 import DateInput from "@/app/diary/_components/DateInput";
-import ErrorMessage from "@/app/_components/ErrorMessage";
+import { FormInput } from "@/app/diary/_components/EditForm";
+import { ContentInput, TitleInput } from "@/app/diary/_components/FormInput";
 import ImageInput from "@/app/diary/_components/ImageInput";
 import VideoInput from "@/app/diary/_components/VideoInput";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
-import { showToast } from "@/app/_components/Toast";
-import { useAtom } from "jotai";
-import { diaryImagesAtom } from "@/app/_states/atom";
-import { FormInput } from "@/app/diary/_components/EditForm";
-import { getPrettyToday } from "@/app/_utils/getPrettyToday";
-import { ContentInput, TitleInput } from "@/app/diary/_components/FormInput";
 
 interface Diary {
   title: string;
   content: string;
   date: string;
 }
-
-const MAX_LENGTH = { title: 15, content: 500 };
 
 const CreateForm = ({ petId }: { petId: number }) => {
   const queryClient = useQueryClient();
@@ -76,18 +73,12 @@ const CreateForm = ({ petId }: { petId: number }) => {
             postDiaryMutation.mutate(formData);
           })}
         >
-          <TitleInput register={register} watch={watch} />
-          {errors.title && <ErrorMessage message={errors.title.message?.toString()} />}
-          {errors.title && <ErrorMessage message={errors.title.message?.toString()} />}
-
+          <TitleInput register={register} watch={watch} errors={errors} />
           <DateInput register={register} setValue={setValue} getValue={getValues} />
           <ImageInput register={register} setValue={setValue} />
           <VideoInput register={register} setValue={setValue} />
+          <ContentInput register={register} watch={watch} errors={errors} />
 
-          <div className={styles.inputWrapper}>
-            <ContentInput register={register} watch={watch} />
-            {errors.content && <ErrorMessage message={errors.content.message?.toString()} />}
-          </div>
           <button className={styles.button}>작성하기</button>
         </form>
       </div>

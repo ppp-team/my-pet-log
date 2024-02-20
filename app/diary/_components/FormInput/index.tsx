@@ -1,13 +1,17 @@
+import ErrorMessage from "@/app/_components/ErrorMessage";
 import * as styles from "@/app/diary/_components/CreateForm/style.css";
 import { FormInput } from "@/app/diary/_components/EditForm";
-import { UseFormRegister, UseFormWatch } from "react-hook-form";
-const MAX_LENGTH = { title: 15, content: 500 };
+import { FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form";
 
 interface InputProps {
   register: UseFormRegister<FormInput>;
   watch: UseFormWatch<FormInput>;
+  errors: FieldErrors<FormInput>;
 }
-export const TitleInput = ({ register, watch }: InputProps) => {
+
+export const MAX_LENGTH = { title: 15, content: 500 };
+
+export const TitleInput = ({ register, watch, errors }: InputProps) => {
   return (
     <div className={styles.inputWrapper}>
       <label htmlFor="title" className={styles.label}>
@@ -18,18 +22,19 @@ export const TitleInput = ({ register, watch }: InputProps) => {
         id="title"
         className={styles.input}
       />
-      {
+      <div className={styles.hintContainer}>
+        <div>{errors.title && <ErrorMessage message={errors.title.message?.toString()} />}</div>
         <p className={styles.p}>
           {watch("title")?.length ?? "0"}/ {MAX_LENGTH.title}
         </p>
-      }
+      </div>
     </div>
   );
 };
 
-export const ContentInput = ({ register, watch }: InputProps) => {
+export const ContentInput = ({ register, watch, errors }: InputProps) => {
   return (
-    <>
+    <div className={styles.inputWrapper}>
       <label htmlFor="content" className={styles.label}>
         내용 *
       </label>
@@ -42,11 +47,12 @@ export const ContentInput = ({ register, watch }: InputProps) => {
         className={styles.input}
         style={{ height: "10rem" }}
       />
-      {
+      <div className={styles.hintContainer}>
+        <div>{errors.content && <ErrorMessage message={errors.content.message?.toString()} />}</div>
         <p className={styles.p}>
           {watch("content")?.length ?? "0"}/ {MAX_LENGTH.content}
         </p>
-      }
-    </>
+      </div>
+    </div>
   );
 };

@@ -2,7 +2,6 @@
 
 import { getDiary, putDiary } from "@/app/_api/diary";
 import BackHeader from "@/app/_components/BackHeader";
-import ErrorMessage from "@/app/_components/ErrorMessage";
 import { showToast } from "@/app/_components/Toast";
 import { deletedImagesAtom, diaryImagesAtom } from "@/app/_states/atom";
 import * as styles from "@/app/diary/_components/CreateForm/style.css";
@@ -110,17 +109,11 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
             putDiaryMutation.mutate(formData);
           })}
         >
-          <TitleInput register={register} watch={watch} />
-          {errors.title && <ErrorMessage message={errors.title.message?.toString()} />}
-
+          <TitleInput register={register} watch={watch} errors={errors} />
           <DateInput register={register} setValue={setValue} getValue={getValues} />
           <ImageInput register={register} setValue={setValue} oldImages={oldImages} />
           <VideoInput register={register} setValue={setValue} />
-
-          <div className={styles.inputWrapper}>
-            <ContentInput register={register} watch={watch} />
-            {errors.content && <ErrorMessage message={errors.content.message?.toString()} />}
-          </div>
+          <ContentInput register={register} watch={watch} errors={errors} />
 
           <button className={styles.button}>작성하기</button>
         </form>
