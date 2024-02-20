@@ -8,6 +8,9 @@ import { redirect } from "next/navigation";
 import { getPets } from "@/app/_api/pets";
 import { PetType, PetsType } from "@/app/_types/petGroup/types";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
+import { cookies } from "next/headers";
+
+const petId = Number(cookies().get("petId")?.value);
 
 const HomePage: NextPage = async () => {
   const queryClient = new QueryClient();
@@ -17,7 +20,7 @@ const HomePage: NextPage = async () => {
 
   // 통신 완료 후 유저 프로필이 없을 경우
   if (user && !user.nickname) return redirect("/create/user-profile");
-  // 통신 완료 후 동물이 하나이 없을 경우
+  // 통신 완료 후 동물이 하나도 없을 경우
   if (pets && pets.data.length === 0) return redirect("/no-pet-group");
   // 통신 완료 후 메인 동물이 없을 경우
   if (!currentPet) return redirect("/home/select");
@@ -26,7 +29,7 @@ const HomePage: NextPage = async () => {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main className={styles.container}>
         <HomePetProfile />
-        <HomeHealthLogPreview />
+        <HomeHealthLogPreview petId={petId} />
       </main>
     </HydrationBoundary>
   );
