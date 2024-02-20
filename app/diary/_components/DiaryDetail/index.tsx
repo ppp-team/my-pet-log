@@ -20,6 +20,7 @@ import { deleteComment, deleteDiary, getComments, getDiary, postComment, postCom
 import { Comment, GetCommentsResponse } from "@/app/_types/diary/type";
 import { showToast } from "@/app/_components/Toast";
 import Link from "next/link";
+import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
 
 interface CommentProps {
   comment: Comment;
@@ -152,8 +153,6 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
   );
 };
 
-const PAGE_SIZE = 5;
-
 const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isKebabOpen, setIsKebabOpen] = useState(false);
@@ -181,7 +180,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
   //댓글 조회
   const { data: comments, fetchNextPage } = useInfiniteQuery({
     queryKey: ["comments", { petId, diaryId }],
-    queryFn: ({ pageParam }) => getComments({ diaryId, page: pageParam, size: PAGE_SIZE }),
+    queryFn: ({ pageParam }) => getComments({ diaryId, page: pageParam, size: COMMENT_PAGE_SIZE }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
