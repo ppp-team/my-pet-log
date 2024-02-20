@@ -26,24 +26,24 @@ export const Diary = ({ diary }: { diary: DiaryType }) => {
     </Link>
   );
 };
-
-export const Diaries = ({ data }: { data: InfiniteData<GetDiaryListResponse> }) => {
+interface a {
+  date: string;
+  diaries: DiaryType[];
+}
+export const Diaries = ({ data }: { data: a[] | undefined }) => {
+  if (!data) return;
   return (
     <section className={styles.container}>
-      {data.pages.map((p, idx) => (
-        <div key={idx} className={styles.container}>
-          {p?.content.map((v: any) => {
-            return (
-              <div className={styles.diaryListWrapper} key={v.date}>
-                <p className={styles.date}>{v.date}</p>
-                {v.diaries.map((diary: DiaryType) => {
-                  return <Diary diary={diary} key={diary.diaryId} />;
-                })}
-              </div>
-            );
-          })}
-        </div>
-      ))}
+      {data.map((v: any) => {
+        return (
+          <div className={styles.diaryListWrapper} key={v.date}>
+            <p className={styles.date}>{v.date}</p>
+            {v.diaries.map((diary: DiaryType) => {
+              return <Diary diary={diary} key={diary.diaryId} />;
+            })}
+          </div>
+        );
+      })}
     </section>
   );
 };
