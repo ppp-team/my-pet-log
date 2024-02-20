@@ -117,6 +117,7 @@ export const length = style({
 
   fontSize: "1.4rem",
   fontWeight: "600",
+  color: "var(--Gray81)",
 });
 
 export const button = style({
