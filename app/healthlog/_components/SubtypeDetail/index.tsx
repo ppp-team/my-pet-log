@@ -2,7 +2,7 @@ import SearchLocation from "@/app/healthlog/_components/SearchLocation";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
 import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 import React, { useEffect, useRef, useState } from "react";
-import { UseFormRegister, UseFormSetValue, UseFormWatch, FormState, FieldValues } from "react-hook-form";
+import { FieldValues, FormState, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import * as styles from "./style.css";
 
 export interface FormValues {
@@ -19,12 +19,12 @@ interface SubtypeDetailProps {
   errors: FormState<FieldValues>["errors"];
   setValue: UseFormSetValue<FieldValues>;
   onLocationSelect: (id: number | null) => void;
+  initialSubType?: string;
 }
 
 const MAX_LENGTH = { type: 15, subtype: 15, memo: 500 };
 
-const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register, watch, errors, setValue, onLocationSelect }) => {
-  const [isInputCleared, setIsInputCleared] = useState(false);
+const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register, watch, errors, setValue, onLocationSelect, initialSubType }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,13 +34,6 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
     setSelectedOption(option);
     setValue("subtype", option);
     setDropdownOpen(false);
-  };
-
-  const handleFocus = () => {
-    if (!isInputCleared) {
-      setValue("subtype", "");
-      setIsInputCleared(true);
-    }
   };
 
   useEffect(() => {
@@ -54,6 +47,24 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+
+  useEffect(() => {
+    if (initialSubType) {
+      if (visibleSubtype === "CUSTOM" || !subtypeOptions[visibleSubtype as keyof typeof subtypeOptions].includes(initialSubType)) {
+        setSelectedOption("직접 입력");
+        setValue("subtype", initialSubType);
+      } else {
+        setSelectedOption(initialSubType);
+        setValue("subtype", initialSubType);
+      }
+    }
+  }, [initialSubType, setValue, visibleSubtype]);
+
+  useEffect(() => {
+    if (initialSubType && selectedOption === "직접 입력") {
+      setValue("subtype", initialSubType);
+    }
+  }, [initialSubType, selectedOption, setValue]);
 
   useEffect(() => {
     if (selectedOption !== "직접 입력") {
@@ -92,7 +103,6 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
               maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
             })}
             maxLength={MAX_LENGTH.subtype}
-            autoFocus
           />
           {
             <p className={styles.p}>
@@ -131,9 +141,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
                   required: "내용을 입력해주세요",
                   maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
                 })}
-                maxLength={MAX_LENGTH.subtype}
-                autoFocus
-                onFocus={handleFocus}
+                value={watch("subtype")}
               />
               {
                 <p className={styles.p}>

@@ -3,18 +3,20 @@
 import { getGuardiansForLogs } from "@/app/_api/guardians";
 import { GuardianForLogsType } from "@/app/_types/guardians/types";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as styles from "./style.css";
 
 interface SelectMateDropdownProps {
+  petId: number;
   onSelect: (id: string) => void;
+  selectedId?: string;
 }
 
-const SelectMateDropdown = ({ onSelect }: SelectMateDropdownProps) => {
+const SelectMateDropdown = ({ petId, onSelect, selectedId: propSelectedId }: SelectMateDropdownProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [selectedNickname, setSelectedNickname] = useState("");
-  const petId = Number(localStorage.getItem("petId"));
+  const [, setSelectedId] = useState(propSelectedId || "");
 
   const { data: guardiansData } = useQuery({
     queryKey: ["guardiansForLogs", petId],
@@ -22,17 +24,24 @@ const SelectMateDropdown = ({ onSelect }: SelectMateDropdownProps) => {
   });
 
   useEffect(() => {
-    if (guardiansData) {
-      const currentUser = guardiansData.find((guardian) => guardian.isCurrentUser);
-      if (currentUser && !selectedNickname) {
-        setSelectedNickname(currentUser.nickname);
-        onSelect(currentUser.id);
+    if (guardiansData && !propSelectedId) {
+      const currentUserGuardian = guardiansData.find((guardian) => guardian.isCurrentUser);
+      if (currentUserGuardian) {
+        setSelectedNickname(currentUserGuardian.nickname);
+        setSelectedId(currentUserGuardian.id);
+        onSelect(currentUserGuardian.id);
+      }
+    } else if (propSelectedId) {
+      const selectedGuardian = guardiansData?.find((guardian) => guardian.id === propSelectedId);
+      if (selectedGuardian) {
+        setSelectedNickname(selectedGuardian.nickname);
       }
     }
-  }, [guardiansData, onSelect, selectedNickname]);
+  }, [guardiansData, propSelectedId, onSelect]);
 
   const handleSelectMate = (nickname: string, id: string) => {
     setSelectedNickname(nickname);
+    setSelectedId(id);
     setShowDropdown(false);
     onSelect(id);
   };
