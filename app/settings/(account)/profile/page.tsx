@@ -13,6 +13,7 @@ import { showToast } from "@/app/_components/Toast";
 import { useState } from "react";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
+import defaultProfileImagePath from "@/public/images/person-profile-default.svg?url";
 
 interface IFormInput {
   nickname: string;
@@ -93,6 +94,11 @@ const Page = () => {
     },
   });
 
+  const handleResetProfileImage = () => {
+    setImagePreviewUrl("none");
+    //setValue("image", null); 기본프로필로 변경 시 뭘 넣어야하는 지 be께 여쭤봄!
+  };
+
   //폼 제출 시
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     if (nicknameChanged && !watch("isNicknameConfirmed")) {
@@ -112,12 +118,19 @@ const Page = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
       <label className={styles.profile} htmlFor="image">
         {imagePreviewUrl ? (
-          <Image className={styles.image} src={imagePreviewUrl} alt="Profile Preview" width={126} height={126} />
+          <Image className={styles.image} src={imagePreviewUrl === "none" ? defaultProfileImagePath : imagePreviewUrl} alt="Profile Preview" width={126} height={126} />
         ) : (
           user && <Image className={styles.image} src={getImagePath(user.profilePath)} alt="profile image" width={126} height={126} />
         )}
         <Image className={styles.cameraIcon} src={cameraIcon} alt="camera icon" width={40} height={40} />
       </label>
+      <button
+        type="button"
+        style={{ textDecoration: "underline", textUnderlineOffset: "0.2rem", color: "var(--Gray81)", marginBottom: "0.8rem" }}
+        onClick={handleResetProfileImage}
+      >
+        기본 프로필로 변경
+      </button>
       <input id="image" type="file" accept="image/*" {...register("image")} onChange={handleImageChange} style={{ display: "none" }} />
 
       <label className={styles.label}>이메일*</label>

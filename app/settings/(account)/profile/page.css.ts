@@ -8,7 +8,7 @@ export const formContainer = style({
 });
 
 export const profile = style({
-  marginBottom: "5rem",
+  marginBottom: "1.2rem",
 
   position: "relative",
 
