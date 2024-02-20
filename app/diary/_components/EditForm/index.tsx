@@ -83,7 +83,7 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
   const [deletedImages, setDeletedImages] = useAtom(deletedImagesAtom);
   return (
     <>
-      <BackHeader title="육아일기 수정" />
+      <BackHeader title="육아일기 수정" styleTop="0" />
       <div className={styles.container}>
         <form
           className={styles.form}

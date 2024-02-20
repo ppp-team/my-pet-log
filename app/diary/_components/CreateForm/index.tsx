@@ -54,7 +54,7 @@ const CreateForm = ({ petId }: { petId: number }) => {
 
   return (
     <>
-      <BackHeader title="육아일기 글작성" />
+      <BackHeader title="육아일기 글작성" styleTop="0" />
       <div className={styles.container}>
         <form
           className={styles.form}
