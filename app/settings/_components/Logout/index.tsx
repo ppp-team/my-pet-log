@@ -4,17 +4,21 @@ import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import { useRouter } from "next/navigation";
 import { postLogout } from "@/app/_api/auth";
+import { useMutation } from "@tanstack/react-query";
 
 const Logout = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const router = useRouter();
 
-  const handleConfirm = async () => {
-    const logoutSuccess = await postLogout();
-
-    if (logoutSuccess) {
+  const logoutMutation = useMutation({
+    mutationFn: () => postLogout(),
+    onSuccess: () => {
       router.push("/login");
-    }
+    },
+  });
+
+  const handleConfirm = async () => {
+    logoutMutation.mutate();
   };
 
   return (
@@ -24,7 +28,6 @@ const Logout = () => {
           color: "var(--GrayC2)",
           fontSize: "1.4rem",
           fontWeight: "600",
-
           cursor: "pointer",
         }}
         onClick={openModalFunc}
