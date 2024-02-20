@@ -6,8 +6,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import { showToast } from "@/app/_components/Toast";
 
-const petId = 7;
-
 interface IForm {
   inputValue: string;
 }
@@ -22,7 +20,7 @@ const InvitationForm = () => {
   } = useForm<IForm>({ mode: "onTouched" });
 
   const inviteMutation = useMutation({
-    mutationFn: (email: string) => postInviteGuardian(petId, email),
+    mutationFn: (email: string) => postInviteGuardian(email),
     onSuccess: () => {
       showToast("초대 완료!", true);
       queryClient.invalidateQueries({ queryKey: ["my-invitations"] });

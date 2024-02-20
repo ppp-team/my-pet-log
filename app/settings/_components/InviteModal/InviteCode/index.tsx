@@ -7,25 +7,21 @@ import { useQuery } from "@tanstack/react-query";
 import { getPet, getCode } from "@/app/_api/pets";
 import { PetType } from "@/app/_types/pets/types";
 
-const petId = 7;
-
 const InviteCode = () => {
-  const inviteCode = "seul1234";
-
   const { data: petInfo } = useQuery<PetType>({
-    queryKey: ["petInfo", petId],
-    queryFn: () => getPet(petId),
+    queryKey: ["petInfo"],
+    queryFn: () => getPet(),
   });
-
   const { data: code } = useQuery<string>({
     queryKey: ["inviteCode"],
-    queryFn: () => getCode(petId),
+    queryFn: () => getCode(),
   });
 
   // 복사 버튼 클릭 시
   const handleCopyClick = () => {
+    if (!code) return;
     navigator.clipboard
-      .writeText(inviteCode)
+      .writeText(code)
       .then(() => {
         showToast("복사가 완료됐습니다.", true);
       })

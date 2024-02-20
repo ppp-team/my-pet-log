@@ -13,16 +13,14 @@ import { getMe } from "@/app/_api/users";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import Image from "next/image";
 
-const petId = 7;
-
 const Member = () => {
   const { data: user } = useQuery<UserType>({
     queryKey: ["me"],
     queryFn: () => getMe(),
   });
   const { data } = useQuery<GuardiansType>({
-    queryKey: ["petmate", petId],
-    queryFn: () => getGuardians(petId),
+    queryKey: ["petmate"],
+    queryFn: () => getGuardians(),
   });
 
   const router = useRouter();
@@ -47,10 +45,9 @@ const Member = () => {
   };
 
   const deleteGuardianMutation = useMutation({
-    mutationFn: (guardianId: number) => deleteGuardians(petId, guardianId),
+    mutationFn: (guardianId: number) => deleteGuardians(guardianId),
 
     onSuccess: () => {
-      //삭제 시 .. 로컬 스토리지에서 현재 대표반려동물을 삭제하고..그 이후 처리를 어떻게 해야할 것인가..? 논의1
       router.push("/home");
     },
   });
