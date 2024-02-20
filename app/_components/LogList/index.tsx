@@ -6,26 +6,25 @@ import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import { GetLogsListType, LogsType } from "@/app/_types/log/types";
 import EmptyHealthLog from "@/app/healthlog/_components/EmptyHealthLog";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import * as styles from "./style.css";
 
 interface LogListPropsType extends GetLogsListType {
   petId: number;
+  selectedDate: string;
 }
 
-const LogList: React.FC<LogListPropsType> = ({ petId, logsData: initialLogsData }) => {
+const LogList: React.FC<LogListPropsType> = ({ petId, logsData, selectedDate }) => {
+  const queryClient = useQueryClient();
   const [selectedLog, setSelectedLog] = useState<LogsType | null>(null);
-  const [logsData, setLogsData] = useState(initialLogsData);
+  const [year, month, day] = selectedDate.split("-").map(Number);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   const deleteLogMutation = useMutation({
     mutationFn: (logId: number) => deleteLog(petId, logId),
     onSuccess: () => {
-      setLogsData((prevLogsData) => ({
-        ...prevLogsData,
-        logs: prevLogsData.logs.filter((log) => log.logId !== selectedLog?.logId),
-      }));
+      queryClient.invalidateQueries({ queryKey: ["Logs", petId, year, month, day] });
       closeModalFunc();
     },
   });
@@ -47,7 +46,7 @@ const LogList: React.FC<LogListPropsType> = ({ petId, logsData: initialLogsData 
         <p className={styles.date}>{logsData.date}</p>
         {logsData.logs && logsData.logs.length > 0 ? (
           <ul>
-            {logsData.logs.map((logItem) => (
+            {logsData.logs.map((logItem: LogsType) => (
               <LogItem petId={petId} logItem={logItem} key={logItem.logId} onDelete={() => handleDelete(logItem)} />
             ))}
           </ul>

@@ -28,6 +28,7 @@
     "react-icons": "^5.0.1",
     "react-notion-x": "^6.16.0",
     "react-toastify": "^10.0.4",
+    "sharp": "^0.33.2",
     "swiper": "^11.0.5",
     "vanilla-calendar-pro": "^2.9.2"
   },
