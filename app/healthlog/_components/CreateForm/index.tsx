@@ -118,7 +118,7 @@ const CreateForm = ({ petId }: CreateFormProps) => {
 
   return (
     <>
-      <BackHeader title="건강수첩 작성하기" />
+      <BackHeader title="건강수첩 작성하기" styleTop="0" />
       <div className={styles.container}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems} onKeyDown={handleKeyPress}>
           <div className={styles.inputWrapper}>

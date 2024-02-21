@@ -8,5 +8,6 @@ export const Z_INDEX = createGlobalTheme(":root", {
   Modal: "10",
   SelectMateDropdown_dropdownList: "5",
   LogWriteButton_button: "5",
+  SubtypeDetail_optionsList: "1",
   Header: "10",
 });

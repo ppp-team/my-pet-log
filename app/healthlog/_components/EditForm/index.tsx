@@ -139,7 +139,7 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
 
   return (
     <>
-      <BackHeader title="건강수첩 수정하기" />
+      <BackHeader title="건강수첩 수정하기" styleTop="0" />
       <div className={styles.container}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems} onKeyDown={handleKeyPress}>
           <div className={styles.inputWrapper}>

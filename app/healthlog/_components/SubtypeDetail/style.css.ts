@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/styles/zindex.css";
 import { style, globalStyle } from "@vanilla-extract/css";
 
 export const container = style({
@@ -107,7 +108,7 @@ export const optionsList = style({
   color: "var(--Black)",
   borderRadius: "10px",
   boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
-  zIndex: 1,
+  zIndex: Z_INDEX.SubtypeDetail_optionsList,
 });
 
 export const optionButton = style({
