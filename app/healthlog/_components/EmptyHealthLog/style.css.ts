@@ -11,6 +11,6 @@ export const container = style({
   gap: "1rem",
 
   fontSize: "1.6rem",
-  fontWeight: "700",
+  fontWeight: "500",
   color: "gray",
 });

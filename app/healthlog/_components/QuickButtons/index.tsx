@@ -13,6 +13,10 @@ import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./style.css";
 
+interface QuickButtonsProps {
+  petId: number;
+}
+
 const buttonData = [
   { src: feedIconSrc, typeName: "FEED", text: "사료", colorClass: "" },
   { src: treatIconSrc, typeName: "TREAT", text: "간식/영양제", colorClass: styles.secondColorButton },
@@ -22,14 +26,12 @@ const buttonData = [
   { src: writeIconSrc, typeName: "CUSTOM", text: "직접 입력", colorClass: styles.thirdColorButton, link: "/healthlog/create" },
 ];
 
-const QuickButtons = () => {
+const QuickButtons = ({ petId }: QuickButtonsProps) => {
   const { mutate: postLog } = usePostLogsMutation();
   const { data: user } = useQuery<UserType>({
     queryKey: ["me"],
     queryFn: () => getMe(),
   });
-
-  const petId = Number(localStorage.getItem("petId"));
 
   const handleButtonClick = (typeName: string) => {
     const formattedDateTime = getKRDateTime();
