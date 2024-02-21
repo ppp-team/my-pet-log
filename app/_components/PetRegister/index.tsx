@@ -25,11 +25,11 @@ export interface IFormInput {
   type: string;
   breed: string;
   gender: "MALE" | "FEMALE";
-  neutering: boolean | null;
+  neutering: boolean | null | string;
   birthday: string | null;
   firstMeet: string | null;
   name: string;
-  weight: number | null;
+  weight: number | string | null;
   registeredNumber: string | null;
   id: string | number | null;
 }
@@ -69,11 +69,11 @@ const PetRegister = () => {
       type: data.type,
       breed: data.breed,
       gender: data.gender,
-      isNeutered: data.neutering,
+      isNeutered: data.neutering === "" ? null : data.neutering,
       birth: data.birthday,
       firstMeetDate: data.firstMeet,
-      weight: data.weight,
-      registeredNumber: data.registeredNumber,
+      weight: data.weight === "" ? null : data.weight,
+      registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
     console.log("request", request);
 
@@ -89,7 +89,7 @@ const PetRegister = () => {
     if (res !== null) {
       return openModalFunc();
     }
-
+    //응답결과 확인
     console.log("res", res);
   };
 
