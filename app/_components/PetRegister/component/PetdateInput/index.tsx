@@ -21,6 +21,10 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const calendarRef = useRef(null); //
 
+  const handleClick = () => {
+    setIsCalendarOpen((prev) => !prev);
+  };
+
   const options: Options = {
     type: "default",
     settings: {
@@ -31,6 +35,8 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
     actions: {
       clickDay(e, self) {
         if (!self.selectedDates[0]) return;
+        e.stopPropagation();
+        console.log("날짜클릭");
         setValue(id, `${self.selectedDates[0]}`);
         setDateValue(getValue(id) || "");
       },
@@ -55,14 +61,15 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
       document.removeEventListener("mousedown", handleClickOutside); //
     };
   }, [calendarRef]);
+
   return (
-    <div className={styles.inputWrapper}>
-      <div style={{ display: "flex", gap: "1rem", position: "relative" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
+    <div className={styles.inputWrapper} ref={calendarRef}>
+      <div style={{ display: "flex", gap: "1rem", position: "relative" }} onClick={handleClick}>
         <Image src={CalendarIcon} alt="calendar icon" width={20} height={20} style={{ position: "absolute", right: "1.4rem", top: "1.3rem" }} />
         <input className={styles.input} value={dateValue} readOnly {...register(id)} disabled={isDisabled} />
       </div>
       {isCalendarOpen && (
-        <div className={styles.calendarWrapper} ref={calendarRef}>
+        <div className={styles.calendarWrapper}>
           <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%" }} />
         </div>
       )}

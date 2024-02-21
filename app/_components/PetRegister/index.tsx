@@ -17,7 +17,7 @@ import BackIcon from "@/public/icons/chevron-left.svg?url";
 import { useRouter } from "next/navigation";
 import { postPet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
-import Modal from "@/app/_components/Modal";
+import ImageModal from "../ImageModal";
 
 export interface IFormInput {
   petName: string;
@@ -203,7 +203,7 @@ const PetRegister = () => {
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
       <div>
-        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
+        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen((prev) => !prev)}>
           {selectedType || "타입을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
@@ -349,7 +349,7 @@ const PetRegister = () => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>
-      {isModalOpen && <Modal text={"등록이 완료되었습니다!"} buttonText={"확인"} onClick={handleCloseModal} onClose={handleCloseModal} />}
+      {isModalOpen && <ImageModal type={"register"} onClick={handleCloseModal} onClose={handleCloseModal} />}
     </>
   );
 };
