@@ -19,7 +19,7 @@ interface CreateFormProps {
 
 const CreateForm = ({ petId }: CreateFormProps) => {
   const [visibleSubtype, setVisibleSubtype] = useState<keyof typeof subtypeOptions | "CUSTOM" | "WALK" | null>("FEED");
-  const [selectedType, setSelectedType] = useState<string>("FEED");
+  const [selectedType, setSelectedType] = useState<string>("CUSTOM");
   const [kakaoLocationId, setKakaoLocationId] = useState<number | null>(null);
   const [activeButtonGroup, setActiveButtonGroup] = useState("");
   const [selectedGuardianId, setSelectedGuardianId] = useState<string>("");
@@ -85,6 +85,11 @@ const CreateForm = ({ petId }: CreateFormProps) => {
       console.error("로그 등록 실패:", error);
     }
   };
+
+  useEffect(() => {
+    setVisibleSubtype("CUSTOM");
+    setActiveButtonGroup("bottom");
+  }, []);
 
   useEffect(() => {
     setValue("memo", "");
