@@ -99,7 +99,6 @@ export const label = style({
 
 export const input = style({
   padding: "1.3rem 1.8rem",
-  marginBottom: "0.8rem",
 
   borderRadius: "10px",
   border: "1.5px solid #e2e2e2",
