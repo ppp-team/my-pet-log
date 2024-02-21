@@ -28,9 +28,9 @@ export const petInfo = style({
 export const main = style({
   display: "flex",
   flexDirection: "column",
-  gap: "0.9rem",
+  // gap: "0.9rem",
 
-  padding: "2.4rem 1.6rem 1.4rem",
+  padding: "1.4rem 1.6rem",
 
   borderTop: "1px solid var(--GrayE8)",
   borderBottom: "1px solid var(--GrayE8)",
@@ -60,7 +60,7 @@ export const swiperFraction = style({
 
   position: "absolute",
   right: "2.6rem",
-  top: "3.7rem",
+  top: "2.7rem",
 
   paddingTop: "0.3rem",
 
@@ -94,6 +94,8 @@ export const content = style({
   color: "var(--Gray1F)",
 
   wordBreak: "break-word",
+
+  marginTop: "0.9rem",
 });
 
 export const commentsCount = style({

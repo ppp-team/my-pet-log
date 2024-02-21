@@ -336,21 +336,21 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
                   )}
                 </Swiper>
               </div>
-              <div className={styles.profile}>
-                <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
-                  <Image className={styles.profileImage} src={getImagePath(diary.writer.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
-                  <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{diary.writer.nickname}</p>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <button onClick={handleDiaryLike}>
-                    <LikeIcon color={diary.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
-                  </button>
-                  <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{diary.likeCount}</p>
-                </div>
-              </div>
             </>
           )}
 
+          <div className={styles.profile}>
+            <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
+              <Image className={styles.profileImage} src={getImagePath(diary.writer.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
+              <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{diary.writer.nickname}</p>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <button onClick={handleDiaryLike}>
+                <LikeIcon color={diary.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
+              </button>
+              <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{diary.likeCount}</p>
+            </div>
+          </div>
           <p className={styles.content}>{diary.content}</p>
         </section>
 
