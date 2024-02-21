@@ -19,7 +19,9 @@ const PcHeader = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <Image className={styles.logo} src={logoImageSrc} alt="로고 이미지" width={37} height={36} />
+        <Link href="/">
+          <Image className={styles.logo} src={logoImageSrc} alt="로고 이미지" width={37} height={36} />
+        </Link>
         <ul className={styles.centerMenuList}>
           {PC_CENTER_MENUS.map((menu) => (
             <li key={menu.label}>
