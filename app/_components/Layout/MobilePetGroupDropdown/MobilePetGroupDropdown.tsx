@@ -24,9 +24,10 @@ const SETTING_BUTTON: dropdownMenuItemType = {
 
 const MobilePetGroupDropdown = () => {
   const router = useRouter();
+  const petId = Number(localStorage.getItem("petId"));
 
   const { data: pets } = useQuery<PetsType>({
-    queryKey: ["pets"],
+    queryKey: ["pets", petId],
     queryFn: () => getPets(),
   });
 
