@@ -67,7 +67,7 @@ const CreateForm = ({ petId }: CreateFormProps) => {
     const datetime = `${date}T${time}`;
 
     const logData = {
-      type: selectedType === "CUSTOM" ? data.type : selectedType,
+      type: selectedType,
       subType: data.subtype,
       isCustomLocation: selectedType === "WALK",
       kakaoLocationId: selectedType === "WALK" ? kakaoLocationId : null,

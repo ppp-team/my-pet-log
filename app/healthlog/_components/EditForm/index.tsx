@@ -10,6 +10,7 @@ import SubtypeDetail from "@/app/healthlog/_components/SubtypeDetail";
 import { buttonTypes } from "@/public/data/buttonTypes";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as styles from "./style.css";
@@ -27,13 +28,12 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
   const [kakaoLocationId, setKakaoLocationId] = useState<number | null>(null);
   const topSubtypeRef = useRef<HTMLDivElement>(null);
   const bottomSubtypeRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const { data: logDetailData, error } = useQuery<LogDetailType, Error>({
     queryKey: ["LogDetail", petId, logId],
     queryFn: () => getLogDetail(Number(petId), Number(logId)),
   });
-
-  console.log(logDetailData);
 
   const {
     handleSubmit,
@@ -44,10 +44,6 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
     formState: { errors },
   } = useForm<FieldValues>();
 
-  const handleSelectMate = (id: string) => {
-    setSelectedGuardianId(id);
-  };
-
   const handleTypeButtonClick = (type: string, group: string) => {
     if (selectedType === type && activeButtonGroup === group) {
       setVisibleSubtype(type as keyof typeof subtypeOptions | "CUSTOM" | "WALK");
@@ -57,6 +53,10 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
       setVisibleSubtype(type as keyof typeof subtypeOptions | "CUSTOM" | "WALK");
       setActiveButtonGroup(group);
     }
+  };
+
+  const handleSelectMate = (id: string) => {
+    setSelectedGuardianId(id);
   };
 
   const handleLocationSelect = (id: number | null) => {
@@ -88,6 +88,7 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
 
     console.log(petId, logId, logData);
     putLogs(petId, logId, logData);
+    router.push("/healthlog");
   };
 
   useEffect(() => {
@@ -100,7 +101,6 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
       setValue("isImportant", logDetailData.isImportant);
       setSelectedGuardianId(logDetailData.managerId ? logDetailData.managerId : "");
 
-      // type 값을 확인하고 setVisibleSubtype에 전달하기 전에 타입을 확인합니다.
       const typeOptions = ["FEED", "HEALTH", "TREAT", "GROOMING", "CUSTOM", "WALK"];
       if (typeOptions.includes(logDetailData.type)) {
         setSelectedType(logDetailData.type);
@@ -108,8 +108,23 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
       } else {
         setVisibleSubtype("CUSTOM");
       }
+
+      const typeOptionsTop = ["FEED", "HEALTH", "TREAT"];
+      const typeOptionsBottom = ["GROOMING", "CUSTOM", "WALK"];
+
+      if (typeOptionsTop.includes(logDetailData.type)) {
+        setActiveButtonGroup("top");
+      } else if (typeOptionsBottom.includes(logDetailData.type)) {
+        setActiveButtonGroup("bottom");
+      }
     }
   }, [logDetailData, setValue, setSelectedType, setVisibleSubtype]);
+
+  useEffect(() => {
+    setValue("memo", "");
+    setValue("subtype", "");
+    setValue("isImportant", false);
+  }, [visibleSubtype, setValue]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
