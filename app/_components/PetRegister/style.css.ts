@@ -279,8 +279,8 @@ export const radioContainer = style({
   flexDirection: "row",
 
   position: "relative",
-  border: "1.5px var(--LightOrange)",
-  borderRadius: "5px",
+  border: "none",
+  borderRadius: "10px",
 });
 
 export const radioOption = style({
@@ -298,20 +298,21 @@ export const radioOption = style({
 
 export const leftRadio = style({
   width: "100%",
-  border: "solid 1px rgba(0, 0, 0, .15)",
+  border: "solid 1.5px var(--GrayE2)",
+  borderRadius: "10px 0px 0px 10px",
 });
 
 export const rightRadio = style({
+  marginLeft: "-0.1rem",
   width: "100%",
-  border: "solid 1px rgba(0, 0, 0, .15)",
+  border: "solid 1.5px var(--GrayE2)",
+  borderRadius: "0px 10px 10px 0px",
 });
 
 export const leftSelected = style({
   width: "100%",
 
   borderRadius: "10px 0px 0px 10px",
-  border: "1.5px solid var(--MainOrange)",
-
   color: "var(--MainOrange)",
   backgroundColor: "var(--LightOrange)",
 });
@@ -320,11 +321,13 @@ export const rightSelected = style({
   width: "100%",
 
   borderRadius: "0px 10px 10px 0px",
-  border: "1.5px solid var(--MainOrange)",
-
   color: "var(--MainOrange)",
   backgroundColor: "var(--LightOrange)",
 });
+
+export const leftSelectedBorder = style([leftSelected, { border: "1.5px solid var(--MainOrange)", zIndex: 1 }]);
+
+export const rightSelectedBorder = style([rightSelected, { border: "1.5px solid var(--MainOrange)", zIndex: 1 }]);
 
 export const deleteButtonWrapper = style({});
 export const deleteButton = style({
