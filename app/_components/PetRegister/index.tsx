@@ -40,7 +40,7 @@ const PetRegister = () => {
   const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
-  const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
+  const dropdownRef = useRef<HTMLDivElement>(null); //모달 외부 클릭시 닫히도록
   const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
   const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
   const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
@@ -202,8 +202,8 @@ const PetRegister = () => {
 
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
-      <div>
-        <button ref={dropdownRef} className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen((prev) => !prev)}>
+      <div ref={dropdownRef}>
+        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen((prev) => !prev)}>
           {selectedType || "타입을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
@@ -222,36 +222,38 @@ const PetRegister = () => {
 
       {/* 품종 */}
       <label className={styles.label}>품종*</label>
-      {selectedType !== "기타" && (
-        <button ref={dropdownRef} className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
-          {selectedBreed || "품종을 선택하세요"}
-          <DropdownIcon className={`${styles.dropdownIcon} ${breedOpen ? styles.dropdownIconOpen : ""}`} />
-        </button>
-      )}
-      {breedOpen && selectedType !== "기타" && (
-        <ul className={styles.optionsList}>
-          {petOptions[selectedType]?.map((breed: string, index: number) => (
-            <li key={index} value={breed}>
-              <button type="button" className={styles.optionButton} onClick={() => handleBreedClick(breed)} {...register("breed")}>
-                {breed}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      <div ref={dropdownRef}>
+        {selectedType !== "기타" && (
+          <button className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
+            {selectedBreed || "품종을 선택하세요"}
+            <DropdownIcon className={`${styles.dropdownIcon} ${breedOpen ? styles.dropdownIconOpen : ""}`} />
+          </button>
+        )}
+        {breedOpen && selectedType !== "기타" && (
+          <ul className={styles.optionsList}>
+            {petOptions[selectedType]?.map((breed: string, index: number) => (
+              <li key={index} value={breed}>
+                <button type="button" className={styles.optionButton} onClick={() => handleBreedClick(breed)} {...register("breed")}>
+                  {breed}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
 
-      {selectedType === "기타" && (
-        <>
-          <input
-            className={styles.writeInput}
-            placeholder="품종을 직접 입력하세요"
-            {...register("breed", {
-              required: "내용을 입력해주세요",
-            })}
-            autoFocus
-          />
-        </>
-      )}
+        {selectedType === "기타" && (
+          <>
+            <input
+              className={styles.writeInput}
+              placeholder="품종을 직접 입력하세요"
+              {...register("breed", {
+                required: "내용을 입력해주세요",
+              })}
+              autoFocus
+            />
+          </>
+        )}
+      </div>
 
       <button className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
         다음
