@@ -136,6 +136,23 @@ export const inputWrapper = style({
   flexDirection: "column",
 });
 
+// 타입, 품종
+export const selectBox = style({
+  width: "100%",
+  padding: "1.3rem 1.8rem",
+  marginBottom: "0.8rem",
+
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  borderRadius: "10px",
+  border: "1.5px solid #e2e2e2",
+
+  color: "var(--Gray81)",
+  fontSize: "1.6rem",
+  fontWeight: "600",
+});
+
 export const inputBox = style({
   width: "100%",
   height: "4rem",
@@ -170,6 +187,57 @@ export const selectWrapper = style({
 
 export const selectBoxOpen = style({
   backgroundColor: "var(--White)",
+});
+
+export const dropdownIcon = style({
+  width: "1rem",
+  height: "1rem",
+
+  fill: "var(--MainOrange)",
+});
+
+export const dropdownIconOpen = style({
+  transform: "rotate(180deg)",
+
+  fill: "var(--MainOrange)",
+});
+
+export const optionsList = style({
+  width: "100%",
+  padding: "0",
+
+  display: "flex",
+  flexDirection: "column",
+
+  listStyle: "none",
+
+  backgroundColor: "var(--White)",
+  color: "var(--Black)",
+  borderRadius: "10px",
+  boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
+  zIndex: 1,
+});
+
+export const optionButton = style({
+  width: "100%",
+  height: "4.8rem",
+
+  padding: "1rem",
+  textAlign: "left",
+
+  borderRadius: "10px",
+  border: "1.5px solid var(--White)",
+
+  backgroundColor: "var(--White)",
+  color: "var(--Black)",
+  fontWeight: "500",
+
+  cursor: "pointer",
+
+  ":hover": {
+    backgroundColor: "var(--LightOrange)",
+    color: "var(--MainOrange)",
+  },
 });
 
 export const textBox = style({
@@ -260,7 +328,6 @@ export const rightSelected = style({
 });
 
 export const deleteButtonWrapper = style({});
-
 export const deleteButton = style({
   marginTop: "3.2rem",
   padding: "0.6rem 1.4rem",
