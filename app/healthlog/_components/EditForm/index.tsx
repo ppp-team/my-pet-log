@@ -116,8 +116,8 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
         setVisibleSubtype("CUSTOM");
       }
 
-      const typeOptionsTop = ["FEED", "HEALTH", "TREAT"];
-      const typeOptionsBottom = ["GROOMING", "CUSTOM", "WALK"];
+      const typeOptionsTop = ["FEED", "HEALTH", "WALK"];
+      const typeOptionsBottom = ["TREAT", "GROOMING", "CUSTOM"];
 
       if (typeOptionsTop.includes(logDetailData.type)) {
         setActiveButtonGroup("top");
