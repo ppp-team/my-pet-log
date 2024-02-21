@@ -17,6 +17,7 @@
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@vanilla-extract/css": "^1.14.0",
     "@vanilla-extract/dynamic": "^2.1.0",
+    "cookies-next": "^4.1.1",
     "framer-motion": "^11.0.3",
     "jotai": "^2.6.2",
     "moment": "^2.30.1",
