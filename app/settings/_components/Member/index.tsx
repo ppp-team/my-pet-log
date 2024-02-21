@@ -13,13 +13,13 @@ import { getMe } from "@/app/_api/users";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import Image from "next/image";
 
-const Member = () => {
+const Member = ({ petId }: { petId: number }) => {
   const { data: user } = useQuery<UserType>({
     queryKey: ["me"],
     queryFn: () => getMe(),
   });
   const { data } = useQuery<GuardiansType>({
-    queryKey: ["petmate"],
+    queryKey: ["petmate", petId],
     queryFn: () => getGuardians(),
   });
 
@@ -76,7 +76,7 @@ const Member = () => {
       {isModalOpen1 && <Modal text="그룹 생성자의 경우 탈퇴는 관리자에게 문의해주세요." buttonText="1:1 문의" onClick={handleLeaderConfirm} onClose={closeModal1} />}
       {isModalOpen2 && <Modal text="정말 탈퇴하시겠습니까?" buttonText="확인" onClick={handleMemberConfirm} onClose={closeModal2} />}
 
-      <MemberList members={members} isLeader={isLeader} />
+      <MemberList petId={petId} members={members} isLeader={isLeader} />
     </main>
   );
 };

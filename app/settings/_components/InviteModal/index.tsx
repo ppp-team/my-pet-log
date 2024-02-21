@@ -7,7 +7,7 @@ import InvitationForm from "@/app/settings/_components/InvitationForm";
 import CloseIcon from "@/public/icons/close.svg?url";
 import InviteCode from "./InviteCode";
 
-const InviteModal = () => {
+const InviteModal = ({ petId }: { petId: number }) => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   return (
@@ -28,8 +28,8 @@ const InviteModal = () => {
               <Image src={CloseIcon} alt="close icon" width={24} height={24} onClick={closeModalFunc} />
             </div>
             <h3 className={styles.title}>초대하고 싶은 펫메이트의 이메일을 입력해주세요.</h3>
-            <InvitationForm />
-            <InviteCode />
+            <InvitationForm petId={petId} />
+            <InviteCode petId={petId} />
           </section>
         </ModalContainer>
       )}
