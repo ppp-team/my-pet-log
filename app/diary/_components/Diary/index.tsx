@@ -4,6 +4,7 @@ import CommentIconURL from "@/public/icons/message.svg?url";
 import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./style.css";
+import { getImagePath } from "@/app/_utils/getPetImagePath";
 
 export const Diary = ({ diary }: { diary: DiaryType }) => {
   return (
@@ -20,7 +21,7 @@ export const Diary = ({ diary }: { diary: DiaryType }) => {
             <p className={styles.description}>{diary.content}</p>
           </div>
         </div>
-        <div className={styles.diaryImage} style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${diary.thumbnailPath})` }} />
+        <Image className={styles.diaryImage} src={getImagePath(diary.thumbnailPath)} alt="일기 썸네일" width={90} height={90} />
       </div>
     </Link>
   );

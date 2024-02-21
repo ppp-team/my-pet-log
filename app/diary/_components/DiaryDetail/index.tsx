@@ -22,6 +22,9 @@ import { showToast } from "@/app/_components/Toast";
 import Link from "next/link";
 import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
 import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
+import { UserType } from "@/app/_types/users/types";
+import { getMe } from "@/app/_api/users";
+import { getImagePath } from "@/app/_utils/getPersonImagePath";
 
 interface CommentProps {
   comment: Comment;
@@ -101,7 +104,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
   return (
     <>
       <div className={styles.commentContainer}>
-        <div style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${comment.writer.profilePath})` }} className={styles.profileImage} />
+        <Image className={styles.profileImage} src={getImagePath(comment.writer.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
         <div className={styles.commentMain}>
           <div className={styles.commentHeader}>
             <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>
@@ -247,8 +250,13 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     postCommentMutation.mutate();
   };
 
-  if (!diary) return <>없음</>;
+  const { data: user } = useQuery<UserType>({
+    queryKey: ["me"],
+    queryFn: () => getMe(),
+  });
 
+  if (!diary) return;
+  if (!user) return;
   return (
     <>
       <BackHeader title="육아일기" />
@@ -319,7 +327,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
               </div>
               <div className={styles.profile}>
                 <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
-                  <div style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${diary.writer.profilePath}` }} className={styles.profileImage} />
+                  <Image className={styles.profileImage} src={getImagePath(diary.writer.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
                   <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{diary.writer.nickname}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -348,7 +356,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
           {!isLoading && hasNextPage && <div ref={targetRef} />}
 
           <div className={styles.commentInputContainer}>
-            <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
+            <Image className={styles.profileImage} src={getImagePath(user.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
             <div style={{ width: "100%", position: "relative" }}>
               <textarea placeholder="댓글을 남겨주세요" className={styles.commentInput} onChange={handleCommentChange} value={commentValue} />
               <Image src={SendIcon} alt="send icon" width={20} height={20} className={styles.sendIcon} onClick={handlePostComment} />

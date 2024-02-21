@@ -76,8 +76,6 @@ export const swiperFraction = style({
 });
 
 export const profileImage = style({
-  width: "3rem",
-  height: "3rem",
   minWidth: "3rem",
   minHeight: "3rem",
 
