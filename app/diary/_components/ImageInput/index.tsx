@@ -8,7 +8,8 @@ import { LuImageOff, LuImagePlus } from "react-icons/lu";
 import * as styles from "./style.css";
 import { useAtom } from "jotai";
 import { deletedImagesAtom, diaryImagesAtom } from "@/app/_states/atom";
-import { DiaryImagesType, FormInput } from "@/app/diary/_components/EditForm";
+import { FormInput } from "@/app/diary/_components/EditForm";
+import { DiaryMediaType } from "@/app/_types/diary/type";
 
 export interface ImagesType {
   name: string;
@@ -20,24 +21,25 @@ const MAX_IMAGES = 10;
 export interface InputProps {
   register: UseFormRegister<FormInput>;
   setValue: UseFormSetValue<FormInput>;
-  oldImages?: DiaryImagesType[];
+  oldMedia?: DiaryMediaType[];
 }
 
-const ImageInput = ({ register, setValue, oldImages }: InputProps) => {
+const ImageInput = ({ register, setValue, oldMedia }: InputProps) => {
   const [images, setImages] = useAtom(diaryImagesAtom);
-  const [deletedImages, setDeletedImages] = useAtom(deletedImagesAtom);
-  const [oldData, setOldData] = useState(oldImages);
+  const [, setDeletedImages] = useAtom(deletedImagesAtom);
+  const [oldData, setOldData] = useState(oldMedia);
 
   useEffect(() => {
     //edit용 이전 데이터
-    setOldData(oldImages);
-  }, [oldImages]);
+    setOldData(oldMedia);
+  }, [oldMedia]);
+
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    if (files?.length + images.length > MAX_IMAGES) {
+    if (files?.length + images.length + (oldData ? oldData?.length : 0) > MAX_IMAGES) {
       openModalFunc();
       return;
     }
@@ -82,10 +84,10 @@ const ImageInput = ({ register, setValue, oldImages }: InputProps) => {
             accept="image/*"
             {...register("images")}
             onChange={handleImageChange}
-            disabled={images.length >= MAX_IMAGES}
+            // disabled={images.length >= MAX_IMAGES}
           />
-          <label htmlFor="images" className={`${styles.input} ${images.length >= MAX_IMAGES && styles.disabledInput}`}>
-            {images.length >= MAX_IMAGES ? <LuImageOff className={styles.addIcon} /> : <LuImagePlus className={styles.addIcon} />}
+          <label htmlFor="images" className={`${styles.input} ${images.length + (oldData ? oldData.length : 0) >= MAX_IMAGES && styles.disabledInput}`}>
+            {images.length + (oldData ? oldData.length : 0) >= MAX_IMAGES ? <LuImageOff className={styles.addIcon} /> : <LuImagePlus className={styles.addIcon} />}
           </label>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="one" direction="horizontal">
@@ -121,7 +123,7 @@ const ImageInput = ({ register, setValue, oldImages }: InputProps) => {
           </DragDropContext>
         </div>
         <p className={styles.p}>
-          이미지 최대 {MAX_IMAGES}개 중 {images.length}개
+          이미지 최대 {MAX_IMAGES}개 중 {images.length + (oldData ? oldData.length : 0)}개
         </p>
         {isModalOpen && <Modal text="최대 이미지 수 10개를 초과했습니다." onClick={closeModalFunc} buttonText="확인" onClose={closeModalFunc} />}
       </div>

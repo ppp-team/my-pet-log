@@ -93,19 +93,18 @@ export interface GetDiaryRequest {
   petId: number;
   diaryId: number;
 }
+export interface DiaryMediaType {
+  mediaId: number;
+  path: string;
+}
 
 export interface GetDiaryResponse {
   diaryId: number;
   title: string;
   content: string;
   date: string;
-  images: [
-    {
-      mediaId: number;
-      path: string;
-    },
-  ];
-  videos: [{ mediaId: string; path: string }];
+  images: DiaryMediaType[];
+  videos: DiaryMediaType[];
   isCurrentUserLiked: boolean;
   writer: Writer;
   commentCount: number;

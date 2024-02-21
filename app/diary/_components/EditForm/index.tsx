@@ -1,9 +1,10 @@
 "use client";
 
-import { getDiary, putDiary } from "@/app/_api/diary";
+import { getDiary, postDiaryVideo, putDiary } from "@/app/_api/diary";
 import BackHeader from "@/app/_components/BackHeader";
 import { showToast } from "@/app/_components/Toast";
 import { deletedImagesAtom, diaryImagesAtom } from "@/app/_states/atom";
+import { DiaryMediaType } from "@/app/_types/diary/type";
 import * as styles from "@/app/diary/_components/CreateForm/style.css";
 import DateInput from "@/app/diary/_components/DateInput";
 import { ContentInput, TitleInput } from "@/app/diary/_components/FormInput";
@@ -20,6 +21,7 @@ interface Diary {
   content: string;
   date: string;
   deletedMediaIds?: number[];
+  uploadedVideoIds?: string[];
 }
 
 export interface FormInput {
@@ -30,13 +32,9 @@ export interface FormInput {
   video?: File | null;
 }
 
-export interface DiaryImagesType {
-  mediaId: number;
-  path: string;
-}
-
 const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
-  const [oldImages, setOldImages] = useState<DiaryImagesType[]>([]);
+  const [oldImages, setOldImages] = useState<DiaryMediaType[]>([]);
+  const [oldVideo, setOldVideo] = useState<DiaryMediaType[]>([]);
   const queryClient = useQueryClient();
   const router = useRouter();
   const { data: diary, isSuccess } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ diaryId }) });
@@ -75,6 +73,7 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
       setValue("content", diary.content);
       setValue("date", diary.date.replaceAll(".", "-"));
       setOldImages([...diary.images]);
+      setOldVideo([...diary.videos]);
     }
   }, [isSuccess]);
 
@@ -87,7 +86,6 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
         <form
           className={styles.form}
           onSubmit={handleSubmit(async (data) => {
-            console.log(data);
             const formData = new FormData();
 
             const request: Diary = {
@@ -95,7 +93,18 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
               content: data.content,
               date: data.date,
             };
+            //video가 있다면 백엔드에 등록 후 응답id를 formData에 추가
+            if (data.video) {
+              const videoFormData = new FormData();
+              videoFormData.append("video", data.video);
 
+              try {
+                const res = await postDiaryVideo({ formData: videoFormData });
+                request.uploadedVideoIds = [res.videoId];
+              } catch {
+                showToast("영상 업로드에 실패했습니다.", false);
+              }
+            }
             if (deletedImages) {
               request.deletedMediaIds = deletedImages;
             }
@@ -111,11 +120,11 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
         >
           <TitleInput register={register} watch={watch} errors={errors} />
           <DateInput register={register} setValue={setValue} getValue={getValues} />
-          <ImageInput register={register} setValue={setValue} oldImages={oldImages} />
-          <VideoInput register={register} setValue={setValue} />
+          <ImageInput register={register} setValue={setValue} oldMedia={oldImages} />
+          <VideoInput register={register} setValue={setValue} oldMedia={oldVideo} />
           <ContentInput register={register} watch={watch} errors={errors} />
 
-          <button className={styles.button}>작성하기</button>
+          <button className={styles.button}>수정하기</button>
         </form>
       </div>
     </>
