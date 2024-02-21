@@ -1,3 +1,5 @@
+"use client";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -13,21 +15,16 @@ import { useQuery } from "@tanstack/react-query";
 import { getPets } from "@/app/_api/pets";
 
 const MyPetCarousel = () => {
+  const { data: pets } = useQuery<PetsType>({
+    queryKey: ["pets"],
+    queryFn: () => getPets(),
+  });
+
   const myPetInfoStyles = {
     profileBorderColor: "var(--White)",
     nameTextColor: "var(--White)",
     breedTextColor: "var(--White)",
   };
-
-  const { data: pets, isLoading } = useQuery<PetsType>({
-    queryKey: ["pets"],
-    queryFn: () => getPets(),
-  });
-
-  const petList = pets?.data ?? [];
-  if (isLoading) return <div>Loading...</div>;
-
-  console.log("petList:", petList);
 
   return (
     <div>
@@ -42,7 +39,7 @@ const MyPetCarousel = () => {
         modules={[Pagination]}
         className="mySwiper"
       >
-        {petList.map((petInfo) => (
+        {pets?.data.map((petInfo) => (
           <SwiperSlide key={petInfo.petId}>
             <div className={container}>
               <div className={petInfoWrapper}>{petInfo && <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />}</div>

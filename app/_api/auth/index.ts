@@ -39,6 +39,7 @@ export const postLogout = async () => {
 
     if (res.status === 204) {
       cookies().delete("accessToken");
+      cookies().delete("petId");
       return true;
     }
   } catch (error: any) {
