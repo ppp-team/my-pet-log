@@ -73,7 +73,7 @@ const PetRegister = () => {
       birth: data.birthday === "날짜 선택" ? null : data.birthday,
       firstMeetDate: data.firstMeet === "날짜 선택" ? null : data.firstMeet,
       weight: data.weight === "" ? null : data.weight,
-      registeredNumber: data.registeredNumber === "" ? null : data.registe,
+      registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
     console.log("request", request);
 
@@ -203,12 +203,12 @@ const PetRegister = () => {
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
       <div>
-        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen((prev) => !prev)}>
+        <button ref={dropdownRef} className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen((prev) => !prev)}>
           {selectedType || "타입을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
         {typeOpen && (
-          <ul className={styles.optionsList} ref={dropdownRef}>
+          <ul className={styles.optionsList}>
             {Object.keys(petOptions).map((type: string, index: number) => (
               <li key={index} value={type}>
                 <button type="button" className={styles.optionButton} onClick={() => handleTypeClick(type)} {...register("type")}>
@@ -223,13 +223,13 @@ const PetRegister = () => {
       {/* 품종 */}
       <label className={styles.label}>품종*</label>
       {selectedType !== "기타" && (
-        <button className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
+        <button ref={dropdownRef} className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
           {selectedBreed || "품종을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${breedOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
       )}
       {breedOpen && selectedType !== "기타" && (
-        <ul className={styles.optionsList} ref={dropdownRef}>
+        <ul className={styles.optionsList}>
           {petOptions[selectedType]?.map((breed: string, index: number) => (
             <li key={index} value={breed}>
               <button type="button" className={styles.optionButton} onClick={() => handleBreedClick(breed)} {...register("breed")}>
