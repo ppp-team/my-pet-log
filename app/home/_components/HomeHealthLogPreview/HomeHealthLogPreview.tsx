@@ -5,11 +5,10 @@ import LogList from "@/app/_components/LogList";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-const HomeHealthLogPreview = () => {
+const HomeHealthLogPreview = ({ petId }: { petId: number }) => {
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
   const [year, month, day] = selectedDate.split("-");
-  const petId = Number(localStorage.getItem("petId"));
 
   const { data: logsData } = useQuery({
     queryKey: ["Logs", petId, year, month, day],

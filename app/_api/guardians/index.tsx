@@ -2,8 +2,11 @@
 
 import instance from "@/app/_api/axios";
 import { GuardianForLogsType } from "@/app/_types/guardians/types";
+import { cookies } from "next/headers";
 
-export const getGuardians = async (petId: number) => {
+const petId = cookies().get("petId")?.value;
+
+export const getGuardians = async () => {
   try {
     const response = await instance.get(`/my/guardians/${petId}`);
     if (response.status === 200) {
@@ -28,7 +31,7 @@ export const getGuardiansForLogs = async (petId: number): Promise<GuardianForLog
   }
 };
 
-export const postInviteGuardian = async (petId: number, email: string) => {
+export const postInviteGuardian = async (email: string) => {
   try {
     const response = await instance.post(`/my/guardians/${petId}/invite`, {
       email,
@@ -42,7 +45,7 @@ export const postInviteGuardian = async (petId: number, email: string) => {
   }
 };
 
-export const deleteGuardians = async (petId: number, guardianId: number) => {
+export const deleteGuardians = async (guardianId: number) => {
   try {
     const response = await instance.delete(`/my/guardians/${petId}`, {
       data: { guardianId },

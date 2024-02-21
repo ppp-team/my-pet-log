@@ -1,50 +1,48 @@
-"use client";
+"use server";
 
 import Link from "next/link";
 import MyProfile from "@/app/settings/_components/MyProfile";
 import MypetCarousel from "@/app/settings/_components/MypetCarousel";
-import * as styles from "@/app/settings/page.css";
 import HeartIcon from "@/public/icons/heart.svg?url";
 import QuestionIcon from "@/public/icons/circle-help.svg?url";
 import MessageIcon from "@/public/icons/message-alt.svg?url";
 import NoticeIcon from "@/public/icons/megaphone.svg?url";
 import MenuList from "@/app/settings/_components/MenuList";
-import Modal from "@/app/_components/Modal";
-import { useModal } from "@/app/_hooks/useModal";
-import { postLogout } from "@/app/_api/auth";
-import { useRouter } from "next/navigation";
+import { getPets } from "@/app/_api/pets";
+import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
+import { getMe } from "@/app/_api/users";
+import Logout from "@/app/settings/_components/Logout";
 
-const Page = () => {
-  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
-  const router = useRouter();
+const Page = async () => {
+  const queryClient = new QueryClient();
 
-  const handleConfirm = async () => {
-    const logoutSuccess = await postLogout();
-    closeModalFunc();
-
-    if (logoutSuccess) {
-      router.push("/login");
-    }
-  };
+  await queryClient.prefetchQuery({ queryKey: ["pets"], queryFn: () => getPets() });
+  await queryClient.prefetchQuery({ queryKey: ["me"], queryFn: () => getMe() });
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <>
-      <MypetCarousel />
-      <div className={styles.container}>
-        <Link href="/settings/profile">
-          <MyProfile />
-        </Link>
-        <div className={styles.listContainer}>
-          <MenuList href="/settings/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
-          <MenuList href="/settings/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
-          <MenuList href="/settings/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />
-          <MenuList href="/settings/notice" src={NoticeIcon} alt="notice icon" text="공지사항" />
-          <span className={styles.logout} onClick={openModalFunc}>
-            로그아웃
-          </span>
+      <HydrationBoundary state={dehydratedState}>
+        <MypetCarousel />
+        <div style={{ padding: "0 1.6rem 1.6rem" }}>
+          <Link href="/settings/profile">
+            <MyProfile />
+          </Link>
+          <div
+            style={{
+              padding: "2.3rem 0",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <MenuList href="/settings/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
+            <MenuList href="/settings/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
+            <MenuList href="/settings/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />
+            <MenuList href="/settings/notice" src={NoticeIcon} alt="notice icon" text="공지사항" />
+            <Logout />
+          </div>
         </div>
-      </div>
-      {isModalOpen && <Modal text="로그아웃 하시겠습니까?" buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
+      </HydrationBoundary>
     </>
   );
 };

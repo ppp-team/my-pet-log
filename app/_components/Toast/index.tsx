@@ -11,7 +11,7 @@ type messageProps = {
 const ToastComponent = ({ message, isSuccess }: messageProps) => (
   <div className={container}>
     {isSuccess ? <ConfirmIcon width={20} height={20} color={"var(--Green)"} /> : <WarningIcon width={20} height={20} />}
-    <span style={{ color: isSuccess ? "var(--Green)" : "var(--Red)" }}>{message}</span>
+    <span style={{ color: "var(--White)" }}>{message}</span>
   </div>
 );
 

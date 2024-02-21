@@ -11,7 +11,7 @@ export const container = style({
 });
 
 globalStyle(".Toastify__toast-container ", {
-  width: "20rem",
+  width: "30rem",
 
   bottom: "10rem",
   left: "50%",
@@ -22,12 +22,18 @@ globalStyle(".Toastify__toast ", {
   minHeight: "unset",
   padding: "1.2rem",
 
-  borderRadius: "6px",
+  borderRadius: "10px",
   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+  backgroundColor: "rgba(0, 0, 0, 0.80)",
 });
 
 globalStyle(".Toastify__close-button", {
   alignSelf: "unset",
+});
+
+globalStyle(".Toastify__close-button--light", {
+  color: "var(--White)",
+  opacity: "unset",
 });
 
 globalStyle(".Toastify__toast-body", {
