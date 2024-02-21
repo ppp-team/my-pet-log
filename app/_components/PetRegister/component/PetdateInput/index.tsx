@@ -14,6 +14,7 @@ interface DateInputProps {
   getValue: UseFormGetValues<IFormInput>;
   id: "birthday" | "firstMeet";
 }
+
 const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [dateValue, setDateValue] = useState("날짜 선택");
