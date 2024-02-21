@@ -4,7 +4,6 @@ import { PetType } from "@/app/_types/pets/types";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
 import Image from "next/image";
 
-//타입 추후에 다른 파일로 빼기
 interface StyleProps {
   styles?: {
     profileBorderColor: string;

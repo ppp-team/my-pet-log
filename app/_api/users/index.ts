@@ -38,16 +38,9 @@ export interface postUserProfilePropType {
   profileImage?: string;
 }
 
-export const postUserProfile = async ({ nickname, profileImage }: postUserProfilePropType) => {
+export const postUserProfile = async ({ formData }: { formData: FormData }) => {
   try {
-    const response = await instance.post(
-      "/users/profile",
-      {
-        profileImage,
-        nickname,
-      },
-      { headers: { "Content-Type": "multipart/form-data" } },
-    );
+    const response = await instance.post("/users/profile", formData, { headers: { "Content-Type": "multipart/form-data" } });
 
     if (response.status === 200) {
       return true;

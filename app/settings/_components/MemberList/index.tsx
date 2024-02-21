@@ -13,15 +13,13 @@ interface MemberListProps {
   isLeader: boolean;
 }
 
-const petId = 7;
-
 const MemberList = ({ members, isLeader }: MemberListProps) => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [selectedGuardianId, setSelectedGuardianId] = useState<number | null>(null);
   const queryClient = useQueryClient();
 
   const deleteGuardianMutation = useMutation({
-    mutationFn: (guardianId: number) => deleteGuardians(petId, guardianId),
+    mutationFn: (guardianId: number) => deleteGuardians(guardianId),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["petmate"] });

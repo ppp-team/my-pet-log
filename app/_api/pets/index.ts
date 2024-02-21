@@ -3,6 +3,8 @@
 import instance from "@/app/_api/axios";
 import { cookies } from "next/headers";
 
+const petId = cookies().get("petId")?.value;
+
 export const postPet = async ({ formData }: { formData: FormData }) => {
   try {
     console.log("formData:", formData.get("petImage"));
@@ -17,7 +19,8 @@ export const postPet = async ({ formData }: { formData: FormData }) => {
     return null;
   }
 };
-export const getPet = async (petId: number) => {
+
+export const getPet = async () => {
   try {
     const response = await instance.get(`/my/pets/${petId}`);
     return response.data;
@@ -39,7 +42,7 @@ export const getPets = async () => {
   }
 };
 
-export const getCode = async (petId: number) => {
+export const getCode = async () => {
   try {
     const response = await instance.get(`/my/pets/${petId}/code`);
     if (response.status === 200) {

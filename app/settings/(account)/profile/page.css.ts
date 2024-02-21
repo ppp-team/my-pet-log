@@ -8,7 +8,7 @@ export const formContainer = style({
 });
 
 export const profile = style({
-  marginBottom: "5rem",
+  marginBottom: "1.2rem",
 
   position: "relative",
 
@@ -117,6 +117,7 @@ export const length = style({
 
   fontSize: "1.4rem",
   fontWeight: "600",
+  color: "var(--Gray81)",
 });
 
 export const button = style({
