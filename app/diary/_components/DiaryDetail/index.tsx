@@ -19,17 +19,18 @@ import { useParams, useRouter } from "next/navigation";
 import { deleteComment, deleteDiary, getComments, getDiary, postComment, postCommentLike, postDiaryLike, putComment } from "@/app/_api/diary";
 import { Comment, GetCommentsResponse } from "@/app/_types/diary/type";
 import { showToast } from "@/app/_components/Toast";
-
-const petId = 2;
+import Link from "next/link";
+import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
 
 interface CommentProps {
   comment: Comment;
-  diaryId: string | string[];
+  diaryId: number;
   pageNum: number;
   contentNum: number;
+  petId: number;
 }
 
-const Comment = ({ comment, diaryId, pageNum, contentNum }: CommentProps) => {
+const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps) => {
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [isEditing, setIsEditing] = useState(false);
@@ -61,16 +62,17 @@ const Comment = ({ comment, diaryId, pageNum, contentNum }: CommentProps) => {
   });
 
   //댓글 좋아요
-  const postDiaryLikeMutation = useMutation({
+  const postCommentLikeMutation = useMutation({
     mutationFn: () => postCommentLike({ commentId: comment.commentId }),
   });
 
   const handleCommentLike = () => {
-    postDiaryLikeMutation.mutate();
+    postCommentLikeMutation.mutate();
+
     const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
     if (!newComments) return;
     newComments.pages[pageNum].content[contentNum].isCurrentUserLiked = !comment?.isCurrentUserLiked;
-    newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount - 1 : comment.likeCount + 1;
+    newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount + 1 : comment.likeCount - 1;
     queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
   };
 
@@ -151,15 +153,12 @@ const Comment = ({ comment, diaryId, pageNum, contentNum }: CommentProps) => {
   );
 };
 
-const PAGE_SIZE = 5;
-
-const DiaryDetailPage = () => {
+const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const [commentValue, setCommentValue] = useState("");
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const queryClient = useQueryClient();
-  const { _id: diaryId } = useParams();
   const router = useRouter();
 
   //일기 상세 조회
@@ -181,7 +180,7 @@ const DiaryDetailPage = () => {
   //댓글 조회
   const { data: comments, fetchNextPage } = useInfiniteQuery({
     queryKey: ["comments", { petId, diaryId }],
-    queryFn: ({ pageParam }) => getComments({ diaryId, page: pageParam, size: PAGE_SIZE }),
+    queryFn: ({ pageParam }) => getComments({ diaryId, page: pageParam, size: COMMENT_PAGE_SIZE }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
@@ -221,7 +220,7 @@ const DiaryDetailPage = () => {
     if (commentValue.trim() == "") return;
     postCommentMutation.mutate();
   };
-  if (!diary) return;
+  if (!diary) return <>없음</>;
 
   return (
     <>
@@ -238,7 +237,14 @@ const DiaryDetailPage = () => {
               <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} onClick={() => setIsKebabOpen(!isKebabOpen)} />
               {isKebabOpen && (
                 <ul className={styles.kebabModal}>
-                  <li className={styles.kebabList}>수정하기</li>
+                  <li
+                    className={styles.kebabList}
+                    onClick={() => {
+                      router.push(`/diary/edit/${diary.diaryId}`);
+                    }}
+                  >
+                    수정하기
+                  </li>
                   <li
                     className={styles.kebabList}
                     onClick={() => {
@@ -297,7 +303,9 @@ const DiaryDetailPage = () => {
           <div className={styles.commentsCount}>댓글({diary.commentCount})</div>
           <div style={{ minHeight: "10rem" }}>
             {comments?.pages.map((v, pageNum) =>
-              v?.content.map((comment, contentNum) => <Comment diaryId={diaryId} comment={comment} pageNum={pageNum} contentNum={contentNum} key={comment.commentId} />),
+              v?.content.map((comment, contentNum) => (
+                <Comment diaryId={diaryId} petId={petId} comment={comment} pageNum={pageNum} contentNum={contentNum} key={comment.commentId} />
+              )),
             )}
           </div>
           <button onClick={() => fetchNextPage()}>댓글 더 불러오기</button>
@@ -315,4 +323,4 @@ const DiaryDetailPage = () => {
   );
 };
 
-export default DiaryDetailPage;
+export default DiaryDetail;

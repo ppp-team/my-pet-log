@@ -1,13 +1,14 @@
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import { DragDropContext, Draggable, DropResult, Droppable } from "@hello-pangea/dnd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { IoIosCloseCircle } from "react-icons/io";
 import { LuImageOff, LuImagePlus } from "react-icons/lu";
 import * as styles from "./style.css";
 import { useAtom } from "jotai";
-import { diaryImagesAtom } from "@/app/_states/atom";
+import { deletedImagesAtom, diaryImagesAtom } from "@/app/_states/atom";
+import { DiaryImagesType, FormInput } from "@/app/diary/_components/EditForm";
 
 export interface ImagesType {
   name: string;
@@ -17,12 +18,20 @@ export interface ImagesType {
 const MAX_IMAGES = 10;
 
 export interface InputProps {
-  register: UseFormRegister<FieldValues>;
-  setValue: UseFormSetValue<FieldValues>;
+  register: UseFormRegister<FormInput>;
+  setValue: UseFormSetValue<FormInput>;
+  oldImages?: DiaryImagesType[];
 }
 
-const ImageInput = ({ register, setValue }: InputProps) => {
+const ImageInput = ({ register, setValue, oldImages }: InputProps) => {
   const [images, setImages] = useAtom(diaryImagesAtom);
+  const [deletedImages, setDeletedImages] = useAtom(deletedImagesAtom);
+  const [oldData, setOldData] = useState(oldImages);
+
+  useEffect(() => {
+    //edit용 이전 데이터
+    setOldData(oldImages);
+  }, [oldImages]);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +53,10 @@ const ImageInput = ({ register, setValue }: InputProps) => {
     setValue("images", null);
   };
 
+  const deleteOldImage = (mediaId: number) => {
+    setOldData((prev) => prev?.filter((v) => v.mediaId !== mediaId));
+    setDeletedImages((prev) => [...prev, mediaId]);
+  };
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result;
     if (!destination) return; //드래그앤드랍 컨테이너 벗어났을 때
@@ -78,6 +91,16 @@ const ImageInput = ({ register, setValue }: InputProps) => {
             <Droppable droppableId="one" direction="horizontal">
               {(provided) => (
                 <div className={styles.container} {...provided.droppableProps} ref={provided.innerRef}>
+                  {oldData &&
+                    oldData.map((v) => {
+                      return (
+                        <div key={v.mediaId}>
+                          <div className={styles.preview} style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${v.path})` }}>
+                            <IoIosCloseCircle className={styles.closeIcon} onClick={() => deleteOldImage(v.mediaId)} />
+                          </div>
+                        </div>
+                      );
+                    })}
                   {images.map((image, index) => {
                     return (
                       <Draggable draggableId={String(image.name)} index={index} key={image.name}>

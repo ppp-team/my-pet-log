@@ -10,13 +10,13 @@ import {
   PostCommentRequest,
   PutCommentRequest,
   getSearchDiaryRequest,
-  postDiaryRequest,
 } from "@/app/_types/diary/type";
 import { cookies } from "next/headers";
 
-const petId = cookies().get("petId")?.value;
+// const petId = cookies().get("petId")?.value;
 
 export const postDiary = async ({ formData }: { formData: FormData }) => {
+  const petId = cookies().get("petId")?.value;
   try {
     const res = await instance.post(`/pets/${petId}/diaries`, formData, { headers: { "Content-Type": "multipart/form-data" } });
 
@@ -27,6 +27,7 @@ export const postDiary = async ({ formData }: { formData: FormData }) => {
 };
 
 export const getDiaryList = async ({ page, size }: GetDiaryListRequest) => {
+  const petId = cookies().get("petId")?.value;
   try {
     const res = await instance.get(`/pets/${petId}/diaries`, { params: { page, size } });
 
@@ -37,7 +38,8 @@ export const getDiaryList = async ({ page, size }: GetDiaryListRequest) => {
   }
 };
 
-export const getDiary = async ({ diaryId }: { diaryId: string | string[] }): Promise<GetDiaryResponse | null> => {
+export const getDiary = async ({ diaryId }: { diaryId: number }): Promise<GetDiaryResponse | null> => {
+  const petId = cookies().get("petId")?.value;
   try {
     const res = await instance.get(`pets/${petId}/diaries/${diaryId}`);
 
@@ -49,6 +51,7 @@ export const getDiary = async ({ diaryId }: { diaryId: string | string[] }): Pro
 };
 
 export const getComments = async ({ diaryId, page, size }: GetCommentsRequest): Promise<GetCommentsResponse | null> => {
+  const petId = cookies().get("petId")?.value;
   try {
     const res = await instance.get(`pets/${petId}/diaries/${diaryId}/comments`, { params: { page, size } });
 
@@ -59,7 +62,8 @@ export const getComments = async ({ diaryId, page, size }: GetCommentsRequest): 
   }
 };
 
-export const deleteDiary = async ({ diaryId }: { diaryId: string | string[] }) => {
+export const deleteDiary = async ({ diaryId }: { diaryId: number }) => {
+  const petId = cookies().get("petId")?.value;
   try {
     await instance.delete(`pets/${petId}/diaries/${diaryId}`);
   } catch (error: any) {
@@ -67,27 +71,33 @@ export const deleteDiary = async ({ diaryId }: { diaryId: string | string[] }) =
   }
 };
 
-export const postDiaryLike = async ({ diaryId }: { diaryId: string | string[] }) => {
+export const postDiaryLike = async ({ diaryId }: { diaryId: number }) => {
+  const petId = cookies().get("petId")?.value;
   await instance.post(`pets/${petId}/diaries/${diaryId}/like`);
 };
 
 export const postComment = async ({ diaryId, content }: PostCommentRequest) => {
+  const petId = cookies().get("petId")?.value;
   await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
 };
 
 export const deleteComment = async ({ commentId }: { commentId: number }) => {
+  const petId = cookies().get("petId")?.value;
   await instance.delete(`pets/${petId}/diaries/comments/${commentId}`);
 };
 
 export const putComment = async ({ commentId, content }: PutCommentRequest) => {
+  const petId = cookies().get("petId")?.value;
   await instance.put(`pets/${petId}/diaries/comments/${commentId}`, { content });
 };
 
 export const postCommentLike = async ({ commentId }: { commentId: number }) => {
-  await instance.get(`pets/${petId}/comments/${commentId}/like`);
+  const petId = cookies().get("petId")?.value;
+  await instance.post(`pets/${petId}/diaries/comments/${commentId}/like`);
 };
 
 export const getSearchDiary = async ({ page, size, keyword }: getSearchDiaryRequest): Promise<GetDiaryListResponse | null> => {
+  const petId = cookies().get("petId")?.value;
   try {
     const res = await instance.get(`pets/${petId}/diaries/search`, { params: { page, size, keyword } });
     return res.data;
@@ -95,4 +105,9 @@ export const getSearchDiary = async ({ page, size, keyword }: getSearchDiaryRequ
     console.error(error.response);
     return null;
   }
+};
+
+export const putDiary = async ({ diaryId, formData }: { diaryId: number; formData: FormData }) => {
+  const petId = cookies().get("petId")?.value;
+  await instance.put(`pets/${petId}/diaries/${diaryId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
 };

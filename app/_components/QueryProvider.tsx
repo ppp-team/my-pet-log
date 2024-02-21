@@ -10,7 +10,9 @@ const QueryProvider = ({ children }: { children: ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <ReactQueryDevtools initialIsOpen={false} />
+      <div style={{ fontSize: "1.5rem" }}>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </div>
     </QueryClientProvider>
   );
 };

@@ -1,14 +1,13 @@
 "use client";
 import { Diary as DiaryType, GetDiaryListResponse } from "@/app/_types/diary/type";
 import CommentIconURL from "@/public/icons/message.svg?url";
-import { InfiniteData } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./style.css";
 
 export const Diary = ({ diary }: { diary: DiaryType }) => {
   return (
-    <Link href={`/diary/detail/${diary.diaryId}`}>
+    <Link href={`/diary/detail/${diary.diaryId}`} scroll={false}>
       <div className={styles.diaryWrapper}>
         <div className={styles.contents}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -27,23 +26,20 @@ export const Diary = ({ diary }: { diary: DiaryType }) => {
   );
 };
 
-export const Diaries = ({ data }: { data: InfiniteData<GetDiaryListResponse> }) => {
+export const Diaries = ({ data }: { data: GetDiaryListResponse["content"] | undefined }) => {
+  if (!data) return;
   return (
     <section className={styles.container}>
-      {data.pages.map((p, idx) => (
-        <div key={idx} className={styles.container}>
-          {p?.content.map((v: any) => {
-            return (
-              <div className={styles.diaryListWrapper} key={v.date}>
-                <p className={styles.date}>{v.date}</p>
-                {v.diaries.map((diary: DiaryType) => {
-                  return <Diary diary={diary} key={diary.diaryId} />;
-                })}
-              </div>
-            );
-          })}
-        </div>
-      ))}
+      {data.map((v: any) => {
+        return (
+          <div className={styles.diaryListWrapper} key={v.date}>
+            <p className={styles.date}>{v.date}</p>
+            {v.diaries.map((diary: DiaryType) => {
+              return <Diary diary={diary} key={diary.diaryId} />;
+            })}
+          </div>
+        );
+      })}
     </section>
   );
 };

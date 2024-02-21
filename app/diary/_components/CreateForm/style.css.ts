@@ -20,7 +20,7 @@ export const input = style({
   width: "100%",
   fontSize: "1.6rem",
 
-  margin: "0.6rem 0",
+  marginTop: "0.6rem",
   padding: "0.8rem 1rem",
 
   borderRadius: "10px",
@@ -37,10 +37,19 @@ export const inputWrapper = style({
   flexDirection: "column",
 });
 
+export const hintContainer = style({
+  display: "grid",
+  alignItems: "center",
+  gridTemplateColumns: "1fr auto",
+  minHeight: "1.95rem",
+});
+
 export const p = style({
   fontSize: "1.2rem",
   fontWeight: "500",
   color: "var(--Gray81)",
+
+  marginTop: "0.6rem",
 });
 
 export const label = style({

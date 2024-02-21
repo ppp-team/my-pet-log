@@ -1,15 +1,13 @@
 "use client";
-import SearchIconURL from "@/public/icons/search.svg?url";
-import Image from "next/image";
-import { root, search, searchIcon, writeIcon } from "@/app/diary/_components/Diary/style.css";
-// import * as styles from "./style.css";
 import { getSearchDiary } from "@/app/_api/diary";
-import { ChangeEvent, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import { Diaries } from "@/app/diary/_components/Diary";
-import { GetDiaryListRequest, GetDiaryListResponse } from "@/app/_types/diary/type";
+import { container, root, search, searchIcon } from "@/app/diary/_components/Diary/style.css";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
+import SearchIconURL from "@/public/icons/search.svg?url";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useRef } from "react";
 
 const PAGE_SIZE = 2;
 
@@ -22,43 +20,50 @@ const Search = () => {
     queryFn: ({ pageParam }) => getSearchDiary({ page: pageParam, size: PAGE_SIZE, keyword }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
+    enabled: !!keyword,
   });
 
+  if (!keyword) return <>검색해보세요</>;
   if (isLoading) return <>loading</>;
-  return <>{data?.pages[0]?.content.length ? <Diaries data={data as InfiniteData<GetDiaryListResponse>} /> : <div>일치하는 검색어가 없어요</div>}</>;
+  if (!data?.pages[0]?.content.length) return <>일치하는 검색어가 없어요</>;
+
+  return (
+    <>
+      {data.pages.map((page, idx) => (
+        <div key={idx} className={container}>
+          <Diaries data={page?.content} />
+        </div>
+      ))}
+    </>
+  );
 };
 
 const SearchPage = () => {
-  const [isClick, setIsClick] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
   return (
     <div className={root}>
       <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-        <div onClick={() => router.back()}>
+        <div onClick={() => router.replace("/diary")}>
           <Image src={BackIcon} alt="backward icon" width={25} height={25} />
         </div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (searchValue.trim() == "") return; //빈값이면 검색하지 않음
-            router.replace(`/diary/search?keyword=${searchValue}`);
-            setIsClick(true);
+            if (searchRef?.current?.value.trim() == "") return; //빈값이면 검색하지 않음
+            router.replace(`/diary/search?keyword=${searchRef?.current?.value}`);
           }}
           style={{ position: "relative", width: "100%" }}
         >
-          <input className={search} onChange={handleOnChange} value={searchValue} placeholder="제목, 내용으로 검색" />
+          <input className={search} ref={searchRef} placeholder="제목, 내용으로 검색" />
           <button>
             <Image src={SearchIconURL} alt="search icon" width={16} height={16} className={searchIcon} />
           </button>
         </form>
       </div>
 
-      {isClick && <Search />}
+      <Search />
     </div>
   );
 };

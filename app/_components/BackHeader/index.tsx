@@ -5,11 +5,11 @@ import BackIcon from "@/public/icons/chevron-left.svg?url";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const BackHeader = ({ title }: { title: string }) => {
+const BackHeader = ({ title, styleTop }: { title: string; styleTop?: string }) => {
   const router = useRouter();
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} style={{ top: styleTop || "5.6rem" }}>
       {title}
       <div className={styles.backIcon} onClick={() => router.back()}>
         <Image src={BackIcon} alt="backward icon" width={25} height={25} />
