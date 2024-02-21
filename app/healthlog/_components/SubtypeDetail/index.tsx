@@ -89,6 +89,10 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
               maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
             })}
             maxLength={MAX_LENGTH.subtype}
+            value={watch("subtype")}
+            onFocus={() => {
+              setValue("subtype", "");
+            }}
           />
           <p className={styles.p}>
             {watch("subtype")?.length ?? "0"}/{MAX_LENGTH.subtype}
@@ -126,6 +130,9 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
                   maxLength: { value: MAX_LENGTH.subtype, message: `최대 ${MAX_LENGTH.subtype}자까지 작성할 수 있습니다.` },
                 })}
                 value={watch("subtype")}
+                onFocus={() => {
+                  setValue("subtype", "");
+                }}
               />
               <p className={styles.p}>
                 {watch("subtype")?.length ?? "0"}/{MAX_LENGTH.subtype}
