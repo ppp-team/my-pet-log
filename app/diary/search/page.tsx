@@ -23,12 +23,11 @@ const Search = () => {
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
     enabled: !!keyword,
   });
-  const { targetRef, setIsRefActivated } = useInfiniteScroll({ callbackFunc: fetchNextPage });
+  const { targetRef, setTargetActive } = useInfiniteScroll({ callbackFunc: fetchNextPage });
 
-  useEffect(() => {
-    console.log("render");
-    setIsRefActivated((prev) => !prev);
-  }, [data]);
+  // useEffect(() => {
+  //   setTargetActive((prev) => !prev);
+  // }, [data]);
 
   if (!keyword) return <>검색해보세요</>;
   if (isLoading) return <>loading</>;
@@ -41,9 +40,8 @@ const Search = () => {
           {page && <Diaries data={page?.content} />}
         </div>
       ))}
-      {/* <div ref={targetRef}>target</div> */}
       {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
-      {!isLoading && <div ref={targetRef}>asd</div>}
+      {!isLoading && hasNextPage && <div ref={targetRef} />}
       <button onClick={() => fetchNextPage()}>더 불러오기</button>
     </>
   );

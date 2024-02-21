@@ -1,8 +1,8 @@
 import { getDiaryList } from "@/app/_api/diary";
 import DiaryList from "@/app/diary/_components/DiaryList";
+import { DIARY_PAGE_SIZE } from "@/app/diary/constant";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
-const PAGE_SIZE = 2;
 
 const DiaryPgae = async () => {
   const queryClient = new QueryClient();
@@ -10,7 +10,7 @@ const DiaryPgae = async () => {
 
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["diaries", petId],
-    queryFn: ({ pageParam }) => getDiaryList({ page: pageParam, size: PAGE_SIZE }),
+    queryFn: ({ pageParam }) => getDiaryList({ page: pageParam, size: DIARY_PAGE_SIZE }),
     initialPageParam: 0,
   });
 

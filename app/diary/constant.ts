@@ -2,7 +2,7 @@ export const COMMENT_PAGE_SIZE = 10;
 
 export const DIARY_PAGE_SIZE = 8;
 
-export const DIARY_SEARCH_PAGE_SIZE = 5;
+export const DIARY_SEARCH_PAGE_SIZE = 2;
 
 export const DIARY_TITLE_MAX_LENGTH = 15;
 
