@@ -36,7 +36,7 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
     onSuccess: (data) => {
       if (data) {
         showToast("등록되었습니다!", true);
-        router.push("/home/select");
+        router.push("/home-select");
       } else {
         setError("inputValue", { type: "invalid", message: ERROR_MESSAGE.receivedInvitationCodeInvalid });
       }

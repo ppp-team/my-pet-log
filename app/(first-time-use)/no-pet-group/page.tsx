@@ -21,7 +21,7 @@ const NoPetGroupPage: NextPage = () => {
         등록하시겠어요?
       </p>
       <Image className={styles.mockUpImage} src={MockUpImageSrc} width={203} height={254} alt="목업 이미지" />
-      <Link className={styles.linkCreate} href="/create/pet-group">
+      <Link className={styles.linkCreate} href="/pet-register">
         마이펫을 등록할래요
       </Link>
       <button className={styles.linkParticipate} onClick={openModalFunc}>

@@ -15,14 +15,35 @@ export const userProfileImageContainer = style({
   textAlign: "center",
 });
 
+export const userProfileLabel = style({
+  position: "relative",
+  display: "inline-block",
+  width: "auto",
+  height: "auto",
+  fontSize: "0",
+  cursor: "pointer",
+});
+
 export const userProfileImageDefault = style({
   width: "12.6rem",
   height: "12.4rem",
   objectFit: "cover",
+  overflow: "hidden",
+  borderRadius: "50%",
 });
 
 export const userProfileImage = style({
   borderRadius: "50%",
+});
+
+export const cameraIcon = style({
+  position: "absolute",
+  bottom: "0.5rem",
+  right: "0",
+  padding: "0.4rem",
+  borderRadius: "50%",
+  border: "3px solid var(--White)",
+  backgroundColor: "var(--LightOrange)",
 });
 
 export const idFieldset = style({ marginBottom: "2.7rem" });

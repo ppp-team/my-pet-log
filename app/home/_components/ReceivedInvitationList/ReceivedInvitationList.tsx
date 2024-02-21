@@ -31,7 +31,7 @@ const ReceivedInvitationList = () => {
         queryClient.invalidateQueries({ queryKey: ["invites"] });
         const petName = invites?.find((item) => item.invitationId === data)?.petName;
         showToast(petName ? `${petName}의 집사가 되었어요!` : "집사가 되었어요!", true);
-        router.push("/home/select");
+        router.push("/home-select");
         /**
          * TODO 첫번째 펫그룹 참여 시 홈으로 보낼 것인지 or 따로 버튼을 만들지 논의 후 처리
          */
@@ -50,7 +50,7 @@ const ReceivedInvitationList = () => {
     onSuccess: (data) => {
       if (data) {
         queryClient.invalidateQueries({ queryKey: ["invites"] });
-        showToast("초대를 거절했습니다.", true);
+        showToast("초대가 거절되었습니다.", true);
       } else {
         showToast("초대 거절에 실패했습니다. 잠시 후 다시 시도해주세요.", false);
       }
