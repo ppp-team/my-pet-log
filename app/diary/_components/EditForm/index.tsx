@@ -27,7 +27,7 @@ export interface FormInput {
   content: string;
   date: string;
   images?: File[] | null;
-  video?: File;
+  video?: File | null;
 }
 
 export interface DiaryImagesType {

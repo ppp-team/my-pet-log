@@ -252,6 +252,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
   return (
     <>
       <BackHeader title="육아일기" />
+
       <div className={styles.root}>
         <section className={styles.header}>
           <p className={styles.petInfo}>
@@ -288,10 +289,10 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
         </section>
 
         <section className={styles.main}>
-          {diary.images.length > 0 && (
+          {(diary.images.length > 0 || diary.videos.length > 0) && (
             <>
               <div className={styles.swiperFraction}>
-                {currentPage + 1}/{diary.images.length}
+                {currentPage + 1}/{diary.images.length + diary.videos.length}
               </div>
               <div onClick={() => setIsKebabOpen(false)}>
                 <Swiper
@@ -306,6 +307,14 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
                       <div className={styles.image} style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${image.path})` }}></div>
                     </SwiperSlide>
                   ))}
+                  {diary.videos.length > 0 && (
+                    <SwiperSlide>
+                      <video controls width="250" className={styles.image} autoPlay={true} loop={true}>
+                        동영상 재생에 실패했습니다.
+                        <source src={`${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${diary.videos[0].path}`} type="video/mp4" />
+                      </video>
+                    </SwiperSlide>
+                  )}
                 </Swiper>
               </div>
               <div className={styles.profile}>

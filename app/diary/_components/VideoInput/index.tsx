@@ -11,7 +11,9 @@ const VideoInput = ({ register, setValue }: InputProps) => {
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || !files[0]) return;
+
     setPreviewVideo(URL.createObjectURL(files[0]));
+    setValue("video", files[0]);
   };
 
   const deleteVideo = () => {

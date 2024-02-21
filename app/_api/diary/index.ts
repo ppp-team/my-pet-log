@@ -9,6 +9,7 @@ import {
   GetDiaryListResponse,
   GetDiaryResponse,
   PostCommentRequest,
+  PostDiaryVideoResponse,
   PutCommentRequest,
   getSearchDiaryRequest,
 } from "@/app/_types/diary/type";
@@ -112,4 +113,9 @@ export const getSearchDiary = async ({ page, size, keyword }: getSearchDiaryRequ
 export const putDiary = async ({ diaryId, formData }: { diaryId: number; formData: FormData }) => {
   const petId = cookies().get("petId")?.value;
   await instance.put(`pets/${petId}/diaries/${diaryId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+};
+
+export const postDiaryVideo = async ({ formData }: { formData: FormData }): Promise<PostDiaryVideoResponse> => {
+  const res = await instance.post(`/videos?domain=DIARY`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+  return res.data;
 };
