@@ -45,11 +45,18 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
   } = useForm<FieldValues>();
 
   const handleTypeButtonClick = (type: string, group: string) => {
-    if (selectedType === type && activeButtonGroup === group) {
+    if (selectedType !== type) {
+      setSelectedType(type);
       setVisibleSubtype(type as keyof typeof subtypeOptions | "CUSTOM" | "WALK");
+      setActiveButtonGroup(group);
+
+      setValue("subtype", "");
+      setValue("memo", "");
+      setValue("isImportant", false);
+    } else if (selectedType === type && activeButtonGroup === group) {
+      setVisibleSubtype(null);
       setActiveButtonGroup("");
     } else {
-      setSelectedType(type);
       setVisibleSubtype(type as keyof typeof subtypeOptions | "CUSTOM" | "WALK");
       setActiveButtonGroup(group);
     }
@@ -69,7 +76,7 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
     }
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const date = data.date;
     const time = convertTime12to24(data.time);
     const datetime = `${date}T${time}`;
@@ -87,7 +94,7 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
     };
 
     console.log(petId, logId, logData);
-    putLogs(petId, logId, logData);
+    await putLogs(petId, logId, logData);
     router.push("/healthlog");
   };
 
@@ -119,12 +126,6 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
       }
     }
   }, [logDetailData, setValue, setSelectedType, setVisibleSubtype]);
-
-  useEffect(() => {
-    setValue("memo", "");
-    setValue("subtype", "");
-    setValue("isImportant", false);
-  }, [visibleSubtype, setValue]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -192,7 +193,6 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
                   setValue={setValue}
                   onLocationSelect={handleLocationSelect}
                   initialSubType={logDetailData?.subType}
-                  initialLocation={logDetailData?.location}
                 />
               )}
             </div>

@@ -21,19 +21,13 @@ interface SubtypeDetailProps {
   setValue: UseFormSetValue<FieldValues>;
   onLocationSelect: (id: number | null) => void;
   initialSubType?: string;
-  initialLocation?: {
-    isCustomLocation: boolean;
-    kakaoLocationId: number | null;
-  };
 }
 
 const MAX_LENGTH = { type: 15, subtype: 15, memo: 500 };
 
-const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, initialLocation, register, watch, errors, setValue, onLocationSelect, initialSubType }) => {
+const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register, watch, errors, setValue, onLocationSelect, initialSubType }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [placeId, setPlaceId] = useState<number | null>(null);
-  const [placePosition, setPlacePosition] = useState<{ y: number; x: number } | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
 
@@ -44,8 +38,6 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, initialLo
   };
 
   const handlePlaceSelect = (place: Place) => {
-    setPlaceId(place.id);
-    setPlacePosition({ y: place.y, x: place.x });
     setValue("subtype", place.place_name);
     onLocationSelect(place.id);
   };
@@ -82,7 +74,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, initialLo
       {visibleSubtype === "WALK" && (
         <div className={styles.inputWrapper}>
           <label>장소</label>
-          <SearchLocation appKey={myKey} onSelectPlace={handlePlaceSelect} selectedPlaceId={placeId} selectedPlacePosition={placePosition} initialSubType={initialSubType} />
+          <SearchLocation appKey={myKey} onSelectPlace={handlePlaceSelect} initialSubType={initialSubType} />
         </div>
       )}
 
