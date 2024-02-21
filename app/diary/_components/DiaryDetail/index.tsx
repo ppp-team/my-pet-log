@@ -17,7 +17,7 @@ import BackHeader from "@/app/_components/BackHeader";
 import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { deleteComment, deleteDiary, getComments, getDiary, postComment, postCommentLike, postDiaryLike, putComment } from "@/app/_api/diary";
-import { Comment, GetCommentsResponse } from "@/app/_types/diary/type";
+import { Comment, GetCommentsResponse, GetDiaryResponse } from "@/app/_types/diary/type";
 import { showToast } from "@/app/_components/Toast";
 import Link from "next/link";
 import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
@@ -53,6 +53,12 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
       // }
       showToast("댓글을 삭제했습니다.", true);
       closeModalFunc();
+
+      const newDiaryData = queryClient.getQueryData<GetDiaryResponse>(["diary", { petId, diaryId }]);
+      if (newDiaryData) {
+        newDiaryData.commentCount = newDiaryData.commentCount - 1;
+        queryClient.setQueryData(["diary", { petId, diaryId }], newDiaryData);
+      }
     },
     onError: (e) => {
       showToast("댓글 삭제에 실패했습니다.", false);
@@ -221,6 +227,12 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
       setCommentValue("");
 
       showToast("댓글을 생성했습니다.", true);
+
+      if (diary) {
+        const newDiaryData = { ...diary };
+        newDiaryData.commentCount = diary?.commentCount + 1;
+        queryClient.setQueryData(["diary", { petId, diaryId }], newDiaryData);
+      }
     },
     onError: () => {
       showToast("댓글 생성에 실패했습니다.", false);
@@ -254,7 +266,6 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     queryKey: ["me"],
     queryFn: () => getMe(),
   });
-
   if (!diary) return;
   if (!user) return;
   return (
