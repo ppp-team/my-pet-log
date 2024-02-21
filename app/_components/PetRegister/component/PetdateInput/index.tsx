@@ -50,14 +50,14 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside); // 클릭 이벤트 핸들러 등록
+    document.addEventListener("mousedown", handleClickOutside); // 클릭
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside); // 컴포넌트가 언마운트될 때 클릭 이벤트 핸들러 정리
+      document.removeEventListener("mousedown", handleClickOutside); //
     };
   }, [calendarRef]);
   return (
     <div className={styles.inputWrapper}>
-      <div style={{ display: "flex", gap: "1rem", position: "relative", marginBottom: "0.8rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
+      <div style={{ display: "flex", gap: "1rem", position: "relative" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
         <Image src={CalendarIcon} alt="calendar icon" width={20} height={20} style={{ position: "absolute", right: "1.4rem", top: "1.3rem" }} />
         <input className={styles.input} value={dateValue} readOnly {...register(id)} disabled={isDisabled} />
       </div>
