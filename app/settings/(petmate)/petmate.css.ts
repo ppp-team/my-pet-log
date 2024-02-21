@@ -27,7 +27,7 @@ export const profileWrapper = style({
 
 export const profileImg = style({
   borderRadius: "50%",
-  border: "1px solid var(--MainOrange)",
+  border: "2px solid var(--MainOrange)",
 });
 
 export const nickname = style({
