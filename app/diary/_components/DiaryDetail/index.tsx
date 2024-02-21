@@ -5,7 +5,7 @@ import LikeIcon from "@/public/icons/like.svg";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -21,6 +21,7 @@ import { Comment, GetCommentsResponse } from "@/app/_types/diary/type";
 import { showToast } from "@/app/_components/Toast";
 import Link from "next/link";
 import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
+import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
 
 interface CommentProps {
   comment: Comment;
@@ -42,7 +43,13 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
     mutationFn: (commentId: number) => deleteComment({ commentId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
+      // const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
+      // if (newComments.pages) {
+      //   newComments.pages[pageNum].content.splice(contentNum, 1);
+      //   queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+      // }
       showToast("댓글을 삭제했습니다.", true);
+      closeModalFunc();
     },
     onError: (e) => {
       showToast("댓글 삭제에 실패했습니다.", false);
@@ -53,7 +60,12 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
   const putCommentMutation = useMutation({
     mutationFn: () => putComment({ commentId: comment.commentId, content: newCommentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
+      const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
+      if (newComments.pages) {
+        newComments.pages[pageNum].content[contentNum].content = newCommentValue;
+        queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+      }
+
       showToast("댓글을 수정했습니다.", true);
     },
     onError: (e) => {
@@ -69,11 +81,12 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
   const handleCommentLike = () => {
     postCommentLikeMutation.mutate();
 
-    const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
-    if (!newComments) return;
-    newComments.pages[pageNum].content[contentNum].isCurrentUserLiked = !comment?.isCurrentUserLiked;
-    newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount + 1 : comment.likeCount - 1;
-    queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+    const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
+    if (newComments.pages) {
+      newComments.pages[pageNum].content[contentNum].isCurrentUserLiked = !comment?.isCurrentUserLiked;
+      newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount + 1 : comment.likeCount - 1;
+      queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+    }
   };
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -178,19 +191,32 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
   });
 
   //댓글 조회
-  const { data: comments, fetchNextPage } = useInfiniteQuery({
+  const {
+    data: comments,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+  } = useInfiniteQuery({
     queryKey: ["comments", { petId, diaryId }],
     queryFn: ({ pageParam }) => getComments({ diaryId, page: pageParam, size: COMMENT_PAGE_SIZE }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
+  const { targetRef } = useInfiniteScroll({ callbackFunc: fetchNextPage });
+
   //댓글 생성
   const postCommentMutation = useMutation({
     mutationFn: () => postComment({ diaryId, content: commentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
+    onSuccess: (data: Comment) => {
+      //invalidate하는 게 아니라 데이터 추가
+      const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
+      if (!newComments) return;
+      newComments?.pages[0]?.content.unshift(data);
+      queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+
       setCommentValue("");
+
       showToast("댓글을 생성했습니다.", true);
     },
     onError: () => {
@@ -220,6 +246,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     if (commentValue.trim() == "") return;
     postCommentMutation.mutate();
   };
+
   if (!diary) return <>없음</>;
 
   return (
@@ -308,7 +335,9 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
               )),
             )}
           </div>
-          <button onClick={() => fetchNextPage()}>댓글 더 불러오기</button>
+          {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
+          {!isLoading && hasNextPage && <div ref={targetRef} />}
+
           <div className={styles.commentInputContainer}>
             <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
             <div style={{ width: "100%", position: "relative" }}>

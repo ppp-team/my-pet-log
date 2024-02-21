@@ -2,6 +2,7 @@
 
 import instance from "@/app/_api/axios";
 import {
+  Comment,
   GetCommentsRequest,
   GetCommentsResponse,
   GetDiaryListRequest,
@@ -76,9 +77,10 @@ export const postDiaryLike = async ({ diaryId }: { diaryId: number }) => {
   await instance.post(`pets/${petId}/diaries/${diaryId}/like`);
 };
 
-export const postComment = async ({ diaryId, content }: PostCommentRequest) => {
+export const postComment = async ({ diaryId, content }: PostCommentRequest): Promise<Comment> => {
   const petId = cookies().get("petId")?.value;
-  await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
+  const res = await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
+  return res.data;
 };
 
 export const deleteComment = async ({ commentId }: { commentId: number }) => {

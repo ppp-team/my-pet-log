@@ -1,27 +1,34 @@
 "use client";
 import { getSearchDiary } from "@/app/_api/diary";
+import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
 import { Diaries } from "@/app/diary/_components/Diary";
 import { container, root, search, searchIcon } from "@/app/diary/_components/Diary/style.css";
+import { DIARY_SEARCH_PAGE_SIZE } from "@/app/diary/constant";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import SearchIconURL from "@/public/icons/search.svg?url";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useRef } from "react";
-
-const PAGE_SIZE = 2;
+import { useEffect, useRef } from "react";
 
 const Search = () => {
+  console.log("rerender");
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword");
 
-  const { data, isLoading } = useInfiniteQuery({
+  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ["search", keyword],
-    queryFn: ({ pageParam }) => getSearchDiary({ page: pageParam, size: PAGE_SIZE, keyword }),
+    queryFn: ({ pageParam }) => getSearchDiary({ page: pageParam, size: DIARY_SEARCH_PAGE_SIZE, keyword }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
     enabled: !!keyword,
   });
+  const { targetRef, setIsRefActivated } = useInfiniteScroll({ callbackFunc: fetchNextPage });
+
+  useEffect(() => {
+    console.log("render");
+    setIsRefActivated((prev) => !prev);
+  }, [data]);
 
   if (!keyword) return <>검색해보세요</>;
   if (isLoading) return <>loading</>;
@@ -31,9 +38,13 @@ const Search = () => {
     <>
       {data.pages.map((page, idx) => (
         <div key={idx} className={container}>
-          <Diaries data={page?.content} />
+          {page && <Diaries data={page?.content} />}
         </div>
       ))}
+      {/* <div ref={targetRef}>target</div> */}
+      {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
+      {!isLoading && <div ref={targetRef}>asd</div>}
+      <button onClick={() => fetchNextPage()}>더 불러오기</button>
     </>
   );
 };

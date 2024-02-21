@@ -7,7 +7,7 @@ import * as styles from "./style.css";
 
 export const Diary = ({ diary }: { diary: DiaryType }) => {
   return (
-    <Link href={`/diary/detail/${diary.diaryId}`} scroll={false}>
+    <Link href={`/diary/detail/${diary.diaryId}`}>
       <div className={styles.diaryWrapper}>
         <div className={styles.contents}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -26,7 +26,7 @@ export const Diary = ({ diary }: { diary: DiaryType }) => {
   );
 };
 
-export const Diaries = ({ data }: { data: GetDiaryListResponse["content"] | undefined }) => {
+export const Diaries = ({ data }: { data: GetDiaryListResponse["content"] }) => {
   if (!data) return;
   return (
     <section className={styles.container}>
