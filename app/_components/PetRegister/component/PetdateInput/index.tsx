@@ -1,6 +1,6 @@
 import * as styles from "./style.css";
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Options } from "vanilla-calendar-pro";
 import { UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import OptionalMessage from "@/app/_components/PetRegister/component/OptionalCheck";
@@ -18,6 +18,7 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [dateValue, setDateValue] = useState("날짜 선택");
   const [isDisabled, setIsDisabled] = useState(false);
+  const calendarRef = useRef(null); //
 
   const options: Options = {
     type: "default",
@@ -41,6 +42,18 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
     setIsDisabled((prev) => !prev);
   };
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
+        setIsCalendarOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside); // 클릭 이벤트 핸들러 등록
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); // 컴포넌트가 언마운트될 때 클릭 이벤트 핸들러 정리
+    };
+  }, [calendarRef]);
   return (
     <div className={styles.inputWrapper}>
       <div style={{ display: "flex", gap: "1rem", position: "relative", marginBottom: "0.8rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
@@ -48,7 +61,7 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
         <input className={styles.input} value={dateValue} readOnly {...register(id)} disabled={isDisabled} />
       </div>
       {isCalendarOpen && (
-        <div className={styles.calendarWrapper}>
+        <div className={styles.calendarWrapper} ref={calendarRef}>
           <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%" }} />
         </div>
       )}
