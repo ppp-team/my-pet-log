@@ -24,7 +24,7 @@ export const postLogin = async ({ email, password }: FormData) => {
       return "signin success";
     }
   } catch (error: any) {
-    console.error(error.response.data.message);
+    console.error(error);
     return null;
   }
 };
@@ -41,7 +41,7 @@ export const postSocial = async ({ email }: SocialData) => {
       return "signin success";
     }
   } catch (error: any) {
-    console.error(error.response.data.message);
+    console.error(error);
     return null;
   }
 };
@@ -61,7 +61,6 @@ export const postLogout = async () => {
 
     if (res.status === 204) {
       cookies().delete("accessToken");
-      cookies().delete("refreshToken");
       return true;
     }
   } catch (error: any) {
@@ -81,7 +80,7 @@ export const postSignup = async ({ email, password }: FormData) => {
       return "signup success";
     }
   } catch (error: any) {
-    console.error(error.response.data.message);
+    console.error(error);
     return null;
   }
 };
