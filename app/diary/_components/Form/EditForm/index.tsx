@@ -10,6 +10,7 @@ import DateInput from "@/app/diary/_components/Input/DateInput";
 import { ContentInput, TitleInput } from "@/app/diary/_components/Input/FormInput";
 import ImageInput from "@/app/diary/_components/Input/ImageInput";
 import VideoInput from "@/app/diary/_components/Input/VideoInput";
+import Loading from "@/app/diary/_components/Loading";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -35,11 +36,16 @@ export interface FormInput {
 const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
   const [oldImages, setOldImages] = useState<DiaryMediaType[]>([]);
   const [oldVideo, setOldVideo] = useState<DiaryMediaType[]>([]);
+  const [isVideoUploading, setIsVideoUploading] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
   const { data: diary, isSuccess } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ diaryId }) });
 
-  const putDiaryMutation = useMutation({
+  const {
+    mutate: putDiaryMutation,
+    isPending,
+    isSuccess: isPutSuccess,
+  } = useMutation({
     mutationFn: (formData: FormData) => putDiary({ diaryId, formData }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
@@ -95,6 +101,7 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
             };
             //video가 있다면 백엔드에 등록 후 응답id를 formData에 추가
             if (data.video) {
+              setIsVideoUploading(true);
               const videoFormData = new FormData();
               videoFormData.append("video", data.video);
 
@@ -104,6 +111,7 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
               } catch {
                 showToast("영상 업로드에 실패했습니다.", false);
               }
+              setIsVideoUploading(false);
             }
             if (deletedImages) {
               request.deletedMediaIds = deletedImages;
@@ -115,7 +123,7 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
               diaryImages.forEach((v) => formData.append("images", v.file));
             }
 
-            putDiaryMutation.mutate(formData);
+            putDiaryMutation(formData);
           })}
         >
           <TitleInput register={register} watch={watch} errors={errors} />
@@ -127,6 +135,7 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
           <button className={styles.button}>수정하기</button>
         </form>
       </div>
+      {(isPending || isVideoUploading || isPutSuccess) && <Loading />}
     </>
   );
 };

@@ -9,4 +9,5 @@ export const Z_INDEX = createGlobalTheme(":root", {
   SelectMateDropdown_dropdownList: "5",
   LogWriteButton_button: "5",
   Header: "10",
+  LoadingPage: "15",
 });

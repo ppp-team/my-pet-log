@@ -15,6 +15,8 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
+import { useState } from "react";
+import Loading from "@/app/diary/_components/Loading";
 
 interface Diary {
   title: string;
@@ -24,10 +26,15 @@ interface Diary {
 }
 
 const CreateForm = ({ petId }: { petId: number }) => {
+  const [isVideoUploading, setIsVideoUploading] = useState(false);
   const queryClient = useQueryClient();
 
   //일기 생성
-  const postDiaryMutation = useMutation({
+  const {
+    mutate: postDiaryMutation,
+    isPending,
+    isSuccess,
+  } = useMutation({
     mutationFn: (formData: FormData) => postDiary({ formData }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
@@ -51,6 +58,7 @@ const CreateForm = ({ petId }: { petId: number }) => {
   const [diaryImages, setDiaryImages] = useAtom(diaryImagesAtom);
 
   const router = useRouter();
+
   return (
     <>
       <BackHeader title="육아일기 글작성" styleTop="0" />
@@ -68,6 +76,8 @@ const CreateForm = ({ petId }: { petId: number }) => {
 
             //video가 있다면 백엔드에 등록 후 응답id를 formData에 추가
             if (data.video) {
+              setIsVideoUploading(true);
+
               const videoFormData = new FormData();
               videoFormData.append("video", data.video);
 
@@ -77,6 +87,7 @@ const CreateForm = ({ petId }: { petId: number }) => {
               } catch {
                 showToast("영상 업로드에 실패했습니다.", false);
               }
+              setIsVideoUploading(false);
             }
 
             const blob = new Blob([JSON.stringify(request)], { type: "application/json" });
@@ -86,7 +97,7 @@ const CreateForm = ({ petId }: { petId: number }) => {
               diaryImages.forEach((v) => formData.append("images", v.file));
             }
 
-            postDiaryMutation.mutate(formData);
+            postDiaryMutation(formData);
           })}
         >
           <TitleInput register={register} watch={watch} errors={errors} />
@@ -98,6 +109,7 @@ const CreateForm = ({ petId }: { petId: number }) => {
           <button className={styles.button}>작성하기</button>
         </form>
       </div>
+      {(isPending || isVideoUploading || isSuccess) && <Loading />}
     </>
   );
 };
