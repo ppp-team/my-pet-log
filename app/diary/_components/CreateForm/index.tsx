@@ -1,6 +1,6 @@
 "use client";
 
-import { postDiary } from "@/app/_api/diary";
+import { postDiary, postDiaryVideo } from "@/app/_api/diary";
 import BackHeader from "@/app/_components/BackHeader";
 import { showToast } from "@/app/_components/Toast";
 import { diaryImagesAtom } from "@/app/_states/atom";
@@ -20,10 +20,13 @@ interface Diary {
   title: string;
   content: string;
   date: string;
+  uploadedVideoIds?: string[];
 }
 
 const CreateForm = ({ petId }: { petId: number }) => {
   const queryClient = useQueryClient();
+
+  //일기 생성
   const postDiaryMutation = useMutation({
     mutationFn: (formData: FormData) => postDiary({ formData }),
     onSuccess: () => {
@@ -48,7 +51,6 @@ const CreateForm = ({ petId }: { petId: number }) => {
   const [diaryImages, setDiaryImages] = useAtom(diaryImagesAtom);
 
   const router = useRouter();
-
   return (
     <>
       <BackHeader title="육아일기 글작성" styleTop="0" />
@@ -63,6 +65,20 @@ const CreateForm = ({ petId }: { petId: number }) => {
               content: data.content,
               date: data.date,
             };
+
+            //video가 있다면 백엔드에 등록 후 응답id를 formData에 추가
+            if (data.video) {
+              const videoFormData = new FormData();
+              videoFormData.append("video", data.video);
+
+              try {
+                const res = await postDiaryVideo({ formData: videoFormData });
+                request.uploadedVideoIds = [res.videoId];
+              } catch {
+                showToast("영상 업로드에 실패했습니다.", false);
+              }
+            }
+
             const blob = new Blob([JSON.stringify(request)], { type: "application/json" });
             formData.append("request", blob);
 

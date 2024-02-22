@@ -12,9 +12,9 @@ import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import Image from "next/image";
 import EmptyMyInvitation from "@/app/settings/_components/EmptyMyInvitation";
 
-const Invitation = () => {
+const Invitation = ({ petId }: { petId: number }) => {
   const { data } = useQuery<MyInvitationType[]>({
-    queryKey: ["my-invitations"],
+    queryKey: ["my-invitations", petId],
     queryFn: () => getMyInvitations(),
   });
 
@@ -27,7 +27,7 @@ const Invitation = () => {
   const cancelMutation = useMutation({
     mutationFn: (invitationId: number) => postCancel(invitationId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["my-invitations"] });
+      queryClient.invalidateQueries({ queryKey: ["my-invitations", petId] });
     },
   });
 
@@ -41,7 +41,7 @@ const Invitation = () => {
 
   return (
     <>
-      <InviteModal />
+      <InviteModal petId={petId} />
       {invites.length === 0 ? (
         <EmptyMyInvitation />
       ) : (

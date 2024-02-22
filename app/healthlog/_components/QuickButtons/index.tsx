@@ -15,6 +15,7 @@ import * as styles from "./style.css";
 
 interface QuickButtonsProps {
   petId: number;
+  selectedDate: string;
 }
 
 const buttonData = [
@@ -26,7 +27,10 @@ const buttonData = [
   { src: writeIconSrc, typeName: "CUSTOM", text: "직접 입력", colorClass: styles.thirdColorButton, link: "/healthlog/create" },
 ];
 
-const QuickButtons = ({ petId }: QuickButtonsProps) => {
+const QuickButtons = ({ petId, selectedDate }: QuickButtonsProps) => {
+  const currentTime = new Date().toTimeString().split(" ")[0];
+  const dateTimeForLog = `${selectedDate}T${currentTime}`;
+
   const { mutate: postLog } = usePostLogsMutation();
   const { data: user } = useQuery<UserType>({
     queryKey: ["me"],
@@ -34,9 +38,13 @@ const QuickButtons = ({ petId }: QuickButtonsProps) => {
   });
 
   const handleButtonClick = (typeName: string) => {
-    const formattedDateTime = getKRDateTime();
-    const [datePart] = formattedDateTime.split("T");
+    const [datePart] = selectedDate.split("T");
     const [year, month, day] = datePart.split("-").map(Number);
+    const selectedDateTime = new Date(year, month - 1, day);
+    const currentDateTime = new Date();
+    currentDateTime.setHours(0, 0, 0, 0);
+
+    const isFutureDate = selectedDateTime > currentDateTime;
 
     const logData = {
       petId: petId,
@@ -45,8 +53,8 @@ const QuickButtons = ({ petId }: QuickButtonsProps) => {
         subType: null,
         isCustomLocation: typeName === "WALK",
         kakaoLocationId: null,
-        datetime: formattedDateTime,
-        isComplete: true,
+        datetime: dateTimeForLog,
+        isComplete: !isFutureDate,
         isImportant: false,
         memo: null,
         managerId: String(user?.id),

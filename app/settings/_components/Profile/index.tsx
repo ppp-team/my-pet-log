@@ -5,7 +5,7 @@ import { PLACEHOLDER, NICKNAME_RULES } from "@/app/_constants/inputConstant";
 import * as styles from "@/app/settings/(account)/profile/page.css";
 import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserType } from "@/app/_types/users/types";
 import { getMe, postCheckNickname, putUserProfile } from "@/app/_api/users";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
@@ -26,6 +26,7 @@ const Profile = () => {
     queryKey: ["me"],
     queryFn: () => getMe(),
   });
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -88,16 +89,12 @@ const Profile = () => {
     onSuccess: (data) => {
       if (data) {
         showToast("등록되었습니다!", true);
+        queryClient.invalidateQueries({ queryKey: ["me"] });
       } else {
         showToast("등록 실패했습니다. 잠시 후 다시 시도해주세요.", false);
       }
     },
   });
-
-  const handleResetProfileImage = () => {
-    setImagePreviewUrl("none");
-    //setValue("image", null); 기본프로필로 변경 시 뭘 넣어야하는 지 be께 여쭤봄!
-  };
 
   //폼 제출 시
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
@@ -127,7 +124,9 @@ const Profile = () => {
       <button
         type="button"
         style={{ textDecoration: "underline", textUnderlineOffset: "0.2rem", color: "var(--Gray81)", marginBottom: "0.8rem" }}
-        onClick={handleResetProfileImage}
+        onClick={() => {
+          setImagePreviewUrl("none");
+        }}
       >
         기본 프로필로 변경
       </button>

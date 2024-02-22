@@ -1,21 +1,44 @@
+import { deletedImagesAtom } from "@/app/_states/atom";
 import { InputProps } from "@/app/diary/_components/ImageInput";
 import * as inputStyles from "@/app/diary/_components/ImageInput/style.css";
-import { useState } from "react";
+import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
 import * as styles from "./style.css";
 
-const VideoInput = ({ register, setValue }: InputProps) => {
+const VideoInput = ({ register, setValue, oldMedia }: InputProps) => {
   const [previewVideo, setPreviewVideo] = useState("");
+  const [, setDeletedVideo] = useAtom(deletedImagesAtom);
+  const [oldData, setOldData] = useState(oldMedia);
+
+  useEffect(() => {
+    //edit용 이전 데이터
+    setOldData(oldMedia);
+  }, [oldMedia]);
 
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || !files[0]) return;
+
     setPreviewVideo(URL.createObjectURL(files[0]));
+    setValue("video", files[0]);
+
+    if (oldData && oldData.length > 0) {
+      //비디오는 한 개만 첨부 가능하므로 oldData삭제
+      setDeletedVideo((prev) => [...prev, oldData[0].mediaId]);
+      setOldData([]);
+    }
   };
 
   const deleteVideo = () => {
     setPreviewVideo("");
+    setValue("video", null);
+  };
+
+  const deleteOldVideo = () => {
+    if (oldData) setDeletedVideo((prev) => [...prev, oldData[0].mediaId]);
+    setOldData([]);
     setValue("video", null);
   };
   return (
@@ -30,6 +53,12 @@ const VideoInput = ({ register, setValue }: InputProps) => {
           <div style={{ position: "relative", width: "10rem", height: "10rem" }}>
             <video className={styles.video} src={previewVideo} autoPlay />
             <IoIosCloseCircle className={inputStyles.closeIcon} onClick={deleteVideo} />
+          </div>
+        )}
+        {oldData && oldData.length > 0 && (
+          <div style={{ position: "relative", width: "10rem", height: "10rem" }}>
+            <video className={styles.video} src={`${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${oldData[0].path}`} autoPlay />
+            <IoIosCloseCircle className={inputStyles.closeIcon} onClick={deleteOldVideo} />
           </div>
         )}
       </div>

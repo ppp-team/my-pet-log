@@ -4,7 +4,7 @@ import Image from "next/image";
 import dropdownIconSrc from "@/public/icons/drop-down-icon-orange.svg?url";
 import petGroupSettingIconSrc from "@/public/icons/pet-group-settings.svg?url";
 import NoPetProfileIconSrc from "@/public/images/pet-profile-default.svg?url";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { PetsType } from "@/app/_types/petGroup/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { editPetRep, getPets } from "@/app/_api/pets";
@@ -24,9 +24,10 @@ const SETTING_BUTTON: dropdownMenuItemType = {
 
 const MobilePetGroupDropdown = () => {
   const router = useRouter();
+  const petId = Number(localStorage.getItem("petId"));
 
   const { data: pets } = useQuery<PetsType>({
-    queryKey: ["pets"],
+    queryKey: ["pets", petId],
     queryFn: () => getPets(),
   });
 
@@ -45,6 +46,8 @@ const MobilePetGroupDropdown = () => {
    * @type {dropdownMenuItemType} currentPetGroupId로 리스트에서 repStatus === "REPRESENTATIVE"인 currentPetGroup 추출하고 없으면 null
    */
   const currentPetGroup: dropdownMenuItemType | null = parsedPetGroupList.find((petGroup) => petGroup.isSelected === true) ?? null;
+
+  if (!currentPetGroup) redirect("/404");
 
   /**
    * @type {Array<dropdownMenuItemType>} currentPetGroup 제외하고 나머지 리스트 + 동물 관리 버튼

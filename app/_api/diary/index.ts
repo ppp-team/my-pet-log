@@ -2,12 +2,14 @@
 
 import instance from "@/app/_api/axios";
 import {
+  Comment,
   GetCommentsRequest,
   GetCommentsResponse,
   GetDiaryListRequest,
   GetDiaryListResponse,
   GetDiaryResponse,
   PostCommentRequest,
+  PostDiaryVideoResponse,
   PutCommentRequest,
   getSearchDiaryRequest,
 } from "@/app/_types/diary/type";
@@ -76,9 +78,10 @@ export const postDiaryLike = async ({ diaryId }: { diaryId: number }) => {
   await instance.post(`pets/${petId}/diaries/${diaryId}/like`);
 };
 
-export const postComment = async ({ diaryId, content }: PostCommentRequest) => {
+export const postComment = async ({ diaryId, content }: PostCommentRequest): Promise<Comment> => {
   const petId = cookies().get("petId")?.value;
-  await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
+  const res = await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
+  return res.data;
 };
 
 export const deleteComment = async ({ commentId }: { commentId: number }) => {
@@ -110,4 +113,9 @@ export const getSearchDiary = async ({ page, size, keyword }: getSearchDiaryRequ
 export const putDiary = async ({ diaryId, formData }: { diaryId: number; formData: FormData }) => {
   const petId = cookies().get("petId")?.value;
   await instance.put(`pets/${petId}/diaries/${diaryId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+};
+
+export const postDiaryVideo = async ({ formData }: { formData: FormData }): Promise<PostDiaryVideoResponse> => {
+  const res = await instance.post(`/videos?domain=DIARY`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+  return res.data;
 };

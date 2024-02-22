@@ -44,7 +44,7 @@ const HealthlogContent = ({ petId }: HealthlogContentProps) => {
         />
       </div>
       <div className={styles.quickButtonsContainer}>
-        <QuickButtons petId={petId} />
+        <QuickButtons petId={petId} selectedDate={selectedDate} />
       </div>
       <div>
         <LogList petId={petId} selectedDate={selectedDate} logsData={logsData} />

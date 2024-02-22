@@ -11,9 +11,10 @@ import { getImagePath } from "@/app/_utils/getPersonImagePath";
 interface MemberListProps {
   members: GuardianType[];
   isLeader: boolean;
+  petId: number;
 }
 
-const MemberList = ({ members, isLeader }: MemberListProps) => {
+const MemberList = ({ members, isLeader, petId }: MemberListProps) => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [selectedGuardianId, setSelectedGuardianId] = useState<number | null>(null);
   const queryClient = useQueryClient();
@@ -22,7 +23,7 @@ const MemberList = ({ members, isLeader }: MemberListProps) => {
     mutationFn: (guardianId: number) => deleteGuardians(guardianId),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["petmate"] });
+      queryClient.invalidateQueries({ queryKey: ["petmate", petId] });
     },
   });
 

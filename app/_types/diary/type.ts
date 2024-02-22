@@ -42,6 +42,11 @@ interface Tag {
   isCurrentUser: boolean;
 }
 
+export interface PostDiaryVideoResponse {
+  videoId: string;
+  validUntil: string;
+}
+
 export interface GetDiaryListResponse {
   content: [
     {
@@ -88,19 +93,18 @@ export interface GetDiaryRequest {
   petId: number;
   diaryId: number;
 }
+export interface DiaryMediaType {
+  mediaId: number;
+  path: string;
+}
 
 export interface GetDiaryResponse {
   diaryId: number;
   title: string;
   content: string;
   date: string;
-  images: [
-    {
-      mediaId: number;
-      path: string;
-    },
-  ];
-  videos: string[];
+  images: DiaryMediaType[];
+  videos: DiaryMediaType[];
   isCurrentUserLiked: boolean;
   writer: Writer;
   commentCount: number;

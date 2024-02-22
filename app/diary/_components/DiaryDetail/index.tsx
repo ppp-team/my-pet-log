@@ -5,7 +5,7 @@ import LikeIcon from "@/public/icons/like.svg";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -17,10 +17,14 @@ import BackHeader from "@/app/_components/BackHeader";
 import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { deleteComment, deleteDiary, getComments, getDiary, postComment, postCommentLike, postDiaryLike, putComment } from "@/app/_api/diary";
-import { Comment, GetCommentsResponse } from "@/app/_types/diary/type";
+import { Comment, GetCommentsResponse, GetDiaryResponse } from "@/app/_types/diary/type";
 import { showToast } from "@/app/_components/Toast";
 import Link from "next/link";
 import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
+import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
+import { UserType } from "@/app/_types/users/types";
+import { getMe } from "@/app/_api/users";
+import { getImagePath } from "@/app/_utils/getPersonImagePath";
 
 interface CommentProps {
   comment: Comment;
@@ -42,7 +46,19 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
     mutationFn: (commentId: number) => deleteComment({ commentId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
+      // const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
+      // if (newComments.pages) {
+      //   newComments.pages[pageNum].content.splice(contentNum, 1);
+      //   queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+      // }
       showToast("댓글을 삭제했습니다.", true);
+      closeModalFunc();
+
+      const newDiaryData = queryClient.getQueryData<GetDiaryResponse>(["diary", { petId, diaryId }]);
+      if (newDiaryData) {
+        newDiaryData.commentCount = newDiaryData.commentCount - 1;
+        queryClient.setQueryData(["diary", { petId, diaryId }], newDiaryData);
+      }
     },
     onError: (e) => {
       showToast("댓글 삭제에 실패했습니다.", false);
@@ -53,7 +69,12 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
   const putCommentMutation = useMutation({
     mutationFn: () => putComment({ commentId: comment.commentId, content: newCommentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
+      const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
+      if (newComments.pages) {
+        newComments.pages[pageNum].content[contentNum].content = newCommentValue;
+        queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+      }
+
       showToast("댓글을 수정했습니다.", true);
     },
     onError: (e) => {
@@ -69,11 +90,12 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
   const handleCommentLike = () => {
     postCommentLikeMutation.mutate();
 
-    const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
-    if (!newComments) return;
-    newComments.pages[pageNum].content[contentNum].isCurrentUserLiked = !comment?.isCurrentUserLiked;
-    newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount + 1 : comment.likeCount - 1;
-    queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+    const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
+    if (newComments.pages) {
+      newComments.pages[pageNum].content[contentNum].isCurrentUserLiked = !comment?.isCurrentUserLiked;
+      newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount + 1 : comment.likeCount - 1;
+      queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+    }
   };
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -88,7 +110,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
   return (
     <>
       <div className={styles.commentContainer}>
-        <div style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${comment.writer.profilePath})` }} className={styles.profileImage} />
+        <Image className={styles.profileImage} src={getImagePath(comment.writer.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
         <div className={styles.commentMain}>
           <div className={styles.commentHeader}>
             <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>
@@ -139,7 +161,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             {/* <button className={styles.recommentButton}>답글</button> */}
-            <button className={styles.commentLikeButton} onClick={handleCommentLike}>
+            <button className={`${styles.commentLikeButton} ${comment.isCurrentUserLiked ? styles.LikeIcon : ""}`} onClick={handleCommentLike}>
               <LikeIcon color={comment.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} />
               {comment.likeCount}
             </button>
@@ -178,20 +200,39 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
   });
 
   //댓글 조회
-  const { data: comments, fetchNextPage } = useInfiniteQuery({
+  const {
+    data: comments,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+  } = useInfiniteQuery({
     queryKey: ["comments", { petId, diaryId }],
     queryFn: ({ pageParam }) => getComments({ diaryId, page: pageParam, size: COMMENT_PAGE_SIZE }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
+  const { targetRef } = useInfiniteScroll({ callbackFunc: fetchNextPage });
+
   //댓글 생성
   const postCommentMutation = useMutation({
     mutationFn: () => postComment({ diaryId, content: commentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
+    onSuccess: (data: Comment) => {
+      //invalidate하는 게 아니라 데이터 추가
+      const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
+      if (!newComments) return;
+      newComments?.pages[0]?.content.unshift(data);
+      queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
+
       setCommentValue("");
+
       showToast("댓글을 생성했습니다.", true);
+
+      if (diary) {
+        const newDiaryData = { ...diary };
+        newDiaryData.commentCount = diary?.commentCount + 1;
+        queryClient.setQueryData(["diary", { petId, diaryId }], newDiaryData);
+      }
     },
     onError: () => {
       showToast("댓글 생성에 실패했습니다.", false);
@@ -220,11 +261,17 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     if (commentValue.trim() == "") return;
     postCommentMutation.mutate();
   };
-  if (!diary) return <>없음</>;
 
+  const { data: user } = useQuery<UserType>({
+    queryKey: ["me"],
+    queryFn: () => getMe(),
+  });
+  if (!diary) return;
+  if (!user) return;
   return (
     <>
       <BackHeader title="육아일기" />
+
       <div className={styles.root}>
         <section className={styles.header}>
           <p className={styles.petInfo}>
@@ -261,10 +308,10 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
         </section>
 
         <section className={styles.main}>
-          {diary.images.length > 0 && (
+          {(diary.images.length > 0 || diary.videos.length > 0) && (
             <>
               <div className={styles.swiperFraction}>
-                {currentPage + 1}/{diary.images.length}
+                {currentPage + 1}/{diary.images.length + diary.videos.length}
               </div>
               <div onClick={() => setIsKebabOpen(false)}>
                 <Swiper
@@ -279,23 +326,31 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
                       <div className={styles.image} style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${image.path})` }}></div>
                     </SwiperSlide>
                   ))}
+                  {diary.videos.length > 0 && (
+                    <SwiperSlide>
+                      <video controls width="250" className={styles.image} autoPlay={true} loop={true}>
+                        동영상 재생에 실패했습니다.
+                        <source src={`${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${diary.videos[0].path}`} type="video/mp4" />
+                      </video>
+                    </SwiperSlide>
+                  )}
                 </Swiper>
-              </div>
-              <div className={styles.profile}>
-                <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
-                  <div style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${diary.writer.profilePath}` }} className={styles.profileImage} />
-                  <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{diary.writer.nickname}</p>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <button onClick={handleDiaryLike}>
-                    <LikeIcon color={diary.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
-                  </button>
-                  <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{diary.likeCount}</p>
-                </div>
               </div>
             </>
           )}
 
+          <div className={styles.profile}>
+            <div style={{ display: "flex", gap: "0.9rem", alignItems: "center" }}>
+              <Image className={styles.profileImage} src={getImagePath(diary.writer.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
+              <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{diary.writer.nickname}</p>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <button onClick={handleDiaryLike} className={`${diary.isCurrentUserLiked ? styles.LikeIcon : ""}`}>
+                <LikeIcon color={diary.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
+              </button>
+              <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{diary.likeCount}</p>
+            </div>
+          </div>
           <p className={styles.content}>{diary.content}</p>
         </section>
 
@@ -308,9 +363,11 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
               )),
             )}
           </div>
-          <button onClick={() => fetchNextPage()}>댓글 더 불러오기</button>
+          {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
+          {!isLoading && hasNextPage && <div ref={targetRef} />}
+
           <div className={styles.commentInputContainer}>
-            <div style={{ backgroundImage: `url()` }} className={styles.profileImage} />
+            <Image className={styles.profileImage} src={getImagePath(user.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
             <div style={{ width: "100%", position: "relative" }}>
               <textarea placeholder="댓글을 남겨주세요" className={styles.commentInput} onChange={handleCommentChange} value={commentValue} />
               <Image src={SendIcon} alt="send icon" width={20} height={20} className={styles.sendIcon} onClick={handlePostComment} />

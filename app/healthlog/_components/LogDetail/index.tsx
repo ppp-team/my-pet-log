@@ -8,11 +8,11 @@ import { useRouter } from "next/navigation";
 import * as styles from "./style.css";
 
 interface LogDetailProps {
+  petId: number;
   logId: number;
 }
 
-const LogDetail = ({ logId }: LogDetailProps) => {
-  const petId = Number(localStorage.getItem("petId"));
+const LogDetail = ({ petId, logId }: LogDetailProps) => {
   const router = useRouter();
 
   const { data: logDetailData, error } = useQuery<LogDetailType, Error>({
