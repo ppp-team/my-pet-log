@@ -1,6 +1,6 @@
 import { deletedImagesAtom } from "@/app/_states/atom";
-import { InputProps } from "@/app/diary/_components/ImageInput";
-import * as inputStyles from "@/app/diary/_components/ImageInput/style.css";
+import { InputProps } from "@/app/diary/_components/Input/ImageInput";
+import * as inputStyles from "@/app/diary/_components/Input/ImageInput/style.css";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";

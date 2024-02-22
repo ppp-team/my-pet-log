@@ -1,5 +1,5 @@
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
-import { FormInput } from "@/app/diary/_components/EditForm";
+import { FormInput } from "@/app/diary/_components/Form/EditForm";
 import { useState } from "react";
 import { UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { Options } from "vanilla-calendar-pro";
