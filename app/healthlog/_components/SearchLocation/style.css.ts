@@ -49,3 +49,10 @@ export const searchButton = style({
   color: "var(--White)",
   fontWeight: "600",
 });
+
+export const map = style({
+  width: "100%",
+  height: "30rem",
+
+  borderRadius: "10px",
+});

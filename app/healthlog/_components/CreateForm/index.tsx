@@ -19,7 +19,7 @@ interface CreateFormProps {
 
 const CreateForm = ({ petId }: CreateFormProps) => {
   const [visibleSubtype, setVisibleSubtype] = useState<keyof typeof subtypeOptions | "CUSTOM" | "WALK" | null>("FEED");
-  const [selectedType, setSelectedType] = useState<string>("FEED");
+  const [selectedType, setSelectedType] = useState<string>("CUSTOM");
   const [kakaoLocationId, setKakaoLocationId] = useState<number | null>(null);
   const [activeButtonGroup, setActiveButtonGroup] = useState("");
   const [selectedGuardianId, setSelectedGuardianId] = useState<string>("");
@@ -67,7 +67,7 @@ const CreateForm = ({ petId }: CreateFormProps) => {
     const datetime = `${date}T${time}`;
 
     const logData = {
-      type: selectedType === "CUSTOM" ? data.type : selectedType,
+      type: selectedType,
       subType: data.subtype,
       isCustomLocation: selectedType === "WALK",
       kakaoLocationId: selectedType === "WALK" ? kakaoLocationId : null,
@@ -85,6 +85,11 @@ const CreateForm = ({ petId }: CreateFormProps) => {
       console.error("로그 등록 실패:", error);
     }
   };
+
+  useEffect(() => {
+    setVisibleSubtype("CUSTOM");
+    setActiveButtonGroup("bottom");
+  }, []);
 
   useEffect(() => {
     setValue("memo", "");
@@ -118,7 +123,7 @@ const CreateForm = ({ petId }: CreateFormProps) => {
 
   return (
     <>
-      <BackHeader title="건강수첩 작성하기" />
+      <BackHeader title="건강수첩 작성하기" styleTop="0" />
       <div className={styles.container}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formItems} onKeyDown={handleKeyPress}>
           <div className={styles.inputWrapper}>

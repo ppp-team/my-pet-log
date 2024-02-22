@@ -10,8 +10,6 @@ declare global {
 interface SearchLocationProps {
   appKey: string;
   onSelectPlace: (place: Place) => void;
-  selectedPlaceId?: number | null;
-  selectedPlacePosition?: { y: number; x: number } | null;
   initialSubType?: string;
 }
 
@@ -24,7 +22,7 @@ export interface Place {
 
 type Status = "OK" | "ZERO_RESULT" | "ERROR";
 
-const SearchLocation = ({ appKey, onSelectPlace, selectedPlaceId, selectedPlacePosition, initialSubType }: SearchLocationProps) => {
+const SearchLocation = ({ appKey, onSelectPlace, initialSubType }: SearchLocationProps) => {
   const [inputText, setInputText] = useState<string>("");
   const [map, setMap] = useState<any>(null);
 
@@ -43,24 +41,33 @@ const SearchLocation = ({ appKey, onSelectPlace, selectedPlaceId, selectedPlaceP
         };
         const initialMap = new window.kakao.maps.Map(container, options);
         setMap(initialMap);
+
+        if (initialSubType) {
+          searchPlaceByName(initialSubType, initialMap);
+        }
       });
     };
 
     return () => {
       document.head.removeChild(script);
     };
-  }, [appKey]);
+  }, [appKey, initialSubType]);
 
-  useEffect(() => {
-    if (selectedPlacePosition && map) {
-      const center = new window.kakao.maps.LatLng(selectedPlacePosition.y, selectedPlacePosition.x);
-      map.setCenter(center);
-      new window.kakao.maps.Marker({
-        map: map,
-        position: center,
-      });
-    }
-  }, [selectedPlacePosition, map]);
+  const searchPlaceByName = (placeName: string, map: any) => {
+    const ps = new window.kakao.maps.services.Places();
+    ps.keywordSearch(placeName, (data: any, status: any) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        const firstPlace = data[0];
+        const center = new window.kakao.maps.LatLng(firstPlace.y, firstPlace.x);
+        map.setCenter(center);
+        new window.kakao.maps.Marker({
+          map: map,
+          position: center,
+        });
+        setInputText(firstPlace.place_name);
+      }
+    });
+  };
 
   const searchPlaces = () => {
     window.kakao.maps.load(() => {
@@ -105,7 +112,7 @@ const SearchLocation = ({ appKey, onSelectPlace, selectedPlaceId, selectedPlaceP
           검색
         </button>
       </div>
-      <div id="map" style={{ width: "100%", height: "30rem" }} />
+      <div className={styles.map} id="map" />
     </div>
   );
 };
