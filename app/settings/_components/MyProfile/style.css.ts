@@ -27,7 +27,7 @@ export const profileImg = style({
   width: "5rem",
   height: "5rem",
 
-  border: "1px solid var(--MainOrange)",
+  border: "2px solid var(--MainOrange)",
   borderRadius: "50%",
   backgroundSize: "contain",
 });

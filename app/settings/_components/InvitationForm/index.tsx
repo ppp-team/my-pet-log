@@ -10,7 +10,7 @@ interface IForm {
   inputValue: string;
 }
 
-const InvitationForm = () => {
+const InvitationForm = ({ petId }: { petId: number }) => {
   const queryClient = useQueryClient();
   const {
     register,
@@ -23,7 +23,7 @@ const InvitationForm = () => {
     mutationFn: (email: string) => postInviteGuardian(email),
     onSuccess: () => {
       showToast("초대 완료!", true);
-      queryClient.invalidateQueries({ queryKey: ["my-invitations"] });
+      queryClient.invalidateQueries({ queryKey: ["my-invitations", petId] });
     },
     onError: (error: any) => {
       setError("inputValue", {

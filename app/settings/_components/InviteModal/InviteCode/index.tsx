@@ -7,13 +7,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getPet, getCode } from "@/app/_api/pets";
 import { PetType } from "@/app/_types/pets/types";
 
-const InviteCode = () => {
+const InviteCode = ({ petId }: { petId: number }) => {
   const { data: petInfo } = useQuery<PetType>({
-    queryKey: ["petInfo"],
+    queryKey: ["petInfo", petId],
     queryFn: () => getPet(),
   });
   const { data: code } = useQuery<string>({
-    queryKey: ["inviteCode"],
+    queryKey: ["inviteCode", petId],
     queryFn: () => getCode(),
   });
 
