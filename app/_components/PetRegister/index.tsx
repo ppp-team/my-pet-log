@@ -44,7 +44,7 @@ const PetRegister = () => {
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLDivElement>(null); //모달 외부 클릭시 닫히도록
   const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
-  const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
+  const [selectedBreed, setSelectedBreed] = useState<string | null>(null); //품종 선택 반영
   const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
@@ -148,7 +148,7 @@ const PetRegister = () => {
   const handleTypeClick = (type: string) => {
     setValue("type", type);
     setSelectedType(type);
-    setSelectedBreed("");
+    setSelectedBreed(null);
     setTypeOpen((prev) => !prev);
   };
 
@@ -258,9 +258,9 @@ const PetRegister = () => {
           )}
         </div>
       </div>
-      <button className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
+      <div className={` ${isSectionValid ? styles.button : styles.disableButton}`} onClick={handleNextSection}>
         다음
-      </button>
+      </div>
     </>
   );
 

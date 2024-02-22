@@ -125,10 +125,23 @@ export const button = style({
   marginTop: "2.4rem",
 
   borderRadius: "30px",
+  fontSize: "1.6rem",
+  fontWeight: 600,
+  textAlign: "center",
 
-  color: "#fff",
+  color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
+
+  cursor: "pointer",
 });
+
+export const disableButton = style([
+  button,
+  {
+    backgroundColor: "var(--GrayB1)",
+    pointerEvents: "none",
+  },
+]);
 
 export const inputWrapper = style({
   display: "flex",
