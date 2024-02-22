@@ -1,5 +1,6 @@
 import { postLogs } from "@/app/_api/log/index";
 import { getMe } from "@/app/_api/users";
+import { showToast } from "@/app/_components/Toast";
 import { PostLogType } from "@/app/_types/log/types";
 import { UserType } from "@/app/_types/user/types";
 import feedIconSrc from "@/public/icons/feed-icon.svg?url";
@@ -45,6 +46,9 @@ const QuickButtons = ({ petId, selectedDate }: QuickButtonsProps) => {
       queryClient.invalidateQueries({
         queryKey: ["Logs", variables.petId, year, month, day],
       });
+    },
+    onError: () => {
+      showToast("건강수첩 항목 생성에 실패했습니다.", false);
     },
   });
 
