@@ -47,7 +47,7 @@ const MobilePetGroupDropdown = () => {
    */
   const currentPetGroup: dropdownMenuItemType | null = parsedPetGroupList.find((petGroup) => petGroup.isSelected === true) ?? null;
 
-  if (!currentPetGroup) redirect("/404");
+  // if (!currentPetGroup) redirect("/404");
 
   /**
    * @type {Array<dropdownMenuItemType>} currentPetGroup 제외하고 나머지 리스트 + 동물 관리 버튼
