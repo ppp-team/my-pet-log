@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { postPet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
 import ImageModal from "../ImageModal";
+import GenderSelection from "./component/RadioInput/GenderRadio";
+import NeuteringSelection from "./component/RadioInput/NeuteringRadio";
 
 export interface IFormInput {
   petName: string;
@@ -40,7 +42,7 @@ const PetRegister = () => {
   const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
-  const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
+  const dropdownRef = useRef<HTMLDivElement>(null); //모달 외부 클릭시 닫히도록
   const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
   const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
   const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
@@ -54,7 +56,7 @@ const PetRegister = () => {
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onTouched" });
+  } = useForm<IFormInput>({ mode: "onSubmit" });
 
   const router = useRouter();
   const handleCloseModal = () => {
@@ -69,11 +71,11 @@ const PetRegister = () => {
       type: data.type,
       breed: data.breed,
       gender: data.gender,
-      isNeutered: data.neutering === "" ? null : data.neutering,
+      isNeutered: data.neutering === undefined ? null : data.neutering,
       birth: data.birthday === "날짜 선택" ? null : data.birthday,
       firstMeetDate: data.firstMeet === "날짜 선택" ? null : data.firstMeet,
       weight: data.weight === "" ? null : data.weight,
-      registeredNumber: data.registeredNumber === "" ? null : data.registe,
+      registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
     console.log("request", request);
 
@@ -200,59 +202,62 @@ const PetRegister = () => {
       <input className={styles.writeInput} {...register("petName", PET_NAME_RULES)} placeholder={PET_PLACEHOLDER.name} />
       {errors.petName && <ErrorMessage message={errors.petName.message} />}
 
-      {/* 타입 */}
-      <label className={styles.label}>타입*</label>
-      <div>
-        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen((prev) => !prev)}>
-          {selectedType || "타입을 선택하세요"}
-          <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
-        </button>
-        {typeOpen && (
-          <ul className={styles.optionsList} ref={dropdownRef}>
-            {Object.keys(petOptions).map((type: string, index: number) => (
-              <li key={index} value={type}>
-                <button type="button" className={styles.optionButton} onClick={() => handleTypeClick(type)} {...register("type")}>
-                  {type}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+      <div ref={dropdownRef}>
+        {/* 타입 */}
+        <label className={styles.label}>타입*</label>
+        <div>
+          <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen((prev) => !prev)}>
+            {selectedType || "타입을 선택하세요"}
+            <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
+          </button>
+          {typeOpen && (
+            <ul className={styles.optionsList}>
+              {Object.keys(petOptions).map((type: string, index: number) => (
+                <li key={index} value={type}>
+                  <button type="button" className={styles.optionButton} onClick={() => handleTypeClick(type)} {...register("type")}>
+                    {type}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* 품종 */}
+        <label className={styles.label}>품종*</label>
+        <div>
+          {selectedType !== "기타" && (
+            <button className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
+              {selectedBreed || "품종을 선택하세요"}
+              <DropdownIcon className={`${styles.dropdownIcon} ${breedOpen ? styles.dropdownIconOpen : ""}`} />
+            </button>
+          )}
+          {breedOpen && selectedType !== "기타" && (
+            <ul className={styles.optionsList}>
+              {petOptions[selectedType]?.map((breed: string, index: number) => (
+                <li key={index} value={breed}>
+                  <button type="button" className={styles.optionButton} onClick={() => handleBreedClick(breed)} {...register("breed")}>
+                    {breed}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {selectedType === "기타" && (
+            <>
+              <input
+                className={styles.writeInput}
+                placeholder="품종을 직접 입력하세요"
+                {...register("breed", {
+                  required: "내용을 입력해주세요",
+                })}
+                autoFocus
+              />
+            </>
+          )}
+        </div>
       </div>
-
-      {/* 품종 */}
-      <label className={styles.label}>품종*</label>
-      {selectedType !== "기타" && (
-        <button className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
-          {selectedBreed || "품종을 선택하세요"}
-          <DropdownIcon className={`${styles.dropdownIcon} ${breedOpen ? styles.dropdownIconOpen : ""}`} />
-        </button>
-      )}
-      {breedOpen && selectedType !== "기타" && (
-        <ul className={styles.optionsList} ref={dropdownRef}>
-          {petOptions[selectedType]?.map((breed: string, index: number) => (
-            <li key={index} value={breed}>
-              <button type="button" className={styles.optionButton} onClick={() => handleBreedClick(breed)} {...register("breed")}>
-                {breed}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {selectedType === "기타" && (
-        <>
-          <input
-            className={styles.writeInput}
-            placeholder="품종을 직접 입력하세요"
-            {...register("breed", {
-              required: "내용을 입력해주세요",
-            })}
-            autoFocus
-          />
-        </>
-      )}
-
       <button className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
         다음
       </button>
@@ -263,45 +268,11 @@ const PetRegister = () => {
     <>
       {/* 성별 */}
       <label className={styles.label}>성별*</label>
-      <div className={styles.radioContainer}>
-        <div className={`${styles.leftRadio} ${selectedGender === "MALE" ? styles.leftSelectedBorder : ""}`}>
-          <input type="radio" id="MALE" value="MALE" checked={selectedGender === "MALE"} onClick={() => handleGenderChange("MALE")} {...register("gender", PET_GENDER_RULES)} />
-          <label className={`${styles.radioOption} ${selectedGender === "MALE" && styles.leftSelected}`} htmlFor="MALE">
-            남
-          </label>
-        </div>
-        <div className={`${styles.rightRadio} ${selectedGender === "FEMALE" ? styles.rightSelectedBorder : ""}`}>
-          <input
-            type="radio"
-            id="FEMALE"
-            value="FEMALE"
-            checked={selectedGender === "FEMALE"}
-            onClick={() => handleGenderChange("FEMALE")}
-            {...register("gender", PET_GENDER_RULES)}
-          />
-          <label className={`${styles.radioOption} ${selectedGender === "FEMALE" && styles.rightSelected}`} htmlFor="FEMALE">
-            여
-          </label>
-        </div>
-      </div>
-      {errors.gender && <ErrorMessage message={errors.gender.message} />}
+      <GenderSelection selectedGender={selectedGender} handleGenderChange={handleGenderChange} />
 
       {/* 중성화 여부 */}
-      <label className={styles.label}>중성화 여부</label>
-      <div className={styles.radioContainer}>
-        <div className={`${styles.leftRadio} ${selectedNeutering === "true" ? styles.leftSelectedBorder : ""}`}>
-          <input type="radio" id="yes" name="neutering" value="true" checked={selectedNeutering === "true"} onChange={handleNeuteringChange} />
-          <label className={`${styles.radioOption} ${selectedNeutering === "true" && styles.leftSelected}`} htmlFor="yes">
-            했어요
-          </label>
-        </div>
-        <div className={`${styles.rightRadio} ${selectedNeutering === "false" ? styles.rightSelectedBorder : ""}`}>
-          <input type="radio" id="no" name="neutering" value="false" checked={selectedNeutering === "false"} onChange={handleNeuteringChange} />
-          <label className={`${styles.radioOption} ${selectedNeutering === "false" && styles.rightSelected}`} htmlFor="no">
-            안했어요
-          </label>
-        </div>
-      </div>
+      <label className={styles.label}>중성화 여부*</label>
+      <NeuteringSelection selectedNeutering={selectedNeutering} handleNeuteringChange={handleNeuteringChange} />
 
       {/* 생일  */}
       <label className={styles.label}>생일</label>

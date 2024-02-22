@@ -56,9 +56,9 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside); // 클릭
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside); //
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [calendarRef]);
 
