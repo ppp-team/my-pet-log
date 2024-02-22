@@ -2,9 +2,15 @@ import { Z_INDEX } from "@/styles/zindex.css";
 import { style } from "@vanilla-extract/css";
 
 export const header = style({
+  "@media": {
+    "screen and (min-width: 1024px)": {
+      display: "none",
+    },
+  },
+
   position: "fixed",
   top: "0",
-  zIndex: Z_INDEX.MobileLayout,
+  zIndex: Z_INDEX.AppLayout,
   display: "grid",
   justifyContent: "space-between",
   gridTemplateColumns: "auto 4rem",

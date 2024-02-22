@@ -2,9 +2,15 @@ import { Z_INDEX } from "@/styles/zindex.css";
 import { style } from "@vanilla-extract/css";
 
 export const footer = style({
+  "@media": {
+    "screen and (min-width: 1024px)": {
+      display: "none",
+    },
+  },
+
   position: "fixed",
   bottom: "0",
-  zIndex: Z_INDEX.MobileLayout,
+  zIndex: Z_INDEX.AppLayout,
   borderRadius: "10px 10px 0px 0px",
   backgroundColor: "var(--White)",
   boxShadow: "0px -3px 3px 0px rgba(163, 163, 163, 0.20)",

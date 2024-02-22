@@ -33,7 +33,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     return (
       <>
         <PcHeader />
-        {children}
+        <MainWrapper>{children}</MainWrapper>
       </>
     );
   }
