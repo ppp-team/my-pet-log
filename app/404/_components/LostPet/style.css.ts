@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const lostPetWrapper = style({
   width: "100%",
-  height: "17rem",
+  height: "18rem",
 
   display: "flex",
   flexDirection: "column",
@@ -38,9 +38,8 @@ export const lostPetCardList = style({
   display: "flex",
 
   marginLeft: "2.1rem",
-  gap: "2rem",
 
-  overflow: "auto",
+  overflowX: "auto",
   selectors: {
     "&::-webkit-scrollbar": {
       display: "none",
@@ -52,9 +51,10 @@ export const lostPetCardList = style({
 });
 
 export const lostPetCard = style({
-  width: "19.7rem",
+  width: "21rem",
   height: "9rem",
 
+  margin: "1rem",
   padding: "1.4rem",
   gap: "0.9rem",
 
@@ -76,7 +76,7 @@ export const lostPetImage = style({
 });
 
 export const lostPetCardDetail = style({
-  width: "12rem",
+  width: "13rem",
 
   display: "flex",
   flexDirection: "column",
