@@ -15,11 +15,13 @@ import OptionalMessage from "../component/OptionalCheck";
 import CloseIcon from "@/public/icons/close.svg?url";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import { useRouter } from "next/navigation";
-import { postPet } from "@/app/_api/pets";
+import { postPet, deletePet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
 import ImageModal from "../../ImageModal";
 import GenderSelection from "../component/RadioInput/GenderRadio";
 import NeuteringSelection from "../component/RadioInput/NeuteringRadio";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { showToast } from "@/app/_components/Toast";
 
 export interface IFormInput {
   petName: string;
@@ -37,7 +39,8 @@ export interface IFormInput {
 }
 
 const PetRegisterEdit = () => {
-  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  const { isModalOpen: isConfirmModalOpen, openModalFunc: openConfirmModalFunc, closeModalFunc: closeConfirmModalFunc } = useModal();
+  const { isModalOpen: isDeleteModalOpen, openModalFunc: openDeleteModalFunc, closeModalFunc: closeDeleteModalFunc } = useModal();
   const [profileImage, setProfileImage] = useState<File | string | null>(DefaultImage);
   const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
@@ -49,6 +52,9 @@ const PetRegisterEdit = () => {
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
 
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
@@ -58,11 +64,42 @@ const PetRegisterEdit = () => {
     watch,
   } = useForm<IFormInput>({ mode: "onSubmit" });
 
-  const router = useRouter();
   const handleCloseModal = () => {
-    closeModalFunc();
+    closeConfirmModalFunc();
     router.push("/settings");
   };
+
+  const handleCancelModal = () => {
+    closeDeleteModalFunc();
+  };
+
+  const handleDeleteModal = () => {
+    closeDeleteModalFunc();
+    router.push("/settings");
+  };
+
+  // const deletePetMutation = useMutation(deletePet, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["pets", petId] });
+  //     router.push("/settings");
+  //   },
+  //   onError: () => {
+  //     showToast("마이펫 삭제에 실패했습니다.", false);
+  //     closeDeleteModalFunc();
+  //   },
+  // });
+
+  const deletePetMutation = useMutation({
+    mutationFn: deletePet,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["pets", petId] });
+      router.push("/settings");
+    },
+    onError: () => {
+      showToast("마이펫 삭제에 실패했습니다.", false);
+      closeDeleteModalFunc();
+    },
+  });
 
   //전체 폼 제출
   const onSubmit: SubmitHandler<IFormInput> = async (data, e) => {
@@ -91,7 +128,7 @@ const PetRegisterEdit = () => {
     console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
     const res = await postPet({ formData });
     if (res !== null) {
-      return openModalFunc();
+      return openConfirmModalFunc();
     }
     //응답결과 확인
     console.log("res", res);
@@ -176,11 +213,6 @@ const PetRegisterEdit = () => {
   const clearWeightInput = () => {
     setValue("weight", null);
     setIsWeightDisabled((prev) => !prev);
-  };
-
-  //삭제하기 버튼, API호출하는 코드로 수정 예정
-  const handleDelete = () => {
-    console.log("동물 삭제");
   };
 
   const section1 = (
@@ -297,11 +329,13 @@ const PetRegisterEdit = () => {
 
       {/* 삭제하기 버튼 */}
       <div className={styles.deleteButtonWrapper}>
-        <button className={styles.deleteButton} onClick={handleDelete}>
+        <div className={styles.deleteButton} onClick={openDeleteModalFunc}>
           동물 삭제하기
-        </button>
+        </div>
       </div>
+      {isDeleteModalOpen && <ImageModal type={"deletePet"} onClick={deletePetMutation.mutate} onClose={handleCancelModal} />}
 
+      {/* 작성완료 버튼 */}
       <button className={styles.button}>작성완료</button>
     </>
   );
@@ -322,7 +356,7 @@ const PetRegisterEdit = () => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>
-      {isModalOpen && <ImageModal type={"register"} onClick={handleCloseModal} onClose={handleCloseModal} />}
+      {isConfirmModalOpen && <ImageModal type={"register"} onClick={handleCloseModal} onClose={handleCloseModal} />}
     </>
   );
 };

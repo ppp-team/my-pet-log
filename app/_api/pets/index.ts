@@ -56,7 +56,7 @@ export const getCode = async () => {
 
 export const editPetRep = async (petId: string) => {
   try {
-    const response = await instance.post(`/my/pets/${petId}/selectRep`);
+    const response = await instance.post(`/my/pets/${petId}`);
 
     if (response.status === 200) {
       cookies().set("petId", petId);
@@ -66,5 +66,22 @@ export const editPetRep = async (petId: string) => {
     }
   } catch (error) {
     throw new Error("Error fetching user data");
+  }
+};
+
+export const deletePet = async (petData: { petId: string }) => {
+  const petId = cookies().get("petId")?.value;
+  try {
+    const response = await instance.delete(`my/pets/${petData.petId}`);
+    if (response.status === 200) {
+      console.log("삭제했당");
+    }
+  } catch (error: any) {
+    if (error.response && error.response.status === 400) {
+      console.error(error.response.data);
+    } else {
+      // 그 외의 서버 오류 처리
+      console.error(error.response?.data);
+    }
   }
 };

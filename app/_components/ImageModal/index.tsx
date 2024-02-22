@@ -6,7 +6,7 @@ import Register from "@/public/icons/pet-register-comfirm-icon.svg";
 import Signup from "@/public/icons/signup-confirm-icon.svg";
 
 interface ModalProps {
-  type: "register" | "signup";
+  type: "register" | "signup" | "deletePet";
   onClick: () => void;
   onClose: () => void;
 }
@@ -33,9 +33,19 @@ const ImageModal = ({ type, onClick, onClose }: ModalProps) => {
       modalImage = <Signup width={138} height={104} alt="가입 이미지" />;
       buttonText = `로그인`;
       break;
+
+    case "deletePet":
+      title = `정말 삭제하시겠습니까?`;
+      text1 = `모든 데이터가 삭제됩니다..`;
+      text2 = `어쩌구저쩌구...`;
+      modalImage = <Signup width={138} height={104} alt="가입 이미지" />;
+      buttonText = `삭제하기`;
+      break;
+
     default:
       break;
   }
+
   return (
     <ModalContainer>
       <section className={styles.container}>
