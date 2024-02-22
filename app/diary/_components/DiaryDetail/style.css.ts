@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
 
 export const root = style({
   display: "flex",
@@ -287,4 +287,16 @@ export const commentKebab = style([
 export const commentEditForm = style({
   display: "flex",
   flexDirection: "column",
+});
+
+const bounce = keyframes({
+  "0%": { transform: "scale(0.6)", transformOrigin: "center center" },
+  "25%": { transform: "scale(0.9)" },
+  "50%": { transform: "scale(1.1)" },
+  "75%": { transform: "scale(1)" },
+  "100%": { transform: "scale(0.9)", transformOrigin: "center center" },
+});
+
+export const LikeIcon = style({
+  animation: `${bounce} 0.4s linear 1`,
 });

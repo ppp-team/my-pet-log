@@ -161,7 +161,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             {/* <button className={styles.recommentButton}>답글</button> */}
-            <button className={styles.commentLikeButton} onClick={handleCommentLike}>
+            <button className={`${styles.commentLikeButton} ${comment.isCurrentUserLiked ? styles.LikeIcon : ""}`} onClick={handleCommentLike}>
               <LikeIcon color={comment.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} />
               {comment.likeCount}
             </button>
@@ -345,7 +345,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
               <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>{diary.writer.nickname}</p>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <button onClick={handleDiaryLike}>
+              <button onClick={handleDiaryLike} className={`${diary.isCurrentUserLiked ? styles.LikeIcon : ""}`}>
                 <LikeIcon color={diary.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} style={{ cursor: "pointer" }} />
               </button>
               <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{diary.likeCount}</p>
