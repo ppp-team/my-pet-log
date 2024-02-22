@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTERNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
 import { useState, useEffect, useRef } from "react";
-import * as styles from "./style.css";
+import * as styles from "../style.css";
 import DefaultImage from "@/public/images/pet-profile-default.svg?url";
 import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
@@ -11,15 +11,15 @@ import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
 import { petOptions } from "@/public/data/petOptions";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import DropdownIcon from "@/public/icons/drop-down-icon.svg";
-import OptionalMessage from "./component/OptionalCheck";
+import OptionalMessage from "../component/OptionalCheck";
 import CloseIcon from "@/public/icons/close.svg?url";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import { useRouter } from "next/navigation";
 import { postPet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
-import ImageModal from "../ImageModal";
-import GenderSelection from "./component/RadioInput/GenderRadio";
-import NeuteringSelection from "./component/RadioInput/NeuteringRadio";
+import ImageModal from "../../ImageModal";
+import GenderSelection from "../component/RadioInput/GenderRadio";
+import NeuteringSelection from "../component/RadioInput/NeuteringRadio";
 
 export interface IFormInput {
   petName: string;
@@ -65,7 +65,9 @@ const PetRegister = () => {
   };
 
   //전체 폼 제출
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+  const onSubmit: SubmitHandler<IFormInput> = async (data, e) => {
+    e?.preventDefault;
+
     const request = {
       name: data.petName,
       type: data.type,
@@ -174,11 +176,6 @@ const PetRegister = () => {
   const clearWeightInput = () => {
     setValue("weight", null);
     setIsWeightDisabled((prev) => !prev);
-  };
-
-  //삭제하기 버튼, API호출하는 코드로 수정 예정
-  const handleDelete = () => {
-    console.log("동물 삭제");
   };
 
   const section1 = (
@@ -292,13 +289,6 @@ const PetRegister = () => {
       <label className={styles.label}>동물등록번호</label>
       <input className={styles.writeInput} {...register("registeredNumber", PET_REGISTERNUMBER_RULES)} placeholder={PET_PLACEHOLDER.registeredNumber} />
       {errors.registeredNumber && <ErrorMessage message={errors.registeredNumber.message} />}
-
-      {/* 삭제하기 버튼 */}
-      <div className={styles.deleteButtonWrapper}>
-        <button className={styles.deleteButton} onClick={handleDelete}>
-          동물 삭제하기
-        </button>
-      </div>
 
       <button className={styles.button}>작성완료</button>
     </>

@@ -1,4 +1,4 @@
-import PetRegister from "@/app/_components/PetRegister";
+import PetRegister from "@/app/_components/PetRegister/PetRegisterForm";
 
 const page = () => {
   return (

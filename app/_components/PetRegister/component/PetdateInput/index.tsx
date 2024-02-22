@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Options } from "vanilla-calendar-pro";
 import { UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import OptionalMessage from "@/app/_components/PetRegister/component/OptionalCheck";
-import { IFormInput } from "@/app/_components/PetRegister";
+import { IFormInput } from "@/app/_components/PetRegister/PetRegisterForm";
 import CalendarIcon from "@/public/icons/calendarIcon.svg?url";
 import Image from "next/image";
 
