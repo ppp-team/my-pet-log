@@ -12,7 +12,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const Search = () => {
-  console.log("rerender");
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword");
 
@@ -25,14 +24,13 @@ const Search = () => {
   });
   const { targetRef, setTargetActive } = useInfiniteScroll({ callbackFunc: fetchNextPage });
 
-  // useEffect(() => {
-  //   setTargetActive((prev) => !prev);
-  // }, [data]);
+  useEffect(() => {
+    setTargetActive((prev) => !prev);
+  }, [hasNextPage]);
 
   if (!keyword) return <>검색해보세요</>;
   if (isLoading) return <>loading</>;
   if (!data?.pages[0]?.content.length) return <>일치하는 검색어가 없어요</>;
-
   return (
     <>
       {data.pages.map((page, idx) => (
@@ -41,8 +39,7 @@ const Search = () => {
         </div>
       ))}
       {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
-      {!isLoading && hasNextPage && <div ref={targetRef} />}
-      <button onClick={() => fetchNextPage()}>더 불러오기</button>
+      {!isLoading && hasNextPage && <div ref={targetRef}>target</div>}
     </>
   );
 };
