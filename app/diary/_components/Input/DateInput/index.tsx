@@ -13,11 +13,11 @@ interface DateInputProps {
 
 const DateInput = ({ register, setValue, getValue }: DateInputProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-
   const options: Options = {
     settings: {
       selected: {
         dates: [getValue("date")],
+        month: +getValue("date")?.split("-")[1] - 1,
       },
       iso8601: false,
       visibility: {
