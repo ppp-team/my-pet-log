@@ -29,7 +29,7 @@ const SubtypeDetail: React.FC<SubtypeDetailProps> = ({ visibleSubtype, register,
   const [selectedOption, setSelectedOption] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const myKey = process.env.NEXT_PUBLIC_API_KEY || "default-key";
+  const myKey = process.env.NEXT_PUBLIC_KAKAOMAP_API_KEY || "default-key";
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
