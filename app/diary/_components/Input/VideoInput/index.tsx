@@ -13,6 +13,11 @@ const VideoInput = ({ register, setValue, oldMedia }: InputProps) => {
   const [oldData, setOldData] = useState(oldMedia);
 
   useEffect(() => {
+    //input은 기본으로 null이 아니라 File[]이므로 초기화해줌
+    setValue("video", null);
+  }, []);
+
+  useEffect(() => {
     //edit용 이전 데이터
     setOldData(oldMedia);
   }, [oldMedia]);
