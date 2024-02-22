@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
 
 export const root = style({
   display: "flex",
@@ -28,9 +28,9 @@ export const petInfo = style({
 export const main = style({
   display: "flex",
   flexDirection: "column",
-  gap: "0.9rem",
+  // gap: "0.9rem",
 
-  padding: "2.4rem 1.6rem 1.4rem",
+  padding: "1.4rem 1.6rem",
 
   borderTop: "1px solid var(--GrayE8)",
   borderBottom: "1px solid var(--GrayE8)",
@@ -60,7 +60,7 @@ export const swiperFraction = style({
 
   position: "absolute",
   right: "2.6rem",
-  top: "3.7rem",
+  top: "2.7rem",
 
   paddingTop: "0.3rem",
 
@@ -76,8 +76,6 @@ export const swiperFraction = style({
 });
 
 export const profileImage = style({
-  width: "3rem",
-  height: "3rem",
   minWidth: "3rem",
   minHeight: "3rem",
 
@@ -96,6 +94,8 @@ export const content = style({
   color: "var(--Gray1F)",
 
   wordBreak: "break-word",
+
+  marginTop: "0.9rem",
 });
 
 export const commentsCount = style({
@@ -287,4 +287,16 @@ export const commentKebab = style([
 export const commentEditForm = style({
   display: "flex",
   flexDirection: "column",
+});
+
+const bounce = keyframes({
+  "0%": { transform: "scale(0.6)", transformOrigin: "center center" },
+  "25%": { transform: "scale(0.9)" },
+  "50%": { transform: "scale(1.1)" },
+  "75%": { transform: "scale(1)" },
+  "100%": { transform: "scale(0.9)", transformOrigin: "center center" },
+});
+
+export const LikeIcon = style({
+  animation: `${bounce} 0.4s linear 1`,
 });

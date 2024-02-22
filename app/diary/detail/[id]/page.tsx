@@ -1,4 +1,5 @@
 import { getComments, getDiary } from "@/app/_api/diary";
+import { getMe } from "@/app/_api/users";
 import DiaryDetail from "@/app/diary/_components/DiaryDetail";
 import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
@@ -14,6 +15,9 @@ const DiaryDetailPage = async ({ params: { id } }: { params: { id: string } }) =
     queryFn: ({ pageParam }) => getComments({ diaryId, page: pageParam, size: COMMENT_PAGE_SIZE }),
     initialPageParam: 0,
   });
+
+  //댓글 입력창 프로필 이미지
+  await queryClient.prefetchQuery({ queryKey: ["me"], queryFn: () => getMe() });
   const dehydratedState = dehydrate(queryClient);
 
   return (

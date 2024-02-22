@@ -8,6 +8,6 @@ globalStyle(".swiper", {
 
 globalStyle(".swiper-pagination-bullet", {
   backgroundColor: "var(--MainOrange)",
-  width: "0.6rem",
-  height: "0.6rem",
+  width: "0.7rem",
+  height: "0.7rem",
 });

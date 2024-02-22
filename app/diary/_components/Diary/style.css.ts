@@ -84,9 +84,6 @@ export const writer = style({
 });
 
 export const diaryImage = style({
-  width: "9rem",
-  height: "9rem",
-
   borderRadius: "6px",
 
   backgroundSize: "cover",

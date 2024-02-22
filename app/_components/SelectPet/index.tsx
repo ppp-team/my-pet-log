@@ -3,8 +3,8 @@ import { editPetRep, getPets } from "@/app/_api/pets";
 import * as styles from "@/app/_components/SelectPet/style.css";
 import { PetType, PetsType } from "@/app/_types/petGroup/types";
 import calculateAge from "@/app/_utils/calculateAge";
+import { getImagePath } from "@/app/_utils/getPetImagePath";
 import AddIcon from "@/public/icons/add.svg?url";
-import NoPetProfileImage from "@/public/images/pet-profile-default.svg?url";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,8 +21,8 @@ const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
         router.push(path);
       }}
     >
-      <div className={styles.profile} style={{ backgroundImage: `url(${pet.petImageUrl ?? NoPetProfileImage}` }} />
-
+      {/* <div className={styles.profile} style={{ backgroundImage: `url(${pet.petImageUrl ?? NoPetProfileImage}` }} /> */}
+      <Image className={styles.profile} src={getImagePath(pet.petImageUrl)} alt="펫 프로필 사진" width={80} height={80} />
       <div className={styles.text}>
         <h3 style={{ fontSize: "1.6rem", fontWeight: "700" }}>{pet.name}</h3>
         <p style={{ fontSize: "1.3rem", fontWeight: "500" }}>

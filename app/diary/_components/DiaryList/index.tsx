@@ -8,17 +8,25 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import WriteIconURL from "@/public/icons/write.svg?url";
 import Link from "next/link";
-const PAGE_SIZE = 2;
+import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
+import { DIARY_PAGE_SIZE } from "@/app/diary/constant";
+import { useEffect } from "react";
 
 const DiaryList = ({ petId }: { petId: number }) => {
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery({
     queryKey: ["diaries", petId],
-    queryFn: ({ pageParam }) => getDiaryList({ page: pageParam, size: PAGE_SIZE }),
+    queryFn: ({ pageParam }) => getDiaryList({ page: pageParam, size: DIARY_PAGE_SIZE }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
-  if (!data?.pages[0].content.length) return <EmptyDiaryList />;
+  const { targetRef, setTargetActive } = useInfiniteScroll({ callbackFunc: fetchNextPage });
+
+  useEffect(() => {
+    setTargetActive((prev) => !prev);
+  }, [hasNextPage]);
+
+  if (!data?.pages[0]?.content.length) return <EmptyDiaryList />;
 
   return (
     <div className={root}>
@@ -31,7 +39,8 @@ const DiaryList = ({ petId }: { petId: number }) => {
           <Diaries data={page?.content} />
         </div>
       ))}
-      <button onClick={() => fetchNextPage()}>더 불러오기</button>
+      {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
+      {!isLoading && hasNextPage && <div ref={targetRef} />}
       <Link href={"/diary/create"}>
         <Image src={WriteIconURL} alt="write icon" width={60} height={60} className={writeIcon} />
       </Link>
