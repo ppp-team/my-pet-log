@@ -52,7 +52,7 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
       queryClient.invalidateQueries({ queryKey: ["diary", { petId, diaryId }] });
       setDeletedImages([]);
       setDiaryImages([]);
-      router.replace(`/diary/detail/${diaryId}`);
+      router.back();
     },
     onError: () => {
       showToast("일기 수정에 실패했습니다.", false);
