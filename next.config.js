@@ -24,6 +24,11 @@ const nextConfig = {
         hostname: "mypetlog.s3.ap-northeast-2.amazonaws.com",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "www.animal.go.kr",
+        pathname: "/**",
+      },
     ],
   },
 };

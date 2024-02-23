@@ -13,11 +13,15 @@ interface LogItemProps {
   petId: number;
   logItem: LogsType;
   onDelete: (logItem: LogsType) => void;
+  onToggleDetail: (logId: number) => void;
+  onSwipe: (logId: number) => void;
+  isActive: boolean;
+  isSwipeActive: boolean;
 }
 
-const SWIPE_BUTTON_WIDTH = 132;
+const SWIPE_BUTTON_WIDTH = 16;
 
-const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemProps) => {
+const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete, onToggleDetail, isActive, onSwipe, isSwipeActive }: LogItemProps) => {
   const [isChecked, setIsChecked] = useState(logItem.isComplete);
   const [showDetails, setShowDetails] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -30,7 +34,6 @@ const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemPr
     event.stopPropagation();
     const newCheckedState = event.target.checked;
     setIsChecked(newCheckedState);
-
     try {
       await checkLog(petId, logItem.logId);
     } catch (error) {
@@ -61,8 +64,10 @@ const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemPr
     setIsSwiping(false);
     const endX = event.changedTouches[0].clientX;
     const swipedDistance = startX - endX;
+
     if (swipedDistance > 0) {
       setCurrentTranslate(-SWIPE_BUTTON_WIDTH);
+      onSwipe(logItem.logId);
     } else {
       setCurrentTranslate(0);
     }
@@ -72,6 +77,7 @@ const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemPr
     const target = event.target as HTMLElement;
     if (target.id !== checkboxId && !target.closest(`label[for="${checkboxId}"]`)) {
       setShowDetails(!showDetails);
+      onToggleDetail(logItem.logId);
     }
   };
 
@@ -79,6 +85,7 @@ const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemPr
     function handleClickOutside(event: MouseEvent) {
       if (logItemRef.current && !logItemRef.current.contains(event.target as Node)) {
         setShowDetails(false);
+        setCurrentTranslate(0);
       }
     }
 
@@ -91,7 +98,7 @@ const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemPr
   return (
     <div className={styles.swipeArea} ref={logItemRef}>
       <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className={styles.container}>
-        <li className={styles.listContainer} onClick={toggleDetails}>
+        <li className={styles.listContainer} onClick={toggleDetails} style={{ transform: `translateX(${currentTranslate}px)` }}>
           <div className={styles.leftPart}>
             <label htmlFor={checkboxId} className={styles.checkBox}>
               <input type="checkbox" id={checkboxId} checked={isChecked} onChange={handleCheckboxChange} className={styles.inputCheckbox} />
@@ -110,7 +117,7 @@ const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemPr
             <span>{logItem.manager.nickname}</span>
           </div>
         </li>
-        {currentTranslate === -SWIPE_BUTTON_WIDTH && (
+        {currentTranslate === -SWIPE_BUTTON_WIDTH && isSwipeActive && (
           <div className={styles.swipeButtons}>
             <Link href={`/healthlog/edit/${logItem.logId}`}>
               <button
@@ -142,7 +149,7 @@ const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete }: LogItemPr
         )}
       </div>
 
-      {showDetails && (
+      {isActive && showDetails && (
         <div className={styles.logDetailContainer}>
           <LogDetail petId={petId} logId={logItem.logId} />
         </div>

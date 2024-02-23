@@ -18,6 +18,8 @@ interface LogListPropsType extends GetLogsListType {
 const LogList: React.FC<LogListPropsType> = ({ petId, logsData, selectedDate }) => {
   const queryClient = useQueryClient();
   const [selectedLog, setSelectedLog] = useState<LogsType | null>(null);
+  const [activeLogId, setActiveLogId] = useState<number | null>(null);
+  const [activeSwipeItemId, setActiveSwipeItemId] = useState<number | null>(null);
   const [year, month, day] = selectedDate.split("-").map(Number);
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
@@ -40,12 +42,34 @@ const LogList: React.FC<LogListPropsType> = ({ petId, logsData, selectedDate }) 
     }
   };
 
+  const handleToggleDetail = (logId: number) => {
+    setActiveLogId(activeLogId === logId ? null : logId);
+  };
+
+  const handleSwipe = (logId: number) => {
+    setActiveSwipeItemId(activeSwipeItemId === logId ? null : logId);
+    setActiveLogId(null);
+  };
+
   return (
     <>
       <div>
         <p className={styles.date}>{logsData?.date}</p>
         {logsData?.logs && logsData?.logs.length > 0 ? (
-          <ul>{logsData?.logs.map((logItem: LogsType) => <LogItem petId={petId} logItem={logItem} key={logItem.logId} onDelete={() => handleDelete(logItem)} />)}</ul>
+          <ul>
+            {logsData?.logs.map((logItem: LogsType) => (
+              <LogItem
+                petId={petId}
+                logItem={logItem}
+                key={logItem.logId}
+                onDelete={() => handleDelete(logItem)}
+                onToggleDetail={() => handleToggleDetail(logItem.logId)}
+                onSwipe={() => handleSwipe(logItem.logId)}
+                isSwipeActive={activeSwipeItemId === logItem.logId}
+                isActive={activeLogId === logItem.logId}
+              />
+            ))}
+          </ul>
         ) : (
           <EmptyHealthLog />
         )}
