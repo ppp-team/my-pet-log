@@ -11,7 +11,7 @@ interface SignButtonProps {
 
 const SignButton = ({ type, action }: SignButtonProps) => {
   let message = "";
-  let Icon = null;
+  let Icon = <Kakao width={18} height={18} alt="카카오 아이콘" />;
 
   let buttonStyle = styles.signButton;
 
