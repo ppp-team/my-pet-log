@@ -54,9 +54,14 @@ export const getCode = async () => {
   }
 };
 
+export const putPet = async ({ petId, formData }: { petId: string; formData: FormData }) => {
+  // const petId = cookies().get("petId")?.value;
+  await instance.put(`my/pets/${petId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+};
+
 export const editPetRep = async (petId: string) => {
   try {
-    const response = await instance.post(`/my/pets/${petId}`);
+    const response = await instance.post(`/my/guardians/${petId}/selectRep`);
 
     if (response.status === 200) {
       cookies().set("petId", petId);
@@ -69,10 +74,10 @@ export const editPetRep = async (petId: string) => {
   }
 };
 
-export const deletePet = async (petData: { petId: string }) => {
+export const deletePet = async () => {
   const petId = cookies().get("petId")?.value;
   try {
-    const response = await instance.delete(`my/pets/${petData.petId}`);
+    const response = await instance.delete(`my/pets/${petId}`);
     if (response.status === 200) {
       console.log("삭제했당");
     }

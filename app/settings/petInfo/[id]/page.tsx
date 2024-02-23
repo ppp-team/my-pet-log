@@ -1,4 +1,5 @@
 import PetRegisterEdit from "@/app/_components/PetRegister/PetEditForm";
+import PetDetailPage from "@/app/_components/PetRegister/PetEditPage";
 
 // const page = () => {
 //   return (
