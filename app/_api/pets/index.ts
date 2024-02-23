@@ -22,6 +22,7 @@ export const getPet = async () => {
   const petId = cookies().get("petId")?.value;
   try {
     const response = await instance.get(`/my/pets/${petId}`);
+    console.log("response:", response.data); //콘솔이 안찍힘...
     return response.data;
   } catch (error: any) {
     console.error(error.response.data);
