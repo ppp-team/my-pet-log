@@ -2,7 +2,6 @@ import QueryProvider from "@/app/_components/QueryProvider";
 import "@/styles/global.css";
 import "@/styles/colors.css";
 import type { Metadata } from "next";
-import Template from "./template";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
