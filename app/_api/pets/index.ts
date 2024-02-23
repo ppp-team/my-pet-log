@@ -18,8 +18,8 @@ export const postPet = async ({ formData }: { formData: FormData }) => {
   }
 };
 
-export const getPet = async () => {
-  const petId = cookies().get("petId")?.value;
+export const getPet = async ({ petId }: { petId: number }) => {
+  // const petId = cookies().get("petId")?.value;
   try {
     const response = await instance.get(`/my/pets/${petId}`);
     console.log("response:", response.data); //콘솔이 안찍힘...

@@ -14,14 +14,16 @@ import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 import OptionalMessage from "../component/OptionalCheck";
 import CloseIcon from "@/public/icons/close.svg?url";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
-import { useRouter } from "next/navigation";
-import { postPet, deletePet } from "@/app/_api/pets";
+import { useRouter, useParams } from "next/navigation";
+import { getPet, putPet, deletePet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
 import ImageModal from "../../ImageModal";
 import GenderSelection from "../component/RadioInput/GenderRadio";
 import NeuteringSelection from "../component/RadioInput/NeuteringRadio";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { showToast } from "@/app/_components/Toast";
+import Loading from "@/app/diary/_components/Loading";
+import { PetType } from "@/app/_types/pets/types";
 
 export interface IFormInput {
   petName: string;
@@ -52,8 +54,32 @@ const PetRegisterEdit = () => {
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
 
-  const router = useRouter();
+  //리액트쿼리
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const params = useParams();
+
+  const { data: petInfo } = useQuery<PetType>({
+    queryKey: ["petInfo", { petId: params.petId }],
+    queryFn: () => getPet(petId),
+  });
+
+  console.log("데이터", petInfo);
+
+  // const {
+  //   mutate: putPetMutation,
+  //   isPending,
+  //   isSuccess: isPutSuccess,
+  // } = useMutation({
+  //   mutationFn: (formData: FormData) => putPet({ petId, formData }),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["petInfo", petId] });
+  //     router.back();
+  //   },
+  //   onError: () => {
+  //     showToast("마이펫 수정에 실패했습니다.", false);
+  //   },
+  // });
 
   const {
     register,
@@ -72,22 +98,6 @@ const PetRegisterEdit = () => {
   const handleCancelModal = () => {
     closeDeleteModalFunc();
   };
-
-  const handleDeleteModal = () => {
-    closeDeleteModalFunc();
-    router.push("/settings");
-  };
-
-  // const deletePetMutation = useMutation(deletePet, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["pets", petId] });
-  //     router.push("/settings");
-  //   },
-  //   onError: () => {
-  //     showToast("마이펫 삭제에 실패했습니다.", false);
-  //     closeDeleteModalFunc();
-  //   },
-  // });
 
   const deletePetMutation = useMutation({
     mutationFn: deletePet,
@@ -125,15 +135,31 @@ const PetRegisterEdit = () => {
     formData.append("petImage", data.image);
 
     // FormData에 데이터가 올바르게 추가되었는지 확인
-    console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
-    const res = await postPet({ formData });
-    if (res !== null) {
-      return openConfirmModalFunc();
-    }
-    //응답결과 확인
-    console.log("res", res);
+    // console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
+    // const res = await postPet({ formData });
+    // if (res !== null) {
+    //   return openConfirmModalFunc();
+    // }
+    // //응답결과 확인
+    // console.log("res", res);
+
+    // putPetMutation(formData);
   };
 
+  // useEffect(() => {
+  //   if (petInfo) {
+  //     setValue("petName", petInfo.petName);
+  //     setValue("type", petInfo.type);
+  //     setValue("breed", petInfo.breed);
+  //     setValue("gender", petInfo.gender);
+  //     setValue("isNeutered", petInfo.neutering);
+  //     setValue("birth", petInfo.birthday);
+  //     setValue("firstMeetDate", petInfo.firstMeet);
+  //     setValue("weight", petInfo.weight);
+  //     setValue("registeredNumber", petInfo.registeredNumber);
+  //   }
+  // }, [petInfo, isSuccess, setValue]);
+  console.log("Setting values:", petInfo);
   //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
   let isSectionValid = false;
   if (getValues() && getValues().petName && getValues().type && getValues().breed) {
@@ -333,7 +359,7 @@ const PetRegisterEdit = () => {
           동물 삭제하기
         </div>
       </div>
-      {isDeleteModalOpen && <ImageModal type={"deletePet"} onClick={deletePetMutation.mutate} onClose={handleCancelModal} />}
+      {isDeleteModalOpen && <ImageModal type={"deletePet"} onClick={() => deletePetMutation.mutate} onClose={handleCancelModal} />}
 
       {/* 작성완료 버튼 */}
       <button className={styles.button}>작성완료</button>
@@ -357,6 +383,7 @@ const PetRegisterEdit = () => {
         {section === 1 ? section1 : section2}
       </form>
       {isConfirmModalOpen && <ImageModal type={"register"} onClick={handleCloseModal} onClose={handleCloseModal} />}
+      {/* {(isPending || isVideoUploading || isPutSuccess) && <Loading />} */}
     </>
   );
 };
