@@ -2,7 +2,8 @@ import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle("*", {
   boxSizing: "border-box",
-  fontFamily: "Pretendard",
+  fontFamily:
+    "var(--Pretendard), serif, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif", // TODO 폰트 정상 적용 확인 후 serif 제거
   margin: 0,
   padding: 0,
 });
