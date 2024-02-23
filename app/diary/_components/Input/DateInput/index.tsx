@@ -1,5 +1,5 @@
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
-import { FormInput } from "@/app/diary/_components/EditForm";
+import { FormInput } from "@/app/diary/_components/Form/EditForm";
 import { useState } from "react";
 import { UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { Options } from "vanilla-calendar-pro";
@@ -13,11 +13,11 @@ interface DateInputProps {
 
 const DateInput = ({ register, setValue, getValue }: DateInputProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-
   const options: Options = {
     settings: {
       selected: {
         dates: [getValue("date")],
+        month: +getValue("date")?.split("-")[1] - 1,
       },
       iso8601: false,
       visibility: {

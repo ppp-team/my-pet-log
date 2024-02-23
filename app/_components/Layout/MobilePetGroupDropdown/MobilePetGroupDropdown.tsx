@@ -52,7 +52,7 @@ const MobilePetGroupDropdown = () => {
   /**
    * @type {Array<dropdownMenuItemType>} currentPetGroup 제외하고 나머지 리스트 + 동물 관리 버튼
    */
-  const dropDownMenuList: dropdownMenuItemType[] = [...parsedPetGroupList.filter((petGroup) => petGroup.petId !== currentPetGroup.petId), SETTING_BUTTON];
+  const dropDownMenuList: dropdownMenuItemType[] = [...parsedPetGroupList.filter((petGroup) => petGroup.petId !== currentPetGroup?.petId), SETTING_BUTTON];
 
   const queryClient = useQueryClient();
 

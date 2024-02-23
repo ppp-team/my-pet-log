@@ -64,6 +64,19 @@ export const putUserProfile = async ({ formData }: { formData: FormData }) => {
   }
 };
 
+export const postUserProfileImage = async ({ formData }: { formData: FormData }) => {
+  try {
+    const response = await instance.post("/users/profile/image", formData, { headers: { "Content-Type": "multipart/form-data" } });
+
+    if (response.status === 200) {
+      return true;
+    }
+  } catch (error: any) {
+    console.error(error.response.data);
+    return null;
+  }
+};
+
 export const postCheckPassword = async (password: string) => {
   try {
     const response = await instance.post("/users/password/validation", {

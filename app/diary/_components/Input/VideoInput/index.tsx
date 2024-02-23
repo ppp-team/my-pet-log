@@ -1,6 +1,6 @@
 import { deletedImagesAtom } from "@/app/_states/atom";
-import { InputProps } from "@/app/diary/_components/ImageInput";
-import * as inputStyles from "@/app/diary/_components/ImageInput/style.css";
+import { InputProps } from "@/app/diary/_components/Input/ImageInput";
+import * as inputStyles from "@/app/diary/_components/Input/ImageInput/style.css";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
@@ -11,6 +11,11 @@ const VideoInput = ({ register, setValue, oldMedia }: InputProps) => {
   const [previewVideo, setPreviewVideo] = useState("");
   const [, setDeletedVideo] = useAtom(deletedImagesAtom);
   const [oldData, setOldData] = useState(oldMedia);
+
+  useEffect(() => {
+    //input은 기본으로 null이 아니라 File[]이므로 초기화해줌
+    setValue("video", null);
+  }, []);
 
   useEffect(() => {
     //edit용 이전 데이터

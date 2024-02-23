@@ -1,30 +1,29 @@
 "use client";
 
+import { deleteComment, deleteDiary, getComments, getDiary, postComment, postCommentLike, postDiaryLike, putComment } from "@/app/_api/diary";
+import { getMe } from "@/app/_api/users";
+import BackHeader from "@/app/_components/BackHeader";
+import Modal from "@/app/_components/Modal";
+import { showToast } from "@/app/_components/Toast";
+import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
+import { useModal } from "@/app/_hooks/useModal";
+import { Comment, GetCommentsResponse, GetDiaryResponse } from "@/app/_types/diary/type";
+import { UserType } from "@/app/_types/users/types";
+import { getImagePath } from "@/app/_utils/getPersonImagePath";
+import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
 import KebabIcon from "@/public/icons/kebab.svg?url";
 import LikeIcon from "@/public/icons/like.svg";
-import Modal from "@/app/_components/Modal";
-import { useModal } from "@/app/_hooks/useModal";
+import SendIcon from "@/public/icons/send.svg?url";
+import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import * as styles from "./style.css";
 import "./swiper.css";
-import SendIcon from "@/public/icons/send.svg?url";
-import BackHeader from "@/app/_components/BackHeader";
-import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
-import { deleteComment, deleteDiary, getComments, getDiary, postComment, postCommentLike, postDiaryLike, putComment } from "@/app/_api/diary";
-import { Comment, GetCommentsResponse, GetDiaryResponse } from "@/app/_types/diary/type";
-import { showToast } from "@/app/_components/Toast";
-import Link from "next/link";
-import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
-import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
-import { UserType } from "@/app/_types/users/types";
-import { getMe } from "@/app/_api/users";
-import { getImagePath } from "@/app/_utils/getPersonImagePath";
 
 interface CommentProps {
   comment: Comment;
@@ -223,7 +222,6 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
       if (!newComments) return;
       newComments?.pages[0]?.content.unshift(data);
       queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
-
       setCommentValue("");
 
       showToast("댓글을 생성했습니다.", true);

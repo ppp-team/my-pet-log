@@ -10,9 +10,8 @@ import { PetType, PetsType } from "@/app/_types/petGroup/types";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
 
-const petId = Number(cookies().get("petId")?.value);
-
 const HomePage: NextPage = async () => {
+  const petId = Number(cookies().get("petId")?.value);
   const queryClient = new QueryClient();
   const user = await queryClient.fetchQuery<UserType>({ queryKey: ["me"], queryFn: () => getMe() });
   const pets = await queryClient.fetchQuery<PetsType>({ queryKey: ["pets"], queryFn: () => getPets() });

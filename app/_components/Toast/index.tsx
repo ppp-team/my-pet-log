@@ -16,6 +16,7 @@ const ToastComponent = ({ message, isSuccess }: messageProps) => (
 );
 
 export const showToast = (message: string, isSuccess: boolean) => {
+  toast.dismiss();
   toast(<ToastComponent message={message} isSuccess={isSuccess} />, {
     position: "bottom-center",
     autoClose: 1000,

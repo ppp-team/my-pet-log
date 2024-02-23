@@ -1,4 +1,4 @@
-import EditForm from "@/app/diary/_components/EditForm";
+import EditForm from "@/app/diary/_components/Form/EditForm";
 import { cookies } from "next/headers";
 
 const EditPage = ({ params: { id } }: { params: { id: string } }) => {

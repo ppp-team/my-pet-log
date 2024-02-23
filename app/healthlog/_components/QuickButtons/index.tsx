@@ -1,14 +1,15 @@
+import { postLogs } from "@/app/_api/log/index";
 import { getMe } from "@/app/_api/users";
-import { usePostLogsMutation } from "@/app/_hooks/usePostLogMutation";
+import { showToast } from "@/app/_components/Toast";
+import { PostLogType } from "@/app/_types/log/types";
 import { UserType } from "@/app/_types/user/types";
-import getKRDateTime from "@/app/_utils/getKRDateTime";
 import feedIconSrc from "@/public/icons/feed-icon.svg?url";
 import groomingIconSrc from "@/public/icons/grooming-icon.svg?url";
 import healthIconSrc from "@/public/icons/health-icon.svg?url";
 import treatIconSrc from "@/public/icons/treat-icon.svg?url";
 import walkIconSrc from "@/public/icons/walk-icon.svg?url";
 import writeIconSrc from "@/public/icons/write-pencil-icon.svg?url";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./style.css";
@@ -16,6 +17,12 @@ import * as styles from "./style.css";
 interface QuickButtonsProps {
   petId: number;
   selectedDate: string;
+}
+
+interface MutationParams {
+  petId: number;
+  logData: PostLogType;
+  date: { year: number; month: number; day: number };
 }
 
 const buttonData = [
@@ -28,10 +35,23 @@ const buttonData = [
 ];
 
 const QuickButtons = ({ petId, selectedDate }: QuickButtonsProps) => {
+  const queryClient = useQueryClient();
   const currentTime = new Date().toTimeString().split(" ")[0];
   const dateTimeForLog = `${selectedDate}T${currentTime}`;
 
-  const { mutate: postLog } = usePostLogsMutation();
+  const { mutate: postLog } = useMutation<PostLogType, Error, MutationParams>({
+    mutationFn: async ({ petId, logData }) => postLogs(petId, logData),
+    onSuccess: (data, variables) => {
+      const { year, month, day } = variables.date;
+      queryClient.invalidateQueries({
+        queryKey: ["Logs", variables.petId, year, month, day],
+      });
+    },
+    onError: () => {
+      showToast("건강수첩 항목 생성에 실패했습니다.", false);
+    },
+  });
+
   const { data: user } = useQuery<UserType>({
     queryKey: ["me"],
     queryFn: () => getMe(),

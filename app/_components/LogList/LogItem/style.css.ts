@@ -11,8 +11,6 @@ export const container = style({
   gap: "0.5rem",
 
   fontSize: "1.2rem",
-
-  transition: "transform 0.3s ease",
 });
 
 export const listContainer = style({
@@ -24,6 +22,8 @@ export const listContainer = style({
   justifyContent: "space-between",
 
   borderBottom: "1px solid var(--GrayC2)",
+
+  transition: "transform 0.3s ease",
 });
 
 export const leftPart = style({
@@ -126,14 +126,13 @@ export const swipeArea = style({
   display: "flex",
   flexDirection: "column",
   overflow: "visible",
+  transition: "transform 0.6s ease",
 });
 
 export const swipeButtons = style({
   display: "flex",
 
   marginRight: "-1.6rem",
-
-  transition: "transform 0.3s ease",
 });
 
 export const editButton = style({
