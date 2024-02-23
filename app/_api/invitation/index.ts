@@ -1,6 +1,7 @@
 "use server";
 
 import instance from "@/app/_api/axios";
+import { cookies } from "next/headers";
 
 export const getInvitations = async () => {
   try {
@@ -15,8 +16,9 @@ export const getInvitations = async () => {
 };
 
 export const getMyInvitations = async () => {
+  const petId = cookies().get("petId")?.value;
   try {
-    const response = await instance.get("/my/invitations/my-invitations");
+    const response = await instance.get(`/my/invitations/${petId}/my-invitations`);
 
     if (response.status === 200) {
       return response.data;

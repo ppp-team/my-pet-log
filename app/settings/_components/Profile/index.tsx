@@ -7,7 +7,7 @@ import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserType } from "@/app/_types/users/types";
-import { getMe, postCheckNickname, putUserProfile } from "@/app/_api/users";
+import { getMe, postCheckNickname, putUserProfile, postUserProfileImage } from "@/app/_api/users";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import { showToast } from "@/app/_components/Toast";
 import { useState } from "react";
@@ -84,16 +84,12 @@ const Profile = () => {
     },
   });
 
-  const mutation = useMutation({
+  const putNicknameMutation = useMutation({
     mutationFn: (formData: FormData) => putUserProfile({ formData }),
-    onSuccess: (data) => {
-      if (data) {
-        showToast("등록되었습니다!", true);
-        queryClient.invalidateQueries({ queryKey: ["me"] });
-      } else {
-        showToast("등록 실패했습니다. 잠시 후 다시 시도해주세요.", false);
-      }
-    },
+  });
+
+  const postProfileMutation = useMutation({
+    mutationFn: (formData: FormData) => postUserProfileImage({ formData }),
   });
 
   //폼 제출 시
@@ -103,12 +99,27 @@ const Profile = () => {
       return;
     }
 
-    const formData = new FormData();
+    try {
+      if (nicknameChanged) {
+        const NickNameformData = new FormData();
+        NickNameformData.append("nickname", data.nickname);
+        //putNicknameMutation.mutate(NickNameformData);
+        await putNicknameMutation.mutateAsync(NickNameformData);
+      }
 
-    formData.append("nickname", data.nickname);
-    formData.append("profileImage", data.image);
+      const ProfileformData = new FormData();
+      if (imagePreviewUrl === "none") {
+        await postProfileMutation.mutateAsync(ProfileformData);
+      } else if (imagePreviewUrl) {
+        ProfileformData.append("profileImage", data.image);
+        await postProfileMutation.mutateAsync(ProfileformData);
+      }
 
-    mutation.mutate(formData);
+      showToast("프로필이 성공적으로 업데이트되었습니다!", true);
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+    } catch (error) {
+      showToast("업데이트에 실패했습니다. 잠시 후 다시 시도해주세요.", false);
+    }
   };
 
   return (

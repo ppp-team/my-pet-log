@@ -13,6 +13,7 @@ const Logout = () => {
   const logoutMutation = useMutation({
     mutationFn: () => postLogout(),
     onSuccess: () => {
+      localStorage.removeItem("petId");
       router.push("/login");
     },
   });
