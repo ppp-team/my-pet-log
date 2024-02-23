@@ -4,18 +4,28 @@ import Image from "next/image";
 import * as styles from "./PcHeaderNav.css";
 import logoImageSrc from "@/public/icons/logo.svg?url";
 import Link from "next/link";
+import { useCookies } from "react-cookie";
+import { useEffect, useState } from "react";
 
-const getMenuLoginLogout = (isLoggedIn: boolean) => {
-  return isLoggedIn ? { label: "로그아웃", href: "/", style: styles.linkLogin } : { label: "로그인", href: "/login", style: styles.linkLogin };
-};
+const PC_CENTER_MENUS = [
+  { label: "홈", href: "/home" },
+  { label: "육아일기", href: "/diary" },
+  { label: "건강수첩", href: "/healthlog" },
+  { label: "관리", href: "/settings" },
+];
 
-const PcHeaderNav = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
-  const PC_CENTER_MENUS = [
-    { label: "홈", href: "/home" },
-    { label: "육아일기", href: "/diary" },
-    { label: "건강수첩", href: "/healthlog" },
-    { label: "관리", href: "/settings" },
-  ];
+const PcHeaderNav = () => {
+  const [cookies] = useCookies();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (cookies.accessToken) setIsLoggedIn(true);
+  }, [cookies]);
+
+  const getMenuLoginLogout = (isLoggedIn: boolean) => {
+    return isLoggedIn ? { label: "로그아웃", href: "/", style: styles.linkLogin } : { label: "로그인", href: "/login", style: styles.linkLogin };
+  };
 
   const PC_RIGHT_MENUS = [{ label: "회원가입", href: "/signup", style: styles.linkSignUp }, getMenuLoginLogout(isLoggedIn)];
 
