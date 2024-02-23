@@ -4,7 +4,7 @@ import Image from "next/image";
 import dropdownIconSrc from "@/public/icons/drop-down-icon-orange.svg?url";
 import petGroupSettingIconSrc from "@/public/icons/pet-group-settings.svg?url";
 import NoPetProfileIconSrc from "@/public/images/pet-profile-default.svg?url";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { PetsType } from "@/app/_types/petGroup/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { editPetRep, getPets } from "@/app/_api/pets";
@@ -13,7 +13,6 @@ type dropdownMenuItemType = {
   petId: string;
   petName: string;
   petProfileImageUrl: string;
-  isSelected?: boolean;
 };
 
 const SETTING_BUTTON: dropdownMenuItemType = {
@@ -24,10 +23,9 @@ const SETTING_BUTTON: dropdownMenuItemType = {
 
 const MobilePetGroupDropdown = () => {
   const router = useRouter();
-  const petId = Number(localStorage.getItem("petId"));
-
+  const petIdCookie = null; // TODO react-cookie try
   const { data: pets } = useQuery<PetsType>({
-    queryKey: ["pets", petId],
+    queryKey: ["pets", petIdCookie],
     queryFn: () => getPets(),
   });
 
@@ -38,16 +36,15 @@ const MobilePetGroupDropdown = () => {
       petId: item.petId,
       petName: item.name,
       petProfileImageUrl: item?.petImageUrl ?? NoPetProfileIconSrc,
-      isSelected: item.repStatus === "REPRESENTATIVE" ? true : false,
     };
   });
 
   /**
    * @type {dropdownMenuItemType} currentPetGroupId로 리스트에서 repStatus === "REPRESENTATIVE"인 currentPetGroup 추출하고 없으면 null
    */
-  const currentPetGroup: dropdownMenuItemType | null = parsedPetGroupList.find((petGroup) => petGroup.isSelected === true) ?? null;
+  const currentPetGroup: dropdownMenuItemType | null = parsedPetGroupList.find((petGroup) => petGroup.petId === petIdCookie) ?? null;
 
-  if (!currentPetGroup) redirect("/404");
+  // if (!currentPetGroup) // TODO petId가 없는 상태로 접근할 경우가 있는지 체크 후 있다면 redirect("/404") 처리
 
   /**
    * @type {Array<dropdownMenuItemType>} currentPetGroup 제외하고 나머지 리스트 + 동물 관리 버튼
