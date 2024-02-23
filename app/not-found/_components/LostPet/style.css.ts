@@ -16,6 +16,7 @@ export const lostPetWrapper = style({
 export const titleWrapper = style({
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
 });
 
 export const lostPetTitle = style({
@@ -73,6 +74,8 @@ export const lostPetImage = style({
 
   borderRadius: "10px",
   background: "var(--Gray81)",
+
+  objectFit: "cover",
 });
 
 export const lostPetCardDetail = style({
