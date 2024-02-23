@@ -1,11 +1,13 @@
-import PetRegister from "@/app/_components/PetRegister";
+// import PetRegisterEdit from "@/app/_components/PetRegister/PetEditForm";
 
-const page = () => {
-  return (
-    <div>
-      <PetRegister />
-    </div>
-  );
-};
+// const page = () => {
+//   return (
+//     <div>
+//       <PetRegisterEdit/>
+//     </div>
+//   );
+// };
 
-export default page;
+// export default page;
+
+//삭제 예정 페이지

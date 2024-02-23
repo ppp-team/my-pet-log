@@ -13,6 +13,7 @@ export const input = style({
   border: "1.5px solid #e2e2e2",
 
   fontSize: "1.6rem",
+  color: "var(--Gray81)",
   fontWeight: "600",
   cursor: "pointer",
 

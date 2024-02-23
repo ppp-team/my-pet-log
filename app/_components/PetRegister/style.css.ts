@@ -99,7 +99,6 @@ export const label = style({
 
 export const input = style({
   padding: "1.3rem 1.8rem",
-  marginBottom: "0.8rem",
 
   borderRadius: "10px",
   border: "1.5px solid #e2e2e2",
@@ -123,13 +122,26 @@ export const writeInput = style([
 
 export const button = style({
   padding: "1.3rem 0",
-  marginTop: "2.4rem",
+  marginTop: "3.2rem",
 
   borderRadius: "30px",
+  fontSize: "1.6rem",
+  fontWeight: 600,
+  textAlign: "center",
 
-  color: "#fff",
+  color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
+
+  cursor: "pointer",
 });
+
+export const disableButton = style([
+  button,
+  {
+    backgroundColor: "var(--GrayB1)",
+    pointerEvents: "none",
+  },
+]);
 
 export const inputWrapper = style({
   display: "flex",
@@ -280,8 +292,8 @@ export const radioContainer = style({
   flexDirection: "row",
 
   position: "relative",
-  border: "1.5px var(--LightOrange)",
-  borderRadius: "5px",
+  border: "none",
+  borderRadius: "10px",
 });
 
 export const radioOption = style({
@@ -299,20 +311,21 @@ export const radioOption = style({
 
 export const leftRadio = style({
   width: "100%",
-  border: "solid 1px rgba(0, 0, 0, .15)",
+  border: "solid 1.5px var(--GrayE2)",
+  borderRadius: "10px 0px 0px 10px",
 });
 
 export const rightRadio = style({
+  marginLeft: "-0.1rem",
   width: "100%",
-  border: "solid 1px rgba(0, 0, 0, .15)",
+  border: "solid 1.5px var(--GrayE2)",
+  borderRadius: "0px 10px 10px 0px",
 });
 
 export const leftSelected = style({
   width: "100%",
 
   borderRadius: "10px 0px 0px 10px",
-  border: "1.5px solid var(--MainOrange)",
-
   color: "var(--MainOrange)",
   backgroundColor: "var(--LightOrange)",
 });
@@ -321,11 +334,13 @@ export const rightSelected = style({
   width: "100%",
 
   borderRadius: "0px 10px 10px 0px",
-  border: "1.5px solid var(--MainOrange)",
-
   color: "var(--MainOrange)",
   backgroundColor: "var(--LightOrange)",
 });
+
+export const leftSelectedBorder = style([leftSelected, { border: "1.5px solid var(--MainOrange)", zIndex: 1 }]);
+
+export const rightSelectedBorder = style([rightSelected, { border: "1.5px solid var(--MainOrange)", zIndex: 1 }]);
 
 export const deleteButtonWrapper = style({});
 export const deleteButton = style({
