@@ -4,6 +4,7 @@ import "@/styles/colors.css";
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FontLayout from "@/fonts/layout";
 
 export const metadata: Metadata = {
   title: "마이펫로그",
@@ -13,13 +14,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body>
+      <FontLayout>
         <QueryProvider>
           {children}
           <ToastContainer />
           <div id="portal"></div>
         </QueryProvider>
-      </body>
+      </FontLayout>
     </html>
   );
 }

@@ -1,4 +1,4 @@
-import CreateForm from "@/app/diary/_components/CreateForm";
+import CreateForm from "@/app/diary/_components/Form/CreateForm";
 import { cookies } from "next/headers";
 
 const CreatePage = () => {

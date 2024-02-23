@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
-import { title, petadd, container, petButton, petMateButton, petInfoWrapper } from "./style.css";
+import { petadd, container, petButton, petMateButton, petInfoWrapper } from "./style.css";
 import "./swiper.css";
 import MyPetInfo from "@/app/settings/_components/MyPetInfo";
 import Image from "next/image";
@@ -14,10 +14,11 @@ import { PetsType } from "@/app/_types/pets/types";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { editPetRep, getPets } from "@/app/_api/pets";
+import Skeleton from "../Skeleton";
 
 const MyPetCarousel = () => {
   const router = useRouter();
-  const { data: pets } = useQuery<PetsType>({
+  const { data: pets, isPending } = useQuery<PetsType>({
     queryKey: ["pets"],
     queryFn: () => getPets(),
   });
@@ -28,9 +29,12 @@ const MyPetCarousel = () => {
     breedTextColor: "var(--White)",
   };
 
+  if (isPending) {
+    return <Skeleton />;
+  }
+
   return (
     <div style={{ marginBottom: (pets?.data?.length ?? 0) > 0 ? "0" : "3.8rem" }}>
-      <div className={title}>마이펫 관리하기</div>
       <Swiper
         slidesPerView={"auto"}
         centeredSlides={true}

@@ -8,7 +8,7 @@ import { LuImageOff, LuImagePlus } from "react-icons/lu";
 import * as styles from "./style.css";
 import { useAtom } from "jotai";
 import { deletedImagesAtom, diaryImagesAtom } from "@/app/_states/atom";
-import { FormInput } from "@/app/diary/_components/EditForm";
+import { FormInput } from "@/app/diary/_components/Form/EditForm";
 import { DiaryMediaType } from "@/app/_types/diary/type";
 
 export interface ImagesType {
