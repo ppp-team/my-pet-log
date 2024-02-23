@@ -10,4 +10,5 @@ export const Z_INDEX = createGlobalTheme(":root", {
   LogWriteButton_button: "5",
   SubtypeDetail_optionsList: "1",
   Header: "10",
+  LoadingPage: "15",
 });

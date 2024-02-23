@@ -1,6 +1,6 @@
 import ErrorMessage from "@/app/_components/ErrorMessage";
-import * as styles from "@/app/diary/_components/CreateForm/style.css";
-import { FormInput } from "@/app/diary/_components/EditForm";
+import * as styles from "@/app/diary/_components/Form/CreateForm/style.css";
+import { FormInput } from "@/app/diary/_components/Form/EditForm";
 import { FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form";
 
 interface InputProps {
