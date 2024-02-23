@@ -23,7 +23,15 @@ const MyPetInfo = ({ petInfo, styles }: MyPetProps) => {
 
   return (
     <div className={container}>
-      <Image style={{ border: `3px solid ${profileBorderColor}` }} className={profile} src={getImagePath(petInfo.petImageUrl)} alt="profile icon" width={70} height={70} />
+      <Image
+        style={{ border: `3px solid ${profileBorderColor}` }}
+        className={profile}
+        src={getImagePath(petInfo.petImageUrl)}
+        alt="profile icon"
+        width={70}
+        height={70}
+        priority={true}
+      />
       <div className={info}>
         <span style={{ fontSize: "1.8rem", fontWeight: "600", color: nameTextColor }}>{petInfo.name}</span>
         <span style={{ fontSize: "1.2rem", fontWeight: "500", color: breedTextColor }}>{petInfo.breed}</span>

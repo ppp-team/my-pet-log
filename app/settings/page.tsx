@@ -8,7 +8,6 @@ import QuestionIcon from "@/public/icons/circle-help.svg?url";
 import MessageIcon from "@/public/icons/message-alt.svg?url";
 import NoticeIcon from "@/public/icons/megaphone.svg?url";
 import MenuList from "@/app/settings/_components/MenuList";
-import { getPets } from "@/app/_api/pets";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { getMe } from "@/app/_api/users";
 import Logout from "@/app/settings/_components/Logout";
@@ -16,13 +15,22 @@ import Logout from "@/app/settings/_components/Logout";
 const Page = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({ queryKey: ["pets"], queryFn: () => getPets() });
   await queryClient.prefetchQuery({ queryKey: ["me"], queryFn: () => getMe() });
   const dehydratedState = dehydrate(queryClient);
 
   return (
     <>
       <HydrationBoundary state={dehydratedState}>
+        <div
+          style={{
+            margin: "2rem 1.6rem",
+            color: "var(--Gray72)",
+            fontSize: "1.6rem",
+            fontWeight: "600",
+          }}
+        >
+          마이펫 관리하기
+        </div>
         <MypetCarousel />
         <div style={{ padding: "0 1.6rem 1.6rem" }}>
           <Link href="/settings/profile">
