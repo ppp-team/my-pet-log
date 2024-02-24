@@ -27,11 +27,11 @@ export interface IFormInput {
   type: string;
   breed: string;
   gender: "MALE" | "FEMALE";
-  neutering: boolean | null;
+  neutering: boolean | null | string;
   birthday: string | null;
   firstMeet: string | null;
   name: string;
-  weight: number | null;
+  weight: number | string | null;
   registeredNumber: string | null;
   id: string | number | null;
 }
@@ -78,11 +78,11 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       type: data.type,
       breed: data.breed,
       gender: data.gender,
-      isNeutered: data.neutering,
-      birth: data.birthday,
-      firstMeetDate: data.firstMeet,
-      weight: data.weight,
-      registeredNumber: data.registeredNumber,
+      isNeutered: data.neutering === "" ? null : data.neutering,
+      birth: data.birthday === "날짜 선택" ? null : data.birthday,
+      firstMeetDate: data.firstMeet === "날짜 선택" ? null : data.firstMeet,
+      weight: data.weight === "" ? null : data.weight,
+      registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
     console.log("request", request);
 
