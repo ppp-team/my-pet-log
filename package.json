@@ -27,7 +27,7 @@
     "react-cookie": "^7.1.0",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
-    "react-lottie": "^1.2.4",
+    "react-lottie": "^1.2.10",
     "react-notion-x": "^6.16.0",
     "react-toastify": "^10.0.4",
     "sharp": "^0.33.2",
