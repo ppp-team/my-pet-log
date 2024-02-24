@@ -10,7 +10,7 @@ export const container = style({
     "screen and (min-width: 744px)": {
       maxWidth: "45rem",
       margin: "0 auto",
-      paddingTop: "2.4rem",
+      padding: "2.4rem 0",
     },
   },
 });
@@ -27,6 +27,7 @@ export const memberlist = style({
 });
 
 export const profileWrapper = style({
+  width: "70%",
   display: "flex",
   alignItems: "center",
   gap: "1.4rem",
@@ -40,6 +41,11 @@ export const profileImg = style({
 export const nickname = style({
   fontSize: "1.6rem",
   fontWeight: "600",
+  width: "30%",
+  maxWidth: "10rem",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
 });
 
 export const button = style({
@@ -54,8 +60,7 @@ export const header = style({
 });
 
 export const state = style({
-  width: "5.4rem",
-  height: "2.1rem",
+  padding: "0.4rem 1rem",
 
   borderRadius: "5px",
 

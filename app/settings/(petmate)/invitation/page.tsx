@@ -10,7 +10,7 @@ const Page = async () => {
   const queryClient = new QueryClient();
   const petId = Number(cookies().get("petId")?.value);
   await queryClient.prefetchQuery({ queryKey: ["my-invitations", petId], queryFn: () => getMyInvitations() });
-  await queryClient.prefetchQuery({ queryKey: ["petInfo", petId], queryFn: () => getPet() });
+  await queryClient.prefetchQuery({ queryKey: ["petInfo", petId], queryFn: () => getPet(petId) });
   await queryClient.prefetchQuery({ queryKey: ["inviteCode", petId], queryFn: () => getCode() });
 
   const dehydratedState = dehydrate(queryClient);

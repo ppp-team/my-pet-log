@@ -6,6 +6,7 @@ export const header = style({
 });
 
 export const invitation = style({
+  height: "6.4rem",
   padding: "1.6rem 1.8rem",
 
   borderRadius: "10px",
@@ -18,6 +19,12 @@ export const invitation = style({
   fontSize: "1.4rem",
   fontWeight: "600",
   boxShadow: "0px 2px 4px 2px rgba(164, 164, 164, 0.25)",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      maxWidth: "45rem",
+      margin: "0 auto",
+    },
+  },
 });
 
 export const invitationButton = style({
@@ -25,6 +32,23 @@ export const invitationButton = style({
   textAlign: "center",
   fontSize: "1.4rem",
   fontWeight: "600",
+  fontFamily: "Pretendard",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "1.6rem",
+    },
+  },
+});
+
+export const inviteText = style({
+  fontSize: "1.4rem",
+  fontWeight: "600",
+  fontFamily: "Pretendard",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "1.6rem",
+    },
+  },
 });
 
 export const container = style({
