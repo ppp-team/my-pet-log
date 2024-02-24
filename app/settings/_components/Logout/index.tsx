@@ -5,7 +5,7 @@ import { useModal } from "@/app/_hooks/useModal";
 import { useRouter } from "next/navigation";
 import { postLogout } from "@/app/_api/auth";
 import { useMutation } from "@tanstack/react-query";
-import Loading from "@/app/diary/_components/Loading";
+import Loading from "@/app/_components/Loading";
 
 const Logout = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
