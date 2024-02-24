@@ -127,8 +127,10 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   };
 
   useEffect(() => {
-    setProfileImage(watch("image") || DefaultImage);
-  }, [watch]);
+    if (!watch("image")) {
+      setProfileImage(DefaultImage);
+    }
+  }, [watch("image")]);
 
   //드롭다운 외부 클릭시 닫히게 하기
   useEffect(() => {
