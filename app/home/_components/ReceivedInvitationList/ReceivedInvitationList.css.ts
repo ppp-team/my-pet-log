@@ -1,10 +1,13 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
+  minHeight: "19.7rem",
   paddingLeft: "2rem",
+  marginBottom: "2.4rem",
   "@media": {
     "screen and (min-width: 744px)": {
       paddingLeft: "2.5rem",
+      marginBottom: "3rem",
     },
   },
 });
@@ -20,6 +23,10 @@ export const subtitle = style({
       fontSize: "2rem",
     },
   },
+});
+
+export const swiperOverride = style({
+  overflow: "visible!important",
 });
 
 export const itemOverride = style({
@@ -115,7 +122,14 @@ export const noInvitationContainer = style({
   display: "grid",
   gap: "1.2rem",
   justifyItems: "center",
-  padding: "6rem 0",
+  alignItems: "center",
+  height: "16.6rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      height: "22.2rem",
+    },
+  },
 });
 
 export const noInvitationTitle = style({

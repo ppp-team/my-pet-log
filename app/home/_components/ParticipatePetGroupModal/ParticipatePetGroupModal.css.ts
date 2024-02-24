@@ -1,10 +1,11 @@
 import { style } from "@vanilla-extract/css";
 
 export const modalContainer = style({
+  overflow: "hidden",
   display: "flex",
   flexDirection: "column",
   width: "28rem",
-  height: "53.6rem",
+  height: "57.3rem",
   paddingTop: "2.6rem",
   borderRadius: "10px",
   backgroundColor: "#F2F2F2",
@@ -26,6 +27,7 @@ export const closeButton = style({
   "@media": {
     "screen and (min-width: 744px)": {
       marginRight: "2.5rem",
+      marginBottom: "1.5rem",
     },
   },
 });
@@ -72,4 +74,23 @@ export const formWrapper = style({
 export const form = style({
   display: "flex",
   flexDirection: "column",
+});
+
+export const linkButton = style({
+  margin: "0 2rem",
+  padding: "0.9rem 0",
+  borderRadius: "30px",
+  backgroundColor: "var(--MainOrange)",
+  fontSize: "1.6rem",
+  fontWeight: "600",
+  color: "var(--White)",
+  textAlign: "center",
+  ":disabled": {
+    backgroundColor: "var(--GrayA4)",
+    cursor: "not-allowed",
+  },
+
+  "@media": {
+    "screen and (min-width: 744px)": { margin: "0 2.5rem", fontSize: "2rem" },
+  },
 });

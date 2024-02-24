@@ -8,6 +8,11 @@ export const button = style({
   fontWeight: "600",
   color: "var(--White)",
   textAlign: "center",
+  ":disabled": {
+    backgroundColor: "var(--GrayA4)",
+    cursor: "not-allowed",
+  },
+
   "@media": {
     "screen and (min-width: 744px)": {
       fontSize: "2rem",
