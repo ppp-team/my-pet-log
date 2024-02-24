@@ -53,7 +53,7 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
   return (
     <section className={styles.modalContainer}>
       <button onClick={onClickClose} className={styles.closeButton}>
-        <Image src={closeIconSrc} alt="모달 종료 버튼 이미지" width={24} height={24} />
+        <Image className={styles.closeIcon} src={closeIconSrc} alt="모달 종료 버튼 이미지" width={24} height={24} />
       </button>
       <p className={styles.title}>
         초대 내역을 승낙하거나

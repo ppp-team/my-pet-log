@@ -8,4 +8,9 @@ export const button = style({
   fontWeight: "600",
   color: "var(--White)",
   textAlign: "center",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
 });

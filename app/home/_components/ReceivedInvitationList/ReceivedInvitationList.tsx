@@ -15,10 +15,15 @@ const ReceivedInvitationList = () => {
 
   const queryClient = useQueryClient();
 
-  const { data: invites } = useQuery<InvitationType[]>({
-    queryKey: ["invites"],
-    queryFn: () => getInvitations(),
-  });
+  // const { data: invites } = useQuery<InvitationType[]>({
+  //   queryKey: ["invites"],
+  //   queryFn: () => getInvitations(),
+  // });
+
+  const invites: InvitationType[] = [
+    { invitationId: 11, petId: 1, inviteStatus: "PENDING", petName: "은행이", petImageUrl: null, invitedAt: "1분" },
+    { invitationId: 11, petId: 1, inviteStatus: "PENDING", petName: "은행이", petImageUrl: null, invitedAt: "1분" },
+  ];
 
   const { mutate: acceptMutation, isPending: IsAcceptPending } = useMutation({
     mutationKey: ["acceptMutationKey"],
@@ -66,7 +71,7 @@ const ReceivedInvitationList = () => {
           <h1 className={styles.noInvitationTitle}>초대 받은 내역이 없습니다.</h1>
         </div>
       ) : (
-        <Swiper className="mySwiper" slidesPerView={"auto"} spaceBetween={20}>
+        <Swiper className="mySwiper" slidesPerView={"auto"}>
           {invites?.map((invitation) => (
             <SwiperSlide key={invitation.invitationId} className={styles.itemOverride}>
               <div className={styles.item}>
