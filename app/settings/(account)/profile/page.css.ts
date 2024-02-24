@@ -1,6 +1,10 @@
 import { style } from "@vanilla-extract/css";
 
 export const formContainer = style({
+  width: "100%",
+  maxWidth: "45rem",
+
+  margin: "0 auto",
   padding: "5rem 1.5rem",
 
   display: "flex",
@@ -8,12 +12,27 @@ export const formContainer = style({
 });
 
 export const profile = style({
-  marginBottom: "1.2rem",
-
   position: "relative",
 
   display: "flex",
   justifyContent: "center",
+});
+
+export const basicProfileText = style({
+  marginTop: "1.2rem",
+
+  textDecoration: "underline",
+  textUnderlineOffset: "0.2rem",
+  color: "var(--Gray81)",
+  marginBottom: "0.8rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      marginTop: "2.4rem",
+      marginBottom: "0rem",
+      fontSize: "1.5rem",
+    },
+  },
 });
 
 export const image = style({
@@ -24,6 +43,13 @@ export const image = style({
   borderRadius: "50%",
 
   cursor: "pointer",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "21.3rem",
+      height: "21.3rem",
+    },
+  },
 });
 
 export const cameraIcon = style({
@@ -36,13 +62,28 @@ export const cameraIcon = style({
   borderRadius: "50%",
   border: "3px solid var(--White)",
   backgroundColor: "var(--LightOrange)",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "6.7rem",
+      height: "6.7rem",
+
+      transform: "translateX(7rem)",
+    },
+  },
 });
 
 export const label = style({
-  margin: "0.6rem 0",
+  margin: "1rem 0",
 
   fontSize: "1.6rem",
   fontWeight: "600",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      marginTop: "3rem",
+    },
+  },
 });
 
 export const input = style({
@@ -128,6 +169,12 @@ export const button = style({
 
   color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      marginTop: "3.2rem",
+    },
+  },
 });
 
 export const inputError = style({

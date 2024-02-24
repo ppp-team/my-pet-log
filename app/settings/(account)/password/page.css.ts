@@ -1,18 +1,32 @@
 import { style } from "@vanilla-extract/css";
 
 export const formContainer = style({
-  padding: "5rem 1.5rem",
+  width: "100%",
+  maxWidth: "45rem",
+
+  margin: "0 auto",
+  padding: "3rem 1.5rem",
 
   display: "flex",
   flexDirection: "column",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      paddingTop: "3.2rem",
+    },
+  },
 });
 
 export const label = style({
-  marginBottom: "0.6rem",
-  marginTop: "0.8rem",
+  marginBottom: "1rem",
+  marginTop: "1rem",
 
   fontSize: "1.6rem",
   fontWeight: "600",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      marginTop: "2.4rem",
+    },
+  },
 });
 
 export const input = style({
@@ -43,4 +57,9 @@ export const button = style({
 
   color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      marginTop: "3.2rem",
+    },
+  },
 });

@@ -6,7 +6,7 @@ import { useModal } from "@/app/_hooks/useModal";
 import MemberList from "@/app/settings/_components/MemberList";
 import { useRouter } from "next/navigation";
 import { GuardiansType } from "@/app/_types/guardians/types";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getGuardians, deleteGuardians } from "@/app/_api/guardians";
 import { UserType } from "@/app/_types/user/types";
 import { getMe } from "@/app/_api/users";
@@ -14,6 +14,7 @@ import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import Image from "next/image";
 
 const Member = ({ petId }: { petId: number }) => {
+  const queryClient = useQueryClient();
   const { data: user } = useQuery<UserType>({
     queryKey: ["me"],
     queryFn: () => getMe(),
@@ -48,7 +49,9 @@ const Member = ({ petId }: { petId: number }) => {
     mutationFn: (guardianId: number) => deleteGuardians(guardianId),
 
     onSuccess: () => {
-      router.push("/home");
+      localStorage.removeItem("petId");
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
+      router.push("/home-select");
     },
   });
 

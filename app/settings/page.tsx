@@ -11,6 +11,7 @@ import MenuList from "@/app/settings/_components/MenuList";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { getMe } from "@/app/_api/users";
 import Logout from "@/app/settings/_components/Logout";
+import { text } from "./page.css";
 
 const Page = async () => {
   const queryClient = new QueryClient();
@@ -21,16 +22,7 @@ const Page = async () => {
   return (
     <>
       <HydrationBoundary state={dehydratedState}>
-        <div
-          style={{
-            margin: "2rem 1.6rem",
-            color: "var(--Gray72)",
-            fontSize: "1.6rem",
-            fontWeight: "600",
-          }}
-        >
-          마이펫 관리하기
-        </div>
+        <div className={text}>마이펫 관리하기</div>
         <MypetCarousel />
         <div style={{ padding: "0 1.6rem 1.6rem" }}>
           <Link href="/settings/profile">
