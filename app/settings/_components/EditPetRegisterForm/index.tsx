@@ -20,6 +20,8 @@ import { useModal } from "@/app/_hooks/useModal";
 import { useQuery } from "@tanstack/react-query";
 import Modal from "@/app/_components/Modal";
 import { PetType } from "@/app/_types/petGroup/types";
+import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
+import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
 
 export interface IFormInput {
   petName: string;
@@ -63,7 +65,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onTouched" });
+  } = useForm<IFormInput>({ mode: "onBlur" });
 
   const router = useRouter();
   const handleCloseModal = () => {
@@ -78,7 +80,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       type: data.type,
       breed: data.breed,
       gender: data.gender,
-      isNeutered: data.neutering === "" ? null : data.neutering,
+      isNeutered: data.neutering === undefined ? null : data.neutering,
       birth: data.birthday === "날짜 선택" ? null : data.birthday,
       firstMeetDate: data.firstMeet === "날짜 선택" ? null : data.firstMeet,
       weight: data.weight === "" ? null : data.weight,
@@ -272,7 +274,8 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     <>
       {/* 성별 */}
       <label className={styles.label}>성별*</label>
-      <div className={styles.radioContainer}>
+      <GenderSelection selectedGender={selectedGender} handleGenderChange={handleGenderChange} />
+      {/* <div className={styles.radioContainer}>
         <div className={`${styles.leftRadio} ${selectedGender === "MALE" ? styles.leftSelectedBorder : ""}`}>
           <input type="radio" id="MALE" value="MALE" checked={selectedGender === "MALE"} onClick={() => handleGenderChange("MALE")} {...register("gender", PET_GENDER_RULES)} />
           <label className={`${styles.radioOption} ${selectedGender === "MALE" && styles.leftSelected}`} htmlFor="MALE">
@@ -293,11 +296,12 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
           </label>
         </div>
       </div>
-      {errors.gender && <ErrorMessage message={errors.gender.message} />}
+      {errors.gender && <ErrorMessage message={errors.gender.message} />} */}
 
       {/* 중성화 여부 */}
       <label className={styles.label}>중성화 여부</label>
-      <div className={styles.radioContainer}>
+      <NeuteringSelection selectedNeutering={selectedNeutering} handleNeuteringChange={handleNeuteringChange} />
+      {/* <div className={styles.radioContainer}>
         <div className={`${styles.leftRadio} ${selectedNeutering === "true" ? styles.leftSelectedBorder : ""}`}>
           <input type="radio" id="yes" name="neutering" value="true" checked={selectedNeutering === "true"} onChange={handleNeuteringChange} />
           <label className={`${styles.radioOption} ${selectedNeutering === "true" && styles.leftSelected}`} htmlFor="yes">
@@ -310,7 +314,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
             안했어요
           </label>
         </div>
-      </div>
+      </div> */}
 
       {/* 생일  */}
       <label className={styles.label}>생일</label>
