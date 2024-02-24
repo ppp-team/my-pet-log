@@ -5,9 +5,10 @@ import ModalContainer from "@/app/_components/ModalContainer";
 import Register from "@/public/images/modal/RegisterImage.png";
 import Signup from "@/public/images/modal/SignupImage.png";
 import Warning from "@/public/images/modal/warningImage.png";
+import Edit from "@/public/images/modal/editImage.png";
 
 interface ModalProps {
-  type: "register" | "signup" | "deletePet";
+  type: "register" | "signup" | "edit" | "deletePet";
   onClick: () => void;
   onClose: () => void;
 }
@@ -32,9 +33,16 @@ const ImageModal = ({ type, onClick, onClose }: ModalProps) => {
       title = `가입이 완료되었습니다!`;
       text1 = `계정이 생성되었습니다.`;
       text2 = `마이펫로그를 시작해볼까요?`;
-      modalImage = { src: Signup, width: 142, height: 130 };
+      modalImage = { src: Edit, width: 142, height: 130 };
       buttonText = `확인`;
       break;
+
+    case "edit":
+      title = `마이펫 수정 완료!`;
+      text1 = `마이펫의 정보가`;
+      text2 = `성공적으로 수정되었습니다.`;
+      modalImage = { src: Warning, width: 150, height: 142 };
+      buttonText = `확인`;
 
     case "deletePet":
       title = `정말 삭제하시겠습니까?`;
