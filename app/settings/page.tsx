@@ -11,7 +11,7 @@ import MenuList from "@/app/settings/_components/MenuList";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { getMe } from "@/app/_api/users";
 import Logout from "@/app/settings/_components/Logout";
-import { text } from "./page.css";
+import { text, listcontainer } from "./page.css";
 
 const Page = async () => {
   const queryClient = new QueryClient();
@@ -28,13 +28,7 @@ const Page = async () => {
           <Link href="/settings/profile">
             <MyProfile />
           </Link>
-          <div
-            style={{
-              padding: "2.3rem 0",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+          <div className={listcontainer}>
             <MenuList href="/settings/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
             <MenuList href="/settings/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
             <MenuList href="/settings/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />

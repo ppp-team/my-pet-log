@@ -5,6 +5,13 @@ export const container = style({
 
   borderTop: "1px solid var(--GrayE4)",
   borderBottom: "1px solid var(--GrayE4)",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      maxWidth: "45rem",
+      margin: "0 auto",
+      padding: "3rem 0",
+    },
+  },
 });
 
 export const ProfileWrapper = style({
@@ -21,6 +28,11 @@ export const title = style({
   color: "var(--Gray72)",
   fontSize: "1.6rem",
   fontWeight: "600",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
 });
 
 export const profileImg = style({
@@ -30,6 +42,13 @@ export const profileImg = style({
   border: "2px solid var(--MainOrange)",
   borderRadius: "50%",
   backgroundSize: "contain",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "5.6rem",
+      height: "5.6rem",
+    },
+  },
 });
 
 export const nickname = style({
@@ -37,15 +56,31 @@ export const nickname = style({
 
   fontSize: "1.6rem",
   fontWeight: "700",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
 });
 
 export const email = style({
   fontSize: "1.3rem",
   color: "var(--Gray81)",
   fontWeight: "400",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "1.5rem",
+    },
+  },
 });
 
 export const checkRightIcon = style({
   position: "absolute",
   right: 0,
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "2.6rem",
+      height: "2.6rem",
+    },
+  },
 });
