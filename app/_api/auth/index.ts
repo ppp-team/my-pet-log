@@ -7,6 +7,10 @@ interface FormData {
   password: string;
 }
 
+interface SocialData {
+  email: string;
+}
+
 export const postLogin = async ({ email, password }: FormData) => {
   try {
     const res = await instance.post("/auth/signin", {
@@ -16,6 +20,24 @@ export const postLogin = async ({ email, password }: FormData) => {
 
     if (res.status === 200) {
       cookies().set("accessToken", res.data.access_token);
+      cookies().set("refreshToken", res.data.refresh_token);
+      return "signin success";
+    }
+  } catch (error: any) {
+    console.error(error.response.data.message);
+    return null;
+  }
+};
+
+export const postSocial = async ({ email }: SocialData) => {
+  try {
+    const res = await instance.post("/auth/login/social", {
+      email,
+    });
+
+    if (res.status === 200) {
+      cookies().set("accessToken", res.data.access_token);
+      cookies().set("refreshToken", res.data.refresh_token);
       return "signin success";
     }
   } catch (error: any) {
@@ -35,11 +57,12 @@ export const postLogout = async () => {
           accessToken: accessToken,
         },
       },
+      1,
     );
 
     if (res.status === 204) {
       cookies().delete("accessToken");
-      cookies().delete("petId");
+      cookies().delete("refreshToken");
       return true;
     }
   } catch (error: any) {
