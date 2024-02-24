@@ -52,6 +52,7 @@ export const deleteGuardians = async (guardianId: number) => {
       data: { guardianId },
     });
     if (response.status === 200) {
+      cookies().delete("petId");
       return response.data;
     }
   } catch (error: any) {

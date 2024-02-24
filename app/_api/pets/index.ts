@@ -56,7 +56,7 @@ export const getCode = async () => {
 
 export const editPetRep = async (petId: string) => {
   try {
-    const response = await instance.post(`/my/pets/${petId}/selectRep`);
+    const response = await instance.post(`/my/guardians/${petId}/selectRep`);
 
     if (response.status === 200) {
       cookies().set("petId", petId);
