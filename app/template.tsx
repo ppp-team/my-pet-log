@@ -34,7 +34,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     return (
       <CookiesProvider>
         <PcHeader />
-        <MainWrapper>{children}</MainWrapper>
+        {children}
       </CookiesProvider>
     );
   }
