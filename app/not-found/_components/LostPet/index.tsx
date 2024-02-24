@@ -1,7 +1,7 @@
 import { getLostPet } from "@/app/_api/lostpet";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import * as styles from "./style.css";
 
 const LostPet = () => {
@@ -17,7 +17,6 @@ const LostPet = () => {
     return address;
   };
 
-  const router = useRouter();
   const randomPage = getRandomInt(1, 9);
 
   const {
@@ -33,9 +32,10 @@ const LostPet = () => {
     <div className={styles.lostPetWrapper}>
       <div className={styles.titleWrapper}>
         <p className={styles.lostPetTitle}>🏡 저와 함께 집에 갈래요?</p>
-        <button className={styles.moreButton} onClick={() => router.push("https://animal.seoul.go.kr/index")}>
-          {"자세히보기 >"}
-        </button>
+
+        <Link href="http://www.animal.go.kr">
+          <button className={styles.moreButton}>{"자세히보기 >"}</button>
+        </Link>
       </div>
       <div className={styles.lostPetCardList}>
         {isLoading ? (
@@ -45,7 +45,14 @@ const LostPet = () => {
         ) : (
           lostPet?.map((lostPetData: any) => (
             <div key={lostPetData.desertionNo} className={styles.lostPetCard}>
-              <Image className={styles.lostPetImage} src={lostPetData.popfile || "/default-thumbnail.png"} alt="유기동물 사진" width={63} height={63} objectFit="cover" />
+              <Image
+                className={styles.lostPetImage}
+                src={lostPetData.popfile || "https://mypetlog.s3.ap-northeast-2.amazonaws.com/RESOURCE/diary_default_thumbnail.svg"}
+                alt="유기동물 사진"
+                width={63}
+                height={63}
+                objectFit="cover"
+              />
               <div className={styles.lostPetCardDetail}>
                 <div>품종: {lostPetData.kindCd}</div>
                 <div>공고일: {lostPetData.noticeSdt}</div>

@@ -14,6 +14,7 @@ import { useState } from "react";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
 import defaultProfileImagePath from "@/public/images/person-profile-default.svg?url";
+import { style } from "@vanilla-extract/css";
 
 interface IFormInput {
   nickname: string;
@@ -134,7 +135,7 @@ const Profile = () => {
       </label>
       <button
         type="button"
-        style={{ textDecoration: "underline", textUnderlineOffset: "0.2rem", color: "var(--Gray81)", marginBottom: "0.8rem" }}
+        className={styles.basicProfileText}
         onClick={() => {
           setImagePreviewUrl("none");
         }}
