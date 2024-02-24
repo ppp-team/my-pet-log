@@ -122,7 +122,7 @@ export const writeInput = style([
 
 export const button = style({
   padding: "1.3rem 0",
-  marginTop: "2.4rem",
+  marginTop: "3.1rem",
 
   borderRadius: "30px",
 
