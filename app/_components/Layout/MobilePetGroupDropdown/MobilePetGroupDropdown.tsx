@@ -10,12 +10,12 @@ import { useRouter } from "next/navigation";
 import { PetsType } from "@/app/_types/petGroup/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { editPetRep, getPets } from "@/app/_api/pets";
-import { useCookies } from "react-cookie";
 
 type dropdownMenuItemType = {
   id: string;
   label: string;
   imageUrl: string;
+  isSelected?: boolean;
 };
 
 const SETTING_BUTTON: dropdownMenuItemType = {
@@ -46,12 +46,9 @@ const MobilePetGroupDropdown = () => {
   };
 
   const router = useRouter();
-  const [cookies] = useCookies();
-  const petIdCookie = cookies.petId;
-  if (!petIdCookie) router.push("/home-select");
 
   const { data: pets } = useQuery<PetsType>({
-    queryKey: ["pets", petIdCookie],
+    queryKey: ["pets"],
     queryFn: () => getPets(),
   });
 
@@ -62,18 +59,19 @@ const MobilePetGroupDropdown = () => {
       id: item.petId,
       label: item.name,
       imageUrl: item.petImageUrl ?? NoPetProfileIconSrc,
+      isSelected: item.repStatus === "REPRESENTATIVE" ? true : false,
     };
   });
 
   /**
    * @type {dropdownMenuItemType}
    */
-  const currentPetGroup: dropdownMenuItemType | null = parsedPetGroupList.find((petGroup) => petGroup.id === petIdCookie) ?? null;
+  const currentPetGroup: dropdownMenuItemType | null = parsedPetGroupList.find((petGroup) => petGroup.isSelected === true) ?? null;
 
   /**
    * @type {Array<dropdownMenuItemType>} currentPetGroup 제외하고 나머지 리스트 + 동물 관리 버튼
    */
-  const dropDownMenuList: dropdownMenuItemType[] = [...parsedPetGroupList?.filter((petGroup) => petGroup.id !== petIdCookie), SETTING_BUTTON];
+  const dropDownMenuList: dropdownMenuItemType[] = [...parsedPetGroupList?.filter((petGroup) => petGroup.id !== currentPetGroup?.id), SETTING_BUTTON];
 
   if (!currentPetGroup) return <div></div>;
   return (

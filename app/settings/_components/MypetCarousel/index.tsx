@@ -19,6 +19,7 @@ import Skeleton from "../Skeleton";
 const MyPetCarousel = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
+
   const { data: pets, isPending } = useQuery<PetsType>({
     queryKey: ["pets"],
     queryFn: () => getPets(),
@@ -27,7 +28,6 @@ const MyPetCarousel = () => {
   const { mutate: editPetRepMutate } = useMutation({
     mutationFn: (petId: string) => editPetRep(petId),
     onSuccess: () => {
-      console.log("gd");
       queryClient.invalidateQueries({ queryKey: ["pets"] });
       router.push("/settings/member");
     },
