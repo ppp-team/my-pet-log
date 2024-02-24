@@ -12,6 +12,11 @@ export const formTitle = style({
   fontSize: "1.6rem",
   fontWeight: "500",
   color: "var(--Black)",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
 });
 
 export const input = style({
@@ -24,6 +29,13 @@ export const input = style({
   "::placeholder": {
     color: "var(--Gray9f)",
   },
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+      paddingTop: "1.3rem",
+      paddingBottom: "1.3rem",
+    },
+  },
 });
 
 export const button = style({
@@ -35,4 +47,11 @@ export const button = style({
   fontWeight: "600",
   color: "var(--White)",
   textAlign: "center",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      margin: "4rem 0",
+      padding: "1.1rem 0",
+      fontSize: "2rem",
+    },
+  },
 });

@@ -32,11 +32,11 @@ const InviteCode = ({ petId }: { petId: number }) => {
 
   return (
     <>
-      <h3 style={{ fontSize: "1.6rem", fontWeight: "500", marginBottom: "1.1rem" }}>마이펫 초대 코드</h3>
+      <h3 className={styles.title}>마이펫 초대 코드</h3>
       <section className={styles.codeContainer}>
         {petInfo && <MyPetInfo petInfo={petInfo} />}
         <div className={styles.copyContainer}>
-          <span style={{ fontSize: "1.4rem", fontWeight: "500", color: "var(--Gray81)" }}>{code}</span>
+          <span className={styles.code}>{code}</span>
           <button className={styles.copyIcon} onClick={handleCopyClick}>
             <Image src={CopyIcon} alt="copy icon" width={14} height={14} />
             <span>복사하기</span>

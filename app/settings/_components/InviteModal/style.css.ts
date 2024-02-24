@@ -58,6 +58,11 @@ export const container = style({
 
   borderRadius: "10px",
   backgroundColor: "var(--GrayF2)",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "35rem",
+    },
+  },
 });
 
 export const iconWrapper = style({
@@ -70,7 +75,7 @@ export const iconWrapper = style({
 });
 
 export const title = style({
-  width: "22rem",
+  width: "18rem",
   margin: "0 auto 3.5rem",
 
   fontSize: "1.6rem",
@@ -78,4 +83,11 @@ export const title = style({
   textAlign: "center",
 
   wordBreak: "keep-all",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "22rem",
+      fontSize: "2rem",
+      marginBottom: "4.3rem",
+    },
+  },
 });
