@@ -53,7 +53,7 @@ const LogList: React.FC<LogListPropsType> = ({ petId, logsData, selectedDate }) 
 
   return (
     <>
-      <div>
+      <div className={styles.container}>
         <p className={styles.date}>{logsData?.date}</p>
         {logsData?.logs && logsData?.logs.length > 0 ? (
           <ul>

@@ -7,6 +7,14 @@ export const container = style({
 
   display: "flex",
   flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      padding: "0 14.7rem",
+    },
+  },
 });
 
 export const title = style({
@@ -14,4 +22,10 @@ export const title = style({
 
   fontSize: "1.6rem",
   fontWeight: "700",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
 });
