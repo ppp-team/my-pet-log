@@ -3,7 +3,6 @@ import { style } from "@vanilla-extract/css";
 export const calendarBox = style({
   width: "100%",
   maxWidth: "35rem",
-  height: "30rem",
 
   margin: "2.4rem 1.6rem",
   padding: "1rem",
