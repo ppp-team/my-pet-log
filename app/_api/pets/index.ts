@@ -18,8 +18,8 @@ export const postPet = async ({ formData }: { formData: FormData }) => {
   }
 };
 
-export const getPet = async () => {
-  const petId = cookies().get("petId")?.value;
+export const getPet = async (petId: number) => {
+  // const petId = cookies().get("petId")?.value;
   try {
     const response = await instance.get(`/my/pets/${petId}`);
     return response.data;
@@ -56,7 +56,7 @@ export const getCode = async () => {
 
 export const editPetRep = async (petId: string) => {
   try {
-    const response = await instance.post(`/my/pets/${petId}/selectRep`);
+    const response = await instance.post(`/my/guardians/${petId}/selectRep`);
 
     if (response.status === 200) {
       cookies().set("petId", petId);
