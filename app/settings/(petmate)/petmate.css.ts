@@ -6,6 +6,13 @@ export const container = style({
   display: "flex",
   flexDirection: "column",
   gap: "0.8rem",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      maxWidth: "45rem",
+      margin: "0 auto",
+      paddingTop: "2.4rem",
+    },
+  },
 });
 
 export const memberlist = style({
