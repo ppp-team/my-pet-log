@@ -273,13 +273,13 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       {/* 성별 */}
       <label className={styles.label}>성별*</label>
       <div className={styles.radioContainer}>
-        <div className={styles.leftRadio}>
+        <div className={`${styles.leftRadio} ${selectedGender === "MALE" ? styles.leftSelectedBorder : ""}`}>
           <input type="radio" id="MALE" value="MALE" checked={selectedGender === "MALE"} onClick={() => handleGenderChange("MALE")} {...register("gender", PET_GENDER_RULES)} />
           <label className={`${styles.radioOption} ${selectedGender === "MALE" && styles.leftSelected}`} htmlFor="MALE">
             남
           </label>
         </div>
-        <div className={styles.rightRadio}>
+        <div className={`${styles.rightRadio} ${selectedGender === "FEMALE" ? styles.rightSelectedBorder : ""}`}>
           <input
             type="radio"
             id="FEMALE"
@@ -298,13 +298,13 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       {/* 중성화 여부 */}
       <label className={styles.label}>중성화 여부</label>
       <div className={styles.radioContainer}>
-        <div className={styles.leftRadio}>
+        <div className={`${styles.leftRadio} ${selectedNeutering === "true" ? styles.leftSelectedBorder : ""}`}>
           <input type="radio" id="yes" name="neutering" value="true" checked={selectedNeutering === "true"} onChange={handleNeuteringChange} />
           <label className={`${styles.radioOption} ${selectedNeutering === "true" && styles.leftSelected}`} htmlFor="yes">
             했어요
           </label>
         </div>
-        <div className={styles.rightRadio}>
+        <div className={`${styles.rightRadio} ${selectedNeutering === "false" ? styles.rightSelectedBorder : ""}`}>
           <input type="radio" id="no" name="neutering" value="false" checked={selectedNeutering === "false"} onChange={handleNeuteringChange} />
           <label className={`${styles.radioOption} ${selectedNeutering === "false" && styles.rightSelected}`} htmlFor="no">
             안했어요
@@ -324,8 +324,9 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       <label className={styles.label}>몸무게</label>
       <input className={styles.writeInput} {...register("weight", PET_WEIGHT_RULES)} placeholder={PET_PLACEHOLDER.weight} disabled={isWeightDisabled} />
       {errors.weight && <ErrorMessage message={errors.weight.message} />}
-      <OptionalMessage onClearInput={clearWeightInput} message={"모르겠어요"} />
-
+      <div className={styles.plusMarginWrapper}>
+        <OptionalMessage onClearInput={clearWeightInput} message={"모르겠어요"} />
+      </div>
       {/* 동물등록번호 */}
       <label className={styles.label}>동물등록번호</label>
       <input className={styles.writeInput} {...register("registeredNumber", PET_REGISTERNUMBER_RULES)} placeholder={PET_PLACEHOLDER.registeredNumber} />

@@ -6,7 +6,6 @@ export const container = style({
 });
 
 export const itemWrapper = style({
-  marginTop: "0.6rem",
   display: "flex",
   alignItems: "center",
   cursor: "pointer",
