@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import * as styles from "./MobileHeaderPetGroup.css";
 import Image from "next/image";
@@ -8,11 +8,7 @@ import MobilePetGroupDropdown from "../MobilePetGroupDropdown/MobilePetGroupDrop
 import { useQuery } from "@tanstack/react-query";
 import { UserType } from "@/app/_types/users/types";
 import { getMe } from "@/app/_api/users";
-
-const getImagePath = (path: UserType["profilePath"]) => {
-  if (!path) return NoUserProfileIconSrc;
-  else return `${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${path}`;
-};
+import { getImagePath } from "@/app/_utils/getPersonImagePath";
 
 const MobileHeaderPetGroup = () => {
   const { data: user } = useQuery<UserType>({

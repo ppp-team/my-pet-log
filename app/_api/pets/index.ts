@@ -18,8 +18,8 @@ export const postPet = async ({ formData }: { formData: FormData }) => {
   }
 };
 
-export const getPet = async () => {
-  const petId = cookies().get("petId")?.value;
+export const getPet = async (petId: number) => {
+  // const petId = cookies().get("petId")?.value;
   try {
     const response = await instance.get(`/my/pets/${petId}`);
     return response.data;

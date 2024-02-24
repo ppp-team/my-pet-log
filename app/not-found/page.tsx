@@ -5,6 +5,7 @@ import Illust from "@/public/images/illustration-404.png";
 import Background from "@/public/images/illustration-bg-404.png";
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import LostPet from "./_components/LostPet";
 import * as styles from "./page.css";
@@ -26,9 +27,9 @@ const Page = () => {
           <p>길을 잃었어요!</p>
           <p>다시 홈으로 돌아갈까요?</p>
         </div>
-        <Button className={styles.homeButton} onClick={() => router.push("/home")}>
-          마이펫로그 홈 가기
-        </Button>
+        <Link href="/home">
+          <Button className={styles.homeButton}>마이펫로그 홈 가기</Button>
+        </Link>
       </div>
       <LostPet />
     </div>
