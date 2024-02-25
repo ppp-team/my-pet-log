@@ -25,6 +25,8 @@ const SETTING_BUTTON: dropdownMenuItemType = {
 };
 
 const MobilePetGroupDropdown = () => {
+  const router = useRouter();
+
   const queryClient = useQueryClient();
 
   const { mutate: editPetRepMutation } = useMutation({
@@ -45,13 +47,14 @@ const MobilePetGroupDropdown = () => {
     id === SETTING_BUTTON.id ? router.push(id) : handleEditPet(id);
   };
 
-  const router = useRouter();
-
   const { data: pets } = useQuery<PetsType>({
     queryKey: ["pets"],
     queryFn: () => getPets(),
   });
 
+  /**
+   * pets가 없을 경우
+   */
   if (!pets) return <div></div>;
 
   const parsedPetGroupList: dropdownMenuItemType[] = pets.data.map((item) => {
@@ -64,7 +67,7 @@ const MobilePetGroupDropdown = () => {
   });
 
   /**
-   * @type {dropdownMenuItemType}
+   * @type {dropdownMenuItemType} 대표 동물
    */
   const currentPetGroup: dropdownMenuItemType | null = parsedPetGroupList.find((petGroup) => petGroup.isSelected === true) ?? null;
 
@@ -73,6 +76,9 @@ const MobilePetGroupDropdown = () => {
    */
   const dropDownMenuList: dropdownMenuItemType[] = [...parsedPetGroupList?.filter((petGroup) => petGroup.id !== currentPetGroup?.id), SETTING_BUTTON];
 
+  /**
+   * 리스트에 대표 동물이 없을 경우
+   */
   if (!currentPetGroup) return <div></div>;
   return (
     <Dropdown placement="bottom-start">

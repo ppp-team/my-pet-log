@@ -5,6 +5,7 @@ import { pagesWithHeader } from "@/app/_constants/pagesWithHeader";
 import PcHeader from "@/app/_components/Layout/PcHeader/PcHeader";
 import MobileHeaderLogo from "@/app/_components/Layout/MobileHeaderLogo/MobileHeaderLogo";
 import MainWrapper from "@/app/_components/Layout/MainWrapper/MainWrapper";
+import MainWrapperPcOnly from "./_components/Layout/MainWrapperPcOnly/MainWrapperPcOnly";
 import MobileFooterNavigationBar from "@/app/_components/Layout/MobileFooterNavigationBar/MobileFooterNavigationBar";
 import MobileHeaderPetGroup from "@/app/_components/Layout/MobileHeaderPetGroup/MobileHeaderPetGroup";
 import { CookiesProvider } from "react-cookie";
@@ -34,7 +35,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     return (
       <CookiesProvider>
         <PcHeader />
-        <MainWrapper>{children}</MainWrapper>
+        <MainWrapperPcOnly>{children}</MainWrapperPcOnly>
       </CookiesProvider>
     );
   }
