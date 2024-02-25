@@ -17,8 +17,8 @@ import { showToast } from "@/app/_components/Toast";
 
 interface IForm {
   nickname: string;
-  profileImage: File;
-  profileImagePreviewUrl: string;
+  profileImage: File | null;
+  profileImagePreviewUrl: string | null;
   isNicknameConfirmed: boolean;
 }
 
@@ -147,6 +147,16 @@ const CreateUserProfilePage: NextPage = () => {
             })}
           />
         </fieldset>
+        <button
+          type="button"
+          className={styles.buttonProfileImageDefault}
+          onClick={() => {
+            setValue("profileImagePreviewUrl", null);
+            setValue("profileImage", null);
+          }}
+        >
+          기본 프로필로 변경
+        </button>
 
         <fieldset className={styles.idFieldset}>
           <label className={styles.label}>이메일</label>

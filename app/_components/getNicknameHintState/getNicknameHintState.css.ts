@@ -8,8 +8,8 @@ export const length = style({
   justifySelf: "flex-end",
   marginTop: "0.6rem",
   fontSize: "1.1rem",
-  fontWeight: "600",
-  color: "var(--Black)",
+  fontWeight: "500",
+  color: "#7E7E7E",
 });
 
 export const inputErrorStyle = style({
