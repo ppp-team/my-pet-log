@@ -128,6 +128,10 @@ export const button = style({
 
   color: "#fff",
   backgroundColor: "var(--MainOrange)",
+
+  ":disabled": {
+    backgroundColor: "var(--GrayB1)",
+  },
 });
 
 export const inputWrapper = style({

@@ -29,7 +29,7 @@ export interface IFormInput {
   image: File;
   type: string;
   breed: string;
-  gender: "MALE" | "FEMALE";
+  gender: string;
   neutering: boolean | null | string;
   birthday: string | null;
   firstMeet: string | null;
@@ -46,8 +46,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
-  const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
-  const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
   const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
@@ -59,16 +57,15 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     queryFn: () => getPet(petId),
   });
 
-  console.log(petInfo);
-
   const {
     mutate: putPetMutation,
     isPending,
     isSuccess: isPutSuccess,
   } = useMutation({
-    mutationFn: (formData: FormData) => putPet({ petId, formData }),
+    mutationFn: (formData: FormData) => putPet({ petId: String(petId), formData }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["petInfo", petId] });
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
       router.back();
     },
     onError: () => {
@@ -85,6 +82,9 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     watch,
   } = useForm<IFormInput>({ mode: "onSubmit" });
 
+  //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
+  const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
+
   const router = useRouter();
   const handleCloseModal = () => {
     closeModalFunc();
@@ -93,6 +93,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
   //전체 폼 제출
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    console.log("데이터", data);
     const request = {
       name: data.petName,
       type: data.type,
@@ -112,52 +113,25 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     formData.append("petRequest", blob);
     formData.append("petImage", data.image);
 
-    // FormData에 데이터가 올바르게 추가되었는지 확인
-    //   console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
-    //   const res = await postPet({ formData });
-    //   if (res !== null) {
-    //     return openModalFunc();
-    //   }
-
-    //   console.log("res", res);
-    // };
-
-    // FormData에 데이터가 올바르게 추가되었는지 확인
-    console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
-    const res = await postPet({ formData });
-    if (res !== null) {
-      return openConfirmModalFunc();
-    }
-    //응답결과 확인
-    console.log("res", res);
-
     putPetMutation(formData);
+    openModalFunc();
   };
 
   useEffect(() => {
     if (petInfo) {
       setValue("petName", petInfo.name);
       setValue("type", petInfo.type);
-      setSelectedType(petInfo.type);
       setValue("breed", petInfo.breed);
-      setSelectedBreed(petInfo.breed);
       setValue("gender", petInfo.gender);
       setSelectedGender(petInfo.gender);
-      setValue("isNeutered", petInfo.isNeutered);
-      setSelectedNeutering(petInfo.isNeutered);
-      setValue("birth", petInfo.birth);
-
-      // setValue("firstMeetDate", petInfo.firstMeetDate);
-      // setValue("weight", petInfo.weight);
-      // setValue("registeredNumber", petInfo.registeredNumber);
+      setValue("neutering", petInfo.isNeutered === "Y" ? true : false);
+      setSelectedNeutering(petInfo.isNeutered === "Y" ? "true" : "false");
+      setValue("birthday", petInfo.birth.slice(0, 10));
+      setValue("firstMeet", petInfo?.firstMeetDate!.slice(0, 10));
+      setValue("weight", petInfo.weight);
+      setValue("registeredNumber", petInfo.registeredNumber);
     }
   }, [isPutSuccess, petInfo, setValue]);
-
-  //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
-  let isSectionValid = false;
-  if (getValues() && getValues().petName && getValues().type && getValues().breed) {
-    isSectionValid = true;
-  }
 
   const handleNextSection = () => {
     if (isSectionValid) {
@@ -197,22 +171,16 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     };
   }, [dropdownRef]);
 
-  //드롭다운
-  useEffect(() => {
-    // setSelectedBreed("");
-    setValue("breed", "");
-  }, [selectedType, setValue]);
-
+  // 타입 클릭시 작동
   const handleTypeClick = (type: string) => {
     setValue("type", type);
-    setSelectedType(type);
-    setSelectedBreed("");
+    setValue("breed", "");
     setTypeOpen((prev) => !prev);
   };
 
+  // 품종 클릭시 작동
   const handleBreedClick = (breed: string) => {
     setValue("breed", breed);
-    setSelectedBreed(breed);
     setBreedOpen((prev) => !prev);
   };
 
@@ -239,6 +207,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     console.log("동물 삭제");
   };
 
+  console.log(getValues().birthday);
   const section1 = (
     <>
       <div className={styles.profile}>
@@ -263,8 +232,8 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
       <div>
-        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
-          {selectedType || "타입을 선택하세요"}
+        <button type="button" className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
+          {getValues().type || "타입을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
         {typeOpen && (
@@ -282,15 +251,15 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {/* 품종 */}
       <label className={styles.label}>품종*</label>
-      {selectedType !== "기타" && (
-        <button className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
-          {selectedBreed || "품종을 선택하세요"}
+      {getValues().type !== "기타" && (
+        <button type="button" className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
+          {getValues().breed || "품종을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${breedOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
       )}
-      {breedOpen && selectedType !== "기타" && (
+      {breedOpen && getValues().type !== "기타" && (
         <ul className={styles.optionsList} ref={dropdownRef}>
-          {petOptions[selectedType]?.map((breed: string, index: number) => (
+          {petOptions[getValues().type]?.map((breed: string, index: number) => (
             <li key={index} value={breed}>
               <button type="button" className={styles.optionButton} onClick={() => handleBreedClick(breed)} {...register("breed")}>
                 {breed}
@@ -300,21 +269,18 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
         </ul>
       )}
 
-      {selectedType === "기타" && (
-        <>
-          <input
-            value={selectedBreed}
-            className={styles.writeInput}
-            placeholder="품종을 직접 입력하세요"
-            {...register("breed", {
-              required: "내용을 입력해주세요",
-            })}
-            autoFocus
-          />
-        </>
+      {getValues().type === "기타" && (
+        <input
+          className={styles.writeInput}
+          placeholder="품종을 직접 입력하세요"
+          {...register("breed", {
+            required: "내용을 입력해주세요",
+          })}
+          autoFocus
+        />
       )}
 
-      <button className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
+      <button type="button" className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
         다음
       </button>
     </>

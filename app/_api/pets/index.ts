@@ -68,3 +68,8 @@ export const editPetRep = async (petId: string) => {
     throw new Error("Error fetching user data");
   }
 };
+
+export const putPet = async ({ petId, formData }: { petId: string; formData: FormData }) => {
+  // const petId = cookies().get("petId")?.value;
+  await instance.put(`my/pets/${petId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+};
