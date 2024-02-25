@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { text } from "./style.css";
 import Loading from "@/app/diary/_components/Loading";
 
+
 const Logout = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const router = useRouter();
