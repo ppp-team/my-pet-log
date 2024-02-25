@@ -2,6 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const container = style({
   width: "100%",
+  height: "100%",
 
   display: "flex",
   flexDirection: "column",
@@ -22,7 +23,6 @@ export const header = style({
   height: "5.6rem",
 
   position: "fixed",
-  marginTop: "-5.6rem",
   padding: "1.55rem 1.6rem",
 
   display: "flex",
@@ -45,9 +45,10 @@ export const backHomeWrapper = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  justifyContent: "center",
 
   position: "absolute",
-  top: "13.5rem",
+  top: "50%",
   gap: "2rem",
 });
 
