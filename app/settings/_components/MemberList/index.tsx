@@ -23,7 +23,7 @@ const MemberList = ({ members, isLeader, petId }: MemberListProps) => {
     mutationFn: (guardianId: number) => deleteGuardians(guardianId),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["petmate", petId] });
+      queryClient.invalidateQueries({ queryKey: ["petmate"] });
     },
   });
 

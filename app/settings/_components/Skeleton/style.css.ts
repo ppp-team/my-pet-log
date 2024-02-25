@@ -11,7 +11,7 @@ export const container = style({
 });
 
 export const skeleton = style({
-  width: "30.5rem",
+  width: "32.5rem",
   height: "15rem",
 
   marginBottom: "4rem",

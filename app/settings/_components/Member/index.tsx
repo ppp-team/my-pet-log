@@ -21,7 +21,7 @@ const Member = ({ petId }: { petId: number }) => {
     queryFn: () => getMe(),
   });
   const { data } = useQuery<GuardiansType>({
-    queryKey: ["petmate", petId],
+    queryKey: ["petmate"],
     queryFn: () => getGuardians(),
   });
 
