@@ -5,7 +5,9 @@ import { useModal } from "@/app/_hooks/useModal";
 import { useRouter } from "next/navigation";
 import { postLogout } from "@/app/_api/auth";
 import { useMutation } from "@tanstack/react-query";
-import Loading from "@/app/_components/Loading";
+import { text } from "./style.css";
+import Loading from "@/app/diary/_components/Loading";
+
 
 const Logout = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
@@ -30,15 +32,7 @@ const Logout = () => {
 
   return (
     <>
-      <span
-        style={{
-          color: "var(--GrayC2)",
-          fontSize: "1.4rem",
-          fontWeight: "600",
-          cursor: "pointer",
-        }}
-        onClick={openModalFunc}
-      >
+      <span className={text} onClick={openModalFunc}>
         로그아웃
       </span>
       {isModalOpen && <Modal text="로그아웃 하시겠습니까?" buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}

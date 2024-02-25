@@ -44,6 +44,11 @@ export const button = style({
   fontSize: "1.2rem",
   fontWeight: "600",
   textAlign: "center",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "1.5rem",
+    },
+  },
 });
 
 export const petButton = style([
@@ -58,4 +63,10 @@ export const petMateButton = style([button]);
 export const petInfoWrapper = style({
   width: "100%",
   padding: "1.5rem 0 1.5rem 2.8rem",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "1.5rem",
+      padding: "2rem  0 0 3.8rem",
+    },
+  },
 });

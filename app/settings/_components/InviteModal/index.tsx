@@ -15,7 +15,7 @@ const InviteModal = ({ petId }: { petId: number }) => {
       <section className={styles.invitation}>
         <p style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}>
           <Image src={LetterIcon} alt="letter icon" />
-          <span>다른 펫메이트도 초대하고 싶다면?</span>
+          <span className={styles.inviteText}>다른 펫메이트도 초대하고 싶다면?</span>
         </p>
         <button className={styles.invitationButton} onClick={openModalFunc}>
           초대하기 &gt;

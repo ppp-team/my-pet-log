@@ -42,4 +42,11 @@ globalStyle(".swiper-pagination", {
   marginBottom: "1.4rem",
 
   position: "static",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      marginTop: "2rem",
+      marginBottom: "2rem",
+    },
+  },
 });
