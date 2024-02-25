@@ -1,5 +1,4 @@
 import * as styles from "./ReceivedInvitationList.css";
-import petProfileDefaultSrc from "@/public/images/pet-profile-default.svg?url";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -9,6 +8,7 @@ import { InvitationType } from "@/app/_types/invitaion/types";
 import { getInvitations, postAcceptance, postRefusal } from "@/app/_api/invitation";
 import { showToast } from "@/app/_components/Toast";
 import { useRouter } from "next/navigation";
+import { getImagePath } from "@/app/_utils/getPetImagePath";
 
 const ReceivedInvitationList = ({ checkHasNoPets }: { checkHasNoPets: () => void }) => {
   const router = useRouter();
@@ -67,7 +67,7 @@ const ReceivedInvitationList = ({ checkHasNoPets }: { checkHasNoPets: () => void
           {invites?.map((invitation) => (
             <SwiperSlide className={styles.itemOverride} key={invitation.invitationId}>
               <div className={styles.item}>
-                <Image className={styles.petImage} src={invitation.petImageUrl ?? petProfileDefaultSrc} alt="펫 프로필 이미지" width={48} height={48} />
+                <Image className={styles.petImage} src={getImagePath(invitation.petImageUrl)} alt="펫 프로필 이미지" width={48} height={48} />
                 <p className={styles.petName}>{invitation.petName}</p>
                 <p className={styles.invitedDate}>{invitation.invitedAt} 전</p>
                 <div className={styles.responseContainer}>
