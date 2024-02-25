@@ -43,7 +43,7 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
 
   return (
     <div className={styles.inputWrapper}>
-      <div style={{ display: "flex", gap: "1rem", position: "relative", marginBottom: "0.8rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
+      <div style={{ display: "flex", gap: "1rem", position: "relative", marginBottom: "0.6rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
         <Image src={CalendarIcon} alt="calendar icon" width={20} height={20} style={{ position: "absolute", right: "1.4rem", top: "1.3rem" }} />
         <input className={styles.input} value={dateValue} readOnly {...register(id)} disabled={isDisabled} />
       </div>
