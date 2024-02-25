@@ -83,7 +83,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onBlur" });
+  } = useForm<IFormInput>({ mode: "onSubmit" });
 
   const router = useRouter();
   const handleCloseModal = () => {
@@ -141,9 +141,12 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       setSelectedType(petInfo.type);
       setValue("breed", petInfo.breed);
       setSelectedBreed(petInfo.breed);
-      // setValue("gender", petInfo.gender);
-      // setValue("isNeutered", petInfo.isNeutered);
-      // setValue("birth", petInfo.birth);
+      setValue("gender", petInfo.gender);
+      setSelectedGender(petInfo.gender);
+      setValue("isNeutered", petInfo.isNeutered);
+      setSelectedNeutering(petInfo.isNeutered);
+      setValue("birth", petInfo.birth);
+
       // setValue("firstMeetDate", petInfo.firstMeetDate);
       // setValue("weight", petInfo.weight);
       // setValue("registeredNumber", petInfo.registeredNumber);
@@ -235,7 +238,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const handleDelete = () => {
     console.log("동물 삭제");
   };
-  console.log("품종:", selectedBreed);
+
   const section1 = (
     <>
       <div className={styles.profile}>
