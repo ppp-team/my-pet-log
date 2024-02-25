@@ -8,7 +8,7 @@ import Warning from "@/public/images/modal/warningImage.png";
 import Edit from "@/public/images/modal/editImage.png";
 
 interface ModalProps {
-  type: "register" | "signup" | "edit" | "deletePet";
+  type: "register" | "signup" | "edit" | "deletePet" | "unAuthorizedDeletePet";
   onClick: () => void;
   onClose: () => void;
 }
@@ -33,7 +33,7 @@ const ImageModal = ({ type, onClick, onClose }: ModalProps) => {
       title = `가입이 완료되었습니다!`;
       text1 = `계정이 생성되었습니다.`;
       text2 = `마이펫로그를 시작해볼까요?`;
-      modalImage = { src: Edit, width: 142, height: 130 };
+      modalImage = { src: Signup, width: 142, height: 130 };
       buttonText = `확인`;
       break;
 
@@ -41,8 +41,9 @@ const ImageModal = ({ type, onClick, onClose }: ModalProps) => {
       title = `마이펫 수정 완료!`;
       text1 = `마이펫의 정보가`;
       text2 = `성공적으로 수정되었습니다.`;
-      modalImage = { src: Warning, width: 150, height: 142 };
+      modalImage = { src: Edit, width: 150, height: 142 };
       buttonText = `확인`;
+      break;
 
     case "deletePet":
       title = `정말 삭제하시겠습니까?`;
@@ -50,6 +51,13 @@ const ImageModal = ({ type, onClick, onClose }: ModalProps) => {
       text2 = `마이펫을 다시 복구할 수 없습니다.`;
       modalImage = { src: Warning, width: 110, height: 95 };
       buttonText = `삭제`;
+      break;
+
+    case "unAuthorizedDeletePet":
+      title = `마이펫을 삭제할 수 없습니다!`;
+      text1 = `마이펫은 리더만 삭제할 수 있습니다.`;
+      modalImage = { src: Warning, width: 110, height: 95 };
+      buttonText = `확인`;
       break;
 
     default:

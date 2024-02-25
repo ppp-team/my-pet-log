@@ -2,7 +2,7 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTERNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import * as styles from "./style.css";
 import DefaultImage from "@/public/images/pet-profile-default.svg?url";
 import cameraIcon from "@/public/icons/camera.svg?url";
@@ -15,7 +15,7 @@ import OptionalMessage from "@/app/_components/PetRegister/component/OptionalChe
 import CloseIcon from "@/public/icons/close.svg?url";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import { useRouter } from "next/navigation";
-import { postPet, getPet, putPet } from "@/app/_api/pets";
+import { deletePet, getPet, putPet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Modal from "@/app/_components/Modal";
@@ -23,6 +23,12 @@ import { PetType } from "@/app/_types/petGroup/types";
 import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
 import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
 import { showToast } from "@/app/_components/Toast";
+import { getGuardians } from "@/app/_api/guardians";
+import { GuardiansType } from "@/app/_types/guardians/types";
+import { getMe } from "@/app/_api/users";
+import { UserType } from "@/app/_types/user/types";
+import ImageModal from "@/app/_components/Modal/ImageModal";
+import Loading from "@/app/_components/Loading";
 
 export interface IFormInput {
   petName: string;
@@ -40,7 +46,10 @@ export interface IFormInput {
 }
 
 const EditPetRegisterForm = ({ petId }: { petId: number }) => {
-  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  // const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  const { isModalOpen: isConfirmModalOpen, openModalFunc: openConfirmModalFunc, closeModalFunc: closeConfirmModalFunc } = useModal();
+  const { isModalOpen: isUnAuthorizedModalOpen, openModalFunc: openUnAuthorizedModalFunc, closeModalFunc: closeUnAuthorizedModalFunc } = useModal();
+  const { isModalOpen: isDeleteModalOpen, openModalFunc: openDeleteModalFunc, closeModalFunc: closeDeleteModalFunc } = useModal();
   const [profileImage, setProfileImage] = useState<File | string | null>(DefaultImage);
   const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
@@ -52,6 +61,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
   const queryClient = useQueryClient();
 
+  //수정하기
   const { data: petInfo } = useQuery<PetType>({
     queryKey: ["petInfo", petId],
     queryFn: () => getPet(petId),
@@ -70,9 +80,42 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     },
     onError: () => {
       showToast("마이펫 수정에 실패했습니다.", false);
+      closeDeleteModalFunc();
     },
   });
 
+  //삭제하기
+  const { data: user } = useQuery<UserType>({
+    queryKey: ["me"],
+    queryFn: () => getMe(),
+  });
+  const { data: guardiansList } = useQuery<GuardiansType>({
+    queryKey: ["petmate", petId],
+    queryFn: () => getGuardians(petId),
+  });
+
+  const petmateList = guardiansList?.data ?? [];
+  const isOnlyMember = guardiansList?.count === 1 ? true : false;
+  const currentUser = petmateList.find((member) => member.nickname === user?.nickname);
+  const isLeader = currentUser ? currentUser.guardianRole === "LEADER" : false;
+
+  const {
+    mutate: deletePetMutation,
+    isPending: isDeletePending,
+    isSuccess: isDeleteSuccess,
+  } = useMutation({
+    mutationFn: (petId: string) => deletePet({ petId }),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
+      router.push("/settings");
+    },
+    onError: () => {
+      showToast("다른 멤버가 있을 때 반려동물을 삭제할 수 없습니다.", false);
+    },
+  });
+
+  //리액트훅폼
   const {
     register,
     handleSubmit,
@@ -86,14 +129,9 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
 
   const router = useRouter();
-  const handleCloseModal = () => {
-    closeModalFunc();
-    router.push("/settings");
-  };
 
   //전체 폼 제출
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    console.log("데이터", data);
     const request = {
       name: data.petName,
       type: data.type,
@@ -105,7 +143,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       weight: data.weight === "" ? null : data.weight,
       registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
-    console.log("request", request);
 
     const formData = new FormData();
 
@@ -114,7 +151,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     formData.append("petImage", data.image);
 
     putPetMutation(formData);
-    openModalFunc();
+    openConfirmModalFunc();
   };
 
   useEffect(() => {
@@ -126,8 +163,8 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       setSelectedGender(petInfo.gender);
       setValue("neutering", petInfo.isNeutered === "Y" ? true : false);
       setSelectedNeutering(petInfo.isNeutered === "Y" ? "true" : "false");
-      setValue("birthday", petInfo.birth.slice(0, 10));
-      setValue("firstMeet", petInfo?.firstMeetDate!.slice(0, 10));
+      setValue("birthday", petInfo.birth === null ? null : petInfo.birth.slice(0, 10));
+      setValue("firstMeet", petInfo.firstMeetDate === null ? null : petInfo?.firstMeetDate!.slice(0, 10));
       setValue("weight", petInfo.weight);
       setValue("registeredNumber", petInfo.registeredNumber);
     }
@@ -202,12 +239,18 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     setIsWeightDisabled((prev) => !prev);
   };
 
-  //삭제하기 버튼, API호출하는 코드로 수정 예정
+  //삭제하기 버튼 누를시 리더인지 판별
   const handleDelete = () => {
-    console.log("동물 삭제");
+    isLeader ? openDeleteModalFunc() : openUnAuthorizedModalFunc();
   };
 
-  console.log(getValues().birthday);
+  //리더가 삭제 누를시
+  const handleLeaderDelete = () => {
+    if (isLeader && isOnlyMember) {
+      deletePetMutation(String(petId));
+    }
+  };
+
   const section1 = (
     <>
       <div className={styles.profile}>
@@ -319,12 +362,17 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {/* 삭제하기 버튼 */}
       <div className={styles.deleteButtonWrapper}>
-        <button className={styles.deleteButton} onClick={handleDelete}>
+        <button type="button" className={styles.deleteButton} onClick={() => handleDelete()}>
           동물 삭제하기
         </button>
       </div>
+      <button type="submit" className={styles.button}>
+        작성완료
+      </button>
 
-      <button className={styles.button}>작성완료</button>
+      {isDeleteModalOpen && <ImageModal type={"deletePet"} onClick={handleLeaderDelete} onClose={closeDeleteModalFunc} />}
+      {isUnAuthorizedModalOpen && <ImageModal type={"unAuthorizedDeletePet"} onClick={closeUnAuthorizedModalFunc} onClose={closeUnAuthorizedModalFunc} />}
+      {isConfirmModalOpen && <ImageModal type={"edit"} onClick={closeConfirmModalFunc} onClose={closeConfirmModalFunc} />}
     </>
   );
 
@@ -344,7 +392,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>
-      {isModalOpen && <Modal text={"등록이 완료되었습니다!"} buttonText={"확인"} onClick={handleCloseModal} onClose={handleCloseModal} />}
     </>
   );
 };

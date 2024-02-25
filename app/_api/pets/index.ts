@@ -73,3 +73,16 @@ export const putPet = async ({ petId, formData }: { petId: string; formData: For
   // const petId = cookies().get("petId")?.value;
   await instance.put(`my/pets/${petId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
 };
+
+export const deletePet = async ({ petId }: { petId: string }) => {
+  console.log("여기는 들어갔겠지?", petId);
+  try {
+    const response = await instance.delete(`my/pets/${petId}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
