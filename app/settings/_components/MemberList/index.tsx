@@ -42,7 +42,9 @@ const MemberList = ({ members, isLeader, petId }: MemberListProps) => {
         <section key={member.guardianId} className={memberlist}>
           <div className={profileWrapper}>
             <Image className={profileImg} src={getImagePath(member.profileImageUrl)} alt="profile icon" width={40} height={40} />
-            <p className={nickname}>{member.nickname}</p>
+            <p style={{ width: "unset" }} className={nickname}>
+              {member.nickname}
+            </p>
           </div>
           {isLeader && (
             <button
