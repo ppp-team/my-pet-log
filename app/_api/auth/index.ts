@@ -57,7 +57,6 @@ export const postLogout = async () => {
           accessToken: accessToken,
         },
       },
-      1,
     );
 
     if (res.status === 204) {
