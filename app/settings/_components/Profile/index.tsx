@@ -104,7 +104,6 @@ const Profile = () => {
       if (nicknameChanged) {
         const NickNameformData = new FormData();
         NickNameformData.append("nickname", data.nickname);
-        //putNicknameMutation.mutate(NickNameformData);
         await putNicknameMutation.mutateAsync(NickNameformData);
       }
 

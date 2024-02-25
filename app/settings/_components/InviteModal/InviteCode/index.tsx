@@ -10,7 +10,7 @@ import { PetType } from "@/app/_types/pets/types";
 const InviteCode = ({ petId }: { petId: number }) => {
   const { data: petInfo } = useQuery<PetType>({
     queryKey: ["petInfo", petId],
-    queryFn: () => getPet(),
+    queryFn: () => getPet(petId),
   });
   const { data: code } = useQuery<string>({
     queryKey: ["inviteCode", petId],

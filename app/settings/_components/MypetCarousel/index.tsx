@@ -62,7 +62,7 @@ const MyPetCarousel = () => {
               <button
                 className={petButton}
                 onClick={() => {
-                  router.push("/settings/pet-registe");
+                  router.push(`/settings/pet-info/${petInfo.petId}`);
                 }}
               >
                 마이펫 정보 수정
