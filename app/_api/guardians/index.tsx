@@ -4,7 +4,7 @@ import instance from "@/app/_api/axios";
 import { GuardianForLogsType } from "@/app/_types/guardians/types";
 import { cookies } from "next/headers";
 
-export const getGuardians = async (paramPetId: number) => {
+export const getGuardians = async (paramPetId?: number) => {
   let petId;
   if (paramPetId === undefined) {
     petId = cookies().get("petId")?.value;

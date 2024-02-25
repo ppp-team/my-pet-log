@@ -2,16 +2,14 @@ import * as styles from "./style.css";
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
 import { useState } from "react";
 import { Options } from "vanilla-calendar-pro";
-import { UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import OptionalMessage from "@/app/_components/PetRegister/component/OptionalCheck";
-import { IFormInput } from "@/app/_components/PetRegister";
 import CalendarIcon from "@/public/icons/calendarIcon.svg?url";
 import Image from "next/image";
 
 interface DateInputProps {
-  register: UseFormRegister<IFormInput>;
-  setValue: UseFormSetValue<IFormInput>;
-  getValue: UseFormGetValues<IFormInput>;
+  register: any;
+  setValue: any;
+  getValue: any;
   id: "birthday" | "firstMeet";
 }
 const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
