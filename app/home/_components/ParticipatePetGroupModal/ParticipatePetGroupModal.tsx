@@ -53,7 +53,6 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
     registerMutation(removeSpaces(data.inputValue));
   };
 
-  console.log(isRegisterPending || hasNoPets);
   return (
     <section className={styles.modalContainer}>
       <button onClick={onClickClose} className={styles.closeButton}>
