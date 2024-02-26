@@ -53,7 +53,7 @@ export const linkSignUp = style([
   },
 ]);
 
-export const linkLogin = style([
+export const linkLoginLogout = style([
   linkBase,
   {
     color: "var(--White)",

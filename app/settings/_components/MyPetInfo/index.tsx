@@ -1,5 +1,5 @@
 import calculateAge from "@/app/_utils/calculateAge";
-import { profile, container, info } from "./style.css";
+import { profile, container, info, name, detail } from "./style.css";
 import { PetType } from "@/app/_types/pets/types";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
 import Image from "next/image";
@@ -33,9 +33,13 @@ const MyPetInfo = ({ petInfo, styles }: MyPetProps) => {
         priority={true}
       />
       <div className={info}>
-        <span style={{ fontSize: "1.8rem", fontWeight: "600", color: nameTextColor }}>{petInfo.name}</span>
-        <span style={{ fontSize: "1.2rem", fontWeight: "500", color: breedTextColor }}>{petInfo.breed}</span>
-        <span style={{ fontSize: "1.2rem", fontWeight: "500", color: breedTextColor }}>
+        <span className={name} style={{ color: nameTextColor }}>
+          {petInfo.name}
+        </span>
+        <span className={detail} style={{ color: breedTextColor }}>
+          {petInfo.breed}
+        </span>
+        <span className={detail} style={{ color: breedTextColor }}>
           {gender} · {calculateAge(petInfo.birth)}
         </span>
       </div>

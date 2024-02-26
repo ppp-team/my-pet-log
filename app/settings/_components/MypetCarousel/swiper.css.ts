@@ -5,14 +5,20 @@ globalStyle(".swiper-pagination-bullet", {
 });
 
 globalStyle(".swiper-slide", {
-  width: "30.5rem",
-  height: "14.6rem",
+  width: "32.5rem",
+  height: "15rem",
 
   borderRadius: "10px",
 
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "45rem",
+      height: "20.7rem",
+    },
+  },
 });
 
 globalStyle(".swiper-wrapper", {
@@ -36,4 +42,11 @@ globalStyle(".swiper-pagination", {
   marginBottom: "1.4rem",
 
   position: "static",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      marginTop: "2rem",
+      marginBottom: "2rem",
+    },
+  },
 });

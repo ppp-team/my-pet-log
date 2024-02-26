@@ -11,16 +11,26 @@ import Image from "next/image";
 import AddIcon from "@/public/icons/add.svg?url";
 import Link from "next/link";
 import { PetsType } from "@/app/_types/pets/types";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { editPetRep, getPets } from "@/app/_api/pets";
 import Skeleton from "../Skeleton";
 
 const MyPetCarousel = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
+
   const { data: pets, isPending } = useQuery<PetsType>({
     queryKey: ["pets"],
     queryFn: () => getPets(),
+  });
+
+  const { mutate: editPetRepMutate } = useMutation({
+    mutationFn: (petId: string) => editPetRep(petId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
+      router.push("/settings/member");
+    },
   });
 
   const myPetInfoStyles = {
@@ -49,14 +59,17 @@ const MyPetCarousel = () => {
           <SwiperSlide key={petInfo.petId}>
             <div className={container}>
               <div className={petInfoWrapper}>{petInfo && <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />}</div>
-              <Link href={`/settings/pet-info/${petInfo.petId}`} className={petButton}>
+              <button
+                className={petButton}
+                onClick={() => {
+                  router.push(`/settings/pet-info/${petInfo.petId}`);
+                }}
+              >
                 마이펫 정보 수정
-              </Link>
+              </button>
               <button
                 onClick={() => {
-                  editPetRep(String(petInfo.petId));
-                  localStorage.setItem("petId", String(petInfo.petId));
-                  router.push("/settings/member");
+                  editPetRepMutate(String(petInfo.petId));
                 }}
                 className={petMateButton}
               >

@@ -8,12 +8,23 @@ export const container = style({
   alignItems: "center",
   justifyContent: "center",
   gap: "1.8rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      gap: "2.4rem",
+    },
+  },
 });
 
 export const title = style({
   color: "var(--Black)",
   fontSize: "2rem",
   fontWeight: "600",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2.4rem",
+    },
+  },
 });
 
 export const description = style({
@@ -23,4 +34,9 @@ export const description = style({
   color: "var(--Gray81)",
   fontSize: "1.6rem",
   fontWeight: "500",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
 });

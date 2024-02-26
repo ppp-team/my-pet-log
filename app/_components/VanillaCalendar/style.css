@@ -1,6 +1,36 @@
 .vanilla-calendar {
   height: 100%;
   width: 100%;
+
+  font-size: 1.6rem;
+}
+
+.vanilla-calendar-months__month,
+.vanilla-calendar-years__year {
+  display: flex;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  word-break: break-all;
+  border-radius: 5px;
+  border-width: 0px;
+  padding: 0.25rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+[data-calendar-theme="light"] .vanilla-calendar-months__month.vanilla-calendar-months__month_selected,
+[data-calendar-theme="light"] .vanilla-calendar-months__month.vanilla-calendar-months__month_selected:hover {
+  --tw-bg-opacity: 1;
+  background-color: var(--MainOrange);
+  color: var(--White);
+}
+
+[data-calendar-theme="light"] .vanilla-calendar-years__year.vanilla-calendar-years__year_selected,
+[data-calendar-theme="light"] .vanilla-calendar-years__year.vanilla-calendar-years__year_selected:hover {
+  --tw-bg-opacity: 1;
+  background-color: var(--MainOrange);
+  color: var(--White);
 }
 
 .vanilla-calendar-month,
@@ -8,7 +38,7 @@
   padding: 1.5rem 0.5rem;
 
   cursor: pointer;
-  border-radius: 0.25rem;
+  border-radius: 2.5px;
   border-width: 0px;
   background-color: transparent;
 
@@ -33,6 +63,16 @@
   font-weight: 700;
 }
 
+.vanilla-calendar-days {
+  display: grid;
+  flex-grow: 1;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+  justify-items: center;
+  grid-row-gap: 0.5rem;
+  row-gap: 0.5rem;
+}
+
 .vanilla-calendar-day__btn {
   font-size: 1.4rem;
 }
@@ -42,13 +82,40 @@
   background-color: var(--MainOrange);
 }
 
+[data-calendar-theme="light"] .vanilla-calendar-day__btn {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  color: #0f172a;
+
+  height: 4rem;
+}
+
 [data-calendar-theme="light"] .vanilla-calendar-day__btn_today {
+  width: 3rem;
+  height: 3rem;
+
+  border-radius: 50%;
+
   background-color: var(--LightOrange);
   color: var(--MainOrange);
 }
 
-[data-calendar-theme="light"] .vanilla-calendar-day__btn_selected,
-[data-calendar-theme="light"] .vanilla-calendar-day__btn_selected:hover {
+[data-calendar-theme="light"] .vanilla-calendar-day__btn_selected {
+  width: 3rem;
+  height: 3rem;
+
+  border-radius: 50%;
+
   background-color: var(--MainOrange);
   color: var(--White);
+}
+
+[data-calendar-theme="light"] .vanilla-calendar-day__btn_selected:hover {
+  width: 3rem;
+  height: 3rem;
+
+  border-radius: 50%;
+
+  background-color: var(--LightOrange);
+  color: var(--MainOrange);
 }

@@ -6,6 +6,9 @@ import logoImageSrc from "@/public/icons/logo.svg?url";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { postLogout } from "@/app/_api/auth";
+import { useRouter } from "next/navigation";
 
 const PC_CENTER_MENUS = [
   { label: "홈", href: "/home" },
@@ -23,11 +26,14 @@ const PcHeaderNav = () => {
     if (cookies.accessToken) setIsLoggedIn(true);
   }, [cookies]);
 
-  const getMenuLoginLogout = (isLoggedIn: boolean) => {
-    return isLoggedIn ? { label: "로그아웃", href: "/", style: styles.linkLogin } : { label: "로그인", href: "/login", style: styles.linkLogin };
-  };
+  const router = useRouter();
 
-  const PC_RIGHT_MENUS = [{ label: "회원가입", href: "/signup", style: styles.linkSignUp }, getMenuLoginLogout(isLoggedIn)];
+  const logoutMutation = useMutation({
+    mutationFn: () => postLogout(),
+    onSuccess: () => {
+      router.push("/login");
+    },
+  });
 
   return (
     <nav className={styles.nav}>
@@ -44,13 +50,27 @@ const PcHeaderNav = () => {
         ))}
       </ul>
       <ul className={styles.rightMenuList}>
-        {PC_RIGHT_MENUS.map((menu) => (
-          <li key={menu.label}>
-            <Link className={menu.style} href={menu.href}>
-              {menu.label}
+        <li>
+          {isLoggedIn ? (
+            <button
+              className={styles.linkLoginLogout}
+              onClick={() => {
+                logoutMutation.mutate();
+              }}
+            >
+              로그아웃
+            </button>
+          ) : (
+            <Link className={styles.linkLoginLogout} href="/login">
+              로그인
             </Link>
-          </li>
-        ))}
+          )}
+        </li>
+        <li>
+          <Link className={styles.linkSignUp} href="/signUp">
+            회원가입
+          </Link>
+        </li>
       </ul>
     </nav>
   );

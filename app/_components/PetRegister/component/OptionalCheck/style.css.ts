@@ -3,14 +3,16 @@ import { style } from "@vanilla-extract/css";
 export const container = style({
   display: "flex",
   alignItems: "center",
-  gap: "0.5rem",
 });
 
 export const itemWrapper = style({
+  display: "flex",
+  alignItems: "center",
   cursor: "pointer",
 });
 
 export const checked = style({
+  marginLeft: "0.6rem",
   fontSize: "1.4rem",
   fontWeight: "500",
   color: "var(--Gray81)",

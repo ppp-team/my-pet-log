@@ -12,6 +12,7 @@ import { postRegister } from "@/app/_api/invitation";
 import removeSpaces from "@/app/_utils/removeSpaces";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/app/_components/Toast";
+import { useState } from "react";
 
 export interface TInvitationCodeFormValues {
   inputValue: string;
@@ -23,11 +24,13 @@ interface ParticipatePetGroupModalProps {
 }
 
 const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProps) => {
+  const [hasNoPets, setHasNoPets] = useState(true);
   const router = useRouter();
   const {
     register,
     handleSubmit,
     setError,
+    getValues,
     formState: { errors },
   } = useForm<TInvitationCodeFormValues>({ mode: "onTouched" });
 
@@ -36,7 +39,7 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
     onSuccess: (data) => {
       if (data) {
         showToast("등록되었습니다!", true);
-        router.push("/home-select");
+        if (hasNoPets) setHasNoPets(false);
       } else {
         setError("inputValue", { type: "invalid", message: ERROR_MESSAGE.receivedInvitationCodeInvalid });
       }
@@ -50,10 +53,11 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
     registerMutation(removeSpaces(data.inputValue));
   };
 
+  console.log(isRegisterPending || hasNoPets);
   return (
     <section className={styles.modalContainer}>
       <button onClick={onClickClose} className={styles.closeButton}>
-        <Image src={closeIconSrc} alt="모달 종료 버튼 이미지" width={24} height={24} />
+        <Image className={styles.closeIcon} src={closeIconSrc} alt="모달 종료 버튼 이미지" width={24} height={24} />
       </button>
       <p className={styles.title}>
         초대 내역을 승낙하거나
@@ -70,10 +74,17 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
             register={register}
           />
           <InvitationInputError errorMessage={errors?.inputValue?.message} />
-          <InvitationSubmitButton isDisable={isRegisterPending} />
+          <InvitationSubmitButton isDisable={isRegisterPending || getValues("inputValue") === ""} />
         </form>
       </div>
-      <ReceivedInvitationList />
+      <ReceivedInvitationList
+        checkHasNoPets={() => {
+          if (hasNoPets) setHasNoPets(false);
+        }}
+      />
+      <button className={styles.linkButton} type="button" disabled={isRegisterPending || hasNoPets} onClick={() => router.push("/home-select")}>
+        마이펫 선택하러 가기
+      </button>
     </section>
   );
 };
