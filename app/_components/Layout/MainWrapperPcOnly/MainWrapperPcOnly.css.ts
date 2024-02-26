@@ -8,8 +8,6 @@ export const wrapper = style({
     "screen and (min-width: 1024px)": {
       paddingTop: "8rem",
       paddingBottom: "0",
-      // display: "flex",
-      // justifyContent: "center",
     },
   },
 });

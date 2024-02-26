@@ -37,7 +37,7 @@ const Page = () => {
         <Onboarding image={currentOnboarding.image} title={currentOnboarding.title} description={currentOnboarding.description} />
         <div className={styles.bottomButtonWrapper}>
           {currentShow === OnboardingData.length - 1 ? (
-            <Link href="/signup" className={styles.link}>
+            <Link href="/login" className={styles.link}>
               <button className={styles.bottomButton}>시작하기</button>
             </Link>
           ) : (
