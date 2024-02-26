@@ -2,16 +2,14 @@ import * as styles from "./style.css";
 import VanillaCalendar from "@/app/_components/VanillaCalendar";
 import { useState } from "react";
 import { Options } from "vanilla-calendar-pro";
-import { UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import OptionalMessage from "@/app/_components/PetRegister/component/OptionalCheck";
-import { IFormInput } from "@/app/_components/PetRegister";
 import CalendarIcon from "@/public/icons/calendarIcon.svg?url";
 import Image from "next/image";
 
 interface DateInputProps {
-  register: UseFormRegister<IFormInput>;
-  setValue: UseFormSetValue<IFormInput>;
-  getValue: UseFormGetValues<IFormInput>;
+  register: any;
+  setValue: any;
+  getValue: any;
   id: "birthday" | "firstMeet";
 }
 const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
@@ -41,9 +39,10 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
     setIsDisabled((prev) => !prev);
   };
 
+  console.log(getValue().birthday, dateValue);
   return (
     <div className={styles.inputWrapper}>
-      <div style={{ display: "flex", gap: "1rem", position: "relative", marginBottom: "0.8rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
+      <div style={{ display: "flex", gap: "1rem", position: "relative", marginBottom: "0.6rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
         <Image src={CalendarIcon} alt="calendar icon" width={20} height={20} style={{ position: "absolute", right: "1.4rem", top: "1.3rem" }} />
         <input className={styles.input} value={dateValue} readOnly {...register(id)} disabled={isDisabled} />
       </div>

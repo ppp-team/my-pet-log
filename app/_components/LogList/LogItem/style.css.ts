@@ -11,11 +11,17 @@ export const container = style({
   gap: "0.5rem",
 
   fontSize: "1.2rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      height: "7.8rem",
+    },
+  },
 });
 
 export const listContainer = style({
   width: "100%",
-  height: "6.6rem",
+  height: "100%",
 
   display: "flex",
   alignItems: "center",
@@ -146,6 +152,13 @@ export const editButton = style({
   backgroundColor: "#8E8E93",
   color: "white",
   fontSize: "1.4rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "7.8rem",
+      height: "7.8rem",
+    },
+  },
 });
 
 export const deleteButton = style({
@@ -159,6 +172,13 @@ export const deleteButton = style({
   backgroundColor: "#FF3B30",
   color: "white",
   fontSize: "1.4rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "7.8rem",
+      height: "7.8rem",
+    },
+  },
 });
 
 export const logDetailContainer = style({

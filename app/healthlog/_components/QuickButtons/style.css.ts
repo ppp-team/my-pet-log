@@ -2,11 +2,19 @@ import { style } from "@vanilla-extract/css";
 
 export const buttonContainer = style({
   display: "flex",
-  alignItems: "center",
   justifyContent: "flex-start",
 
-  margin: "0 1.6rem",
-  gap: "1rem",
+  paddingLeft: "1.6rem",
+  gap: "1.6rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      justifyContent: "center",
+
+      paddingLeft: "0",
+      gap: "2.2rem",
+    },
+  },
 });
 
 export const buttonWrapper = style({
@@ -45,6 +53,6 @@ export const thirdColorButton = style({
 });
 
 export const buttonText = style({
-  fontSize: "12px",
+  fontSize: "1.2rem",
   color: "#535353",
 });

@@ -16,6 +16,20 @@ export const title = style({
   color: "var(--Black)",
   fontSize: "2rem",
   fontWeight: "600",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2.8rem",
+    },
+  },
+});
+
+export const icon = style({
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "16.2rem",
+      height: "11.9rem",
+    },
+  },
 });
 
 export const description = style({
@@ -25,6 +39,12 @@ export const description = style({
   color: "var(--Gray81)",
   fontSize: "1.6rem",
   fontWeight: "500",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "31.1rem",
+      fontSize: "2rem",
+    },
+  },
 });
 
 export const button = style({
@@ -41,4 +61,14 @@ export const button = style({
   color: "var(--White)",
   fontSize: "1.6rem",
   fontWeight: "600",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "25.4rem",
+      height: "4.5rem",
+
+      marginTop: "4.8rem",
+
+      fontSize: "2rem",
+    },
+  },
 });

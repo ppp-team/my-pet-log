@@ -13,6 +13,12 @@ export const container = style({
 
   backgroundColor: "var(--GrayF2)",
   borderRadius: "10px",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "35rem",
+      height: "22.9rem",
+    },
+  },
 });
 
 export const iconWrapper = style({
@@ -26,7 +32,22 @@ export const text = style({
   color: "var(--Black)",
   textAlign: "center",
   fontSize: "1.6rem",
-  fontWeight: 500,
+  fontWeight: "500",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
+});
+
+export const closebutton = style({
+  cursor: "pointer",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "3rem",
+      height: "3rem",
+    },
+  },
 });
 
 export const button = style({
@@ -40,4 +61,9 @@ export const button = style({
   fontWeight: "600",
   backgroundColor: "var(--MainOrange)",
   borderRadius: "10px",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
 });

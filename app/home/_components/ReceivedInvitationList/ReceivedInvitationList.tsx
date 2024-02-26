@@ -1,5 +1,4 @@
 import * as styles from "./ReceivedInvitationList.css";
-import petProfileDefaultSrc from "@/public/images/pet-profile-default.svg?url";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -9,8 +8,9 @@ import { InvitationType } from "@/app/_types/invitaion/types";
 import { getInvitations, postAcceptance, postRefusal } from "@/app/_api/invitation";
 import { showToast } from "@/app/_components/Toast";
 import { useRouter } from "next/navigation";
+import { getImagePath } from "@/app/_utils/getPetImagePath";
 
-const ReceivedInvitationList = () => {
+const ReceivedInvitationList = ({ checkHasNoPets }: { checkHasNoPets: () => void }) => {
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -31,10 +31,7 @@ const ReceivedInvitationList = () => {
         queryClient.invalidateQueries({ queryKey: ["invites"] });
         const petName = invites?.find((item) => item.invitationId === data)?.petName;
         showToast(petName ? `${petName}의 집사가 되었어요!` : "집사가 되었어요!", true);
-        router.push("/home-select");
-        /**
-         * TODO 첫번째 펫그룹 참여 시 홈으로 보낼 것인지 or 따로 버튼을 만들지 논의 후 처리
-         */
+        checkHasNoPets();
       } else {
         showToast("초대 수락에 실패했습니다. 잠시 후 다시 시도해주세요.", false);
       }
@@ -66,11 +63,11 @@ const ReceivedInvitationList = () => {
           <h1 className={styles.noInvitationTitle}>초대 받은 내역이 없습니다.</h1>
         </div>
       ) : (
-        <Swiper className="mySwiper" slidesPerView={"auto"} spaceBetween={20}>
+        <Swiper className={`mySwiper ${styles.swiperOverride}`} slidesPerView={"auto"}>
           {invites?.map((invitation) => (
-            <SwiperSlide key={invitation.invitationId} className={styles.itemOverride}>
+            <SwiperSlide className={styles.itemOverride} key={invitation.invitationId}>
               <div className={styles.item}>
-                <Image className={styles.petImage} src={invitation.petImageUrl ?? petProfileDefaultSrc} alt="펫 프로필 이미지" width={48} height={48} />
+                <Image className={styles.petImage} src={getImagePath(invitation.petImageUrl)} alt="펫 프로필 이미지" width={48} height={48} />
                 <p className={styles.petName}>{invitation.petName}</p>
                 <p className={styles.invitedDate}>{invitation.invitedAt} 전</p>
                 <div className={styles.responseContainer}>

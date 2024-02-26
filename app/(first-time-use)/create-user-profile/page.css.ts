@@ -3,6 +3,14 @@ import { style } from "@vanilla-extract/css";
 export const container = style({
   paddingLeft: "1.6rem",
   paddingRight: "1.6rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      margin: "0 auto",
+      padding: "0",
+      maxWidth: "45rem",
+    },
+  },
 });
 
 export const form = style({
@@ -11,7 +19,7 @@ export const form = style({
 
 export const userProfileImageContainer = style({
   paddingTop: "5.2rem",
-  paddingBottom: "4.9rem",
+  paddingBottom: "2.4rem",
   textAlign: "center",
 });
 
@@ -30,6 +38,13 @@ export const userProfileImageDefault = style({
   objectFit: "cover",
   overflow: "hidden",
   borderRadius: "50%",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "21.3rem",
+      height: "21.3rem",
+    },
+  },
 });
 
 export const userProfileImage = style({
@@ -40,10 +55,28 @@ export const cameraIcon = style({
   position: "absolute",
   bottom: "0.5rem",
   right: "0",
+  width: "4rem",
+  height: "4rem",
   padding: "0.4rem",
   borderRadius: "50%",
   border: "3px solid var(--White)",
   backgroundColor: "var(--LightOrange)",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "6.88rem",
+      height: "6.88rem",
+      padding: "1.2rem",
+    },
+  },
+});
+
+export const buttonProfileImageDefault = style({
+  marginBottom: "0.8rem",
+  paddingBottom: "2.4rem",
+  textDecoration: "underline",
+  textUnderlineOffset: "0.2rem",
+  color: "var(--Gray81)",
 });
 
 export const idFieldset = style({ marginBottom: "2.7rem" });
@@ -104,10 +137,16 @@ export const checkNicknameButton = style({
 export const submitButton = style({
   minHeight: "4.5rem",
   padding: "0.9rem 0",
-  borderRadius: "10px",
+  borderRadius: "30px",
   backgroundColor: "#FF8743",
   fontSize: "1.6rem",
   fontWeight: "600",
   textAlign: "center",
   color: "var(--GrayF2)",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
 });

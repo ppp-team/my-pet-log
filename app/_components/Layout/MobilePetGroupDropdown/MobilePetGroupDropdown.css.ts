@@ -62,6 +62,7 @@ export const dropdownItemContainer = style({
 export const petGroupProfileImage = style({
   width: "3.1rem",
   height: "3.1rem",
+  borderRadius: "50%",
 });
 
 export const petGroupName = style({

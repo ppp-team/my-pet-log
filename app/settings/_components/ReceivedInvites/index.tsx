@@ -21,6 +21,7 @@ const ReceivedInvites = () => {
     mutationFn: (invitationId: number) => postAcceptance(invitationId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["invites"] });
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
     },
   });
   const refuseMutation = useMutation({

@@ -10,7 +10,7 @@ import DateInput from "@/app/diary/_components/Input/DateInput";
 import { ContentInput, TitleInput } from "@/app/diary/_components/Input/FormInput";
 import ImageInput from "@/app/diary/_components/Input/ImageInput";
 import VideoInput from "@/app/diary/_components/Input/VideoInput";
-import Loading from "@/app/diary/_components/Loading";
+import Loading from "@/app/_components/Loading";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";

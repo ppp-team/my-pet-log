@@ -11,10 +11,18 @@ export const container = style({
 });
 
 export const skeleton = style({
-  width: "30.5rem",
-  height: "14.6rem",
+  width: "32.5rem",
+  height: "15rem",
 
-  marginBottom: "4.06rem",
+  marginBottom: "4rem",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "45rem",
+      height: "20.7rem",
+
+      marginBottom: "5.2rem",
+    },
+  },
 });
 
 export const skeletonShine = style({

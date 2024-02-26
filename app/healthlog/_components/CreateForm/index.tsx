@@ -157,7 +157,7 @@ const CreateForm = ({ petId }: CreateFormProps) => {
             <SelectMateDropdown petId={petId} onSelect={handleSelectMate} selectedId={selectedGuardianId} />
           </div>
 
-          <div className={styles.inputWrapper}>
+          <div>
             <div className={styles.buttonGroup}>
               {buttonTypes.slice(0, 3).map(({ type, label }) => (
                 <button
@@ -181,7 +181,7 @@ const CreateForm = ({ petId }: CreateFormProps) => {
             </div>
           </div>
 
-          <div className={styles.inputWrapper}>
+          <div>
             <div className={styles.buttonGroup}>
               {buttonTypes.slice(3).map(({ type, label }) => (
                 <button

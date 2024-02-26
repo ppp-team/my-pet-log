@@ -15,7 +15,7 @@ const Modal = ({ text, buttonText, onClick, onClose }: ModalProps) => {
     <ModalContainer>
       <section className={styles.container}>
         <div className={styles.iconWrapper}>
-          <Image style={{ cursor: "pointer" }} src={CloseIcon} alt="close icon" width={24} height={24} onClick={onClose} />
+          <Image className={styles.closebutton} src={CloseIcon} alt="close icon" width={24} height={24} onClick={onClose} />
         </div>
         <div className={styles.text}>{text}</div>
         <button onClick={onClick} className={styles.button}>

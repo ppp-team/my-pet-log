@@ -6,20 +6,22 @@ import { useModal } from "@/app/_hooks/useModal";
 import MemberList from "@/app/settings/_components/MemberList";
 import { useRouter } from "next/navigation";
 import { GuardiansType } from "@/app/_types/guardians/types";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getGuardians, deleteGuardians } from "@/app/_api/guardians";
 import { UserType } from "@/app/_types/user/types";
 import { getMe } from "@/app/_api/users";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import Image from "next/image";
+import Loading from "@/app/_components/Loading";
 
 const Member = ({ petId }: { petId: number }) => {
+  const queryClient = useQueryClient();
   const { data: user } = useQuery<UserType>({
     queryKey: ["me"],
     queryFn: () => getMe(),
   });
   const { data } = useQuery<GuardiansType>({
-    queryKey: ["petmate", petId],
+    queryKey: ["petmate"],
     queryFn: () => getGuardians(),
   });
 
@@ -44,11 +46,17 @@ const Member = ({ petId }: { petId: number }) => {
     router.push("/settings/ask");
   };
 
-  const deleteGuardianMutation = useMutation({
+  const {
+    mutate: deleteGuardianMutation,
+    isPending,
+    isSuccess,
+  } = useMutation({
     mutationFn: (guardianId: number) => deleteGuardians(guardianId),
 
     onSuccess: () => {
-      router.push("/home");
+      localStorage.removeItem("petId");
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
+      router.push("/settings");
     },
   });
 
@@ -57,27 +65,32 @@ const Member = ({ petId }: { petId: number }) => {
     closeModal2();
 
     if (currentUserData?.guardianId) {
-      deleteGuardianMutation.mutate(currentUserData.guardianId);
+      deleteGuardianMutation(currentUserData.guardianId);
     }
   };
 
   if (!user) return <></>;
   return (
-    <main className={container}>
-      <section className={memberlist}>
-        <div className={profileWrapper}>
-          <Image className={profileImg} src={getImagePath(user.profilePath)} alt="profile icon" width={40} height={40} />
-          <p className={nickname}>{user?.nickname} (나)</p>
-        </div>
-        <button className={button} onClick={() => (isLeader ? openModal1() : openModal2())}>
-          탈퇴하기
-        </button>
-      </section>
-      {isModalOpen1 && <Modal text="그룹 생성자의 경우 탈퇴는 관리자에게 문의해주세요." buttonText="1:1 문의" onClick={handleLeaderConfirm} onClose={closeModal1} />}
-      {isModalOpen2 && <Modal text="정말 탈퇴하시겠습니까?" buttonText="확인" onClick={handleMemberConfirm} onClose={closeModal2} />}
+    <>
+      <main className={container}>
+        <section className={memberlist}>
+          <div className={profileWrapper}>
+            <Image className={profileImg} src={getImagePath(user.profilePath)} alt="profile icon" width={40} height={40} />
+            <p style={{ width: "unset" }} className={nickname}>
+              {user?.nickname} (나)
+            </p>
+          </div>
+          <button className={button} onClick={() => (isLeader ? openModal1() : openModal2())}>
+            탈퇴하기
+          </button>
+        </section>
+        {isModalOpen1 && <Modal text="그룹 생성자의 경우 탈퇴는 관리자에게 문의해주세요." buttonText="1:1 문의" onClick={handleLeaderConfirm} onClose={closeModal1} />}
+        {isModalOpen2 && <Modal text="정말 탈퇴하시겠습니까?" buttonText="확인" onClick={handleMemberConfirm} onClose={closeModal2} />}
 
-      <MemberList petId={petId} members={members} isLeader={isLeader} />
-    </main>
+        <MemberList petId={petId} members={members} isLeader={isLeader} />
+      </main>
+      {(isPending || isSuccess) && <Loading />}
+    </>
   );
 };
 

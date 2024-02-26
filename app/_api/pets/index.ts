@@ -18,8 +18,8 @@ export const postPet = async ({ formData }: { formData: FormData }) => {
   }
 };
 
-export const getPet = async () => {
-  const petId = cookies().get("petId")?.value;
+export const getPet = async (petId: number) => {
+  // const petId = cookies().get("petId")?.value;
   try {
     const response = await instance.get(`/my/pets/${petId}`);
     return response.data;
@@ -56,7 +56,7 @@ export const getCode = async () => {
 
 export const editPetRep = async (petId: string) => {
   try {
-    const response = await instance.post(`/my/pets/${petId}/selectRep`);
+    const response = await instance.post(`/my/guardians/${petId}/selectRep`);
 
     if (response.status === 200) {
       cookies().set("petId", petId);
@@ -66,5 +66,23 @@ export const editPetRep = async (petId: string) => {
     }
   } catch (error) {
     throw new Error("Error fetching user data");
+  }
+};
+
+export const putPet = async ({ petId, formData }: { petId: string; formData: FormData }) => {
+  // const petId = cookies().get("petId")?.value;
+  await instance.put(`my/pets/${petId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+};
+
+export const deletePet = async ({ petId }: { petId: string }) => {
+  console.log("여기는 들어갔겠지?", petId);
+  try {
+    const response = await instance.delete(`my/pets/${petId}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 };

@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
 import { useState } from "react";
-import Loading from "@/app/diary/_components/Loading";
+import Loading from "@/app/_components/Loading";
 
 interface Diary {
   title: string;
