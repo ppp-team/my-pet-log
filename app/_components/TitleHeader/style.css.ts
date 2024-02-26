@@ -12,6 +12,13 @@ export const header = style({
   borderBottom: "1px solid var(--GrayE2)",
   fontSize: "1.6rem",
   fontWeight: "500",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      padding: "2rem 0",
+
+      fontSize: "2rem",
+    },
+  },
 });
 
 export const closeIcon = style({

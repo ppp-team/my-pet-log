@@ -21,7 +21,7 @@ const Member = ({ petId }: { petId: number }) => {
     queryFn: () => getMe(),
   });
   const { data } = useQuery<GuardiansType>({
-    queryKey: ["petmate", petId],
+    queryKey: ["petmate"],
     queryFn: () => getGuardians(),
   });
 
@@ -76,7 +76,9 @@ const Member = ({ petId }: { petId: number }) => {
         <section className={memberlist}>
           <div className={profileWrapper}>
             <Image className={profileImg} src={getImagePath(user.profilePath)} alt="profile icon" width={40} height={40} />
-            <p className={nickname}>{user?.nickname} (나)</p>
+            <p style={{ width: "unset" }} className={nickname}>
+              {user?.nickname} (나)
+            </p>
           </div>
           <button className={button} onClick={() => (isLeader ? openModal1() : openModal2())}>
             탈퇴하기
