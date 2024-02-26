@@ -66,7 +66,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
 
   //댓글 수정
   const putCommentMutation = useMutation({
-    mutationFn: () => putComment({ commentId: comment.commentId, content: newCommentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
+    mutationFn: () => putComment({ commentId: comment.commentId, content: newCommentValue }),
     onSuccess: () => {
       const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
       if (newComments.pages) {
@@ -155,7 +155,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
               </button>
             </form>
           ) : (
-            <pre className={styles.commentContent}>{comment.content.replaceAll("<br>", "\n")}</pre>
+            <pre className={styles.commentContent}>{comment.content}</pre>
           )}
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -215,7 +215,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
 
   //댓글 생성
   const postCommentMutation = useMutation({
-    mutationFn: () => postComment({ diaryId, content: commentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
+    mutationFn: () => postComment({ diaryId, content: commentValue }),
     onSuccess: (data: Comment) => {
       //invalidate하는 게 아니라 데이터 추가
       const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
@@ -349,7 +349,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
               <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{diary.likeCount}</p>
             </div>
           </div>
-          <p className={styles.content}>{diary.content}</p>
+          <pre className={styles.content}>{diary.content}</pre>
         </section>
 
         <section>
