@@ -18,16 +18,33 @@ const InviteCode = ({ petId }: { petId: number }) => {
   });
 
   // 복사 버튼 클릭 시
-  const handleCopyClick = () => {
+  const handleCopyClick = async () => {
     if (!code) return;
-    navigator.clipboard
-      .writeText(code)
-      .then(() => {
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(code);
         showToast("복사가 완료됐습니다.", true);
-      })
-      .catch(() => {
+      } catch (err) {
         showToast("복사를 실패했습니다.", false);
-      });
+      }
+    } else {
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        const successful = document.execCommand("copy");
+        document.body.removeChild(textarea);
+
+        if (successful) {
+          showToast("복사가 완료됐습니다.", true);
+        } else {
+          showToast("복사를 실패했습니다.", false);
+        }
+      } catch (err) {
+        showToast("복사를 실패했습니다.", false);
+      }
+    }
   };
 
   return (
