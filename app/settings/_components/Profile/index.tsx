@@ -14,7 +14,6 @@ import { useState } from "react";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
 import defaultProfileImagePath from "@/public/images/person-profile-default.svg?url";
-import { style } from "@vanilla-extract/css";
 
 interface IFormInput {
   nickname: string;
