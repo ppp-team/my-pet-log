@@ -326,7 +326,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
                   ))}
                   {diary.videos.length > 0 && (
                     <SwiperSlide>
-                      <video controls width="250" className={styles.image} autoPlay={true} loop={true}>
+                      <video controls className={styles.image} autoPlay={true} loop={true}>
                         동영상 재생에 실패했습니다.
                         <source src={`${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${diary.videos[0].path}`} type="video/mp4" />
                       </video>
