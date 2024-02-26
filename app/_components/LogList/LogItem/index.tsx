@@ -108,7 +108,7 @@ const LogItem: React.FC<LogItemProps> = ({ petId, logItem, onDelete, onToggleDet
             <div className={styles.taskAndTimeBox}>
               <div className={styles.checkStar}>
                 {logItem.isImportant && <Image src={starIconSrc} width={17} height={17} alt="중요 표시" />}
-                <span className={styles.taskName}>{logItem.taskName}</span>
+                <span className={isSwipeActive ? styles.taskNameSwipeActive : styles.taskName}>{logItem.taskName}</span>
               </div>
               <span className={styles.time}>{logItem.time}</span>
             </div>
