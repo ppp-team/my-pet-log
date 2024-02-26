@@ -41,7 +41,6 @@ export const profileImg = style({
 export const nickname = style({
   fontSize: "1.6rem",
   fontWeight: "600",
-  width: "30%",
   maxWidth: "10rem",
   overflow: "hidden",
   whiteSpace: "nowrap",

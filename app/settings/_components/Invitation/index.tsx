@@ -51,8 +51,8 @@ const Invitation = ({ petId }: { petId: number }) => {
               <div className={profileWrapper}>
                 <Image className={profileImg} src={getImagePath(invite.profilePath)} alt="profile icon" width={40} height={40} />
                 <p className={nickname}>{invite.inviteeName}</p>
-                <div className={state}>{invite.inviteStatus}</div>
               </div>
+              <div className={state}>{invite.inviteStatus}</div>
               {invite.inviteStatus !== "거절" ? (
                 <button
                   className={button}
