@@ -14,10 +14,11 @@ import DropdownIcon from "@/public/icons/drop-down-icon.svg";
 import OptionalMessage from "./component/OptionalCheck";
 import CloseIcon from "@/public/icons/close.svg?url";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { postPet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
 import Modal from "@/app/_components/Modal";
+import ImageModal from "../Modal/ImageModal";
 
 export interface IFormInput {
   petName: string;
@@ -57,9 +58,17 @@ const PetRegister = () => {
   } = useForm<IFormInput>({ mode: "onTouched" });
 
   const router = useRouter();
-  const handleCloseModal = () => {
-    closeModalFunc();
-    router.push("/settings");
+  const pathname = usePathname();
+
+  const handlePath = () => {
+    if (pathname === "/settings/pet-register") {
+      closeModalFunc();
+      router.push("/settings");
+    }
+    if (pathname === "/pet-register") {
+      closeModalFunc();
+      router.push("/HOME");
+    }
   };
 
   //전체 폼 제출
@@ -340,14 +349,14 @@ const PetRegister = () => {
           </div>
         )}
         마이펫 정보 입력
-        <div className={styles.closeIcon} onClick={() => router.push("/")}>
+        <div className={styles.closeIcon} onClick={() => router.back()}>
           <Image src={CloseIcon} alt="close icon" width={25} height={25} />
         </div>
       </header>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>
-      {isModalOpen && <Modal text={"등록이 완료되었습니다!"} buttonText={"확인"} onClick={handleCloseModal} onClose={handleCloseModal} />}
+      {isModalOpen && <ImageModal type={"register"} onClick={handlePath} onClose={handlePath} />}
     </>
   );
 };
