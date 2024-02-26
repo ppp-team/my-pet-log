@@ -17,7 +17,7 @@ import SendIcon from "@/public/icons/send.svg?url";
 import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, KeyboardEventHandler, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -264,6 +264,15 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     queryKey: ["me"],
     queryFn: () => getMe(),
   });
+
+  const onCommentEnterPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.nativeEvent.isComposing) return;
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handlePostComment();
+    }
+  };
+
   if (!diary) return;
   if (!user) return;
   return (
@@ -367,7 +376,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
           <div className={styles.commentInputContainer}>
             <Image className={styles.profileImage} src={getImagePath(user.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
             <div style={{ width: "100%", position: "relative" }}>
-              <textarea placeholder="댓글을 남겨주세요" className={styles.commentInput} onChange={handleCommentChange} value={commentValue} />
+              <textarea placeholder="댓글을 남겨주세요" className={styles.commentInput} onChange={handleCommentChange} value={commentValue} onKeyDown={onCommentEnterPress} />
               <Image src={SendIcon} alt="send icon" width={20} height={20} className={styles.sendIcon} onClick={handlePostComment} />
             </div>
           </div>
