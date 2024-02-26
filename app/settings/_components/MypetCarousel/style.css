@@ -1,0 +1,45 @@
+.swiper-pagination-bullet {
+  background-color: var(--MainOrange) !important;
+}
+
+.swiper-slide {
+  width: 32.5rem !important;
+  height: 15rem !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+@media screen and (min-width: 744px) {
+  .swiper-slide {
+    width: 45rem !important;
+    height: 20.7rem !important;
+  }
+}
+
+.swiper-wrapper {
+  z-index: 100 !important;
+}
+
+.swiper-slide-active {
+  background-color: var(--MainOrange) !important;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  background-color: var(--LightOrange) !important;
+}
+
+.swiper-pagination {
+  margin-top: 1.4rem !important;
+  margin-bottom: 1.4rem !important;
+  position: static !important;
+}
+
+@media screen and (min-width: 744px) {
+  .swiper-pagination {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+}
