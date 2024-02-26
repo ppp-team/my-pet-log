@@ -17,7 +17,7 @@ import SendIcon from "@/public/icons/send.svg?url";
 import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, KeyboardEventHandler, useState } from "react";
+import { ChangeEvent, KeyboardEventHandler, useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -211,7 +211,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
-  const { targetRef } = useInfiniteScroll({ callbackFunc: fetchNextPage });
+  const { targetRef, setTargetActive } = useInfiniteScroll({ callbackFunc: fetchNextPage });
 
   //댓글 생성
   const postCommentMutation = useMutation({
@@ -272,6 +272,10 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
       handlePostComment();
     }
   };
+
+  useEffect(() => {
+    setTargetActive((prev) => !prev);
+  }, [comments]);
 
   if (!diary) return;
   if (!user) return;

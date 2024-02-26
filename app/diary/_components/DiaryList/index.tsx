@@ -24,7 +24,7 @@ const DiaryList = ({ petId }: { petId: number }) => {
 
   useEffect(() => {
     setTargetActive((prev) => !prev);
-  }, [hasNextPage]);
+  }, [data]);
 
   if (!data?.pages[0]?.content.length) return <EmptyDiaryList />;
 

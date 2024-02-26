@@ -44,7 +44,7 @@ const Search = () => {
 
   useEffect(() => {
     setTargetActive((prev) => !prev);
-  }, [hasNextPage]);
+  }, [data]);
 
   if (!keyword) return <SearchIntro />;
   if (isLoading) return <></>;
