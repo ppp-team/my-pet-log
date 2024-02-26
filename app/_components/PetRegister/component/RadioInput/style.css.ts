@@ -40,7 +40,7 @@ export const radioContainer = style({
 
 export const radioOption = style({
   width: "100%",
-  padding: "1.3rem 14.5rem 1.3rem 1.9rem",
+  padding: "1.3rem 0 1.3rem 1.9rem",
 
   display: "inline-block",
 

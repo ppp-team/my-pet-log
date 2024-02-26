@@ -14,6 +14,7 @@ export interface PetType {
   registeredNumber: string;
   repStatus: "REPRESENTATIVE" | "NORMAL";
   petImageUrl: string | null;
+  firstMeetDate?: string;
 }
 
 export interface PetsType {

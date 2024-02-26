@@ -2,7 +2,7 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTERNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import * as styles from "./style.css";
 import DefaultImage from "@/public/images/pet-profile-default.svg?url";
 import cameraIcon from "@/public/icons/camera.svg?url";
@@ -15,7 +15,7 @@ import OptionalMessage from "@/app/_components/PetRegister/component/OptionalChe
 import CloseIcon from "@/public/icons/close.svg?url";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import { useRouter } from "next/navigation";
-import { postPet, getPet, putPet } from "@/app/_api/pets";
+import { deletePet, getPet, putPet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Modal from "@/app/_components/Modal";
@@ -23,13 +23,19 @@ import { PetType } from "@/app/_types/petGroup/types";
 import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
 import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
 import { showToast } from "@/app/_components/Toast";
+import { getGuardians } from "@/app/_api/guardians";
+import { GuardiansType } from "@/app/_types/guardians/types";
+import { getMe } from "@/app/_api/users";
+import { UserType } from "@/app/_types/user/types";
+import ImageModal from "@/app/_components/Modal/ImageModal";
+import Loading from "@/app/_components/Loading";
 
 export interface IFormInput {
   petName: string;
   image: File;
   type: string;
   breed: string;
-  gender: "MALE" | "FEMALE";
+  gender: string;
   neutering: boolean | null | string;
   birthday: string | null;
   firstMeet: string | null;
@@ -40,42 +46,76 @@ export interface IFormInput {
 }
 
 const EditPetRegisterForm = ({ petId }: { petId: number }) => {
-  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  // const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  const { isModalOpen: isConfirmModalOpen, openModalFunc: openConfirmModalFunc, closeModalFunc: closeConfirmModalFunc } = useModal();
+  const { isModalOpen: isUnAuthorizedModalOpen, openModalFunc: openUnAuthorizedModalFunc, closeModalFunc: closeUnAuthorizedModalFunc } = useModal();
+  const { isModalOpen: isDeleteModalOpen, openModalFunc: openDeleteModalFunc, closeModalFunc: closeDeleteModalFunc } = useModal();
   const [profileImage, setProfileImage] = useState<File | string | null>(DefaultImage);
   const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
-  const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
-  const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
   const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
 
   const queryClient = useQueryClient();
 
+  //수정하기
   const { data: petInfo } = useQuery<PetType>({
     queryKey: ["petInfo", petId],
     queryFn: () => getPet(petId),
   });
-
-  console.log(petInfo);
 
   const {
     mutate: putPetMutation,
     isPending,
     isSuccess: isPutSuccess,
   } = useMutation({
-    mutationFn: (formData: FormData) => putPet({ petId, formData }),
+    mutationFn: (formData: FormData) => putPet({ petId: String(petId), formData }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["petInfo", petId] });
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
       router.back();
     },
     onError: () => {
       showToast("마이펫 수정에 실패했습니다.", false);
+      closeDeleteModalFunc();
     },
   });
 
+  //삭제하기
+  const { data: user } = useQuery<UserType>({
+    queryKey: ["me"],
+    queryFn: () => getMe(),
+  });
+  const { data: guardiansList } = useQuery<GuardiansType>({
+    queryKey: ["petmate", petId],
+    queryFn: () => getGuardians(petId),
+  });
+
+  const petmateList = guardiansList?.data ?? [];
+  const isOnlyMember = guardiansList?.count === 1 ? true : false;
+  const currentUser = petmateList.find((member) => member.nickname === user?.nickname);
+  const isLeader = currentUser ? currentUser.guardianRole === "LEADER" : false;
+
+  const {
+    mutate: deletePetMutation,
+    isPending: isDeletePending,
+    isSuccess: isDeleteSuccess,
+  } = useMutation({
+    mutationFn: (petId: string) => deletePet({ petId }),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
+      router.push("/settings");
+    },
+    onError: () => {
+      showToast("다른 멤버가 있을 때 반려동물을 삭제할 수 없습니다.", false);
+    },
+  });
+
+  //리액트훅폼
   const {
     register,
     handleSubmit,
@@ -85,11 +125,10 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     watch,
   } = useForm<IFormInput>({ mode: "onSubmit" });
 
+  //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
+  const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
+
   const router = useRouter();
-  const handleCloseModal = () => {
-    closeModalFunc();
-    router.push("/settings");
-  };
 
   //전체 폼 제출
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
@@ -104,7 +143,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       weight: data.weight === "" ? null : data.weight,
       registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
-    console.log("request", request);
 
     const formData = new FormData();
 
@@ -112,52 +150,25 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     formData.append("petRequest", blob);
     formData.append("petImage", data.image);
 
-    // FormData에 데이터가 올바르게 추가되었는지 확인
-    //   console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
-    //   const res = await postPet({ formData });
-    //   if (res !== null) {
-    //     return openModalFunc();
-    //   }
-
-    //   console.log("res", res);
-    // };
-
-    // FormData에 데이터가 올바르게 추가되었는지 확인
-    console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
-    const res = await postPet({ formData });
-    if (res !== null) {
-      return openConfirmModalFunc();
-    }
-    //응답결과 확인
-    console.log("res", res);
-
     putPetMutation(formData);
+    openConfirmModalFunc();
   };
 
   useEffect(() => {
     if (petInfo) {
       setValue("petName", petInfo.name);
       setValue("type", petInfo.type);
-      setSelectedType(petInfo.type);
       setValue("breed", petInfo.breed);
-      setSelectedBreed(petInfo.breed);
       setValue("gender", petInfo.gender);
       setSelectedGender(petInfo.gender);
-      setValue("isNeutered", petInfo.isNeutered);
-      setSelectedNeutering(petInfo.isNeutered);
-      setValue("birth", petInfo.birth);
-
-      // setValue("firstMeetDate", petInfo.firstMeetDate);
-      // setValue("weight", petInfo.weight);
-      // setValue("registeredNumber", petInfo.registeredNumber);
+      setValue("neutering", petInfo.isNeutered === "Y" ? true : false);
+      setSelectedNeutering(petInfo.isNeutered === "Y" ? "true" : "false");
+      setValue("birthday", petInfo.birth === null ? null : petInfo.birth.slice(0, 10));
+      setValue("firstMeet", petInfo.firstMeetDate === null ? null : petInfo?.firstMeetDate!.slice(0, 10));
+      setValue("weight", petInfo.weight);
+      setValue("registeredNumber", petInfo.registeredNumber);
     }
   }, [isPutSuccess, petInfo, setValue]);
-
-  //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
-  let isSectionValid = false;
-  if (getValues() && getValues().petName && getValues().type && getValues().breed) {
-    isSectionValid = true;
-  }
 
   const handleNextSection = () => {
     if (isSectionValid) {
@@ -197,22 +208,16 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     };
   }, [dropdownRef]);
 
-  //드롭다운
-  useEffect(() => {
-    // setSelectedBreed("");
-    setValue("breed", "");
-  }, [selectedType, setValue]);
-
+  // 타입 클릭시 작동
   const handleTypeClick = (type: string) => {
     setValue("type", type);
-    setSelectedType(type);
-    setSelectedBreed("");
+    setValue("breed", "");
     setTypeOpen((prev) => !prev);
   };
 
+  // 품종 클릭시 작동
   const handleBreedClick = (breed: string) => {
     setValue("breed", breed);
-    setSelectedBreed(breed);
     setBreedOpen((prev) => !prev);
   };
 
@@ -234,9 +239,16 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     setIsWeightDisabled((prev) => !prev);
   };
 
-  //삭제하기 버튼, API호출하는 코드로 수정 예정
+  //삭제하기 버튼 누를시 리더인지 판별
   const handleDelete = () => {
-    console.log("동물 삭제");
+    isLeader ? openDeleteModalFunc() : openUnAuthorizedModalFunc();
+  };
+
+  //리더가 삭제 누를시
+  const handleLeaderDelete = () => {
+    if (isLeader && isOnlyMember) {
+      deletePetMutation(String(petId));
+    }
   };
 
   const section1 = (
@@ -263,8 +275,8 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
       <div>
-        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
-          {selectedType || "타입을 선택하세요"}
+        <button type="button" className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
+          {getValues().type || "타입을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
         {typeOpen && (
@@ -282,15 +294,15 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {/* 품종 */}
       <label className={styles.label}>품종*</label>
-      {selectedType !== "기타" && (
-        <button className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
-          {selectedBreed || "품종을 선택하세요"}
+      {getValues().type !== "기타" && (
+        <button type="button" className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
+          {getValues().breed || "품종을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${breedOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
       )}
-      {breedOpen && selectedType !== "기타" && (
+      {breedOpen && getValues().type !== "기타" && (
         <ul className={styles.optionsList} ref={dropdownRef}>
-          {petOptions[selectedType]?.map((breed: string, index: number) => (
+          {petOptions[getValues().type]?.map((breed: string, index: number) => (
             <li key={index} value={breed}>
               <button type="button" className={styles.optionButton} onClick={() => handleBreedClick(breed)} {...register("breed")}>
                 {breed}
@@ -300,21 +312,18 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
         </ul>
       )}
 
-      {selectedType === "기타" && (
-        <>
-          <input
-            value={selectedBreed}
-            className={styles.writeInput}
-            placeholder="품종을 직접 입력하세요"
-            {...register("breed", {
-              required: "내용을 입력해주세요",
-            })}
-            autoFocus
-          />
-        </>
+      {getValues().type === "기타" && (
+        <input
+          className={styles.writeInput}
+          placeholder="품종을 직접 입력하세요"
+          {...register("breed", {
+            required: "내용을 입력해주세요",
+          })}
+          autoFocus
+        />
       )}
 
-      <button className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
+      <button type="button" className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
         다음
       </button>
     </>
@@ -353,12 +362,17 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {/* 삭제하기 버튼 */}
       <div className={styles.deleteButtonWrapper}>
-        <button className={styles.deleteButton} onClick={handleDelete}>
+        <button type="button" className={styles.deleteButton} onClick={() => handleDelete()}>
           동물 삭제하기
         </button>
       </div>
+      <button type="submit" className={styles.button}>
+        작성완료
+      </button>
 
-      <button className={styles.button}>작성완료</button>
+      {isDeleteModalOpen && <ImageModal type={"deletePet"} onClick={handleLeaderDelete} onClose={closeDeleteModalFunc} />}
+      {isUnAuthorizedModalOpen && <ImageModal type={"unAuthorizedDeletePet"} onClick={closeUnAuthorizedModalFunc} onClose={closeUnAuthorizedModalFunc} />}
+      {isConfirmModalOpen && <ImageModal type={"edit"} onClick={closeConfirmModalFunc} onClose={closeConfirmModalFunc} />}
     </>
   );
 
@@ -378,7 +392,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>
-      {isModalOpen && <Modal text={"등록이 완료되었습니다!"} buttonText={"확인"} onClick={handleCloseModal} onClose={handleCloseModal} />}
     </>
   );
 };

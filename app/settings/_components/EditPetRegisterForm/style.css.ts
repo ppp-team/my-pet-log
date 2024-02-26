@@ -128,6 +128,10 @@ export const button = style({
 
   color: "#fff",
   backgroundColor: "var(--MainOrange)",
+
+  ":disabled": {
+    backgroundColor: "var(--GrayB1)",
+  },
 });
 
 export const inputWrapper = style({
@@ -333,12 +337,18 @@ export const deleteButton = style({
   marginTop: "3.2rem",
   padding: "0.6rem 1.4rem",
   borderRadius: "5px",
-  border: "1px solid var(--Gray81)",
+  border: "1px solid var(--White)",
 
-  color: "var(--Gray81)",
+  color: "var(--White)",
 
   fontSize: "1.4rem",
   fontWeight: 500,
+
+  background: "#FF9999",
+
+  ":hover": {
+    background: "var(--Red)",
+  },
 });
 
 export const plusMarginWrapper = style({
