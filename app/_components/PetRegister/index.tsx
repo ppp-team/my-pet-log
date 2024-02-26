@@ -17,8 +17,9 @@ import BackIcon from "@/public/icons/chevron-left.svg?url";
 import { usePathname, useRouter } from "next/navigation";
 import { postPet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
-import Modal from "@/app/_components/Modal";
-import ImageModal from "../Modal/ImageModal";
+import ImageModal from "@/app/_components/Modal/ImageModal";
+import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
+import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
 
 export interface IFormInput {
   petName: string;
@@ -55,7 +56,7 @@ const PetRegister = () => {
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onTouched" });
+  } = useForm<IFormInput>({ mode: "onSubmit" });
 
   const router = useRouter();
   const pathname = usePathname();
@@ -103,10 +104,11 @@ const PetRegister = () => {
   };
 
   //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
-  let isSectionValid = false;
-  if (getValues() && getValues().petName && getValues().type && getValues().breed) {
-    isSectionValid = true;
-  }
+  // let isSectionValid = false;
+  // if (getValues() && getValues().petName && getValues().type && getValues().breed) {
+  //   isSectionValid = true;
+  // }
+  const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
 
   const handleNextSection = () => {
     if (isSectionValid) {
@@ -127,8 +129,10 @@ const PetRegister = () => {
   };
 
   useEffect(() => {
-    setProfileImage(watch("image") || DefaultImage);
-  }, [watch]);
+    if (!watch("image")) {
+      setProfileImage(DefaultImage);
+    }
+  }, [watch("image")]);
 
   //드롭다운 외부 클릭시 닫히게 하기
   useEffect(() => {
@@ -179,11 +183,6 @@ const PetRegister = () => {
   const clearWeightInput = () => {
     setValue("weight", null);
     setIsWeightDisabled((prev) => !prev);
-  };
-
-  //삭제하기 버튼, API호출하는 코드로 수정 예정
-  const handleDelete = () => {
-    console.log("동물 삭제");
   };
 
   const section1 = (
@@ -270,45 +269,11 @@ const PetRegister = () => {
     <>
       {/* 성별 */}
       <label className={styles.label}>성별*</label>
-      <div className={styles.radioContainer}>
-        <div className={styles.leftRadio}>
-          <input type="radio" id="MALE" value="MALE" checked={selectedGender === "MALE"} onClick={() => handleGenderChange("MALE")} {...register("gender", PET_GENDER_RULES)} />
-          <label className={`${styles.radioOption} ${selectedGender === "MALE" && styles.leftSelected}`} htmlFor="MALE">
-            남
-          </label>
-        </div>
-        <div className={styles.rightRadio}>
-          <input
-            type="radio"
-            id="FEMALE"
-            value="FEMALE"
-            checked={selectedGender === "FEMALE"}
-            onClick={() => handleGenderChange("FEMALE")}
-            {...register("gender", PET_GENDER_RULES)}
-          />
-          <label className={`${styles.radioOption} ${selectedGender === "FEMALE" && styles.rightSelected}`} htmlFor="FEMALE">
-            여
-          </label>
-        </div>
-      </div>
-      {errors.gender && <ErrorMessage message={errors.gender.message} />}
+      <GenderSelection selectedGender={selectedGender} handleGenderChange={handleGenderChange} />
 
       {/* 중성화 여부 */}
       <label className={styles.label}>중성화 여부</label>
-      <div className={styles.radioContainer}>
-        <div className={styles.leftRadio}>
-          <input type="radio" id="yes" name="neutering" value="true" checked={selectedNeutering === "true"} onChange={handleNeuteringChange} />
-          <label className={`${styles.radioOption} ${selectedNeutering === "true" && styles.leftSelected}`} htmlFor="yes">
-            했어요
-          </label>
-        </div>
-        <div className={styles.rightRadio}>
-          <input type="radio" id="no" name="neutering" value="false" checked={selectedNeutering === "false"} onChange={handleNeuteringChange} />
-          <label className={`${styles.radioOption} ${selectedNeutering === "false" && styles.rightSelected}`} htmlFor="no">
-            안했어요
-          </label>
-        </div>
-      </div>
+      <NeuteringSelection selectedNeutering={selectedNeutering} handleNeuteringChange={handleNeuteringChange} />
 
       {/* 생일  */}
       <label className={styles.label}>생일</label>
@@ -322,21 +287,18 @@ const PetRegister = () => {
       <label className={styles.label}>몸무게</label>
       <input className={styles.writeInput} {...register("weight", PET_WEIGHT_RULES)} placeholder={PET_PLACEHOLDER.weight} disabled={isWeightDisabled} />
       {errors.weight && <ErrorMessage message={errors.weight.message} />}
-      <OptionalMessage onClearInput={clearWeightInput} message={"모르겠어요"} />
+      <div className={styles.plusMarginWrapper}>
+        <OptionalMessage onClearInput={clearWeightInput} message={"모르겠어요"} />
+      </div>
 
       {/* 동물등록번호 */}
       <label className={styles.label}>동물등록번호</label>
       <input className={styles.writeInput} {...register("registeredNumber", PET_REGISTERNUMBER_RULES)} placeholder={PET_PLACEHOLDER.registeredNumber} />
       {errors.registeredNumber && <ErrorMessage message={errors.registeredNumber.message} />}
 
-      {/* 삭제하기 버튼 */}
-      <div className={styles.deleteButtonWrapper}>
-        <button className={styles.deleteButton} onClick={handleDelete}>
-          동물 삭제하기
-        </button>
-      </div>
-
-      <button className={styles.button}>작성완료</button>
+      <button type="submit" className={styles.button}>
+        작성완료
+      </button>
     </>
   );
 

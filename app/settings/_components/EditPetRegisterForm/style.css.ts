@@ -206,7 +206,7 @@ export const dropdownIconOpen = style({
 
 export const optionsList = style({
   width: "100%",
-  padding: "0",
+  maxHeight: "48rem",
 
   display: "flex",
   flexDirection: "column",
@@ -218,6 +218,15 @@ export const optionsList = style({
   borderRadius: "10px",
   boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
   zIndex: 1,
+
+  overflowY: "auto",
+  "::-webkit-scrollbar": {
+    width: "1px",
+    height: "5px",
+  },
+  "::-webkit-scrollbar-thumb": {
+    background: "var(--White)",
+  },
 });
 
 export const optionButton = style({
