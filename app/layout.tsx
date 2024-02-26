@@ -5,10 +5,41 @@ import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FontLayout from "@/fonts/layout";
+import { METADATA } from "./_constants/metadata";
 
 export const metadata: Metadata = {
-  title: "마이펫로그",
-  description: "반려동물의 일상을 기록하고 공유하세요",
+  title: METADATA.title,
+  description: METADATA.description,
+  metadataBase: new URL(METADATA.url),
+  openGraph: {
+    title: METADATA.title,
+    description: METADATA.description,
+    url: METADATA.url,
+    siteName: METADATA.title,
+    images: [
+      {
+        url: METADATA.imageUrl,
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: METADATA.locale,
+    type: METADATA.type,
+  },
+  creator: METADATA.creator,
+  generator: METADATA.generator,
+  publisher: METADATA.publisher,
+  applicationName: METADATA.publisher,
+  keywords: METADATA.keywords,
+  icons: {
+    icon: METADATA.imageUrl,
+  },
+  verification: {
+    google: METADATA.googleSiteVerificationVerification,
+    other: {
+      naverSiteVerification: METADATA.naverSiteVerificationVerification,
+    },
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
