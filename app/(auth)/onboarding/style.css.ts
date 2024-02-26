@@ -8,12 +8,6 @@ export const container = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-
-  // "@media": {
-  //   "screen and (min-width: 744px)": {
-  //     margin: "auto 14.7rem",
-  //   },
-  // },
 });
 
 export const wrapper = style({
