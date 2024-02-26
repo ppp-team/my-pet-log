@@ -21,7 +21,7 @@ instance.interceptors.request.use((config) => {
 });
 
 const cache = new ExpiryMap(1000);
-const getRefreshTokenn = pMemoize(
+const getNewAccessToken = pMemoize(
   async () => {
     const newAccessToken = await getRefreshToken();
     return newAccessToken;
@@ -35,7 +35,7 @@ instance.interceptors.response.use(
     //토큰 만료 에러
 
     if (error.response.status === 401) {
-      const newAccessToken = await getRefreshTokenn();
+      const newAccessToken = await getNewAccessToken();
 
       if (newAccessToken) {
         error.config.headers.Authorization = `Bearer ${newAccessToken}`;
