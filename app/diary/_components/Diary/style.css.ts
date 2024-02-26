@@ -3,7 +3,6 @@ import { style } from "@vanilla-extract/css";
 export const root = style({
   display: "flex",
   flexDirection: "column",
-  gap: "2.4rem",
   padding: "2rem",
 });
 
@@ -30,19 +29,18 @@ export const container = style({
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
-  gap: "3rem",
 });
 
 export const diaryListWrapper = style({
   display: "flex",
   flexDirection: "column",
-  gap: "1rem",
 });
 
 export const date = style({
   color: "var(--Gray81)",
   fontSize: "1.4rem",
   fontWeight: "500",
+  marginTop: "3rem",
 });
 
 export const diaryWrapper = style({
@@ -56,6 +54,7 @@ export const diaryWrapper = style({
   boxShadow: " 0px 1px 4px 1px rgba(164, 164, 164, 0.15)",
 
   padding: "1.5rem 1.3rem",
+  marginTop: "1rem",
 
   width: "100%",
   height: "12rem",

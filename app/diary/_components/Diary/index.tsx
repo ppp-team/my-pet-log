@@ -31,20 +31,22 @@ export const Diary = ({ diary }: { diary: DiaryType }) => {
   );
 };
 
-export const Diaries = ({ data }: { data: GetDiaryListResponse["content"] }) => {
+export const Diaries = ({ data, prevData }: { data: GetDiaryListResponse["content"]; prevData: GetDiaryListResponse["content"] | null }) => {
   if (!data) return;
   return (
-    <section className={styles.container}>
+    <>
       {data.map((v: any) => {
         return (
           <div className={styles.diaryListWrapper} key={v.date}>
-            <p className={styles.date}>{v.date}</p>
+            {prevData === null && <p className={styles.date}>{v.date}</p>}
+            {prevData !== null && prevData[prevData?.length - 1].date !== v.date && <p className={styles.date}>{v.date}</p>}
+            {/* <p className={styles.date}>{v.date}</p> */}
             {v.diaries.map((diary: DiaryType) => {
               return <Diary diary={diary} key={diary.diaryId} />;
             })}
           </div>
         );
       })}
-    </section>
+    </>
   );
 };
