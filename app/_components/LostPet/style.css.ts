@@ -89,3 +89,9 @@ export const lostPetCardDetail = style({
   fontSize: "1rem",
   fontWeight: "500",
 });
+
+export const failedToLoad = style({
+  fontSize: "1.2rem",
+  fontWeight: "500",
+  color: "var(--Gray81)",
+});

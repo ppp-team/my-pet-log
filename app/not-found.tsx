@@ -8,9 +8,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import LostPet from "./_components/LostPet";
-import * as styles from "./page.css";
+import * as styles from "./not-found.style.css";
 
-const Page = () => {
+const NotFound = () => {
   const router = useRouter();
 
   return (
@@ -36,4 +36,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default NotFound;
