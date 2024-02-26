@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
-  width: "100%",
+  margin: " 0 auto",
   maxWidth: "74.3rem",
   padding: "0 1.6rem",
   display: "flex",

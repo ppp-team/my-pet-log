@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const container = style({
   maxWidth: "74.4rem",
-  margin: 0,
+  margin: "0 auto",
   padding: "0  4.5rem",
   display: "flex",
   flexDirection: "column",
@@ -42,6 +42,5 @@ export const emailWrapper = style({
 });
 
 export const lineWrapper = style({
-  width: "100%",
   margin: "2rem auto",
 });
