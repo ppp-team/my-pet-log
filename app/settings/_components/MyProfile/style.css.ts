@@ -41,7 +41,8 @@ export const profileImg = style({
 
   border: "2px solid var(--MainOrange)",
   borderRadius: "50%",
-  backgroundSize: "contain",
+
+  objectFit: "cover",
 
   "@media": {
     "screen and (min-width: 744px)": {

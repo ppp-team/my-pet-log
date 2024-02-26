@@ -15,6 +15,7 @@ export const profile = style({
 
   borderRadius: "50%",
   backgroundSize: "contain",
+  objectFit: "cover",
   "@media": {
     "screen and (min-width: 744px)": {
       width: "11rem",
