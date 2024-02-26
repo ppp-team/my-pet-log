@@ -278,8 +278,8 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
           <h3 style={{ fontSize: "1.8rem", fontWeight: "600" }}>{diary.title}</h3>
           <p style={{ fontSize: "1.4rem", color: "var(--Gray9A)" }}>{diary.date}</p>
           {diary.writer.isCurrentUser && (
-            <div onBlur={() => setIsKebabOpen(false)} tabIndex={1}>
-              <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} onClick={() => setIsKebabOpen(!isKebabOpen)} />
+            <div onBlur={() => setIsKebabOpen(false)} tabIndex={1} className={styles.kebab}>
+              <Image src={KebabIcon} alt="kebab icon" width={24} height={24} onClick={() => setIsKebabOpen(!isKebabOpen)} />
               {isKebabOpen && (
                 <ul className={styles.kebabModal}>
                   <li
