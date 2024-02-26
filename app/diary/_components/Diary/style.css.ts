@@ -86,8 +86,7 @@ export const writer = style({
 export const diaryImage = style({
   borderRadius: "6px",
 
-  backgroundSize: "cover",
-  backgroundPosition: "center",
+  objectFit: "cover",
 });
 
 export const description = style({

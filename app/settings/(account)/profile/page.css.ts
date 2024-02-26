@@ -156,8 +156,9 @@ export const length = style({
   top: "5.2rem",
   right: 0,
 
-  fontSize: "1.4rem",
-  fontWeight: "600",
+  fontSize: "1.1rem",
+  fontFamily: "Pretendard",
+  fontWeight: "500",
   color: "var(--Gray81)",
 });
 
@@ -169,6 +170,7 @@ export const button = style({
 
   color: "var(--White)",
   backgroundColor: "var(--MainOrange)",
+  fontSize: "1.6rem",
 
   "@media": {
     "screen and (min-width: 744px)": {

@@ -23,11 +23,10 @@ export const memberlist = style({
   justifyContent: "space-between",
 
   borderRadius: "10px",
-  border: "2px solid var(--MainOrange)",
+  border: "2px solid var(--LightOrange)",
 });
 
 export const profileWrapper = style({
-  width: "70%",
   display: "flex",
   alignItems: "center",
   gap: "1.4rem",
@@ -49,7 +48,7 @@ export const nickname = style({
 
 export const button = style({
   color: "var(--MainOrange)",
-  fontSize: "1.6rem",
+  fontSize: "1.5rem",
   fontWeight: "500",
 });
 
@@ -69,4 +68,11 @@ export const state = style({
   fontSize: "1.2rem",
   fontWeight: "600",
   lineHeight: "2.1rem",
+});
+
+export const buttonWrapper = style({
+  display: "flex",
+  gap: "1rem",
+  alignItems: "center",
+  justifyContent: "center",
 });

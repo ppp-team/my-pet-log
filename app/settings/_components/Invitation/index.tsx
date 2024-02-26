@@ -1,6 +1,6 @@
 "use client";
 
-import { container, memberlist, profileWrapper, profileImg, nickname, state, button } from "@/app/settings/(petmate)/petmate.css";
+import { container, memberlist, profileWrapper, profileImg, nickname, state, button, buttonWrapper } from "@/app/settings/(petmate)/petmate.css";
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import InviteModal from "@/app/settings/_components/InviteModal";
@@ -52,27 +52,29 @@ const Invitation = ({ petId }: { petId: number }) => {
                 <Image className={profileImg} src={getImagePath(invite.profilePath)} alt="profile icon" width={40} height={40} />
                 <p className={nickname}>{invite.inviteeName}</p>
               </div>
-              <div className={state}>{invite.inviteStatus}</div>
-              {invite.inviteStatus !== "거절" ? (
-                <button
-                  className={button}
-                  onClick={() => {
-                    setSelectedGuardianId(invite.invitationId);
-                    openModalFunc();
-                  }}
-                >
-                  초대 취소
-                </button>
-              ) : (
-                <button
-                  className={button}
-                  onClick={() => {
-                    cancelMutation.mutate(invite.invitationId);
-                  }}
-                >
-                  확인
-                </button>
-              )}
+              <div className={buttonWrapper}>
+                <div className={state}>{invite.inviteStatus}</div>
+                {invite.inviteStatus !== "거절" ? (
+                  <button
+                    className={button}
+                    onClick={() => {
+                      setSelectedGuardianId(invite.invitationId);
+                      openModalFunc();
+                    }}
+                  >
+                    초대 취소
+                  </button>
+                ) : (
+                  <button
+                    className={button}
+                    onClick={() => {
+                      cancelMutation.mutate(invite.invitationId);
+                    }}
+                  >
+                    확인
+                  </button>
+                )}
+              </div>
             </section>
           ))}
         </main>
