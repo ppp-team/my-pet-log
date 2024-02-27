@@ -21,6 +21,7 @@ export const currentPetGroupProfileImage = style([
   headerButtonBase,
   {
     marginRight: "1.1rem",
+    objectFit: "cover",
   },
 ]);
 
