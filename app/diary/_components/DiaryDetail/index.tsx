@@ -326,6 +326,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
               </div>
               <div onClick={() => setIsKebabOpen(false)}>
                 <Swiper
+                  className="diary"
                   onSlideChange={(e) => setCurrentPage(e.activeIndex)}
                   pagination={{
                     dynamicBullets: true,
