@@ -7,7 +7,7 @@ import MemberList from "@/app/settings/_components/MemberList";
 import { useRouter } from "next/navigation";
 import { GuardiansType } from "@/app/_types/guardians/types";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getGuardians, deleteGuardians } from "@/app/_api/guardians";
+import { getGuardians, deleteMeGuardians } from "@/app/_api/guardians";
 import { UserType } from "@/app/_types/user/types";
 import { getMe } from "@/app/_api/users";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
@@ -51,7 +51,7 @@ const Member = ({ petId }: { petId: number }) => {
     isPending,
     isSuccess,
   } = useMutation({
-    mutationFn: (guardianId: number) => deleteGuardians(guardianId),
+    mutationFn: (guardianId: number) => deleteMeGuardians(guardianId),
 
     onSuccess: () => {
       localStorage.removeItem("petId");

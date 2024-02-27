@@ -50,7 +50,8 @@ export const postInviteGuardian = async (email: string) => {
   }
 };
 
-export const deleteGuardians = async (guardianId: number) => {
+//내가 탈퇴하기
+export const deleteMeGuardians = async (guardianId: number) => {
   const petId = cookies().get("petId")?.value;
   try {
     const response = await instance.delete(`/my/guardians/${petId}`, {
@@ -58,6 +59,22 @@ export const deleteGuardians = async (guardianId: number) => {
     });
     if (response.status === 200) {
       cookies().delete("petId");
+      return response.data;
+    }
+  } catch (error: any) {
+    console.error(error.response.data);
+    return null;
+  }
+};
+
+// 멤버들 삭제하기(강퇴)
+export const deleteMemberGuardians = async (guardianId: number) => {
+  const petId = cookies().get("petId")?.value;
+  try {
+    const response = await instance.delete(`/my/guardians/${petId}`, {
+      data: { guardianId },
+    });
+    if (response.status === 200) {
       return response.data;
     }
   } catch (error: any) {
