@@ -37,9 +37,9 @@ const CreateForm = ({ petId }: { petId: number }) => {
   } = useMutation({
     mutationFn: (formData: FormData) => postDiary({ formData }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
       router.push("/diary");
       setDiaryImages([]);
+      queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
     },
     onError: () => {
       showToast("일기 생성에 실패했습니다.", false);

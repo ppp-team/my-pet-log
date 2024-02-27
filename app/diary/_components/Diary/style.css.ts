@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
 
 export const root = style({
   display: "flex",
@@ -106,4 +106,20 @@ export const writeIcon = style({
   right: "1.9rem",
 
   cursor: "pointer",
+});
+
+const loadingAnimation = keyframes({
+  "100%": { backgroundPosition: "-100% 0" },
+});
+
+export const loadingThumbnail = style({
+  width: "9rem",
+  height: "9rem",
+
+  willChange: "background-position",
+  background: "linear-gradient(120deg, #ffeee4 30%, #ffffff 38%, #ffffff 40%, #ffeee4 48%)",
+  backgroundSize: "200% 100%",
+  borderRadius: "10px",
+  backgroundPosition: "100% 0",
+  animation: `${loadingAnimation} 1s infinite`,
 });

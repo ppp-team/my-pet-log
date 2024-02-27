@@ -25,7 +25,11 @@ export const Diary = ({ diary }: { diary: DiaryType }) => {
             <p className={styles.description}>{diary.content}</p>
           </div>
         </div>
-        <Image className={styles.diaryImage} src={getImagePath(diary.thumbnailPath)} alt="일기 썸네일" width={90} height={90} />
+        {diary.thumbnailPath ? (
+          <Image className={styles.diaryImage} src={getImagePath(diary.thumbnailPath)} alt="일기 썸네일" width={90} height={90} />
+        ) : (
+          <div className={styles.loadingThumbnail} />
+        )}
       </div>
     </Link>
   );
@@ -40,7 +44,6 @@ export const Diaries = ({ data, prevData }: { data: GetDiaryListResponse["conten
           <div className={styles.diaryListWrapper} key={v.date}>
             {prevData === null && <p className={styles.date}>{v.date}</p>}
             {prevData !== null && prevData[prevData?.length - 1].date !== v.date && <p className={styles.date}>{v.date}</p>}
-            {/* <p className={styles.date}>{v.date}</p> */}
             {v.diaries.map((diary: DiaryType) => {
               return <Diary diary={diary} key={diary.diaryId} />;
             })}
