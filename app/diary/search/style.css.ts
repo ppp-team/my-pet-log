@@ -1,6 +1,23 @@
 import { style } from "@vanilla-extract/css";
 
-export const root = style({});
+export const root = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+});
+
+export const container = style({
+  padding: "2rem",
+  width: "36rem",
+
+  "@media": {
+    "(min-width: 745px) and  (max-width: 1023px)": {
+      width: "45rem",
+    },
+  },
+});
+
 export const search = style({
   width: "100%",
   height: "4rem",
@@ -17,6 +34,8 @@ export const deleteIcon = style({
   height: "2rem",
 
   color: "var(--Gray9f)",
+
+  cursor: "pointer",
 });
 
 export const searchIcon = style({

@@ -40,12 +40,6 @@ export const searchIcon = style({
   transform: "translate(-50%,-50%)",
 });
 
-export const container = style({
-  display: "flex",
-  alignItems: "center",
-  flexDirection: "column",
-});
-
 export const diaryListWrapper = style({
   display: "flex",
   flexDirection: "column",

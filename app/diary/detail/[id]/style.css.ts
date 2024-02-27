@@ -14,7 +14,7 @@ export const diaryDetail = style({
 
   "@media": {
     "(min-width: 745px) and  (max-width: 1023px)": {
-      maxWidth: "50rem",
+      width: "45rem",
     },
   },
 });
