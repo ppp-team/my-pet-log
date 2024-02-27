@@ -1,11 +1,14 @@
+"use client";
 import * as styles from "./style.css";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/images/logo-high-resolution.png";
 import Line from "@/public/icons/auth/line.svg";
 import SignButton from "@/app/(auth)/_components/SignButton";
+import KakaoButton from "../_components/SignButton/KakaoButton";
+import GoogleButton from "../_components/SignButton/GoogleButton";
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <div className={styles.container}>
@@ -19,10 +22,10 @@ const page = () => {
           </Link>
         </p>
         <div className={styles.buttonWrapper}>
-          <SignButton type="kakao" action="시작하기" />
+          <KakaoButton />
         </div>
         <div className={styles.buttonWrapper}>
-          <SignButton type="google" action="시작하기" />
+          <GoogleButton />
         </div>
         <div className={styles.lineWrapper}>
           <Line alt="로고" width={300} height={1} />
@@ -35,4 +38,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
