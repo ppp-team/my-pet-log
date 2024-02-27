@@ -20,8 +20,8 @@ export const Diary = ({ diary }: { diary: DiaryType }) => {
             <Image src={CommentIconURL} alt="comment icon" width={14} height={14} />
             <p style={{ color: "#ACACAC", marginLeft: "0.2rem" }}>{diary.commentCount}</p>
           </div>
-          <div style={{ width: "22.3rem" }}>
-            <h3 style={{ fontSize: "1.6rem", fontWeight: "600" }}>{diary.title}</h3>
+          <div>
+            <h3 className={styles.title}>{diary.title}</h3>
             <p className={styles.description}>{diary.content}</p>
           </div>
         </div>

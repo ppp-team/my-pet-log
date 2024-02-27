@@ -4,10 +4,17 @@ export const root = style({
   display: "flex",
   flexDirection: "column",
   padding: "2rem",
+  alignItems: "center",
+
+  "@media": {
+    "(min-width: 745px) and  (max-width: 1023px)": {
+      padding: "3rem 2rem 2rem",
+    },
+  },
 });
 
 export const search = style({
-  width: "100%",
+  width: "36rem",
   height: "4rem",
 
   borderRadius: "20px",
@@ -15,6 +22,14 @@ export const search = style({
   background: "var(--GrayE8)",
 
   padding: "0.8rem 1rem",
+
+  position: "relative",
+
+  "@media": {
+    "(min-width: 745px) and  (max-width: 1023px)": {
+      width: "100%",
+    },
+  },
 });
 
 export const searchIcon = style({
@@ -34,6 +49,14 @@ export const container = style({
 export const diaryListWrapper = style({
   display: "flex",
   flexDirection: "column",
+
+  width: "36rem",
+
+  "@media": {
+    "(min-width: 745px) and  (max-width: 1023px)": {
+      width: "100%",
+    },
+  },
 });
 
 export const date = style({
@@ -44,6 +67,9 @@ export const date = style({
 });
 
 export const diaryWrapper = style({
+  width: "100%",
+  height: "12rem",
+
   display: "flex",
   gap: "1.9rem",
   justifyContent: "space-between",
@@ -55,9 +81,6 @@ export const diaryWrapper = style({
 
   padding: "1.5rem 1.3rem",
   marginTop: "1rem",
-
-  width: "100%",
-  height: "12rem",
 
   cursor: "pointer",
 });
@@ -84,8 +107,19 @@ export const writer = style({
 
 export const diaryImage = style({
   borderRadius: "6px",
-
   objectFit: "cover",
+
+  "@media": {
+    "(min-width: 745px) and  (max-width: 1023px)": {
+      width: "9.4rem",
+      height: "9.4rem",
+    },
+  },
+});
+
+export const title = style({
+  fontSize: "1.6rem",
+  fontWeight: "600",
 });
 
 export const description = style({
@@ -103,7 +137,7 @@ export const description = style({
 export const writeIcon = style({
   position: "fixed",
   bottom: "6.9rem",
-  right: "1.9rem",
+  right: "1.6rem",
 
   cursor: "pointer",
 });
