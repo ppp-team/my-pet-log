@@ -31,6 +31,13 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <MobileFooterNavigationBar />
       </CookiesProvider>
     );
+  } else if (pathname.startsWith("/settings/received-invites") || pathname.startsWith("/settings/profile") || pathname.startsWith("/settings/password")) {
+    return (
+      <CookiesProvider>
+        <MainWrapperPcOnly>{children}</MainWrapperPcOnly>
+        <MobileFooterNavigationBar />
+      </CookiesProvider>
+    );
   } else {
     return (
       <CookiesProvider>

@@ -28,7 +28,7 @@ export const title = style({
 });
 
 export const description = style({
-  width: "24.9rem",
+  width: "26rem",
 
   textAlign: "center",
   color: "var(--Gray81)",
@@ -36,6 +36,7 @@ export const description = style({
   fontWeight: "500",
   "@media": {
     "screen and (min-width: 744px)": {
+      width: "33rem",
       fontSize: "2rem",
     },
   },

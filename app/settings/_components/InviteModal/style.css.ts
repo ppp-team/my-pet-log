@@ -30,7 +30,7 @@ export const invitation = style({
 export const invitationButton = style({
   color: "var(--MainOrange)",
   textAlign: "center",
-  fontSize: "1.4rem",
+  fontSize: "1.5rem",
   fontWeight: "600",
   fontFamily: "Pretendard",
   "@media": {
@@ -41,7 +41,7 @@ export const invitationButton = style({
 });
 
 export const inviteText = style({
-  fontSize: "1.4rem",
+  fontSize: "1.5rem",
   fontWeight: "600",
   fontFamily: "Pretendard",
   "@media": {

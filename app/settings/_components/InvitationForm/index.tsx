@@ -45,7 +45,7 @@ const InvitationForm = ({ petId }: { petId: number }) => {
         type="text"
         placeholder="이메일 입력"
         {...register("inputValue", {
-          required: ERROR_MESSAGE.nicknameRequired,
+          required: ERROR_MESSAGE.emailRequired,
         })}
       />
       {errors.inputValue && <ErrorMessage message={errors.inputValue.message} />}

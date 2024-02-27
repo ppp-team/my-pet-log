@@ -67,9 +67,9 @@ export const copyIcon = style({
   gap: "0.4rem",
 
   borderRadius: "5px",
-  border: "1.5px solid var(--GrayE2)",
+  border: "1.3px solid var(--GrayC2)",
 
-  color: "var(--GrayE2)",
+  color: "var(--GrayC2)",
   fontSize: "1.2rem",
   "@media": {
     "screen and (min-width: 744px)": {

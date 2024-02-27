@@ -23,6 +23,7 @@ export const container = style({
 
 export const iconWrapper = style({
   width: "100%",
+  marginBottom: "-1rem",
 
   display: "flex",
   justifyContent: "flex-end",
