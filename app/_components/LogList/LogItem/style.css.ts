@@ -113,6 +113,19 @@ export const checkStar = style({
 
 export const taskName = style({
   fontSize: "1.6rem",
+
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  maxWidth: "19rem",
+});
+
+export const taskNameSwipeActive = style({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  maxWidth: "11.6rem",
+  fontSize: "1.6rem",
 });
 
 export const time = style({

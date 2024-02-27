@@ -22,7 +22,7 @@ const NotFound = () => {
       </header>
       <Image className={styles.bg} src={Background} alt="배경 이미지" />
       <div className={styles.backHomeWrapper}>
-        <Image src={Illust} alt="강아지와 사람 일러스트" width={200} height={140} />
+        <Image src={Illust} alt="강아지와 사람 일러스트" className={styles.illust} />
         <div className={styles.backHomeText}>
           <p>길을 잃었어요!</p>
           <p>다시 홈으로 돌아갈까요?</p>

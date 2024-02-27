@@ -34,7 +34,7 @@ const LostPet = () => {
       <div className={styles.titleWrapper}>
         <p className={styles.lostPetTitle}>🏡 저와 함께 집에 갈래요?</p>
 
-        <Link href="http://www.animal.go.kr">
+        <Link href="http://www.animal.go.kr" target="_blank">
           <button className={styles.moreButton}>{"자세히보기 >"}</button>
         </Link>
       </div>

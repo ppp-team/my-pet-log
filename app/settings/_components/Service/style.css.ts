@@ -15,9 +15,6 @@ export const titleWrapper = style({
   flexDirection: "row",
   justifyContent: "center",
   alignItems: "center",
-
-  borderTop: "1px solid #e2e2e2",
-  borderBottom: "1px solid #e2e2e2",
 });
 
 export const IconWrapper = style({
