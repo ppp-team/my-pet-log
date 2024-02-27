@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
+export const root = style({});
 export const search = style({
   width: "100%",
   height: "4rem",
@@ -36,6 +37,8 @@ export const searchIntroWrapper = style({
   flexWrap: "wrap",
 
   fontSize: "1.3rem",
+
+  marginTop: "2.4rem",
 });
 
 export const recommendKey = style({

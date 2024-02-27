@@ -17,7 +17,7 @@ import SendIcon from "@/public/icons/send.svg?url";
 import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -66,7 +66,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
 
   //댓글 수정
   const putCommentMutation = useMutation({
-    mutationFn: () => putComment({ commentId: comment.commentId, content: newCommentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
+    mutationFn: () => putComment({ commentId: comment.commentId, content: newCommentValue }),
     onSuccess: () => {
       const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
       if (newComments.pages) {
@@ -155,7 +155,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
               </button>
             </form>
           ) : (
-            <pre className={styles.commentContent}>{comment.content.replaceAll("<br>", "\n")}</pre>
+            <pre className={styles.commentContent}>{comment.content}</pre>
           )}
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -211,11 +211,11 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
-  const { targetRef } = useInfiniteScroll({ callbackFunc: fetchNextPage });
+  const { targetRef, setTargetActive } = useInfiniteScroll({ callbackFunc: fetchNextPage });
 
   //댓글 생성
   const postCommentMutation = useMutation({
-    mutationFn: () => postComment({ diaryId, content: commentValue.replaceAll(/(\n|\r\n)/g, "<br>") }),
+    mutationFn: () => postComment({ diaryId, content: commentValue }),
     onSuccess: (data: Comment) => {
       //invalidate하는 게 아니라 데이터 추가
       const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
@@ -264,6 +264,19 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     queryKey: ["me"],
     queryFn: () => getMe(),
   });
+
+  const onCommentEnterPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.nativeEvent.isComposing) return;
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handlePostComment();
+    }
+  };
+
+  useEffect(() => {
+    setTargetActive((prev) => !prev);
+  }, [comments]);
+
   if (!diary) return;
   if (!user) return;
   return (
@@ -278,8 +291,8 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
           <h3 style={{ fontSize: "1.8rem", fontWeight: "600" }}>{diary.title}</h3>
           <p style={{ fontSize: "1.4rem", color: "var(--Gray9A)" }}>{diary.date}</p>
           {diary.writer.isCurrentUser && (
-            <div onBlur={() => setIsKebabOpen(false)} tabIndex={1}>
-              <Image src={KebabIcon} alt="kebab icon" width={24} height={24} className={styles.kebab} onClick={() => setIsKebabOpen(!isKebabOpen)} />
+            <div onBlur={() => setIsKebabOpen(false)} tabIndex={1} className={styles.kebab}>
+              <Image src={KebabIcon} alt="kebab icon" width={24} height={24} onClick={() => setIsKebabOpen(!isKebabOpen)} />
               {isKebabOpen && (
                 <ul className={styles.kebabModal}>
                   <li
@@ -326,7 +339,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
                   ))}
                   {diary.videos.length > 0 && (
                     <SwiperSlide>
-                      <video controls width="250" className={styles.image} autoPlay={true} loop={true}>
+                      <video controls className={styles.image} autoPlay={true} loop={true}>
                         동영상 재생에 실패했습니다.
                         <source src={`${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${diary.videos[0].path}`} type="video/mp4" />
                       </video>
@@ -349,7 +362,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
               <p style={{ fontSize: "1.4rem", color: "var(--Gray81)" }}>{diary.likeCount}</p>
             </div>
           </div>
-          <p className={styles.content}>{diary.content}</p>
+          <pre className={styles.content}>{diary.content}</pre>
         </section>
 
         <section>
@@ -367,7 +380,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
           <div className={styles.commentInputContainer}>
             <Image className={styles.profileImage} src={getImagePath(user.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
             <div style={{ width: "100%", position: "relative" }}>
-              <textarea placeholder="댓글을 남겨주세요" className={styles.commentInput} onChange={handleCommentChange} value={commentValue} />
+              <textarea placeholder="댓글을 남겨주세요" className={styles.commentInput} onChange={handleCommentChange} value={commentValue} onKeyDown={onCommentEnterPress} />
               <Image src={SendIcon} alt="send icon" width={20} height={20} className={styles.sendIcon} onClick={handlePostComment} />
             </div>
           </div>

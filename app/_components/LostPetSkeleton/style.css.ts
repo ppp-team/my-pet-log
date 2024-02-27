@@ -15,6 +15,13 @@ export const skeleton = style({
   height: "9rem",
 
   marginBottom: "4.06rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "26.4rem",
+      height: "12rem",
+    },
+  },
 });
 
 export const skeletonShine = style({

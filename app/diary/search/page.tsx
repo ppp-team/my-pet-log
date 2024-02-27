@@ -44,20 +44,20 @@ const Search = () => {
 
   useEffect(() => {
     setTargetActive((prev) => !prev);
-  }, [hasNextPage]);
+  }, [data]);
 
   if (!keyword) return <SearchIntro />;
   if (isLoading) return <></>;
   if (!data?.pages[0]?.content.length) return <>일치하는 검색어가 없어요</>;
   return (
     <>
-      {data.pages.map((page, idx) => (
-        <div key={idx} className={container}>
-          {page && <Diaries data={page?.content} />}
-        </div>
-      ))}
-      {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
-      {!isLoading && hasNextPage && <div ref={targetRef} />}
+      <section className={container}>
+        {data.pages.map((page, idx) => (
+          <div key={idx}>{page && <Diaries data={page?.content} prevData={idx !== 0 ? data.pages[idx - 1]?.content || null : null} />}</div>
+        ))}
+        {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
+        {!isLoading && hasNextPage && <div ref={targetRef} />}
+      </section>
     </>
   );
 };

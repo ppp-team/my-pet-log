@@ -16,6 +16,12 @@ export const bg = style({
   height: "auto",
 
   marginTop: "7.6rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      marginTop: "9.7rem",
+    },
+  },
 });
 
 export const header = style({
@@ -29,7 +35,11 @@ export const header = style({
   justifyContent: "center",
   alignItems: "center",
 
-  backgroundColor: "var(--White)",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      padding: "5rem 3.9rem",
+    },
+  },
 });
 
 export const backIcon = style({
@@ -48,8 +58,20 @@ export const backHomeWrapper = style({
   justifyContent: "center",
 
   position: "absolute",
-  top: "50%",
+  top: "40%",
   gap: "2rem",
+});
+
+export const illust = style({
+  width: "20rem",
+  height: "auto",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "30rem",
+      height: "auto",
+    },
+  },
 });
 
 export const backHomeText = style({
@@ -60,6 +82,13 @@ export const backHomeText = style({
   fontSize: "2rem",
   fontWeight: "600",
   lineHeight: "2.8rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2.6rem",
+      lineHeight: "3.6rem",
+    },
+  },
 });
 
 export const homeButton = style({
@@ -72,6 +101,15 @@ export const homeButton = style({
   fontSize: "1.6rem",
   fontWeight: "600",
   color: "var(--White)",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "28.1rem",
+      height: "6rem",
+
+      fontSize: "2rem",
+    },
+  },
 });
 
 export const titleWrapper = style({

@@ -41,10 +41,6 @@ export const userProfileImage = style([
   {
     width: "4rem",
     height: "4rem",
+    objectFit: "cover",
   },
 ]);
-
-export const userProfileImageTest = style({
-  width: "4rem",
-  height: "100%",
-});

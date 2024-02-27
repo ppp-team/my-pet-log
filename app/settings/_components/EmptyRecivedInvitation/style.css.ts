@@ -1,7 +1,8 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
-  paddingTop: "13.2rem",
+  height: "80vh",
+  margin: "0 auto",
 
   display: "flex",
   flexDirection: "column",
@@ -33,7 +34,7 @@ export const icon = style({
 });
 
 export const description = style({
-  width: "24.9rem",
+  width: "26rem",
 
   textAlign: "center",
   color: "var(--Gray81)",
@@ -41,7 +42,7 @@ export const description = style({
   fontWeight: "500",
   "@media": {
     "screen and (min-width: 744px)": {
-      width: "31.1rem",
+      width: "31rem",
       fontSize: "2rem",
     },
   },

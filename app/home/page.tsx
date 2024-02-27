@@ -1,7 +1,7 @@
 import * as styles from "./page.css";
 import HomePetProfile from "@/app/home/_components/HomePetProfile/HomePetProfile";
 import HomeHealthLogPreview from "@/app/home/_components/HomeHealthLogPreview/HomeHealthLogPreview";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
 import { UserType } from "@/app/_types/users/types";
 import { getMe } from "@/app/_api/users";
 import { redirect } from "next/navigation";
@@ -9,6 +9,11 @@ import { getPets } from "@/app/_api/pets";
 import { PetsType } from "@/app/_types/petGroup/types";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
+
+export const metadata: Metadata = {
+  title: "홈 | 마이펫로그",
+  description: "반려동물 프로필과 건강 수첩을 빠르게 확인하세요",
+};
 
 const HomePage: NextPage = async () => {
   const petIdCookie = cookies().get("petId")?.value;

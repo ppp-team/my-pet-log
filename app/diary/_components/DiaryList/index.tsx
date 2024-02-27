@@ -24,7 +24,7 @@ const DiaryList = ({ petId }: { petId: number }) => {
 
   useEffect(() => {
     setTargetActive((prev) => !prev);
-  }, [hasNextPage]);
+  }, [data]);
 
   if (!data?.pages[0]?.content.length) return <EmptyDiaryList />;
 
@@ -34,13 +34,15 @@ const DiaryList = ({ petId }: { petId: number }) => {
         <div className={search} />
         <Image src={SearchIconURL} alt="search icon" width={16} height={16} className={searchIcon} />
       </Link>
-      {data.pages.map((page, idx) => (
-        <div key={idx} className={container}>
-          <Diaries data={page?.content} />
-        </div>
-      ))}
-      {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
-      {!isLoading && hasNextPage && <div ref={targetRef} />}
+      <section className={container}>
+        {data.pages.map((page, idx) => (
+          <div key={idx}>
+            <Diaries data={page?.content} prevData={idx !== 0 ? data.pages[idx - 1].content : null} />
+          </div>
+        ))}
+        {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
+        {!isLoading && hasNextPage && <div ref={targetRef} />}
+      </section>
       <Link href={"/diary/create"}>
         <Image src={WriteIconURL} alt="write icon" width={60} height={60} className={writeIcon} />
       </Link>

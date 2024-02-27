@@ -11,10 +11,9 @@ import { getImagePath } from "@/app/_utils/getPersonImagePath";
 interface MemberListProps {
   members: GuardianType[];
   isLeader: boolean;
-  petId: number;
 }
 
-const MemberList = ({ members, isLeader, petId }: MemberListProps) => {
+const MemberList = ({ members, isLeader }: MemberListProps) => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [selectedGuardianId, setSelectedGuardianId] = useState<number | null>(null);
   const queryClient = useQueryClient();
@@ -42,9 +41,7 @@ const MemberList = ({ members, isLeader, petId }: MemberListProps) => {
         <section key={member.guardianId} className={memberlist}>
           <div className={profileWrapper}>
             <Image className={profileImg} src={getImagePath(member.profileImageUrl)} alt="profile icon" width={40} height={40} />
-            <p style={{ width: "unset" }} className={nickname}>
-              {member.nickname}
-            </p>
+            <p className={nickname}>{member.nickname}</p>
           </div>
           {isLeader && (
             <button

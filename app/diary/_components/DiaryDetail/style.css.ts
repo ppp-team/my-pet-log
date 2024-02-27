@@ -87,13 +87,13 @@ export const profileImage = style({
 });
 
 export const content = style({
-  width: "35.7rem",
+  width: "100%",
 
   fontSize: "1.4rem",
   lineHeight: "1.8rem",
   color: "var(--Gray1F)",
 
-  wordBreak: "break-word",
+  whiteSpace: "pre-wrap",
 
   marginTop: "0.9rem",
 });
@@ -145,7 +145,7 @@ export const commentContent = style({
   fontSize: "1.4rem",
   lineHeight: "1.8rem",
 
-  wordBreak: "break-all",
+  whiteSpace: "pre-wrap",
 });
 
 export const commentTextarea = style([

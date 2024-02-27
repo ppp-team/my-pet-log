@@ -3,9 +3,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import "./swiper.css";
+import "./style.css";
 import { Pagination } from "swiper/modules";
-import { petadd, container, petButton, petMateButton, petInfoWrapper } from "./style.css";
+import { petadd, container, petButton, petMateButton, petInfoWrapper } from "./styles.css";
 import MyPetInfo from "@/app/settings/_components/MyPetInfo";
 import Image from "next/image";
 import AddIcon from "@/public/icons/add.svg?url";
