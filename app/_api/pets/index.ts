@@ -75,7 +75,6 @@ export const putPet = async ({ petId, formData }: { petId: string; formData: For
 };
 
 export const deletePet = async ({ petId }: { petId: string }) => {
-  console.log("여기는 들어갔겠지?", petId);
   try {
     const response = await instance.delete(`my/pets/${petId}`);
     if (response.status === 200) {
