@@ -206,7 +206,7 @@ export const dropdownIconOpen = style({
 
 export const optionsList = style({
   width: "100%",
-  padding: "0",
+  maxHeight: "48rem",
 
   display: "flex",
   flexDirection: "column",
@@ -218,6 +218,15 @@ export const optionsList = style({
   borderRadius: "10px",
   boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
   zIndex: 1,
+
+  overflowY: "auto",
+  "::-webkit-scrollbar": {
+    width: "1px",
+    height: "5px",
+  },
+  "::-webkit-scrollbar-thumb": {
+    background: "var(--White)",
+  },
 });
 
 export const optionButton = style({
@@ -337,17 +346,19 @@ export const deleteButton = style({
   marginTop: "3.2rem",
   padding: "0.6rem 1.4rem",
   borderRadius: "5px",
-  border: "1px solid var(--White)",
+  border: "1px solid var(--Gray81)",
 
-  color: "var(--White)",
+  color: "var(--Gray81)",
 
   fontSize: "1.4rem",
   fontWeight: 500,
 
-  background: "#FF9999",
+  background: "var(--White)",
 
   ":hover": {
-    background: "var(--Red)",
+    color: "var(--White)",
+    background: "var(--GrayE2)",
+    border: "1px solid var(--GrayE2)",
   },
 });
 

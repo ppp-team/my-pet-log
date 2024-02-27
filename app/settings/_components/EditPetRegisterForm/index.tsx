@@ -18,7 +18,6 @@ import { useRouter } from "next/navigation";
 import { deletePet, getPet, putPet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Modal from "@/app/_components/Modal";
 import { PetType } from "@/app/_types/petGroup/types";
 import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
 import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
@@ -28,7 +27,6 @@ import { GuardiansType } from "@/app/_types/guardians/types";
 import { getMe } from "@/app/_api/users";
 import { UserType } from "@/app/_types/user/types";
 import ImageModal from "@/app/_components/Modal/ImageModal";
-import Loading from "@/app/_components/Loading";
 
 export interface IFormInput {
   petName: string;
@@ -46,7 +44,6 @@ export interface IFormInput {
 }
 
 const EditPetRegisterForm = ({ petId }: { petId: number }) => {
-  // const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const { isModalOpen: isConfirmModalOpen, openModalFunc: openConfirmModalFunc, closeModalFunc: closeConfirmModalFunc } = useModal();
   const { isModalOpen: isUnAuthorizedModalOpen, openModalFunc: openUnAuthorizedModalFunc, closeModalFunc: closeUnAuthorizedModalFunc } = useModal();
   const { isModalOpen: isDeleteModalOpen, openModalFunc: openDeleteModalFunc, closeModalFunc: closeDeleteModalFunc } = useModal();
@@ -251,6 +248,8 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     }
   };
 
+  console.log("petInfo:", petInfo);
+
   const section1 = (
     <>
       <div className={styles.profile}>
@@ -385,7 +384,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
           </div>
         )}
         마이펫 정보 입력
-        <div className={styles.closeIcon} onClick={() => router.push("/")}>
+        <div className={styles.closeIcon} onClick={() => router.back()}>
           <Image src={CloseIcon} alt="close icon" width={25} height={25} />
         </div>
       </header>
