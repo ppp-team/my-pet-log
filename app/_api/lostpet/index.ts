@@ -8,7 +8,7 @@ const instance = axios.create({
 });
 
 export const getLostPet = async (pageNo: number, numOfRows: number) => {
-  const myKey = "XTqXXeEeKIE8ta7%2BHCBICZqEKDi2PS%2BhJEPEDhePNPWvsilRUkRmfgCOsnkFZQblCTX2zr%2BtdInRCl61nw6Stg%3D%3D";
+  const myKey = process.env.NEXT_PUBLIC_LOSTPET_API_KEY || "";
 
   try {
     const serviceKey = encodeURIComponent(myKey);
