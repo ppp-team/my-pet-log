@@ -1,6 +1,5 @@
 "use client";
 
-import TitleHeader from "@/app/_components/TitleHeader";
 import * as styles from "./style.css";
 import { InvitationType } from "@/app/_types/invitaion/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -46,7 +45,6 @@ const ReceivedInvites = () => {
 
   return (
     <>
-      <TitleHeader title="초대 받은 내역" />
       <main className={styles.container}>
         {invites?.map((invitation) => (
           <section key={invitation.invitationId} className={styles.list}>
