@@ -1,5 +1,6 @@
 .swiper.diary {
-  width: 35rem;
+  width: 100%;
+  max-width: 41.8rem;
   height: 37rem;
   z-index: 0;
 }
