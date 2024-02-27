@@ -76,7 +76,7 @@ export const image = style({
 
   "@media": {
     "(min-width: 745px) and  (max-width: 1023px)": {
-      height: "45rem",
+      height: "41.8rem",
     },
   },
 });
