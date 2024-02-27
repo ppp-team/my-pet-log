@@ -1,12 +1,16 @@
 "use client";
 import { Diary as DiaryType, GetDiaryListResponse } from "@/app/_types/diary/type";
+import { getImagePath } from "@/app/_utils/getPetImagePath";
 import CommentIconURL from "@/public/icons/message.svg?url";
+import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./style.css";
-import { getImagePath } from "@/app/_utils/getPetImagePath";
 
 export const Diary = ({ diary }: { diary: DiaryType }) => {
+  const queryClient = useQueryClient();
+  if (!diary.thumbnailPath) queryClient.invalidateQueries({ queryKey: ["diaries", 2] });
+
   return (
     <Link href={`/diary/detail/${diary.diaryId}`}>
       <div className={styles.diaryWrapper}>
@@ -27,20 +31,22 @@ export const Diary = ({ diary }: { diary: DiaryType }) => {
   );
 };
 
-export const Diaries = ({ data }: { data: GetDiaryListResponse["content"] }) => {
+export const Diaries = ({ data, prevData }: { data: GetDiaryListResponse["content"]; prevData: GetDiaryListResponse["content"] | null }) => {
   if (!data) return;
   return (
-    <section className={styles.container}>
+    <>
       {data.map((v: any) => {
         return (
           <div className={styles.diaryListWrapper} key={v.date}>
-            <p className={styles.date}>{v.date}</p>
+            {prevData === null && <p className={styles.date}>{v.date}</p>}
+            {prevData !== null && prevData[prevData?.length - 1].date !== v.date && <p className={styles.date}>{v.date}</p>}
+            {/* <p className={styles.date}>{v.date}</p> */}
             {v.diaries.map((diary: DiaryType) => {
               return <Diary diary={diary} key={diary.diaryId} />;
             })}
           </div>
         );
       })}
-    </section>
+    </>
   );
 };
