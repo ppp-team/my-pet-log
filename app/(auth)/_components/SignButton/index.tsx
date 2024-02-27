@@ -1,12 +1,12 @@
 import React from "react";
 import * as styles from "./style.css";
-import Google from "@/public/icons/google-icon.svg";
-import Kakao from "@/public/icons/kakao-icon.svg";
-import Email from "@/public/icons/email-icon.svg";
+import Google from "@/public/icons/auth/google-icon.svg";
+import Kakao from "@/public/icons/auth/kakao-icon.svg";
+import Email from "@/public/icons/auth/email-icon.svg";
 
 interface SignButtonProps {
   type: "kakao" | "google" | "email";
-  action: "가입" | "로그인";
+  action: "시작하기" | "로그인";
 }
 
 const SignButton = ({ type, action }: SignButtonProps) => {
@@ -17,7 +17,7 @@ const SignButton = ({ type, action }: SignButtonProps) => {
 
   switch (type) {
     case "kakao":
-      message = `카카오 계정으로 ${action}`;
+      message = `카카오로 3초 만에 ${action}`;
       buttonStyle = `${styles.signButton} ${styles.kakaoButton}`;
       Icon = <Kakao width={18} height={18} alt="카카오 아이콘" />;
       break;

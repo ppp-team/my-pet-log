@@ -9,6 +9,12 @@ export const container = style({
   alignItems: "center",
 
   backgroundColor: "var(--GrayFA)",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      padding: "7.2rem 3rem 14rem",
+    },
+  },
 });
 
 export const skipButtonWrapper = style({
@@ -58,10 +64,17 @@ export const bottomButtonWrapper = style({
 
   display: "flex",
   justifyContent: "center",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      padding: "4.4rem 14.7rem 15.4rem 14.7rem",
+    },
+  },
 });
 
 export const bottomButton = style({
   width: "100%",
+  maxWidth: "35.8rem",
   padding: "1.3rem 0",
 
   borderRadius: "30px",
@@ -75,4 +88,7 @@ export const bottomButton = style({
 
 export const link = style({
   width: "inherit",
+
+  display: "flex",
+  justifyContent: "center",
 });

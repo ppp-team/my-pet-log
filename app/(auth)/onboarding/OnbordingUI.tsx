@@ -11,7 +11,7 @@ const Onboarding = ({ image, title, description }: OnboardingProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Image src={image} alt="content image" width={300} height={338} />
+        <Image className={styles.image} src={image} alt="content image" />
       </div>
       <div className={styles.textArea}>
         <h1 className={styles.titleSection}>

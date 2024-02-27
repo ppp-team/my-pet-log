@@ -10,12 +10,24 @@ export const container = style({
 });
 
 export const title = style({
-  marginTop: "2rem",
+  margin: "2rem auto 2.4rem",
   fontSize: "1.6rem",
   fontWeight: 700,
   textAlign: "center",
 });
 
-export const imgWrapper = style({
-  margin: "7.3rem 0 4.8rem 0",
+export const p = style({
+  margin: "0 auto",
+  fontSize: "1.6rem",
+  fontWeight: "500",
+  textAlign: "center",
+});
+
+export const link = style({
+  paddingLeft: "1rem",
+
+  color: "var(--MainOrange)",
+  textDecoration: "underLine",
+  fontWeight: "700",
+  letterSpacing: "0.2px",
 });
