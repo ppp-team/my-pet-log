@@ -2,6 +2,7 @@ import { getLostPet } from "@/app/_api/lostpet";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import LostPetSkeleton from "@/app/_components/LostPetSkeleton";
 import * as styles from "./style.css";
 
 const LostPet = () => {
@@ -39,9 +40,11 @@ const LostPet = () => {
       </div>
       <div className={styles.lostPetCardList}>
         {isLoading ? (
-          <p>유기동물 정보 로딩 중...</p>
+          <>
+            <LostPetSkeleton />
+          </>
         ) : error ? (
-          <p>유기동물 데이터를 불러오는 데 실패했습니다.</p>
+          <p className={styles.failedToLoad}>🥲 유기동물 데이터를 불러오는 데 실패했습니다.</p>
         ) : (
           lostPet?.map((lostPetData: any) => (
             <div key={lostPetData.desertionNo} className={styles.lostPetCard}>

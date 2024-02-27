@@ -5,11 +5,11 @@ import * as styles from "./MobilePetGroupDropdown.css";
 import Image from "next/image";
 import dropdownIconSrc from "@/public/icons/drop-down-icon-orange.svg?url";
 import petGroupSettingIconSrc from "@/public/icons/pet-group-settings.svg?url";
-import NoPetProfileIconSrc from "@/public/images/pet-profile-default.svg?url";
 import { useRouter } from "next/navigation";
 import { PetsType } from "@/app/_types/petGroup/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { editPetRep, getPets } from "@/app/_api/pets";
+import { getImagePath } from "@/app/_utils/getPetImagePath";
 
 type dropdownMenuItemType = {
   id: string;
@@ -61,7 +61,7 @@ const MobilePetGroupDropdown = () => {
     return {
       id: item.petId,
       label: item.name,
-      imageUrl: item.petImageUrl ?? NoPetProfileIconSrc,
+      imageUrl: getImagePath(item.petImageUrl),
       isSelected: item.repStatus === "REPRESENTATIVE" ? true : false,
     };
   });

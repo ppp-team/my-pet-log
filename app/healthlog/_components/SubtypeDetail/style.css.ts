@@ -4,6 +4,7 @@ import { style, globalStyle } from "@vanilla-extract/css";
 export const container = style({
   width: "100%",
 
+  marginTop: "1rem",
   padding: "1.8rem",
   gap: "1rem",
 

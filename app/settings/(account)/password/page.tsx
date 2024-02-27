@@ -50,8 +50,12 @@ const Page = () => {
   const validatePasswordMutation = useMutation({
     mutationFn: (password: string) => postCheckPassword(password),
     onSuccess: () => {
-      const formData = new FormData();
+      if (newPassword === watch("password")) {
+        setError("newPassword", { type: "manual", message: ERROR_MESSAGE.currentEqualNewPassword });
+        return;
+      }
 
+      const formData = new FormData();
       formData.append("password", newPassword);
       updatePasswordMutation.mutate(formData);
     },

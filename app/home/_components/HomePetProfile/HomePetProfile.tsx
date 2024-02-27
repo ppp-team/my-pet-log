@@ -4,9 +4,9 @@ import Image from "next/image";
 import * as styles from "./HomePetProfile.css";
 import { PetsType } from "@/app/_types/petGroup/types";
 import calculateAge from "@/app/_utils/calculateAge";
-import NoPetProfileIconSrc from "@/public/images/pet-profile-default.svg?url";
 import { useQuery } from "@tanstack/react-query";
 import { getPets } from "@/app/_api/pets";
+import { getImagePath } from "@/app/_utils/getPetImagePath";
 
 const HomePetProfile = () => {
   const { data: pets } = useQuery<PetsType>({
@@ -21,7 +21,7 @@ const HomePetProfile = () => {
   if (!currentPetGroup) return <></>;
   return (
     <div className={styles.container}>
-      <Image className={styles.petProfileImage} src={currentPetGroup.petImageUrl ?? NoPetProfileIconSrc} alt="동물 프로필 이미지" width={180} height={180} priority={true} />
+      <Image className={styles.petProfileImage} src={getImagePath(currentPetGroup.petImageUrl)} alt="동물 프로필 이미지" width={180} height={180} priority={true} />
       <p className={styles.petName}>{currentPetGroup.name}</p>
       <span className={styles.petInfo}>
         {currentPetGroup.breed && currentPetGroup.breed}

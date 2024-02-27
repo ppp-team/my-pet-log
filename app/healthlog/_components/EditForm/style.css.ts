@@ -9,6 +9,12 @@ export const container = style({
   flexDirection: "column",
 
   overflow: "auto",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      padding: "10.3rem 14.7rem",
+    },
+  },
 });
 
 export const formItems = style({
@@ -24,10 +30,10 @@ export const formItems = style({
 export const inputWrapper = style({
   width: "100%",
 
+  gap: "0.6rem",
+
   display: "flex",
   flexDirection: "column",
-
-  gap: "1rem",
 });
 
 export const buttonGroup = style({
@@ -45,7 +51,7 @@ export const typeButton = style({
   justifyContent: "space-between",
   alignItems: "center",
 
-  padding: "1rem",
+  padding: "1.4rem",
 
   borderRadius: "10px",
   backgroundColor: "var(--GrayF2)",
@@ -54,6 +60,14 @@ export const typeButton = style({
   border: "none",
   outline: "none",
   cursor: "pointer",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      height: "10.1rem",
+
+      padding: "1.75rem",
+    },
+  },
 });
 
 export const typeButtonSelected = style({
@@ -80,6 +94,8 @@ export const addIconSelected = style({
 export const submitButton = style({
   width: "100%",
   height: "4.5rem",
+
+  marginTop: "3rem",
 
   borderRadius: "50px",
   backgroundColor: "var(--MainOrange)",
