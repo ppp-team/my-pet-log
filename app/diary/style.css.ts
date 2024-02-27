@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-export const container = style({
+export const root = style({
   width: "100%",
 
   display: "flex",
@@ -9,7 +9,7 @@ export const container = style({
   justifyContent: "center",
 });
 
-export const diaryList = style({
+export const container = style({
   width: "100%",
 
   "@media": {

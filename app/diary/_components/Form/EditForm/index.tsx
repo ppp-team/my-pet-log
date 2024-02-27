@@ -1,7 +1,7 @@
 "use client";
 
 import { getDiary, postDiaryVideo, putDiary } from "@/app/_api/diary";
-import BackHeader from "@/app/_components/BackHeader";
+import Loading from "@/app/_components/Loading";
 import { showToast } from "@/app/_components/Toast";
 import { deletedImagesAtom, diaryImagesAtom } from "@/app/_states/atom";
 import { DiaryMediaType } from "@/app/_types/diary/type";
@@ -10,7 +10,6 @@ import DateInput from "@/app/diary/_components/Input/DateInput";
 import { ContentInput, TitleInput } from "@/app/diary/_components/Input/FormInput";
 import ImageInput from "@/app/diary/_components/Input/ImageInput";
 import VideoInput from "@/app/diary/_components/Input/VideoInput";
-import Loading from "@/app/_components/Loading";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -87,7 +86,6 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
   const [deletedImages, setDeletedImages] = useAtom(deletedImagesAtom);
   return (
     <>
-      <BackHeader title="육아일기 수정" styleTop="0" />
       <div className={styles.container}>
         <form
           className={styles.form}
@@ -134,8 +132,8 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
 
           <button className={styles.button}>수정하기</button>
         </form>
+        {(isPending || isVideoUploading || isPutSuccess) && <Loading />}
       </div>
-      {(isPending || isVideoUploading || isPutSuccess) && <Loading />}
     </>
   );
 };

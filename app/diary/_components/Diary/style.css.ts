@@ -117,6 +117,7 @@ export const title = style({
 });
 
 export const description = style({
+  width: "22rem",
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",

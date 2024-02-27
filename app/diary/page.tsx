@@ -3,7 +3,7 @@ import DiaryList from "@/app/diary/_components/DiaryList";
 import { DIARY_PAGE_SIZE } from "@/app/diary/constant";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
-import { container, diaryList } from "./style.css";
+import { container, root } from "./style.css";
 
 const DiaryPgae = async () => {
   const queryClient = new QueryClient();
@@ -18,9 +18,9 @@ const DiaryPgae = async () => {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <div className={container}>
+    <div className={root}>
       <HydrationBoundary state={dehydratedState}>
-        <div className={diaryList}>
+        <div className={container}>
           <DiaryList petId={petId} />
         </div>
       </HydrationBoundary>

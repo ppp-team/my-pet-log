@@ -1,22 +1,21 @@
 "use client";
 
 import { postDiary, postDiaryVideo } from "@/app/_api/diary";
-import BackHeader from "@/app/_components/BackHeader";
+import Loading from "@/app/_components/Loading";
 import { showToast } from "@/app/_components/Toast";
 import { diaryImagesAtom } from "@/app/_states/atom";
 import { getPrettyToday } from "@/app/_utils/getPrettyToday";
-import DateInput from "@/app/diary/_components/Input/DateInput";
 import { FormInput } from "@/app/diary/_components/Form/EditForm";
+import DateInput from "@/app/diary/_components/Input/DateInput";
 import { ContentInput, TitleInput } from "@/app/diary/_components/Input/FormInput";
 import ImageInput from "@/app/diary/_components/Input/ImageInput";
 import VideoInput from "@/app/diary/_components/Input/VideoInput";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
-import { useState } from "react";
-import Loading from "@/app/_components/Loading";
 
 interface Diary {
   title: string;
@@ -61,7 +60,6 @@ const CreateForm = ({ petId }: { petId: number }) => {
 
   return (
     <>
-      <BackHeader title="육아일기 글작성" styleTop="0" />
       <div className={styles.container}>
         <form
           className={styles.form}
@@ -108,8 +106,8 @@ const CreateForm = ({ petId }: { petId: number }) => {
 
           <button className={styles.button}>작성하기</button>
         </form>
+        {(isPending || isVideoUploading || isSuccess) && <Loading />}
       </div>
-      {(isPending || isVideoUploading || isSuccess) && <Loading />}
     </>
   );
 };
