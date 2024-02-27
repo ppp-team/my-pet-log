@@ -54,6 +54,10 @@ export const getCode = async () => {
   }
 };
 
+export const putPet = async ({ petId, formData }: { petId: string; formData: FormData }) => {
+  await instance.put(`my/pets/${petId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+};
+
 export const editPetRep = async (petId: string) => {
   try {
     const response = await instance.post(`/my/guardians/${petId}/selectRep`);
