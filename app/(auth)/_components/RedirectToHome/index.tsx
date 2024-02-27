@@ -33,7 +33,7 @@ export default function RedirectToHome() {
 
   useEffect(() => {
     handleUserInfo();
-  }, []);
+  }, [session, handleUserInfo]);
 
   return null;
 }
