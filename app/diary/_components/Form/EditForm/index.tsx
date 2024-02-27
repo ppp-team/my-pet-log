@@ -1,6 +1,6 @@
 "use client";
 
-import { getDiary, postDiaryVideo, putDiary } from "@/app/_api/diary";
+import { getDiary, putDiary } from "@/app/_api/diary";
 import Loading from "@/app/_components/Loading";
 import { showToast } from "@/app/_components/Toast";
 import { deletedImagesAtom, diaryImagesAtom } from "@/app/_states/atom";
@@ -29,22 +29,17 @@ export interface FormInput {
   content: string;
   date: string;
   images?: File[] | null;
-  video?: File | null;
+  video?: string | null;
 }
 
 const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
   const [oldImages, setOldImages] = useState<DiaryMediaType[]>([]);
   const [oldVideo, setOldVideo] = useState<DiaryMediaType[]>([]);
-  const [isVideoUploading, setIsVideoUploading] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
   const { data: diary, isSuccess } = useQuery({ queryKey: ["diary", { petId, diaryId }], queryFn: () => getDiary({ diaryId }) });
 
-  const {
-    mutate: putDiaryMutation,
-    isPending,
-    isSuccess: isPutSuccess,
-  } = useMutation({
+  const { mutate: putDiaryMutation, isPending } = useMutation({
     mutationFn: (formData: FormData) => putDiary({ diaryId, formData }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
@@ -99,17 +94,7 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
             };
             //video가 있다면 백엔드에 등록 후 응답id를 formData에 추가
             if (data.video) {
-              setIsVideoUploading(true);
-              const videoFormData = new FormData();
-              videoFormData.append("video", data.video);
-
-              try {
-                const res = await postDiaryVideo({ formData: videoFormData });
-                request.uploadedVideoIds = [res.videoId];
-              } catch {
-                showToast("영상 업로드에 실패했습니다.", false);
-              }
-              setIsVideoUploading(false);
+              request.uploadedVideoIds = [data.video];
             }
             if (deletedImages) {
               request.deletedMediaIds = deletedImages;
@@ -132,7 +117,7 @@ const EditForm = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
 
           <button className={styles.button}>수정하기</button>
         </form>
-        {(isPending || isVideoUploading || isPutSuccess) && <Loading />}
+        {isPending && <Loading />}
       </div>
     </>
   );
