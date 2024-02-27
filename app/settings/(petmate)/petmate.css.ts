@@ -43,6 +43,8 @@ export const nickname = style({
 });
 
 export const button = style({
+  width: "5.7rem",
+
   color: "var(--MainOrange)",
   fontSize: "1.5rem",
   fontWeight: "500",
@@ -54,6 +56,7 @@ export const header = style({
 });
 
 export const state = style({
+  width: "5.2rem",
   padding: "0.4rem 1rem",
 
   borderRadius: "5px",
