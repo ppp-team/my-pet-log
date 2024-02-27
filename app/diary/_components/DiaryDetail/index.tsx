@@ -281,15 +281,13 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
   if (!user) return;
   return (
     <>
-      <BackHeader title="육아일기" />
-
       <div className={styles.root}>
         <section className={styles.header}>
           <p className={styles.petInfo}>
             {diary.pet.breed} | {diary.pet.age ?? ""}
           </p>
-          <h3 style={{ fontSize: "1.8rem", fontWeight: "600" }}>{diary.title}</h3>
-          <p style={{ fontSize: "1.4rem", color: "var(--Gray9A)" }}>{diary.date}</p>
+          <h3 className={styles.title}>{diary.title}</h3>
+          <p className={styles.date}>{diary.date}</p>
           {diary.writer.isCurrentUser && (
             <div onBlur={() => setIsKebabOpen(false)} tabIndex={1} className={styles.kebab}>
               <Image src={KebabIcon} alt="kebab icon" width={24} height={24} onClick={() => setIsKebabOpen(!isKebabOpen)} />
@@ -321,9 +319,6 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
         <section className={styles.main}>
           {(diary.images.length > 0 || diary.videos.length > 0) && (
             <>
-              <div className={styles.swiperFraction}>
-                {currentPage + 1}/{diary.images.length + diary.videos.length}
-              </div>
               <div onClick={() => setIsKebabOpen(false)}>
                 <Swiper
                   className="diary"
@@ -333,6 +328,9 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
                   }}
                   modules={[Pagination]}
                 >
+                  <div className={styles.swiperFraction}>
+                    {currentPage + 1}/{diary.images.length + diary.videos.length}
+                  </div>
                   {diary.images.map((image, idx) => (
                     <SwiperSlide key={idx}>
                       <div className={styles.image} style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_PREFIX}${image.path})` }}></div>

@@ -19,16 +19,42 @@ export const header = style({
   position: "relative",
 });
 
+export const title = style({
+  fontSize: "1.8rem",
+  fontWeight: "600",
+
+  "@media": {
+    "(min-width: 745px) and  (max-width: 1023px)": {
+      fontSize: "2rem",
+    },
+  },
+});
+
+export const date = style({
+  fontSize: "1.4rem",
+  color: "var(--Gray9A)",
+
+  "@media": {
+    "(min-width: 745px) and  (max-width: 1023px)": {
+      fontSize: "1.6rem",
+    },
+  },
+});
 export const petInfo = style({
   color: "var(--GrayC2)",
   fontSize: "1.4rem",
   fontWeight: "500",
+
+  "@media": {
+    "(min-width: 745px) and  (max-width: 1023px)": {
+      fontSize: "1.6rem",
+    },
+  },
 });
 
 export const main = style({
   display: "flex",
   flexDirection: "column",
-  // gap: "0.9rem",
 
   padding: "1.4rem 1.6rem",
 
@@ -40,13 +66,19 @@ export const main = style({
 
 export const image = style({
   width: "100%",
-  height: "23.8rem",
+  height: "35rem",
 
   borderRadius: "10px",
   border: "1px solid var(--GrayB5)",
 
   backgroundSize: "cover",
   backgroundPosition: "center",
+
+  "@media": {
+    "(min-width: 745px) and  (max-width: 1023px)": {
+      height: "40rem",
+    },
+  },
 });
 
 export const profile = style({
@@ -59,8 +91,8 @@ export const swiperFraction = style({
   height: "1.6rem",
 
   position: "absolute",
-  right: "2.6rem",
-  top: "2.7rem",
+  right: "1.5rem",
+  top: "1.7rem",
 
   paddingTop: "0.3rem",
 
