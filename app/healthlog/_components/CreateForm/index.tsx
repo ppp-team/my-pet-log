@@ -3,6 +3,7 @@
 import { postLogs } from "@/app/_api/log";
 import BackHeader from "@/app/_components/BackHeader";
 import DateInput from "@/app/_components/DateInput";
+import Loading from "@/app/_components/Loading";
 import { showToast } from "@/app/_components/Toast";
 import { PostLogType } from "@/app/_types/log/types";
 import convertTime12to24 from "@/app/_utils/convertTime12to24";
@@ -71,7 +72,7 @@ const CreateForm = ({ petId }: CreateFormProps) => {
     }
   };
 
-  const { mutate: postLog } = useMutation<PostLogType, Error, MutationParams>({
+  const { mutate: postLog, isPending } = useMutation<PostLogType, Error, MutationParams>({
     mutationFn: async ({ petId, logData }) => postLogs(petId, logData),
     onSuccess: (data, variables) => {
       const { year, month, day } = variables.date;
@@ -211,6 +212,7 @@ const CreateForm = ({ petId }: CreateFormProps) => {
             </button>
           </div>
         </form>
+        {isPending && <Loading />}
       </div>
     </>
   );

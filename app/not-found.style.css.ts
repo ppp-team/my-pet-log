@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const container = style({
   width: "100%",
-  height: "100%",
+  minHeight: "100vh",
 
   display: "flex",
   flexDirection: "column",
@@ -16,12 +16,6 @@ export const bg = style({
   height: "auto",
 
   marginTop: "7.6rem",
-
-  "@media": {
-    "screen and (min-width: 744px)": {
-      marginTop: "9.7rem",
-    },
-  },
 });
 
 export const header = style({
@@ -58,8 +52,14 @@ export const backHomeWrapper = style({
   justifyContent: "center",
 
   position: "absolute",
-  top: "40%",
+  top: "30%",
   gap: "2rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      top: "15%",
+    },
+  },
 });
 
 export const illust = style({
