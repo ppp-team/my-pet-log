@@ -67,7 +67,7 @@ const PcHeaderNav = () => {
           )}
         </li>
         <li>
-          <Link className={styles.linkSignUp} href="/signUp">
+          <Link className={styles.linkSignUp} href="/signup">
             회원가입
           </Link>
         </li>

@@ -7,15 +7,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { InvitationType } from "@/app/_types/invitaion/types";
 import { getInvitations, postAcceptance, postRefusal } from "@/app/_api/invitation";
 import { showToast } from "@/app/_components/Toast";
-import { useRouter } from "next/navigation";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
+import Loading from "@/app/_components/Loading";
 
-const ReceivedInvitationList = ({ checkHasNoPets }: { checkHasNoPets: () => void }) => {
-  const router = useRouter();
-
+const ReceivedInvitationList = () => {
   const queryClient = useQueryClient();
 
-  const { data: invites } = useQuery<InvitationType[]>({
+  const { data: invites, isPending } = useQuery<InvitationType[]>({
     queryKey: ["invites"],
     queryFn: () => getInvitations(),
   });
@@ -31,7 +29,6 @@ const ReceivedInvitationList = ({ checkHasNoPets }: { checkHasNoPets: () => void
         queryClient.invalidateQueries({ queryKey: ["invites"] });
         const petName = invites?.find((item) => item.invitationId === data)?.petName;
         showToast(petName ? `${petName}의 집사가 되었어요!` : "집사가 되었어요!", true);
-        checkHasNoPets();
       } else {
         showToast("초대 수락에 실패했습니다. 잠시 후 다시 시도해주세요.", false);
       }
@@ -83,6 +80,7 @@ const ReceivedInvitationList = ({ checkHasNoPets }: { checkHasNoPets: () => void
           ))}
         </Swiper>
       )}
+      {isPending && <Loading />}
     </section>
   );
 };

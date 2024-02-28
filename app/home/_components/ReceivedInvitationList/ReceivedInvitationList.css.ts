@@ -124,10 +124,12 @@ export const noInvitationContainer = style({
   justifyItems: "center",
   alignItems: "center",
   height: "16.6rem",
+  paddingRight: "2rem",
 
   "@media": {
     "screen and (min-width: 744px)": {
       height: "22.2rem",
+      paddingRight: "2.5rem",
     },
   },
 });
