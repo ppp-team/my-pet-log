@@ -235,8 +235,9 @@ export const commentInputContainer = style({
   display: "flex",
   alignItems: "center",
   gap: "0.9rem",
+  width: "100%",
 
-  position: "sticky",
+  position: "fixed",
   bottom: "5.6rem",
 
   padding: "1rem 1.6rem",

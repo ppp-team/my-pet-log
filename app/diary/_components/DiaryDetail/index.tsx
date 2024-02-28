@@ -365,15 +365,15 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
 
         <section>
           <div className={styles.commentsCount}>댓글({diary.commentCount})</div>
-          <div style={{ minHeight: "10rem" }}>
+          <div>
             {comments?.pages.map((v, pageNum) =>
               v?.content.map((comment, contentNum) => (
                 <Comment diaryId={diaryId} petId={petId} comment={comment} pageNum={pageNum} contentNum={contentNum} key={comment.commentId} />
               )),
             )}
+            {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
+            {!isLoading && hasNextPage && <div ref={targetRef} />}
           </div>
-          {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
-          {!isLoading && hasNextPage && <div ref={targetRef} />}
 
           <div className={styles.commentInputContainer}>
             <Image className={styles.profileImage} src={getImagePath(user.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
