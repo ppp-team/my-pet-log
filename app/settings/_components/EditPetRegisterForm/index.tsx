@@ -28,6 +28,7 @@ import { getMe } from "@/app/_api/users";
 import { UserType } from "@/app/_types/user/types";
 import ImageModal from "@/app/_components/Modal/ImageModal";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
+import Loading from "@/app/_components/Loading";
 
 export interface IFormInput {
   petName: string;
@@ -406,6 +407,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>
+      {isPending && <Loading />}
     </>
   );
 };
