@@ -20,6 +20,7 @@ import { useModal } from "@/app/_hooks/useModal";
 import ImageModal from "@/app/_components/Modal/ImageModal";
 import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
 import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
+import { useQueryClient } from "@tanstack/react-query";
 
 export interface IFormInput {
   petName: string;
@@ -58,7 +59,9 @@ const PetRegister = () => {
     watch,
   } = useForm<IFormInput>({ mode: "onSubmit" });
 
+  const queryClient = useQueryClient();
   const router = useRouter();
+
   const pathname = usePathname();
 
   const handlePath = () => {
@@ -97,17 +100,11 @@ const PetRegister = () => {
     console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
     const res = await postPet({ formData });
     if (res !== null) {
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
       return openModalFunc();
     }
-
-    console.log("res", res);
   };
 
-  //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
-  // let isSectionValid = false;
-  // if (getValues() && getValues().petName && getValues().type && getValues().breed) {
-  //   isSectionValid = true;
-  // }
   const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
 
   const handleNextSection = () => {
