@@ -1,9 +1,12 @@
 "use client";
 import { editPetRep, getPets } from "@/app/_api/pets";
+import ModalContainer from "@/app/_components/ModalContainer";
 import * as styles from "@/app/_components/SelectPet/style.css";
+import { useModal } from "@/app/_hooks/useModal";
 import { PetType, PetsType } from "@/app/_types/petGroup/types";
 import calculateAge from "@/app/_utils/calculateAge";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
+import ParticipatePetGroupModal from "@/app/home/_components/ParticipatePetGroupModal/ParticipatePetGroupModal";
 import AddIcon from "@/public/icons/add.svg?url";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -21,7 +24,6 @@ const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
         router.push(path);
       }}
     >
-      {/* <div className={styles.profile} style={{ backgroundImage: `url(${pet.petImageUrl ?? NoPetProfileImage}` }} /> */}
       <Image className={styles.profile} src={getImagePath(pet.petImageUrl)} alt="펫 프로필 사진" width={80} height={80} />
       <div className={styles.text}>
         <h3 style={{ fontSize: "1.6rem", fontWeight: "700" }}>{pet.name}</h3>
@@ -34,7 +36,7 @@ const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
 };
 const SelectPet = ({ type, path }: { type: string; path: string }) => {
   const { data: pets } = useQuery<PetsType | null>({ queryKey: ["pets"], queryFn: () => getPets() });
-
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   return (
     <>
       <div className={styles.root}>
@@ -44,18 +46,14 @@ const SelectPet = ({ type, path }: { type: string; path: string }) => {
             <br />
             {type}를 작성해볼까요?
           </h3>
-          <p className={styles.p}>펫메이트로 초대받으셨나요?</p>
+
+          <p className={styles.p} onClick={openModalFunc}>
+            펫메이트로 초대받으셨나요?
+          </p>
         </div>
 
         <div className={styles.petList}>
-          {pets?.data.map(
-            (pet) =>
-              pet && (
-                // <Link href={path} >
-                <Pet pet={pet} path={path} key={pet.petId} />
-                // </Link>
-              ),
-          )}
+          {pets?.data.map((pet) => pet && <Pet pet={pet} path={path} key={pet.petId} />)}
           <Link href={"/settings/pet-register"} className={styles.container} style={{ justifyContent: "center" }}>
             <div className={styles.addButton}>
               <Image src={AddIcon} alt="add icon" width={16} height={16} className={styles.addIcon} />
@@ -63,6 +61,11 @@ const SelectPet = ({ type, path }: { type: string; path: string }) => {
           </Link>
         </div>
       </div>
+      {isModalOpen && (
+        <ModalContainer>
+          <ParticipatePetGroupModal onClickClose={closeModalFunc} />
+        </ModalContainer>
+      )}
     </>
   );
 };
