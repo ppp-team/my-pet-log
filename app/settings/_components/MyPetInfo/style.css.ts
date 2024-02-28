@@ -29,6 +29,7 @@ export const profile = style({
 });
 
 export const info = style({
+  width: "100%",
   display: "flex",
   flexDirection: "column",
   gap: "0.3rem",
