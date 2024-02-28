@@ -10,6 +10,7 @@ export const loadingContainer = style({
   minHeight: "100%",
   position: "fixed",
   top: "0",
+  right: "0",
 
   backgroundColor: "rgba(255, 255, 255, 0.5)",
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { postDiary, postDiaryVideo } from "@/app/_api/diary";
-import BackHeader from "@/app/_components/BackHeader";
+import { postDiary } from "@/app/_api/diary";
+import Loading from "@/app/_components/Loading";
 import { showToast } from "@/app/_components/Toast";
 import { diaryImagesAtom } from "@/app/_states/atom";
 import { getPrettyToday } from "@/app/_utils/getPrettyToday";
-import DateInput from "@/app/diary/_components/Input/DateInput";
 import { FormInput } from "@/app/diary/_components/Form/EditForm";
+import DateInput from "@/app/diary/_components/Input/DateInput";
 import { ContentInput, TitleInput } from "@/app/diary/_components/Input/FormInput";
 import ImageInput from "@/app/diary/_components/Input/ImageInput";
 import VideoInput from "@/app/diary/_components/Input/VideoInput";
@@ -15,8 +15,6 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as styles from "./style.css";
-import { useState } from "react";
-import Loading from "@/app/_components/Loading";
 
 interface Diary {
   title: string;
@@ -26,20 +24,15 @@ interface Diary {
 }
 
 const CreateForm = ({ petId }: { petId: number }) => {
-  const [isVideoUploading, setIsVideoUploading] = useState(false);
   const queryClient = useQueryClient();
 
   //일기 생성
-  const {
-    mutate: postDiaryMutation,
-    isPending,
-    isSuccess,
-  } = useMutation({
+  const { mutate: postDiaryMutation, isPending } = useMutation({
     mutationFn: (formData: FormData) => postDiary({ formData }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
       router.push("/diary");
       setDiaryImages([]);
+      queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
     },
     onError: () => {
       showToast("일기 생성에 실패했습니다.", false);
@@ -61,7 +54,6 @@ const CreateForm = ({ petId }: { petId: number }) => {
 
   return (
     <>
-      <BackHeader title="육아일기 글작성" styleTop="0" />
       <div className={styles.container}>
         <form
           className={styles.form}
@@ -76,18 +68,7 @@ const CreateForm = ({ petId }: { petId: number }) => {
 
             //video가 있다면 백엔드에 등록 후 응답id를 formData에 추가
             if (data.video) {
-              setIsVideoUploading(true);
-
-              const videoFormData = new FormData();
-              videoFormData.append("video", data.video);
-
-              try {
-                const res = await postDiaryVideo({ formData: videoFormData });
-                request.uploadedVideoIds = [res.videoId];
-              } catch {
-                showToast("영상 업로드에 실패했습니다.", false);
-              }
-              setIsVideoUploading(false);
+              request.uploadedVideoIds = [data.video];
             }
 
             const blob = new Blob([JSON.stringify(request)], { type: "application/json" });
@@ -108,8 +89,8 @@ const CreateForm = ({ petId }: { petId: number }) => {
 
           <button className={styles.button}>작성하기</button>
         </form>
+        {isPending && <Loading />}
       </div>
-      {(isPending || isVideoUploading || isSuccess) && <Loading />}
     </>
   );
 };

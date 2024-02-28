@@ -11,11 +11,15 @@ export const container = style({
 
   gap: "1rem",
 
-  width: "100vw",
+  width: "100%",
   height: "11.3rem",
 
   overflowX: "auto",
   overflowY: "hidden",
+
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
 });
 
 export const input = style({
