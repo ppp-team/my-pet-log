@@ -22,7 +22,7 @@ export const header = style({
       transform: "translateX(-50%)",
       zIndex: "2",
       width: "74.4rem",
-      borderRadius: "20px 20px 0",
+      borderRadius: "20px 20px 0 0",
     },
   },
 });
