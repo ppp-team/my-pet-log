@@ -14,7 +14,7 @@ import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import Image from "next/image";
 import Loading from "@/app/_components/Loading";
 
-const Member = ({ petId }: { petId: number }) => {
+const Member = () => {
   const queryClient = useQueryClient();
   const { data: user } = useQuery<UserType>({
     queryKey: ["me"],

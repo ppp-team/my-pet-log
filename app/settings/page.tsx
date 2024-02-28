@@ -11,7 +11,11 @@ import ListItem from "@/app/settings/_components/ListItem";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { getMe } from "@/app/_api/users";
 import Logout from "@/app/settings/_components/Logout";
-import { text, listcontainer } from "./page.css";
+import { textMyPet, textMyProfile, listcontainer } from "./page.css";
+import { Suspense } from "react";
+import CarouselSkeleton from "./_components/MypetCarousel/Skeleton";
+import ProfileSkeleton from "./_components/MyProfile/Skeleton";
+import ListItemSkeleton from "./_components/ListItem/Skeleton";
 
 const Page = async () => {
   const queryClient = new QueryClient();
@@ -21,22 +25,27 @@ const Page = async () => {
 
   return (
     <>
-      <HydrationBoundary state={dehydratedState}>
-        <div className={text}>마이펫 관리하기</div>
+      <div className={textMyPet}>마이펫 관리하기</div>
+      <Suspense fallback={<CarouselSkeleton />}>
         <MypetCarousel />
-        <div style={{ padding: "0 1.6rem 1.6rem" }}>
-          <Link href="/settings/profile">
+      </Suspense>
+      <div className={textMyProfile}>마이프로필 관리하기</div>
+      <Suspense fallback={<ProfileSkeleton />}>
+        <Link href="/settings/profile">
+          <HydrationBoundary state={dehydratedState}>
             <MyProfile />
-          </Link>
-          <div className={listcontainer}>
-            <ListItem href="/settings/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
-            <ListItem href="/settings/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
-            <ListItem href="/settings/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />
-            <ListItem href="/settings/notice" src={NoticeIcon} alt="notice icon" text="공지사항" />
-            <Logout />
-          </div>
+          </HydrationBoundary>
+        </Link>
+      </Suspense>
+      <Suspense fallback={<ListItemSkeleton />}>
+        <div className={listcontainer}>
+          <ListItem href="/settings/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
+          <ListItem href="/settings/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
+          <ListItem href="/settings/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />
+          <ListItem href="/settings/notice" src={NoticeIcon} alt="notice icon" text="공지사항" />
+          <Logout />
         </div>
-      </HydrationBoundary>
+      </Suspense>
     </>
   );
 };
