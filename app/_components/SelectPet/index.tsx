@@ -18,10 +18,13 @@ const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
   return (
     <div
       className={styles.container}
-      onClick={() => {
-        editPetRep(pet.petId);
-        localStorage.setItem("petId", pet.petId);
-        router.push(path);
+      onClick={async () => {
+        try {
+          await editPetRep(pet.petId);
+          router.push(path);
+        } catch {
+          console.error("대표 반려동물 등록 실패");
+        }
       }}
     >
       <Image className={styles.profile} src={getImagePath(pet.petImageUrl)} alt="펫 프로필 사진" width={80} height={80} />
