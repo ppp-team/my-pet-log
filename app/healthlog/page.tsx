@@ -4,6 +4,8 @@ import { getLogs } from "@/app/_api/log";
 import LogWriteButton from "@/app/healthlog/_components/LogWriteButton";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
+import { Suspense } from "react";
+import HealthlogSkeleton from "./_components/HealthlogSkeleton";
 import HealthlogContent from "./_components/HealthlogContent";
 import * as styles from "./page.css";
 
@@ -26,7 +28,9 @@ const Page = async () => {
     <HydrationBoundary state={dehydratedState}>
       <div className={styles.container}>
         <p className={styles.title}>건강수첩</p>
-        <HealthlogContent petId={petId} />
+        <Suspense fallback={<HealthlogSkeleton />}>
+          <HealthlogContent petId={petId} />
+        </Suspense>
         <LogWriteButton />
       </div>
     </HydrationBoundary>
