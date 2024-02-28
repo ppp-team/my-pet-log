@@ -35,6 +35,8 @@ export const closeIcon = style({
 
 //폼
 export const formContainer = style({
+  margin: "0 auto",
+  maxWidth: "39rem",
   padding: "5rem 1.6rem",
   width: "100%",
 
@@ -48,6 +50,12 @@ export const formContainer = style({
   },
   "::-webkit-scrollbar-thumb": {
     background: "var(--White)",
+  },
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      maxWidth: "45rem",
+    },
   },
 });
 
@@ -91,8 +99,8 @@ export const cameraIcon = style({
   padding: "0.4rem",
 
   borderRadius: "50%",
-  border: "3px solid #fff",
-  backgroundColor: "#f2f2f2",
+  border: "3px solid var(--White)",
+  backgroundColor: "var(--LightOrange)",
 
   cursor: "pointer",
 });

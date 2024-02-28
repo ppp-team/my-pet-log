@@ -39,7 +39,6 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
     setIsDisabled((prev) => !prev);
   };
 
-  console.log(getValue().birthday, dateValue);
   return (
     <div className={styles.inputWrapper}>
       <div style={{ display: "flex", gap: "1rem", position: "relative", marginBottom: "0.6rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>

@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTERNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
 import { useState, useEffect, useRef, Suspense } from "react";
 import * as styles from "./style.css";
-import DefaultImage from "@/public/images/pet-profile-default.svg?url";
+import defaultImage from "@/public/images/pet-profile-default.svg?url";
 import cameraIcon from "@/public/icons/camera.svg?url";
 import Image from "next/image";
 import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
@@ -27,6 +27,7 @@ import { GuardiansType } from "@/app/_types/guardians/types";
 import { getMe } from "@/app/_api/users";
 import { UserType } from "@/app/_types/user/types";
 import ImageModal from "@/app/_components/Modal/ImageModal";
+import { getImagePath } from "@/app/_utils/getPetImagePath";
 
 export interface IFormInput {
   petName: string;
@@ -47,7 +48,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const { isModalOpen: isConfirmModalOpen, openModalFunc: openConfirmModalFunc, closeModalFunc: closeConfirmModalFunc } = useModal();
   const { isModalOpen: isUnAuthorizedModalOpen, openModalFunc: openUnAuthorizedModalFunc, closeModalFunc: closeUnAuthorizedModalFunc } = useModal();
   const { isModalOpen: isDeleteModalOpen, openModalFunc: openDeleteModalFunc, closeModalFunc: closeDeleteModalFunc } = useModal();
-  const [profileImage, setProfileImage] = useState<File | string | null>(DefaultImage);
+  const [profileImage, setProfileImage] = useState<File | string | null>(null);
   const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
@@ -164,6 +165,8 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       setValue("firstMeet", petInfo.firstMeetDate === null ? null : petInfo?.firstMeetDate!.slice(0, 10));
       setValue("weight", petInfo.weight);
       setValue("registeredNumber", petInfo.registeredNumber);
+
+      setProfileImage(getImagePath(petInfo.petImageUrl));
     }
   }, [isPutSuccess, petInfo, setValue]);
 
@@ -178,16 +181,22 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   };
 
   //프로필 이미지
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) return;
-    setProfileImage(URL.createObjectURL(files[0]));
-    setValue("image", files[0]);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setValue("image", file);
+
+      const previewImage = URL.createObjectURL(file);
+      setProfileImage(previewImage);
+
+      return () => URL.revokeObjectURL(previewImage);
+    }
   };
 
   useEffect(() => {
     if (!watch("image")) {
-      setProfileImage(DefaultImage);
+      setProfileImage(defaultImage);
     }
   }, [watch("image")]);
 
@@ -248,17 +257,15 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     }
   };
 
-  console.log("petInfo:", petInfo);
-
   const section1 = (
     <>
       <div className={styles.profile}>
-        <div
-          className={styles.image}
-          style={{
-            backgroundImage: `url(${profileImage || DefaultImage})`,
-          }}
-        >
+        <div className={styles.image}>
+          {profileImage ? (
+            <Image className={styles.image} src={profileImage === "null" ? defaultImage : profileImage} alt="Profile Preview" width={126} height={126} />
+          ) : (
+            petInfo && <Image className={styles.image} src={getImagePath(petInfo.petImageUrl)} alt="profile image" width={126} height={126} />
+          )}
           <label htmlFor="image">
             <Image className={styles.cameraIcon} src={cameraIcon} alt="camera icon" width={40} height={40} />
           </label>
@@ -274,7 +281,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
       <div>
-        <button type="button" className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
+        <button type="button" className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(!typeOpen)}>
           {getValues().type || "타입을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
