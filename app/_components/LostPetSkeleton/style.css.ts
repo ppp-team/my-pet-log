@@ -14,8 +14,6 @@ export const skeleton = style({
   width: "21rem",
   height: "9rem",
 
-  marginBottom: "4.06rem",
-
   "@media": {
     "screen and (min-width: 744px)": {
       width: "26.4rem",

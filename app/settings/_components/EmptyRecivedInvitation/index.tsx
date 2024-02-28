@@ -1,6 +1,5 @@
 import Image from "next/image";
 import letter from "@/public/icons/letter-gray.svg?url";
-import TitleHeader from "@/app/_components/TitleHeader";
 import Link from "next/link";
 
 import { button, container, title, description, icon } from "./style.css";
@@ -8,7 +7,6 @@ import { button, container, title, description, icon } from "./style.css";
 const EmptyRecivedInvitation = () => {
   return (
     <>
-      <TitleHeader title="초대 받은 내역" />
       <section className={container}>
         <Image className={icon} src={letter} alt="letter" width={110} height={81} />
         <p className={title}>초대 받은 내역이 없습니다.</p>

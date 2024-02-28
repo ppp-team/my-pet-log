@@ -9,7 +9,7 @@ interface FormData {
 }
 
 interface SocialData {
-  email: string;
+  email?: string | null;
 }
 
 export const postLogin = async ({ email, password }: FormData) => {
@@ -42,7 +42,7 @@ export const postSocial = async ({ email }: SocialData) => {
       return "signin success";
     }
   } catch (error: any) {
-    console.error(error.response.data.message);
+    console.error(error);
     return null;
   }
 };

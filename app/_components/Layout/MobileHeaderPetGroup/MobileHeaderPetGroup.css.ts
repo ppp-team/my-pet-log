@@ -2,12 +2,6 @@ import { Z_INDEX } from "@/styles/zindex.css";
 import { style } from "@vanilla-extract/css";
 
 export const header = style({
-  "@media": {
-    "screen and (min-width: 1024px)": {
-      display: "none",
-    },
-  },
-
   position: "fixed",
   top: "0",
   zIndex: Z_INDEX.AppLayout,
@@ -19,6 +13,18 @@ export const header = style({
   padding: "0 1.6rem",
   borderBottom: "1px solid var(--GrayE8)",
   backgroundColor: "white",
+
+  "@media": {
+    "screen and (min-width: 1024px)": {
+      position: "fixed",
+      top: "6rem",
+      left: "50%",
+      transform: "translateX(-50%)",
+      zIndex: "2",
+      width: "74.4rem",
+      borderRadius: "20px 20px 0",
+    },
+  },
 });
 
 const headerButtonBase = style({

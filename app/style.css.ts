@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
+  minHeight: "100vh",
   margin: "0 auto",
   padding: "3.65rem 1.6rem 6.9rem",
 

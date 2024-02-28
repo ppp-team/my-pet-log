@@ -34,3 +34,9 @@ export const iconWrapper = style({
 export const messageWrapper = style({
   width: "100%",
 });
+
+//카카오, 구글버튼
+export const buttonWrapper = style({
+  width: "100%",
+  margin: "0.3rem 0",
+});

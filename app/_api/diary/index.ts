@@ -15,8 +15,6 @@ import {
 } from "@/app/_types/diary/type";
 import { cookies } from "next/headers";
 
-// const petId = cookies().get("petId")?.value;
-
 export const postDiary = async ({ formData }: { formData: FormData }) => {
   const petId = cookies().get("petId")?.value;
   try {

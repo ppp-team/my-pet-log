@@ -40,6 +40,15 @@ export const formContainer = style({
 
   display: "flex",
   flexDirection: "column",
+
+  overflowY: "auto",
+  "::-webkit-scrollbar": {
+    width: "1px",
+    height: "5px",
+  },
+  "::-webkit-scrollbar-thumb": {
+    background: "var(--White)",
+  },
 });
 
 //프로필

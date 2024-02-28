@@ -19,16 +19,42 @@ export const header = style({
   position: "relative",
 });
 
+export const title = style({
+  fontSize: "1.8rem",
+  fontWeight: "600",
+
+  "@media": {
+    "(min-width: 744px)": {
+      fontSize: "2rem",
+    },
+  },
+});
+
+export const date = style({
+  fontSize: "1.4rem",
+  color: "var(--Gray9A)",
+
+  "@media": {
+    "(min-width: 744px)": {
+      fontSize: "1.6rem",
+    },
+  },
+});
 export const petInfo = style({
   color: "var(--GrayC2)",
   fontSize: "1.4rem",
   fontWeight: "500",
+
+  "@media": {
+    "(min-width: 744px)": {
+      fontSize: "1.6rem",
+    },
+  },
 });
 
 export const main = style({
   display: "flex",
   flexDirection: "column",
-  // gap: "0.9rem",
 
   padding: "1.4rem 1.6rem",
 
@@ -40,13 +66,19 @@ export const main = style({
 
 export const image = style({
   width: "100%",
-  height: "23.8rem",
+  height: "35rem",
 
   borderRadius: "10px",
   border: "1px solid var(--GrayB5)",
 
   backgroundSize: "cover",
   backgroundPosition: "center",
+
+  "@media": {
+    "(min-width: 744px)": {
+      height: "41.8rem",
+    },
+  },
 });
 
 export const profile = style({
@@ -56,11 +88,11 @@ export const profile = style({
 
 export const swiperFraction = style({
   width: "3.6rem",
-  height: "1.6rem",
+  height: "2rem",
 
   position: "absolute",
-  right: "2.6rem",
-  top: "2.7rem",
+  right: "1.5rem",
+  top: "1.5rem",
 
   paddingTop: "0.3rem",
 
@@ -69,8 +101,8 @@ export const swiperFraction = style({
   backgroundColor: "rgba(0,0,0,0.5)",
 
   color: "var(--White)",
-  fontWeight: "500",
   textAlign: "center",
+  fontSize: "1.2rem",
 
   zIndex: "1",
 });
@@ -210,6 +242,12 @@ export const commentInputContainer = style({
   padding: "1rem 1.6rem",
 
   backgroundColor: "var(--White)",
+
+  "@media": {
+    "(min-width: 744px)": {
+      bottom: 0,
+    },
+  },
 });
 
 export const commentInput = style({

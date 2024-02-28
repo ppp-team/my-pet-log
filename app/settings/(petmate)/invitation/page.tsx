@@ -16,11 +16,9 @@ const Page = async () => {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <>
-      <HydrationBoundary state={dehydratedState}>
-        <Invitation petId={petId} />
-      </HydrationBoundary>
-    </>
+    <HydrationBoundary state={dehydratedState}>
+      <Invitation petId={petId} />
+    </HydrationBoundary>
   );
 };
 

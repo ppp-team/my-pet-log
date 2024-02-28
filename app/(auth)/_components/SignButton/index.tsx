@@ -7,9 +7,10 @@ import Email from "@/public/icons/auth/email-icon.svg";
 interface SignButtonProps {
   type: "kakao" | "google" | "email";
   action: "시작하기" | "로그인";
+  onClick?: () => void;
 }
 
-const SignButton = ({ type, action }: SignButtonProps) => {
+const SignButton = ({ type, action, onClick }: SignButtonProps) => {
   let message = "";
   let Icon = <Kakao width={18} height={18} alt="카카오 아이콘" />;
 
@@ -35,10 +36,10 @@ const SignButton = ({ type, action }: SignButtonProps) => {
 
   return (
     <>
-      <div className={buttonStyle}>
+      <button className={buttonStyle} onClick={onClick}>
         <div className={styles.iconWrapper}>{Icon}</div>
         <div className={styles.messageWrapper}>{message}</div>
-      </div>
+      </button>
     </>
   );
 };

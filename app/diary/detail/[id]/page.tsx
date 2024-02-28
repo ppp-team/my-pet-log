@@ -4,6 +4,8 @@ import DiaryDetail from "@/app/diary/_components/DiaryDetail";
 import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
+import { container, root } from "@/app/diary/style.css";
+import BackHeader from "@/app/_components/BackHeader";
 
 const DiaryDetailPage = async ({ params: { id } }: { params: { id: string } }) => {
   const diaryId = Number(id);
@@ -21,9 +23,14 @@ const DiaryDetailPage = async ({ params: { id } }: { params: { id: string } }) =
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <DiaryDetail petId={petId} diaryId={diaryId} />
-    </HydrationBoundary>
+    <div className={root}>
+      <HydrationBoundary state={dehydratedState}>
+        <BackHeader title="육아일기" />
+        <div className={container}>
+          <DiaryDetail petId={petId} diaryId={diaryId} />
+        </div>
+      </HydrationBoundary>
+    </div>
   );
 };
 

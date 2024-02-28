@@ -8,6 +8,10 @@ globalStyle("*", {
   padding: 0,
 });
 
+globalStyle("*::-webkit-scrollbar", {
+  display: "none",
+});
+
 globalStyle("html, body", {
   fontSize: "62.5%",
   maxWidth: "100vw",

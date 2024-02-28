@@ -1,3 +1,5 @@
+"use server";
+
 import Image from "next/image";
 import Link from "next/link";
 import CheckRigntIcon from "@/public/icons/chevron-right.svg?url";
