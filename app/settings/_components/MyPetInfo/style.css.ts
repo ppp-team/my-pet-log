@@ -52,6 +52,20 @@ export const name = style({
   },
 });
 
+export const breed = style({
+  fontSize: "1.2rem",
+  fontWeight: "500",
+  wordBreak: "keep-all",
+  width: "95%",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "1.6rem",
+      fontWeight: "500",
+    },
+  },
+});
+
 export const detail = style({
   fontSize: "1.2rem",
   fontWeight: "500",
