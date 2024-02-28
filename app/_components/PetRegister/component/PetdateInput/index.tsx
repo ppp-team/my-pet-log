@@ -17,7 +17,6 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
   const [dateValue, setDateValue] = useState(getValue(id) || "날짜 선택");
   const [isDisabled, setIsDisabled] = useState(false);
 
-  console.log(register, setValue, getValue, id);
   const options: Options = {
     type: "default",
     settings: {

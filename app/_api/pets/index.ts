@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 
 export const postPet = async ({ formData }: { formData: FormData }) => {
   try {
-    console.log("formData:", formData.get("petImage"));
     const res = await instance.post(`/my/pets`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });

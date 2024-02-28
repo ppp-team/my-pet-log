@@ -99,7 +99,7 @@ const PetRegister = () => {
     const res = await postPet({ formData });
     if (res !== null) {
       queryClient.invalidateQueries({ queryKey: ["pets"] });
-      return openModalFunc();
+      openModalFunc();
     }
   };
 

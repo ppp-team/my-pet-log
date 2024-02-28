@@ -9,7 +9,6 @@ const GoogleButton = () => {
       await signIn("google", { redirect: true, callbackUrl: "/loginflow" });
     }
   };
-  console.log(session);
 
   return (
     <div>

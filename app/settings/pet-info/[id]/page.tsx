@@ -8,8 +8,6 @@ const Page = () => {
   const segments = pathname.split("/");
   const petId = Number(segments[segments.length - 1]);
 
-  console.log(petId);
-
   return (
     <div>
       <EditPetRegisterForm petId={petId} />;
