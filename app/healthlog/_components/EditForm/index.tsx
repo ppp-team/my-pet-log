@@ -3,6 +3,7 @@
 import { getLogDetail, putLogs } from "@/app/_api/log";
 import BackHeader from "@/app/_components/BackHeader";
 import DateInput from "@/app/_components/DateInput";
+import Loading from "@/app/_components/Loading";
 import { showToast } from "@/app/_components/Toast";
 import { LogDetailType, PostLogType } from "@/app/_types/log/types";
 import convertTime12to24 from "@/app/_utils/convertTime12to24";
@@ -10,7 +11,7 @@ import SelectMateDropdown from "@/app/healthlog/_components/SelectMateDropdown";
 import SubtypeDetail from "@/app/healthlog/_components/SubtypeDetail";
 import { buttonTypes } from "@/public/data/buttonTypes";
 import { subtypeOptions } from "@/public/data/subtypeOptions";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -84,7 +85,7 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
     queryFn: () => getLogDetail(Number(petId), Number(logId)),
   });
 
-  const { mutate: putLog } = useMutation<PostLogType, Error, MutationParams>({
+  const { mutate: putLog, isPending } = useMutation<PostLogType, Error, MutationParams>({
     mutationFn: async ({ petId, logId, logData }) => putLogs(petId, logId, logData),
     onSuccess: (data, variables) => {
       const { year, month, day } = variables.date;
@@ -264,6 +265,7 @@ const EditForm = ({ petId, logId }: EditFormProps) => {
             </button>
           </div>
         </form>
+        {isPending && <Loading />}
       </div>
     </>
   );
