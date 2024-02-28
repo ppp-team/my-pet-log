@@ -74,7 +74,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["petInfo", petId] });
       queryClient.invalidateQueries({ queryKey: ["pets"] });
-      router.back();
     },
     onError: () => {
       showToast("마이펫 수정에 실패했습니다.", false);
@@ -106,7 +105,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pets"] });
-      router.push("/settings");
     },
     onError: () => {
       showToast("다른 멤버가 있을 때 반려동물을 삭제할 수 없습니다.", false);
@@ -121,7 +119,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onTouched" });
+  } = useForm<IFormInput>({ mode: "onSubmit" });
 
   //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
   const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
@@ -255,6 +253,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     if (isLeader && isOnlyMember) {
       deletePetMutation(String(petId));
     }
+    router.push("/settings");
   };
 
   const section1 = (
@@ -378,7 +377,16 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {isDeleteModalOpen && <ImageModal type={"deletePet"} onClick={handleLeaderDelete} onClose={closeDeleteModalFunc} />}
       {isUnAuthorizedModalOpen && <ImageModal type={"unAuthorizedDeletePet"} onClick={closeUnAuthorizedModalFunc} onClose={closeUnAuthorizedModalFunc} />}
-      {isConfirmModalOpen && <ImageModal type={"edit"} onClick={closeConfirmModalFunc} onClose={closeConfirmModalFunc} />}
+      {isConfirmModalOpen && (
+        <ImageModal
+          type={"edit"}
+          onClick={() => {
+            closeConfirmModalFunc();
+            router.back();
+          }}
+          onClose={closeConfirmModalFunc}
+        />
+      )}
     </>
   );
 

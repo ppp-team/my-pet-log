@@ -88,7 +88,6 @@ const PetRegister = () => {
       weight: data.weight === "" ? null : data.weight,
       registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
-    console.log("request", request);
 
     const formData = new FormData();
 
@@ -97,7 +96,6 @@ const PetRegister = () => {
     formData.append("petImage", data.image);
 
     // FormData에 데이터가 올바르게 추가되었는지 확인
-    console.log("FormData:", formData.get("petImage"), formData.get("petRequest"));
     const res = await postPet({ formData });
     if (res !== null) {
       queryClient.invalidateQueries({ queryKey: ["pets"] });
