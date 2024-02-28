@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 
 const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
   const router = useRouter();
-  console.log(pet.birth);
   return (
     <div
       className={styles.container}
@@ -34,7 +33,7 @@ const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
         <p className={styles.petInfo}>{pet.breed}</p>
         <p className={styles.petInfo}>
           {pet.gender === "MALE" ? "남아" : "여아"}
-          {pet.birth ? `• ${calculateAge(pet.birth)}` : ""}
+          {pet.birth ? ` • ${calculateAge(pet.birth)}` : ""}
         </p>
       </div>
     </div>
