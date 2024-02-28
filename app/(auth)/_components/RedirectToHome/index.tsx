@@ -21,7 +21,7 @@ export default function RedirectToHome() {
     if (!session) return;
 
     try {
-      const { accessToken, refreshToken } = await postSocial({ email: socialEmail });
+      const { accessToken, refreshToken } = (await postSocial({ email: socialEmail })) as any;
       setUserAccessToken(accessToken);
       setUserRefreshToken(refreshToken);
       setIsLoggedIn(true);
