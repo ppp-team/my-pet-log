@@ -29,6 +29,7 @@ export const profile = style({
 });
 
 export const info = style({
+  width: "100%",
   display: "flex",
   flexDirection: "column",
   gap: "0.3rem",
@@ -48,6 +49,20 @@ export const name = style({
     "screen and (min-width: 744px)": {
       fontSize: "2.4rem",
       fontWeight: "700",
+    },
+  },
+});
+
+export const breed = style({
+  fontSize: "1.2rem",
+  fontWeight: "500",
+  wordBreak: "keep-all",
+  width: "95%",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "1.6rem",
+      fontWeight: "500",
     },
   },
 });
