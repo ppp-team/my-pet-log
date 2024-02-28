@@ -16,7 +16,6 @@ const MyProfile = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>마이프로필 관리하기</div>
       {data && (
         <div className={styles.ProfileWrapper}>
           <Image className={styles.profileImg} src={getImagePath(data.profilePath)} alt="profile image" width={50} height={50} />

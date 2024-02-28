@@ -14,7 +14,7 @@ import { PetsType } from "@/app/_types/pets/types";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { editPetRep, getPets } from "@/app/_api/pets";
-import Skeleton from "../Skeleton";
+import Skeleton from "./Skeleton";
 
 const MyPetCarousel = () => {
   const queryClient = useQueryClient();

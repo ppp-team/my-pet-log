@@ -4,7 +4,7 @@ import { container, memberlist, profileWrapper, profileImg, nickname, state, but
 import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import InviteModal from "@/app/settings/_components/InviteModal";
-import { postCancel, getMyInvitations } from "@/app/_api/invitation";
+import { postCancel, getMyInvitations, postConfirm } from "@/app/_api/invitation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { MyInvitationType } from "@/app/_types/invitaion/types";
@@ -26,6 +26,13 @@ const Invitation = ({ petId }: { petId: number }) => {
 
   const cancelMutation = useMutation({
     mutationFn: (invitationId: number) => postCancel(invitationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["my-invitations", petId] });
+    },
+  });
+
+  const confirmMutation = useMutation({
+    mutationFn: (invitationId: number) => postConfirm(invitationId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-invitations", petId] });
     },
@@ -68,7 +75,7 @@ const Invitation = ({ petId }: { petId: number }) => {
                   <button
                     className={button}
                     onClick={() => {
-                      cancelMutation.mutate(invite.invitationId);
+                      confirmMutation.mutate(invite.invitationId);
                     }}
                   >
                     확인

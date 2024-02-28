@@ -2,8 +2,8 @@ import { style } from "@vanilla-extract/css";
 
 export const container = style({
   padding: "2rem 0",
+  margin: "0 1.6rem",
 
-  borderTop: "1px solid var(--GrayE4)",
   borderBottom: "1px solid var(--GrayE4)",
   "@media": {
     "screen and (min-width: 744px)": {
@@ -76,12 +76,14 @@ export const email = style({
 });
 
 export const checkRightIcon = style({
+  width: "22px",
+  height: "22px",
   position: "absolute",
   right: 0,
   "@media": {
     "screen and (min-width: 744px)": {
-      width: "2.6rem",
-      height: "2.6rem",
+      width: "26px",
+      height: "26px",
     },
   },
 });
