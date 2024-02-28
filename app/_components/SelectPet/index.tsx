@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 
 const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
   const router = useRouter();
-  console.log(pet.birth);
   return (
     <div
       className={styles.container}

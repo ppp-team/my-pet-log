@@ -29,7 +29,7 @@ const Logout = () => {
   const handleConfirm = async () => {
     closeModalFunc();
     logoutMutation();
-    queryClient.removeQueries({ queryKey: ["me", "pets"], exact: false });
+    queryClient.removeQueries({ queryKey: ["me", "pets", "invites"], exact: false });
   };
 
   return (
