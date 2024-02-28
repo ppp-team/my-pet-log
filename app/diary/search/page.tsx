@@ -13,6 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import * as styles from "./style.css";
+import Spinner from "@/app/_components/Spinner";
 
 const NoResult = () => {
   return (
@@ -55,7 +56,7 @@ const Search = () => {
   }, [data]);
 
   if (!keyword) return <SearchIntro />;
-  if (isLoading) return <></>;
+  if (isLoading) return <Spinner />;
   if (!data?.pages[0]?.content.length) return <NoResult />;
   return (
     <>
