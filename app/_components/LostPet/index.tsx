@@ -5,21 +5,21 @@ import Link from "next/link";
 import LostPetSkeleton from "@/app/_components/LostPetSkeleton";
 import * as styles from "./style.css";
 
+const getRandomInt = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const shortenAddress = (address: string) => {
+  const parts = address.split(" ");
+  if (parts.length > 2) {
+    return `${parts[0]} ${parts[1]}`;
+  }
+  return address;
+};
+
+const randomPage = getRandomInt(1, 9);
+
 const LostPet = () => {
-  const getRandomInt = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  const shortenAddress = (address: string) => {
-    const parts = address.split(" ");
-    if (parts.length > 2) {
-      return `${parts[0]} ${parts[1]}`;
-    }
-    return address;
-  };
-
-  const randomPage = getRandomInt(1, 9);
-
   const {
     data: lostPet,
     isLoading,
