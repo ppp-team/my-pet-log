@@ -5,6 +5,7 @@ import { Diaries } from "@/app/diary/_components/Diary";
 import { DIARY_SEARCH_PAGE_SIZE, RECOMMEND_KEYWORD } from "@/app/diary/constant";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import SearchIconURL from "@/public/icons/search.svg?url";
+import NoResultImage from "@/public/images/no-search-result.png";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +13,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import * as styles from "./style.css";
+import Spinner from "@/app/_components/Spinner";
+
+const NoResult = () => {
+  return (
+    <div className={styles.noResultWrapper}>
+      <Image src={NoResultImage} alt="검색 결과 없음 이미지" width={200} height={200} />
+      <p className={styles.noResultText}>일치하는 결과가 없어요</p>
+    </div>
+  );
+};
 
 const SearchIntro = () => {
   return (
@@ -45,8 +56,8 @@ const Search = () => {
   }, [data]);
 
   if (!keyword) return <SearchIntro />;
-  if (isLoading) return <></>;
-  if (!data?.pages[0]?.content.length) return <>일치하는 검색어가 없어요</>;
+  if (isLoading) return <Spinner />;
+  if (!data?.pages[0]?.content.length) return <NoResult />;
   return (
     <>
       {data.pages.map((page, idx) => (

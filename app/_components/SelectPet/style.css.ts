@@ -14,6 +14,11 @@ export const h3 = style({
   fontSize: "1.6rem",
   fontWeight: "700",
   textAlign: "center",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2.4rem",
+    },
+  },
 });
 
 export const p = style({
@@ -22,10 +27,33 @@ export const p = style({
   textDecorationLine: "underline",
 
   cursor: "pointer",
-});
-export const petList = style({ display: "flex", flexDirection: "column", gap: "1rem" });
 
-export const addButton = style({ backgroundColor: "var(--MainOrange)", borderRadius: "50%", width: "3.3rem", height: "3.3rem", position: "relative" });
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2.4rem",
+    },
+  },
+});
+export const petList = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "1rem",
+});
+
+export const addButton = style({
+  backgroundColor: "var(--MainOrange)",
+  borderRadius: "50%",
+  width: "3.3rem",
+  height: "3.3rem",
+  position: "relative",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "4.5rem",
+      height: "4.5rem",
+    },
+  },
+});
 
 export const container = style({
   minWidth: "29.4rem",
@@ -44,6 +72,16 @@ export const container = style({
   cursor: "pointer",
 
   boxShadow: " 0px 2px 4px 2px rgba(164, 164, 164, 0.25)",
+
+  overflow: "hidden",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "45rem",
+      height: "17rem",
+      gap: "1.7rem",
+    },
+  },
 });
 
 export const profile = style({
@@ -55,6 +93,12 @@ export const profile = style({
 
   backgroundSize: "cover",
   backgroundPosition: "center",
+  "@media": {
+    "screen and (min-width: 744px)": {
+      minWidth: "11rem",
+      height: "11rem",
+    },
+  },
 });
 
 export const text = style({
@@ -68,4 +112,33 @@ export const addIcon = style({
   top: "50%",
   left: "50%",
   transform: "translate(-50%,-50%)",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "3rem",
+      height: "3rem",
+    },
+  },
+});
+
+export const petName = style({
+  fontSize: "1.6rem",
+  fontWeight: "700",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "2.4rem",
+    },
+  },
+});
+
+export const petInfo = style({
+  fontSize: "1.3rem",
+  fontWeight: "500",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      fontSize: "1.6rem",
+    },
+  },
 });

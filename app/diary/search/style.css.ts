@@ -8,6 +8,12 @@ export const root = style({
 });
 
 export const container = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "2.4rem",
+
   padding: "2rem",
   width: "36rem",
 
@@ -56,8 +62,6 @@ export const searchIntroWrapper = style({
   flexWrap: "wrap",
 
   fontSize: "1.3rem",
-
-  marginTop: "2.4rem",
 });
 
 export const recommendKey = style({
@@ -67,4 +71,21 @@ export const recommendKey = style({
   border: "1px solid var(--GrayE8)",
 
   cursor: "pointer",
+});
+
+export const noResultWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "2rem",
+  alignItems: "center",
+
+  height: "100vh",
+
+  marginTop: "7rem",
+});
+
+export const noResultText = style({
+  fontSize: "2rem",
+  fontWeight: "500",
+  color: "var(--Gray9A)",
 });
