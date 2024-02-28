@@ -7,12 +7,13 @@ import { useForm } from "react-hook-form";
 import InvitationInput from "@/app/_components/Invitation/InvitationInput";
 import InvitationInputError from "@/app/_components/Invitation/InvitationInputError";
 import InvitationSubmitButton from "@/app/_components/Invitation/InvitationSubmitButton";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { postRegister } from "@/app/_api/invitation";
 import removeSpaces from "@/app/_utils/removeSpaces";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/app/_components/Toast";
-import { useState } from "react";
+import { PetsType } from "@/app/_types/petGroup/types";
+import { getPets } from "@/app/_api/pets";
 
 export interface TInvitationCodeFormValues {
   inputValue: string;
@@ -24,7 +25,6 @@ interface ParticipatePetGroupModalProps {
 }
 
 const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProps) => {
-  const [hasNoPets, setHasNoPets] = useState(true);
   const router = useRouter();
   const {
     register,
@@ -34,12 +34,18 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
     formState: { errors },
   } = useForm<TInvitationCodeFormValues>({ mode: "onTouched" });
 
+  const { data: pets } = useQuery<PetsType | null>({ queryKey: ["pets"], queryFn: () => getPets() });
+
+  const queryClient = useQueryClient();
+
   const { mutate: registerMutation, isPending: isRegisterPending } = useMutation({
     mutationFn: postRegister,
     onSuccess: (data) => {
       if (data) {
         showToast("등록되었습니다!", true);
-        if (hasNoPets) setHasNoPets(false);
+        queryClient.invalidateQueries({
+          queryKey: ["pets"],
+        });
       } else {
         setError("inputValue", { type: "invalid", message: ERROR_MESSAGE.receivedInvitationCodeInvalid });
       }
@@ -73,15 +79,11 @@ const ParticipatePetGroupModal = ({ onClickClose }: ParticipatePetGroupModalProp
             register={register}
           />
           <InvitationInputError errorMessage={errors?.inputValue?.message} />
-          <InvitationSubmitButton isDisable={isRegisterPending || getValues("inputValue") === ""} />
+          <InvitationSubmitButton isDisable={!!errors?.inputValue || isRegisterPending || !getValues("inputValue") || getValues("inputValue") === ""} />
         </form>
       </div>
-      <ReceivedInvitationList
-        checkHasNoPets={() => {
-          if (hasNoPets) setHasNoPets(false);
-        }}
-      />
-      <button className={styles.linkButton} type="button" disabled={isRegisterPending || hasNoPets} onClick={() => router.push("/home-select")}>
+      <ReceivedInvitationList />
+      <button className={styles.linkButton} type="button" disabled={pets?.count === 0} onClick={() => router.push("/home-select")}>
         마이펫 선택하러 가기
       </button>
     </section>
