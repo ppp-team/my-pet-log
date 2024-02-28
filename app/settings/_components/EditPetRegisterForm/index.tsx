@@ -159,8 +159,8 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       setSelectedGender(petInfo.gender);
       setValue("neutering", petInfo.isNeutered === "Y" ? true : false);
       setSelectedNeutering(petInfo.isNeutered === "Y" ? "true" : "false");
-      setValue("birthday", petInfo.birth === null ? null : petInfo.birth.slice(0, 10));
-      setValue("firstMeet", petInfo.firstMeetDate === null ? null : petInfo?.firstMeetDate!.slice(0, 10));
+      setValue("birthday", petInfo.birth === null ? "날짜 선택" : petInfo.birth.slice(0, 10));
+      setValue("firstMeet", petInfo.firstMeetDate === null ? "날짜 선택" : petInfo?.firstMeetDate!.slice(0, 10));
       setValue("weight", petInfo.weight);
       setValue("registeredNumber", petInfo.registeredNumber);
 
