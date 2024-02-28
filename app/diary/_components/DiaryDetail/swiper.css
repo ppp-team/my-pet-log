@@ -11,16 +11,9 @@
   height: 0.7rem;
 }
 
-@media (min-width: 745px) {
+@media (min-width: 744px) {
   .swiper.diary {
     width: 100%;
     height: 44rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .swiper.diary {
-    width: 35rem;
-    height: 37rem;
   }
 }

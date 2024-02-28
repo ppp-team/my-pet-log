@@ -7,7 +7,7 @@ export const root = style({
   alignItems: "center",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       padding: "3rem 2rem 2rem",
     },
   },
@@ -26,7 +26,7 @@ export const search = style({
   position: "relative",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       width: "100%",
     },
   },
@@ -47,7 +47,7 @@ export const diaryListWrapper = style({
   width: "36rem",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       width: "100%",
     },
   },
@@ -104,7 +104,7 @@ export const diaryImage = style({
   objectFit: "cover",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       width: "9.4rem",
       height: "9.4rem",
     },

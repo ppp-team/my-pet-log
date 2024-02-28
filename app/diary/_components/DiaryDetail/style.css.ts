@@ -24,7 +24,7 @@ export const title = style({
   fontWeight: "600",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       fontSize: "2rem",
     },
   },
@@ -35,7 +35,7 @@ export const date = style({
   color: "var(--Gray9A)",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       fontSize: "1.6rem",
     },
   },
@@ -46,7 +46,7 @@ export const petInfo = style({
   fontWeight: "500",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       fontSize: "1.6rem",
     },
   },
@@ -75,7 +75,7 @@ export const image = style({
   backgroundPosition: "center",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       height: "41.8rem",
     },
   },
@@ -242,6 +242,12 @@ export const commentInputContainer = style({
   padding: "1rem 1.6rem",
 
   backgroundColor: "var(--White)",
+
+  "@media": {
+    "(min-width: 744px)": {
+      bottom: 0,
+    },
+  },
 });
 
 export const commentInput = style({

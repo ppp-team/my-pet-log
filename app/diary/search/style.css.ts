@@ -12,7 +12,7 @@ export const container = style({
   width: "36rem",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       width: "45rem",
     },
   },

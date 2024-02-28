@@ -13,7 +13,7 @@ export const container = style({
   width: "100%",
 
   "@media": {
-    "(min-width: 745px) and  (max-width: 1023px)": {
+    "(min-width: 744px)": {
       maxWidth: "45rem",
     },
   },
