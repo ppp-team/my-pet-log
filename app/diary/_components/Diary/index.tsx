@@ -2,15 +2,11 @@
 import { Diary as DiaryType, GetDiaryListResponse } from "@/app/_types/diary/type";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
 import CommentIconURL from "@/public/icons/message.svg?url";
-import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./style.css";
 
 export const Diary = ({ diary }: { diary: DiaryType }) => {
-  const queryClient = useQueryClient();
-  if (!diary.thumbnailPath) queryClient.invalidateQueries({ queryKey: ["diaries", 2] });
-
   return (
     <Link href={`/diary/detail/${diary.diaryId}`}>
       <div className={styles.diaryWrapper}>

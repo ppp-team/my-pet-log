@@ -27,11 +27,15 @@ const CreateForm = ({ petId }: { petId: number }) => {
   const queryClient = useQueryClient();
 
   //일기 생성
-  const { mutate: postDiaryMutation, isPending } = useMutation({
+  const {
+    mutate: postDiaryMutation,
+    isPending,
+    isSuccess,
+  } = useMutation({
     mutationFn: (formData: FormData) => postDiary({ formData }),
     onSuccess: () => {
-      router.push("/diary");
       setDiaryImages([]);
+      setTimeout(() => router.push("/diary"), 1000); //썸네일 서버에서 완성되는 동안 기다려줌
       queryClient.invalidateQueries({ queryKey: ["diaries", petId] });
     },
     onError: () => {
@@ -89,7 +93,7 @@ const CreateForm = ({ petId }: { petId: number }) => {
 
           <button className={styles.button}>작성하기</button>
         </form>
-        {isPending && <Loading />}
+        {(isPending || isSuccess) && <Loading />}
       </div>
     </>
   );

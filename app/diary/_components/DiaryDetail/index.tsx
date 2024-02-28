@@ -2,7 +2,6 @@
 
 import { deleteComment, deleteDiary, getComments, getDiary, postComment, postCommentLike, postDiaryLike, putComment } from "@/app/_api/diary";
 import { getMe } from "@/app/_api/users";
-import BackHeader from "@/app/_components/BackHeader";
 import Modal from "@/app/_components/Modal";
 import { showToast } from "@/app/_components/Toast";
 import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
