@@ -99,8 +99,8 @@ export const cameraIcon = style({
   padding: "0.4rem",
 
   borderRadius: "50%",
-  border: "3px solid #fff",
-  backgroundColor: "#f2f2f2",
+  border: "3px solid var(--White)",
+  backgroundColor: "var(--LightOrange)",
 
   cursor: "pointer",
 });

@@ -281,7 +281,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
       <div>
-        <button type="button" className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
+        <button type="button" className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(!typeOpen)}>
           {getValues().type || "타입을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
