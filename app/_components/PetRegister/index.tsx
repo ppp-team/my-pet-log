@@ -32,7 +32,7 @@ export interface IFormInput {
   birthday: string | null;
   firstMeet: string | null;
   name: string;
-  weight: number | null;
+  weight: number | null | string;
   registeredNumber: string | null;
   id: string | number | null;
 }
@@ -83,10 +83,10 @@ const PetRegister = () => {
       breed: data.breed,
       gender: data.gender,
       isNeutered: data.neutering,
-      birth: data.birthday,
-      firstMeetDate: data.firstMeet,
-      weight: data.weight,
-      registeredNumber: data.registeredNumber,
+      birth: data.birthday === "날짜 선택" ? null : data.birthday,
+      firstMeetDate: data.firstMeet === "날짜 선택" ? null : data.firstMeet,
+      weight: data.weight === "" ? null : data.weight,
+      registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
     console.log("request", request);
 

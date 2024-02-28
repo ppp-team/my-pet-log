@@ -121,7 +121,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onSubmit" });
+  } = useForm<IFormInput>({ mode: "onTouched" });
 
   //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
   const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
