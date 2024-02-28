@@ -40,13 +40,11 @@ export const profileImg = style({
 export const nickname = style({
   fontSize: "1.6rem",
   fontWeight: "600",
-  maxWidth: "10rem",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
 });
 
 export const button = style({
+  width: "5.7rem",
+
   color: "var(--MainOrange)",
   fontSize: "1.5rem",
   fontWeight: "500",
@@ -58,6 +56,7 @@ export const header = style({
 });
 
 export const state = style({
+  width: "5.2rem",
   padding: "0.4rem 1rem",
 
   borderRadius: "5px",

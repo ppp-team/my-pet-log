@@ -38,7 +38,6 @@ const Profile = () => {
   } = useForm<IFormInput>({ mode: "onChange" });
   let nicknameValue = 0;
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
-  const [nicknameChanged, setNicknameChanged] = useState(false);
 
   if (isSuccess) {
     nicknameValue = watch("nickname", user?.nickname || "").length;
@@ -60,7 +59,8 @@ const Profile = () => {
   // 중복 검사를 실행하는 함수
   const handleCheckNickname = () => {
     const currentNickname = watch("nickname");
-    if (!nicknameChanged) {
+    // 현재와 동일한 닉네임 입력 후 중복검사 시
+    if (currentNickname === user?.nickname) {
       return;
     } else if (currentNickname.length > 10) {
       setError("nickname", { type: "custom", message: "닉네임은 10글자를 초과할 수 없습니다." });
@@ -94,13 +94,22 @@ const Profile = () => {
 
   //폼 제출 시
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    if (nicknameChanged && !watch("isNicknameConfirmed")) {
+    const isNicknameChanged = data.nickname !== user?.nickname;
+    const isImageSelected = !!data.image.size;
+
+    //아무것도 변하지 않고, 버튼만 클릭 시
+    if (!isNicknameChanged && !isImageSelected && imagePreviewUrl !== "none") {
+      return;
+    }
+
+    // 중복검사를 안했을 시
+    if (isNicknameChanged && !watch("isNicknameConfirmed")) {
       setError("nickname", { type: "custom", message: "닉네임 중복 검사를 해주세요." });
       return;
     }
 
     try {
-      if (nicknameChanged) {
+      if (isNicknameChanged) {
         const NickNameformData = new FormData();
         NickNameformData.append("nickname", data.nickname);
         await putNicknameMutation.mutateAsync(NickNameformData);
@@ -157,7 +166,7 @@ const Profile = () => {
           {...register("nickname", {
             ...NICKNAME_RULES,
             onChange: () => {
-              setNicknameChanged(true);
+              setValue("isNicknameConfirmed", false);
             },
           })}
         />

@@ -34,6 +34,7 @@ export const text = style({
   textAlign: "center",
   fontSize: "1.6rem",
   fontWeight: "500",
+  whiteSpace: "pre-wrap",
   "@media": {
     "screen and (min-width: 744px)": {
       fontSize: "2rem",

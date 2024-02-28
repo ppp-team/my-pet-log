@@ -1,6 +1,5 @@
 "use client";
 
-import TitleHeader from "@/app/_components/TitleHeader";
 import * as styles from "./style.css";
 import { InvitationType } from "@/app/_types/invitaion/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -8,6 +7,7 @@ import { getInvitations, postAcceptance, postRefusal } from "@/app/_api/invitati
 import Image from "next/image";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
 import EmptyRecivedInvitation from "@/app/settings/_components/EmptyRecivedInvitation";
+import { showToast } from "@/app/_components/Toast";
 
 const ReceivedInvites = () => {
   const { data: invites } = useQuery<InvitationType[]>({
@@ -20,6 +20,7 @@ const ReceivedInvites = () => {
   const acceptMutation = useMutation({
     mutationFn: (invitationId: number) => postAcceptance(invitationId),
     onSuccess: () => {
+      showToast("초대를 수락하였습니다.", true);
       queryClient.invalidateQueries({ queryKey: ["invites"] });
       queryClient.invalidateQueries({ queryKey: ["pets"] });
     },
@@ -27,6 +28,7 @@ const ReceivedInvites = () => {
   const refuseMutation = useMutation({
     mutationFn: (invitationId: number) => postRefusal(invitationId),
     onSuccess: () => {
+      showToast("초대를 거절하였습니다.", true);
       queryClient.invalidateQueries({ queryKey: ["invites"] });
     },
   });
@@ -43,7 +45,6 @@ const ReceivedInvites = () => {
 
   return (
     <>
-      <TitleHeader title="초대 받은 내역" />
       <main className={styles.container}>
         {invites?.map((invitation) => (
           <section key={invitation.invitationId} className={styles.list}>

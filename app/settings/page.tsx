@@ -7,7 +7,7 @@ import HeartIcon from "@/public/icons/heart.svg?url";
 import QuestionIcon from "@/public/icons/circle-help.svg?url";
 import MessageIcon from "@/public/icons/message-alt.svg?url";
 import NoticeIcon from "@/public/icons/megaphone.svg?url";
-import MenuList from "@/app/settings/_components/MenuList";
+import ListItem from "@/app/settings/_components/ListItem";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { getMe } from "@/app/_api/users";
 import Logout from "@/app/settings/_components/Logout";
@@ -29,10 +29,10 @@ const Page = async () => {
             <MyProfile />
           </Link>
           <div className={listcontainer}>
-            <MenuList href="/settings/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
-            <MenuList href="/settings/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
-            <MenuList href="/settings/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />
-            <MenuList href="/settings/notice" src={NoticeIcon} alt="notice icon" text="공지사항" />
+            <ListItem href="/settings/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
+            <ListItem href="/settings/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
+            <ListItem href="/settings/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />
+            <ListItem href="/settings/notice" src={NoticeIcon} alt="notice icon" text="공지사항" />
             <Logout />
           </div>
         </div>

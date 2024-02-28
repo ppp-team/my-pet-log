@@ -1,0 +1,45 @@
+.swiper.mypet .swiper-pagination-bullet {
+  background-color: var(--MainOrange);
+}
+
+.swiper-slide.mypet {
+  width: 32.5rem;
+  height: 15rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 744px) {
+  .swiper-slide.mypet {
+    width: 45rem;
+    height: 20.7rem;
+  }
+}
+
+.swiper-wrapper.mypet {
+  z-index: 100;
+}
+
+.swiper-slide-active.mypet {
+  background-color: var(--MainOrange);
+}
+
+.swiper-slide-prev.mypet,
+.swiper-slide-next.mypet {
+  background-color: var(--LightOrange);
+}
+
+.swiper.mypet .swiper-pagination {
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+  position: static;
+}
+
+@media screen and (min-width: 744px) {
+  .swiper.mypet .swiper-pagination {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}

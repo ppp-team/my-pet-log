@@ -4,9 +4,10 @@ import { memberlist, profileWrapper, profileImg, nickname, button } from "@/app/
 import { GuardianType } from "@/app/_types/guardians/types";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteGuardians } from "@/app/_api/guardians";
+import { deleteMemberGuardians } from "@/app/_api/guardians";
 import Image from "next/image";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
+import { showToast } from "@/app/_components/Toast";
 
 interface MemberListProps {
   members: GuardianType[];
@@ -16,12 +17,14 @@ interface MemberListProps {
 const MemberList = ({ members, isLeader }: MemberListProps) => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [selectedGuardianId, setSelectedGuardianId] = useState<number | null>(null);
+  const [selectedGuardianNickname, setSelectedGuardianNickname] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const deleteGuardianMutation = useMutation({
-    mutationFn: (guardianId: number) => deleteGuardians(guardianId),
+    mutationFn: (guardianId: number) => deleteMemberGuardians(guardianId),
 
     onSuccess: () => {
+      showToast("삭제가 완료됐습니다", true);
       queryClient.invalidateQueries({ queryKey: ["petmate"] });
     },
   });
@@ -48,6 +51,7 @@ const MemberList = ({ members, isLeader }: MemberListProps) => {
               className={button}
               onClick={() => {
                 setSelectedGuardianId(member.guardianId);
+                setSelectedGuardianNickname(member.nickname);
                 openModalFunc();
               }}
             >
@@ -56,7 +60,7 @@ const MemberList = ({ members, isLeader }: MemberListProps) => {
           )}
         </section>
       ))}
-      {isModalOpen && <Modal text="정말 멤버를 삭제하시겠습니까?" buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
+      {isModalOpen && <Modal text={`정말 ${selectedGuardianNickname}님을\n삭제하시겠습니까?`} buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
     </>
   );
 };

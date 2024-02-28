@@ -3,9 +3,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import "./style.css";
+import "./swiper.css";
 import { Pagination } from "swiper/modules";
-import { petadd, container, petButton, petMateButton, petInfoWrapper } from "./styles.css";
+import * as styles from "./styles.css";
 import MyPetInfo from "@/app/settings/_components/MyPetInfo";
 import Image from "next/image";
 import AddIcon from "@/public/icons/add.svg?url";
@@ -48,6 +48,7 @@ const MyPetCarousel = () => {
       {isSuccess ? (
         <div style={{ marginBottom: (pets?.data?.length ?? 0) > 0 ? "0" : "3.8rem" }}>
           <Swiper
+            className="mypet"
             slidesPerView={"auto"}
             centeredSlides={true}
             spaceBetween={20}
@@ -55,14 +56,13 @@ const MyPetCarousel = () => {
               clickable: true,
             }}
             modules={[Pagination]}
-            className="mySwiper"
           >
             {pets?.data.map((petInfo) => (
-              <SwiperSlide key={petInfo.petId}>
-                <div className={container}>
-                  <div className={petInfoWrapper}>{petInfo && <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />}</div>
+              <SwiperSlide className="mypet" key={petInfo.petId}>
+                <div className={styles.container}>
+                  <div className={styles.petInfoWrapper}>{petInfo && <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />}</div>
                   <button
-                    className={petButton}
+                    className={styles.petButton}
                     onClick={() => {
                       router.push(`/settings/pet-info/${petInfo.petId}`);
                     }}
@@ -73,15 +73,15 @@ const MyPetCarousel = () => {
                     onClick={() => {
                       editPetRepMutate(String(petInfo.petId));
                     }}
-                    className={petMateButton}
+                    className={styles.petMateButton}
                   >
                     펫메이트 초대 및 그룹 관리
                   </button>
                 </div>
               </SwiperSlide>
             ))}
-            <SwiperSlide>
-              <Link href="/settings/pet-register" className={petadd}>
+            <SwiperSlide className="mypet">
+              <Link href="/settings/pet-register" className={styles.petadd}>
                 <Image src={AddIcon} alt="add icon" width={36} height={36} />
                 <span>마이펫 추가</span>
               </Link>
