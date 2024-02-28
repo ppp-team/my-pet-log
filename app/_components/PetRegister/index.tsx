@@ -68,7 +68,7 @@ const PetRegister = () => {
     }
     if (pathname === "/pet-register") {
       closeModalFunc();
-      router.push("/HOME");
+      router.push("/home");
     }
   };
 

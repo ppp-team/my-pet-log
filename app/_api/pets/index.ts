@@ -36,7 +36,7 @@ export const getPets = async () => {
       return response.data;
     }
   } catch (error: any) {
-    console.error(error.response.data);
+    console.error(error);
     return null;
   }
 };
@@ -54,6 +54,10 @@ export const getCode = async () => {
   }
 };
 
+export const putPet = async ({ petId, formData }: { petId: string; formData: FormData }) => {
+  await instance.put(`my/pets/${petId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+};
+
 export const editPetRep = async (petId: string) => {
   try {
     const response = await instance.post(`/my/guardians/${petId}/selectRep`);
@@ -67,11 +71,6 @@ export const editPetRep = async (petId: string) => {
   } catch (error) {
     throw new Error("Error fetching user data");
   }
-};
-
-export const putPet = async ({ petId, formData }: { petId: string; formData: FormData }) => {
-  // const petId = cookies().get("petId")?.value;
-  await instance.put(`my/pets/${petId}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
 };
 
 export const deletePet = async ({ petId }: { petId: string }) => {

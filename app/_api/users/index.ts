@@ -1,5 +1,4 @@
 "use server";
-
 import instance from "@/app/_api/axios";
 
 export const getMe = async () => {
@@ -10,7 +9,7 @@ export const getMe = async () => {
       return response.data;
     }
   } catch (error: any) {
-    console.error(error.response.data);
+    console.error(error);
     return null;
   }
 };
