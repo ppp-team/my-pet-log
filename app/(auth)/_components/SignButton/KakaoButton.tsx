@@ -10,7 +10,6 @@ const KakaoButton = () => {
       await signIn("kakao", { redirect: true, callbackUrl: "/loginflow" });
     }
   };
-  console.log(session);
 
   return (
     <div>

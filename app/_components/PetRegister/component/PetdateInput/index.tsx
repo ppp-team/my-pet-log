@@ -14,7 +14,7 @@ interface DateInputProps {
 }
 const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [dateValue, setDateValue] = useState("날짜 선택");
+  const [dateValue, setDateValue] = useState(getValue(id) || "날짜 선택");
   const [isDisabled, setIsDisabled] = useState(false);
 
   const options: Options = {
@@ -27,8 +27,11 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
     actions: {
       clickDay(e, self) {
         if (!self.selectedDates[0]) return;
-        setValue(id, `${self.selectedDates[0]}`);
-        setDateValue(getValue(id) || "");
+
+        if (id === "birthday" || "firstMeet") {
+          setValue(id, `${self.selectedDates[0]}`);
+          setDateValue(getValue(id) || "");
+        }
       },
     },
   };
@@ -39,6 +42,7 @@ const PetDateInput = ({ register, setValue, getValue, id }: DateInputProps) => {
     setIsDisabled((prev) => !prev);
   };
 
+  if (id !== "birthday" && id !== "firstMeet") return null;
   return (
     <div className={styles.inputWrapper}>
       <div style={{ display: "flex", gap: "1rem", position: "relative", marginBottom: "0.6rem" }} onClick={() => setIsCalendarOpen(!isCalendarOpen)}>

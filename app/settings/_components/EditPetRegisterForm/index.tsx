@@ -28,6 +28,7 @@ import { getMe } from "@/app/_api/users";
 import { UserType } from "@/app/_types/user/types";
 import ImageModal from "@/app/_components/Modal/ImageModal";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
+import Loading from "@/app/_components/Loading";
 
 export interface IFormInput {
   petName: string;
@@ -74,7 +75,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["petInfo", petId] });
       queryClient.invalidateQueries({ queryKey: ["pets"] });
-      router.back();
     },
     onError: () => {
       showToast("마이펫 수정에 실패했습니다.", false);
@@ -106,7 +106,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pets"] });
-      router.push("/settings");
     },
     onError: () => {
       showToast("다른 멤버가 있을 때 반려동물을 삭제할 수 없습니다.", false);
@@ -161,8 +160,8 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       setSelectedGender(petInfo.gender);
       setValue("neutering", petInfo.isNeutered === "Y" ? true : false);
       setSelectedNeutering(petInfo.isNeutered === "Y" ? "true" : "false");
-      setValue("birthday", petInfo.birth === null ? null : petInfo.birth.slice(0, 10));
-      setValue("firstMeet", petInfo.firstMeetDate === null ? null : petInfo?.firstMeetDate!.slice(0, 10));
+      setValue("birthday", petInfo.birth === null ? "날짜 선택" : petInfo.birth.slice(0, 10));
+      setValue("firstMeet", petInfo.firstMeetDate === null ? "날짜 선택" : petInfo?.firstMeetDate!.slice(0, 10));
       setValue("weight", petInfo.weight);
       setValue("registeredNumber", petInfo.registeredNumber);
 
@@ -255,6 +254,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     if (isLeader && isOnlyMember) {
       deletePetMutation(String(petId));
     }
+    router.push("/settings");
   };
 
   const section1 = (
@@ -378,7 +378,16 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {isDeleteModalOpen && <ImageModal type={"deletePet"} onClick={handleLeaderDelete} onClose={closeDeleteModalFunc} />}
       {isUnAuthorizedModalOpen && <ImageModal type={"unAuthorizedDeletePet"} onClick={closeUnAuthorizedModalFunc} onClose={closeUnAuthorizedModalFunc} />}
-      {isConfirmModalOpen && <ImageModal type={"edit"} onClick={closeConfirmModalFunc} onClose={closeConfirmModalFunc} />}
+      {isConfirmModalOpen && (
+        <ImageModal
+          type={"edit"}
+          onClick={() => {
+            closeConfirmModalFunc();
+            router.back();
+          }}
+          onClose={closeConfirmModalFunc}
+        />
+      )}
     </>
   );
 
@@ -398,6 +407,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         {section === 1 ? section1 : section2}
       </form>
+      {isPending && <Loading />}
     </>
   );
 };
