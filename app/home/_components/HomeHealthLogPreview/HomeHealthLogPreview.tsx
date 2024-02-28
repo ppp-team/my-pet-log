@@ -12,7 +12,7 @@ interface HomeHealthLogPreviewProps {
 
 const HomeHealthLogPreview = ({ petId }: HomeHealthLogPreviewProps) => {
   const today = new Date().toISOString().split("T")[0];
-  const [selectedDate, setSelectedDate] = useState(today);
+  const [selectedDate] = useState(today);
   const [year, month, day] = selectedDate.split("-").map(Number);
 
   const { data: logsData, isPending } = useQuery({

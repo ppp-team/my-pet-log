@@ -3,7 +3,6 @@
 import * as styles from "./MobileHeaderPetGroup.css";
 import Image from "next/image";
 import Link from "next/link";
-import NoUserProfileIconSrc from "@/public/icons/user-profile-default-no-camera.svg?url";
 import MobilePetGroupDropdown from "../MobilePetGroupDropdown/MobilePetGroupDropdown";
 import { useQuery } from "@tanstack/react-query";
 import { UserType } from "@/app/_types/users/types";
