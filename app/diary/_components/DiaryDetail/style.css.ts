@@ -88,11 +88,11 @@ export const profile = style({
 
 export const swiperFraction = style({
   width: "3.6rem",
-  height: "1.6rem",
+  height: "2rem",
 
   position: "absolute",
   right: "1.5rem",
-  top: "1.7rem",
+  top: "1.5rem",
 
   paddingTop: "0.3rem",
 
@@ -101,8 +101,8 @@ export const swiperFraction = style({
   backgroundColor: "rgba(0,0,0,0.5)",
 
   color: "var(--White)",
-  fontWeight: "500",
   textAlign: "center",
+  fontSize: "1.2rem",
 
   zIndex: "1",
 });
