@@ -26,9 +26,10 @@ const Pet = ({ pet, path }: { pet: PetType; path: string }) => {
     >
       <Image className={styles.profile} src={getImagePath(pet.petImageUrl)} alt="펫 프로필 사진" width={80} height={80} />
       <div className={styles.text}>
-        <h3 style={{ fontSize: "1.6rem", fontWeight: "700" }}>{pet.name}</h3>
-        <p style={{ fontSize: "1.3rem", fontWeight: "500" }}>
-          {pet.breed} • {pet.gender === "MALE" ? "남아" : "여아"} • {calculateAge(pet.birth)}
+        <h3 className={styles.petName}>{pet.name}</h3>
+        <p className={styles.petInfo}>{pet.breed}</p>
+        <p className={styles.petInfo}>
+          {pet.gender === "MALE" ? "남아" : "여아"} • {calculateAge(pet.birth)}
         </p>
       </div>
     </div>
