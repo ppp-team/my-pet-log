@@ -82,29 +82,29 @@
 
 ### 1. 메인페이지
 
-<img width="407" height="575" alt="로그인 전 홈페이지" src="https://github.com/ppp-team/my-pet-log/assets/144668146/f345ca49-a0a3-4f41-b7ea-ef217f80743c">
-<img width="409" alt="로그인 후 반려동물x 홈페이지" src="https://github.com/ppp-team/my-pet-log/assets/144668146/89aaba09-f0fc-40c5-8ca6-906149be4f16">
+<img width="370" height="575" alt="로그인 전 홈페이지" src="https://github.com/ppp-team/my-pet-log/assets/144668146/73f1919a-5bc4-4841-a2ee-9ae4ea65c23e">
+<img width="409" height="575" alt="로그인 후 반려동물x 홈페이지" src="https://github.com/ppp-team/my-pet-log/assets/144668146/89aaba09-f0fc-40c5-8ca6-906149be4f16">
 
 ### 2. 동물 등록 & 삭제
 
-<img width="407" height="575" alt="동물등록" src="https://github.com/ppp-team/my-pet-log/assets/144668146/5ebe87a9-e1c9-46d0-a753-1a212ec98a14">
+<img width="370" height="575" alt="동물등록" src="https://github.com/ppp-team/my-pet-log/assets/144668146/39721195-c490-4b85-a8c9-30472b045452">
 <img width="390" alt="스크린샷 2024-02-28 오후 7 28 18" src="https://github.com/ppp-team/my-pet-log/assets/144668146/5693be5c-317a-4a1f-9787-22f1b088cd42">
 
 ### 3. 육아 일기
 
-<img width="397" alt="스크린샷 2024-02-28 오후 6 15 47" src="https://github.com/ppp-team/my-pet-log/assets/144668146/0835342c-e610-4e19-8fe4-30628584d1c6">
-<img width="397" alt="스크린샷 2024-02-28 오후 6 15 47" src="https://github.com/ppp-team/my-pet-log/assets/144668146/fce3442b-44c8-4e9c-b33f-11e576cc155e">
+<img width="397" height="575" alt="육아일기 없음" src="https://github.com/ppp-team/my-pet-log/assets/144668146/0835342c-e610-4e19-8fe4-30628584d1c6">
+<img width="370" height="575" alt="육일기 작성" src="https://github.com/ppp-team/my-pet-log/assets/144668146/4dda6e34-3600-4ba7-abdc-0bb20c3922f9">
 
 ### 4. 건강 수첩
 
-<img width="397" alt="스크린샷 2024-02-28 오후 6 15 47" src="https://github.com/ppp-team/my-pet-log/assets/144668146/3bc9df40-71ef-470f-9065-d16099529f83">
-<img width="387" alt="스크린샷 2024-02-28 오후 7 10 13" src="https://github.com/ppp-team/my-pet-log/assets/144668146/8e24f26b-2dad-42cf-ab77-c4bd8d64af52">
+<img width="397" alt="건강수첩 gif" src="https://github.com/ppp-team/my-pet-log/assets/144668146/400e7460-4c08-46cf-84c5-966f07fdb97f">
+<img width="387" alt="건강수첩" src="https://github.com/ppp-team/my-pet-log/assets/144668146/8e24f26b-2dad-42cf-ab77-c4bd8d64af52">
 
 ### 5. 관리
 
-<img width="330" alt="스크린샷 2024-02-28 오후 7 11 21" src="https://github.com/ppp-team/my-pet-log/assets/144668146/10cacc96-503b-4ed3-87aa-b04ccb6f9a54">
-<img width="330" alt="스크린샷 2024-02-28 오후 7 11 21" src="https://github.com/ppp-team/my-pet-log/assets/144668146/be65a336-18f8-43f2-9361-4e05cefd7c17">
-<img width="330" alt="스크린샷 2024-02-28 오후 7 16 57" src="https://github.com/ppp-team/my-pet-log/assets/144668146/a0e7fbc7-219a-4401-8c69-539f84ba0c68">
+<img width="330" height="575" alt="관리" src="https://github.com/ppp-team/my-pet-log/assets/144668146/10cacc96-503b-4ed3-87aa-b04ccb6f9a54">
+<img width="330" height="575" alt="초대하기" src="https://github.com/ppp-team/my-pet-log/assets/144668146/827247f3-6fa5-49c8-ac89-0e952bf0e02e">
+<img width="330" height="575" alt="프로필 수정" src="https://github.com/ppp-team/my-pet-log/assets/144668146/a0e7fbc7-219a-4401-8c69-539f84ba0c68">
 
 ### 6. 로그인 & 회원가입
 
@@ -113,7 +113,7 @@
 
 ### 7. 404페이지 유기동물 정보
 
-<img width="407" alt="스크린샷 2024-02-28 오후 5 57 24" src="https://github.com/ppp-team/my-pet-log/assets/144668146/32304793-d098-4918-8a6c-2a246d846249">
+<img width="407" alt="404" src="https://github.com/ppp-team/my-pet-log/assets/144668146/32304793-d098-4918-8a6c-2a246d846249">
 
 <br/>
 
