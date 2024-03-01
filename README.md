@@ -93,7 +93,7 @@
 ### 3. 육아 일기
 
 <img width="397" height="575" alt="육아일기 없음" src="https://github.com/ppp-team/my-pet-log/assets/144668146/0835342c-e610-4e19-8fe4-30628584d1c6">
-<img width="370" height="575" alt="육아일기 작성" src="https://github.com/ppp-team/my-pet-log/assets/144668146/fce3442b-44c8-4e9c-b33f-11e576cc155e">
+<img width="370" height="575" alt="육아일기 작성" src="https://github.com/ppp-team/my-pet-log/assets/144668146/3aafd780-c748-46bb-8f34-0108e60ad4ce">
 
 ### 4. 건강 수첩
 
