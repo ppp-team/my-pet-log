@@ -21,13 +21,14 @@ const Page = async () => {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <div className={styles.container}>
-        <p className={styles.title}>건강수첩</p>
+    <div className={styles.container}>
+      <p className={styles.title}>건강수첩</p>
+      <HydrationBoundary state={dehydratedState}>
         <HealthlogContent petId={petId} />
-        <LogWriteButton />
-      </div>
-    </HydrationBoundary>
+      </HydrationBoundary>
+
+      <LogWriteButton />
+    </div>
   );
 };
 
