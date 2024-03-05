@@ -1,5 +1,3 @@
-"use server";
-
 import { getLogs } from "@/app/_api/log";
 import LogWriteButton from "@/app/healthlog/_components/LogWriteButton";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
