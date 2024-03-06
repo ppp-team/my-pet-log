@@ -56,7 +56,7 @@ const DateInput = ({ register, setValue, getValue }: DateInputProps) => {
       </div>
       {isCalendarOpen && (
         <div className={styles.calendarWrapper}>
-          <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%", minHeight: "30rem", height: "35rem" }} />
+          <VanillaCalendar config={options} style={{ minWidth: "20rem", width: "100%", minHeight: "30rem", height: "100%" }} />
         </div>
       )}
     </div>
