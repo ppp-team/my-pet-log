@@ -157,7 +157,6 @@ export const length = style({
   right: 0,
 
   fontSize: "1.1rem",
-  fontFamily: "Pretendard",
   fontWeight: "500",
   color: "var(--Gray81)",
 });
