@@ -5,8 +5,8 @@ import "@/styles/colors.css";
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FontLayout from "@/fonts/layout";
 import { METADATA } from "./_constants/metadata";
+import { fontPretendardVariable } from "@/styles/fonts";
 
 export const metadata: Metadata = {
   title: METADATA.title,
@@ -45,8 +45,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
-      <FontLayout>
+    <html lang="ko" className={fontPretendardVariable.className}>
+      <body>
         <QueryProvider>
           <AuthContext>
             {children}
@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div id="portal"></div>
           </AuthContext>
         </QueryProvider>
-      </FontLayout>
+      </body>
     </html>
   );
 }

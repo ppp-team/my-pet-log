@@ -43,7 +43,6 @@ export const invitationButton = style({
 export const inviteText = style({
   fontSize: "1.5rem",
   fontWeight: "600",
-  fontFamily: "Pretendard",
   "@media": {
     "screen and (min-width: 744px)": {
       fontSize: "1.6rem",

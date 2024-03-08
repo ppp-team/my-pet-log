@@ -2,8 +2,7 @@ import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle("*", {
   boxSizing: "border-box",
-  fontFamily:
-    "var(--Pretendard), Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif",
+  fontFamily: "var(--font-pretendard), 'Segoe UI Symbol', sans-serif",
   margin: 0,
   padding: 0,
 });
