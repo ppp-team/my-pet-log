@@ -1,10 +1,10 @@
 import { getComments, getDiary } from "@/app/_api/diary";
 import { getMe } from "@/app/_api/users";
 import DiaryDetail from "@/app/diary/_components/DiaryDetail";
-import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
+import { COMMENT_PAGE_SIZE } from "@/app/diary/(diary)/my-pet/constant";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
-import { container, root } from "@/app/diary/style.css";
+import { container, root } from "@/app/diary/(diary)/my-pet/style.css";
 import BackHeader from "@/app/_components/BackHeader";
 
 const DiaryDetailPage = async ({ params: { id } }: { params: { id: string } }) => {

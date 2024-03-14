@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 
 const MOBILE_FOOTER_NAVIGATION = [
   { name: "홈", iconComp: HomeIcon, href: "/home" },
-  { name: "육아일기", iconComp: DiaryIcon, href: "/diary" },
+  { name: "육아일기", iconComp: DiaryIcon, href: "/diary/my-pet" },
   { name: "건강수첩", iconComp: HealthlogIcon, href: "/healthlog" },
   { name: "관리", iconComp: SettingsIcon, href: "/settings" },
 ];

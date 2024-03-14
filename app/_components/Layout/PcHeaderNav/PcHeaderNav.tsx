@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 
 const PC_CENTER_MENUS = [
   { label: "홈", href: "/home" },
-  { label: "육아일기", href: "/diary" },
+  { label: "육아일기", href: "/diary/my-pet" },
   { label: "건강수첩", href: "/healthlog" },
   { label: "관리", href: "/settings" },
 ];
