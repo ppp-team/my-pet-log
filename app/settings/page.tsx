@@ -39,6 +39,7 @@ const Page = async () => {
       </Suspense>
       <Suspense fallback={<ListItemSkeleton />}>
         <div className={listcontainer}>
+          <ListItem href="/settings/subscriptions" src={HeartIcon} alt="subscription icon" text="구독중인 펫 계정" />
           <ListItem href="/settings/received-invites" src={HeartIcon} alt="heart icon" text="초대 받은 내역" />
           <ListItem href="/settings/faq" src={QuestionIcon} alt="question icon" text="FAQ" />
           <ListItem href="/settings/ask" src={MessageIcon} alt="message icon" text="1:1 문의하기" />

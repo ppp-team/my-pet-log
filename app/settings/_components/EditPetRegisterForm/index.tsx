@@ -164,7 +164,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       setValue("firstMeet", petInfo.firstMeetDate === null ? "날짜 선택" : petInfo?.firstMeetDate!.slice(0, 10));
       setValue("weight", petInfo.weight);
       setValue("registeredNumber", petInfo.registeredNumber);
-
       setProfileImage(getImagePath(petInfo.petImageUrl));
     }
   }, [isPutSuccess, petInfo, setValue]);
@@ -180,7 +179,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   };
 
   //프로필 이미지
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
