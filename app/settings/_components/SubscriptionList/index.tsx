@@ -1,7 +1,7 @@
 "use client";
 import { useModal } from "@/app/_hooks/useModal";
 import Modal from "@/app/_components/Modal";
-import { memberlist, profileWrapper, profileImg, nickname, button } from "./style.css";
+import { container, memberlist, profileWrapper, profileImg, nickname, button } from "./style.css";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -42,25 +42,27 @@ const SubscriptionList = () => {
 
   return (
     <>
-      {mockSubscriptionList.map((member) => (
-        <section key={member.petId} className={memberlist}>
-          <div className={profileWrapper}>
-            <Image className={profileImg} src={getImagePath(member.petImageUrl)} alt="profile icon" width={40} height={40} />
-            <p className={nickname}>{member.name}</p>
-          </div>
-          <button
-            className={button}
-            onClick={() => {
-              setSelectedSubscriptionPetId(member.petId);
-              setSelectedSubscriptionPetName(member.name);
-              openModalFunc();
-            }}
-          >
-            구독취소
-          </button>
-        </section>
-      ))}
-      {isModalOpen && <Modal text={`정말 ${selectedSubscriptionPetName}님의 구독을\n취소하시겠습니까?`} buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
+      <main className={container}>
+        {mockSubscriptionList.map((member) => (
+          <section key={member.petId} className={memberlist}>
+            <div className={profileWrapper}>
+              <Image className={profileImg} src={getImagePath(member.petImageUrl)} alt="profile icon" width={40} height={40} />
+              <p className={nickname}>{member.name}</p>
+            </div>
+            <button
+              className={button}
+              onClick={() => {
+                setSelectedSubscriptionPetId(member.petId);
+                setSelectedSubscriptionPetName(member.name);
+                openModalFunc();
+              }}
+            >
+              구독취소
+            </button>
+          </section>
+        ))}
+        {isModalOpen && <Modal text={`정말 ${selectedSubscriptionPetName}님의 구독을\n취소하시겠습니까?`} buttonText="확인" onClick={handleConfirm} onClose={closeModalFunc} />}
+      </main>
     </>
   );
 };
