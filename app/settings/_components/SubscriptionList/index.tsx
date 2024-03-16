@@ -38,8 +38,6 @@ const SubscriptionList = () => {
     }
   };
 
-  console.log("엥");
-
   return (
     <>
       <main className={container}>
