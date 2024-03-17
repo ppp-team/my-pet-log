@@ -4,6 +4,7 @@ import { PetType } from "@/app/_types/pets/types";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
 import Image from "next/image";
 import EditIcon from "@/public/icons/edit-petcard.svg?url";
+import Link from "next/link";
 
 interface StyleProps {
   styles?: {
@@ -46,9 +47,9 @@ const MyPetInfo = ({ petInfo, styles }: MyPetProps) => {
           {age}
         </span>
       </div>
-      <div className={iconWrapper}>
+      <Link href={`/settings/pet-info/${petInfo.petId}`} className={iconWrapper}>
         <Image className={icon} src={EditIcon} alt="Edit icon" width={20} height={20} />
-      </div>
+      </Link>
     </div>
   );
 };

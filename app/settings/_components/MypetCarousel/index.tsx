@@ -62,20 +62,22 @@ const MyPetCarousel = () => {
                 <div className={styles.container}>
                   <div className={styles.petInfoWrapper}>{petInfo && <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />}</div>
                   <button
-                    className={styles.petButton}
+                    className={styles.petMateButton}
                     onClick={() => {
-                      router.push(`/settings/pet-info/${petInfo.petId}`);
+                      editPetRepMutate(String(petInfo.petId));
                     }}
                   >
-                    마이펫 정보 수정
+                    펫메이트 관리
                   </button>
+
+                  {/* 구독자 관리의 onClick이벤트 수정 필요  */}
                   <button
                     onClick={() => {
                       editPetRepMutate(String(petInfo.petId));
                     }}
-                    className={styles.petMateButton}
+                    className={styles.petSubscriberButton}
                   >
-                    펫메이트 초대 및 그룹 관리
+                    구독자 관리
                   </button>
                 </div>
               </SwiperSlide>
