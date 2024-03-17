@@ -78,3 +78,27 @@ export const detail = style({
     },
   },
 });
+
+export const iconWrapper = style({
+  display: "flex",
+  marginRight: "1rem",
+  marginTop: "-6.5rem",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      marginRight: "1.8rem",
+      marginTop: "-8.5rem",
+    },
+  },
+});
+
+export const icon = style({
+  cursor: "pointer",
+
+  "@media": {
+    "screen and (min-width: 744px)": {
+      width: "2.8rem",
+      height: "2.8rem",
+    },
+  },
+});
