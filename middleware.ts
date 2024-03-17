@@ -10,8 +10,8 @@ export function middleware(request: NextRequest) {
 
     //petId여부에 따라 redirect
     if (path === "/diary/select" && !petId) return;
-    if (path === "/diary/select" && petId) return NextResponse.redirect(new URL("/diary", request.url));
-    if (path.startsWith("/diary") && !petId) return NextResponse.redirect(new URL("/diary/select", request.url));
+    if (path === "/diary/select" && petId) return NextResponse.redirect(new URL("/diary/my-pet", request.url));
+    if (path.startsWith("/diary/my-pet") && !petId) return NextResponse.redirect(new URL("/diary/select", request.url));
 
     if (path === "/healthlog/select" && !petId) return;
     if (path === "/healthlog/select" && petId) return NextResponse.redirect(new URL("/healthlog", request.url));

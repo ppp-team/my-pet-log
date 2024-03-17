@@ -1,11 +1,11 @@
 import { getDiaryList } from "@/app/_api/diary";
 import DiaryList from "@/app/diary/_components/DiaryList";
-import { DIARY_PAGE_SIZE } from "@/app/diary/constant";
+import { DIARY_PAGE_SIZE } from "@/app/diary/(diary)/my-pet/constant";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
 import { container, root } from "./style.css";
 
-const DiaryPgae = async () => {
+const MyPetDiaryPage = async () => {
   const queryClient = new QueryClient();
   const petId = Number(cookies().get("petId")?.value);
 
@@ -28,4 +28,4 @@ const DiaryPgae = async () => {
   );
 };
 
-export default DiaryPgae;
+export default MyPetDiaryPage;
