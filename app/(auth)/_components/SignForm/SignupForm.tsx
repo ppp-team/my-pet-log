@@ -2,7 +2,7 @@
 import Input from "@/app/(auth)/_components/SignInput/Input";
 import * as inputStyles from "@/app/(auth)/_components/SignInput/styles.css";
 import SubmitButton from "@/app/(auth)/_components/SubmitButton/index";
-import { emailVerifyRequest, postSignup } from "@/app/_api/auth";
+import { emailVerifyRequest, emailVerifyResponse, postSignup } from "@/app/_api/auth";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import Loading from "@/app/_components/Loading";
 import ImageModal from "@/app/_components/Modal/ImageModal";
@@ -21,13 +21,13 @@ const SignUpForm = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [isEmailVerify, setIsEmailVerify] = useState(false);
   const [showCodeInput, setShowCodeInput] = useState(false);
-  const { control, handleSubmit, watch, setError, formState, clearErrors, getValues } = useForm({
-    defaultValues: { email: "", password: "", confirmPassword: "" },
+  const { control, handleSubmit, watch, setError, formState, clearErrors, getValues, setValue } = useForm({
+    defaultValues: { email: "", password: "", confirmPassword: "", code: "" },
     mode: "onTouched",
   });
   const router = useRouter();
 
-  const emailVerifyMutation = useMutation({
+  const emailVerifyRequestMutation = useMutation({
     mutationFn: (email: string) => emailVerifyRequest({ email }),
     onSuccess: (res) => {
       if (res === 409) return setError("email", { message: ERROR_MESSAGE.emailDuplicate });
@@ -37,23 +37,35 @@ const SignUpForm = () => {
     },
   });
 
+  const emailVerifyMutation = useMutation({
+    mutationFn: ({ email, code }: { email: string; code: string }) => emailVerifyResponse({ email, code }),
+    onSuccess: (res) => {
+      if (res === 400) return setError("code", { message: "인증번호가 만료되었습니다." });
+      if (res === 404) return setError("code", { message: "인증번호가 일치하지 않습니다." });
+      showToast("인증 되었습니다.", true);
+      setIsEmailVerify(true);
+      clearErrors("email");
+      clearErrors("code");
+    },
+  });
+
   const handleCloseModal = () => {
     closeModalFunc();
     router.push("/login");
   };
 
   const handleEmailVerifyRequest = () => {
-    emailVerifyMutation.mutate(getValues("email"));
+    emailVerifyRequestMutation.mutate(getValues("email"));
   };
 
   const handleEmailVerifyConfirm = () => {
-    setIsEmailVerify(true);
-    clearErrors("email");
+    emailVerifyMutation.mutate({ email: getValues("email"), code: getValues("code") });
   };
 
   return (
     <>
       {emailVerifyMutation.isPending && <Loading />}
+      {emailVerifyRequestMutation.isPending && <Loading />}
       <form
         className={styles.form}
         onSubmit={handleSubmit(async (data) => {
@@ -72,6 +84,7 @@ const SignUpForm = () => {
             pattern: { value: /\S+@\S+\.\S+/, message: ERROR_MESSAGE.emailInvalid },
             validate: {
               emailVerify: () => {
+                if (isEmailVerify) return true;
                 return "이메일을 인증해주세요.";
               },
             },
@@ -83,26 +96,39 @@ const SignUpForm = () => {
                 <input
                   ref={field.ref}
                   value={field.value}
-                  onChange={field.onChange}
+                  onChange={(e) => {
+                    field.onChange(String(e.target.value));
+                    setShowCodeInput(false);
+                    setIsEmailVerify(false);
+                  }}
                   onBlur={field.onBlur}
                   placeholder={PLACEHOLDER.email}
                   className={`${inputStyles.emailInput} ${fieldState.error && inputStyles.error}`}
                 />
                 <button disabled={!regex.test(watch("email"))} className={inputStyles.emailVerifyRequestButton} type="button" onClick={handleEmailVerifyRequest}>
-                  인증하기
+                  {showCodeInput ? "재전송" : "인증하기"}
                 </button>
               </div>
               {fieldState.error && <ErrorMessage message={fieldState.error.message} />}
+            </div>
+            // <EmailInput {...field} label="이메일" placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+          )}
+        />
+        <Controller
+          control={control}
+          name="code"
+          render={({ field, fieldState }) => (
+            <div>
               {showCodeInput && (
                 <div className={inputStyles.emailContainer}>
-                  <input placeholder={PLACEHOLDER.confirmEmail} className={`${inputStyles.emailInput} ${fieldState.error && inputStyles.error}`} />
-                  <button className={inputStyles.emailVerifyRequestButton} type="button" onClick={handleEmailVerifyConfirm}>
+                  <input ref={field.ref} value={field.value} onChange={field.onChange} placeholder={PLACEHOLDER.confirmEmail} className={`${inputStyles.emailInput}`} />
+                  <button className={inputStyles.emailCodeVerifyButton} type="button" onClick={handleEmailVerifyConfirm}>
                     인증확인
                   </button>
                 </div>
               )}
+              {fieldState.error && <ErrorMessage message={fieldState.error.message} />}
             </div>
-            // <EmailInput {...field} label="이메일" placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
 

@@ -77,3 +77,10 @@ export const emailVerifyRequestButton = style({
     },
   },
 });
+
+export const emailCodeVerifyButton = style([
+  emailVerifyRequestButton,
+  {
+    top: "50%",
+  },
+]);
