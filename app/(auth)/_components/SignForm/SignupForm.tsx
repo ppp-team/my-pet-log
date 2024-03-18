@@ -15,13 +15,13 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as styles from "./styles.css";
 
-const regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
+const regex = new RegExp("[a-z0-9]+@[a-z]+.com");
 
 const SignUpForm = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [isEmailVerify, setIsEmailVerify] = useState(false);
   const [showCodeInput, setShowCodeInput] = useState(false);
-  const { control, handleSubmit, watch, setError, formState, clearErrors, getValues, setValue } = useForm({
+  const { control, handleSubmit, watch, setError, formState, clearErrors, getValues } = useForm({
     defaultValues: { email: "", password: "", confirmPassword: "", code: "" },
     mode: "onTouched",
   });
@@ -111,7 +111,6 @@ const SignUpForm = () => {
               </div>
               {fieldState.error && <ErrorMessage message={fieldState.error.message} />}
             </div>
-            // <EmailInput {...field} label="이메일" placeholder={PLACEHOLDER.email} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <Controller
