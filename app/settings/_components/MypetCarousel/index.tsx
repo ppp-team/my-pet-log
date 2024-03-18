@@ -37,6 +37,15 @@ const MyPetCarousel = () => {
     },
   });
 
+  // mutationFn에 올바른 api콜 함수 들어가도록 수정해야함
+  const { mutate: editPetSubscriptionMutate } = useMutation({
+    mutationFn: (petId: string) => editPetRep(petId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["pets"] });
+      router.push("/settings/subscriber");
+    },
+  });
+
   const myPetInfoStyles = {
     profileBorderColor: "var(--White)",
     nameTextColor: "var(--White)",
@@ -62,20 +71,22 @@ const MyPetCarousel = () => {
                 <div className={styles.container}>
                   <div className={styles.petInfoWrapper}>{petInfo && <MyPetInfo petInfo={petInfo} styles={myPetInfoStyles} />}</div>
                   <button
-                    className={styles.petButton}
-                    onClick={() => {
-                      router.push(`/settings/pet-info/${petInfo.petId}`);
-                    }}
-                  >
-                    마이펫 정보 수정
-                  </button>
-                  <button
+                    className={styles.petMateButton}
                     onClick={() => {
                       editPetRepMutate(String(petInfo.petId));
                     }}
-                    className={styles.petMateButton}
                   >
-                    펫메이트 초대 및 그룹 관리
+                    펫메이트 관리
+                  </button>
+
+                  {/* 구독자 관리의 onClick이벤트 수정 필요  */}
+                  <button
+                    onClick={() => {
+                      editPetSubscriptionMutate(String(petInfo.petId));
+                    }}
+                    className={styles.petSubscriberButton}
+                  >
+                    구독자 관리
                   </button>
                 </div>
               </SwiperSlide>

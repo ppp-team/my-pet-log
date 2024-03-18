@@ -51,14 +51,14 @@ export const button = style({
   },
 });
 
-export const petButton = style([
+export const petMateButton = style([
   button,
   {
     borderRight: "1px solid var(--White)",
   },
 ]);
 
-export const petMateButton = style([button]);
+export const petSubscriberButton = style([button]);
 
 export const petInfoWrapper = style({
   width: "100%",

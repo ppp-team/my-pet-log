@@ -1,8 +1,10 @@
 import calculateAge from "@/app/_utils/calculateAge";
-import { profile, container, info, name, detail, breed } from "./style.css";
+import { profile, container, info, name, detail, breed, iconWrapper, icon } from "./style.css";
 import { PetType } from "@/app/_types/pets/types";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
 import Image from "next/image";
+import EditIcon from "@/public/icons/edit-petcard.svg?url";
+import Link from "next/link";
 
 interface StyleProps {
   styles?: {
@@ -45,6 +47,9 @@ const MyPetInfo = ({ petInfo, styles }: MyPetProps) => {
           {age}
         </span>
       </div>
+      <Link href={`/settings/pet-info/${petInfo.petId}`} className={iconWrapper}>
+        <Image className={icon} src={EditIcon} alt="Edit icon" width={20} height={20} />
+      </Link>
     </div>
   );
 };
