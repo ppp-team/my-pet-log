@@ -38,13 +38,42 @@ export const styledInput = style({
   },
 });
 
+export const emailInput = style([
+  styledInput,
+  {
+    padding: "1.3rem 15rem 1.3rem 1.6rem",
+  },
+]);
+
 export const error = style({
   border: "1.5px solid var(--Red)",
   fontSize: "1.6rem",
 });
 
-export const inputContainer = style({
+export const emailContainer = style({
   position: "relative",
-  display: "flex",
-  flexDirection: "row",
+  width: "100%",
+});
+
+export const emailVerifyRequestButton = style({
+  position: "absolute",
+  right: "0.9rem",
+  top: "calc(50% + 0.3rem)",
+  transform: "translateY(-50%)",
+
+  padding: "0.8rem 0.9rem",
+
+  borderRadius: "5px",
+
+  backgroundColor: "var(--LightOrange)",
+  color: "var(--MainOrange)",
+
+  selectors: {
+    "&:disabled": {
+      border: "none",
+      backgroundColor: "var(--GrayB1)",
+      color: "white",
+      cursor: "default",
+    },
+  },
 });
