@@ -7,11 +7,11 @@ import Modal from "@/app/_components/Modal";
 import { useModal } from "@/app/_hooks/useModal";
 import Notification from "../Notification/Notification";
 
-const HasNotification = ({ list }: { list: any[] }) => {
+const HasNotification = ({ list }: { list: any[] | null }) => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
-  const newList = list.filter((item) => !item.checked) ?? null;
-  const pastList = list.filter((item) => item.checked) ?? null;
+  const newList = list?.filter((item) => !item.checked) ?? null;
+  const pastList = list?.filter((item) => item.checked) ?? null;
 
   return (
     <section className={styles.notificationPageContainer}>
@@ -24,7 +24,7 @@ const HasNotification = ({ list }: { list: any[] }) => {
             ))}
           </ul>
         ) : (
-          <p>새 알림이 없습니다.</p>
+          <p className={styles.noNewNotification}>새 알림이 없습니다.</p>
         )}
       </div>
 

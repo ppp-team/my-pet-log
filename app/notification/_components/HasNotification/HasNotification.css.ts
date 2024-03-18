@@ -18,6 +18,13 @@ export const newNotificationList = style({
   gap: "0.8rem",
 });
 
+export const noNewNotification = style({
+  fontSize: "1.4rem",
+  fontWeight: "400",
+  color: "var(--Gray2E)",
+  textAlign: "center",
+});
+
 export const title = style({
   fontSize: "1.4rem",
   fontWeight: "700",
