@@ -9,7 +9,7 @@ const SelectPage = async () => {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <SelectPet type="육아일기" path="/diary" />
+      <SelectPet type="육아일기" path="/diary/my-pet" />
     </HydrationBoundary>
   );
 };

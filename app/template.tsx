@@ -20,7 +20,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <MobileFooterNavigationBar />
       </CookiesProvider>
     );
-  } else if (pagesWithHeader.petGroup.includes(pathname) || pathname.startsWith("/diary/detail")) {
+  } else if (pagesWithHeader.petGroup.includes(pathname) || pathname.startsWith("/diary/detail") || pathname.startsWith("/settings/subscriptions")) {
     return (
       <CookiesProvider>
         <MobileHeaderPetGroup />

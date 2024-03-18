@@ -9,7 +9,7 @@ import { useModal } from "@/app/_hooks/useModal";
 import { Comment, GetCommentsResponse, GetDiaryResponse } from "@/app/_types/diary/type";
 import { UserType } from "@/app/_types/users/types";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
-import { COMMENT_PAGE_SIZE } from "@/app/diary/constant";
+import { COMMENT_PAGE_SIZE } from "@/app/diary/(diary)/my-pet/constant";
 import KebabIcon from "@/public/icons/kebab.svg?url";
 import LikeIcon from "@/public/icons/like.svg";
 import SendIcon from "@/public/icons/send.svg?url";

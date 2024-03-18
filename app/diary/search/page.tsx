@@ -2,7 +2,7 @@
 import { getSearchDiary } from "@/app/_api/diary";
 import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
 import { Diaries } from "@/app/diary/_components/Diary";
-import { DIARY_SEARCH_PAGE_SIZE, RECOMMEND_KEYWORD } from "@/app/diary/constant";
+import { DIARY_SEARCH_PAGE_SIZE, RECOMMEND_KEYWORD } from "@/app/diary/(diary)/my-pet/constant";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import SearchIconURL from "@/public/icons/search.svg?url";
 import NoResultImage from "@/public/images/no-search-result.png";
@@ -84,7 +84,7 @@ const SearchPage = () => {
     <div className={styles.root}>
       <div className={styles.container}>
         <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-          <Link href={"/diary"}>
+          <Link href={"/diary/my-pet"}>
             <Image src={BackIcon} alt="backward icon" width={25} height={25} style={{ cursor: "pointer" }} />
           </Link>
           <form

@@ -1,6 +1,6 @@
 "use client";
-// import Page from "./page";
-import RedirectToHome from "../_components/RedirectToHome";
+import RedirectToHome from "@/app/(auth)/_components/RedirectToHome";
+
 const RedirectPage = () => {
   return (
     <div>

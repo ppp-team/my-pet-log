@@ -4,7 +4,7 @@ import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
 import { Diaries } from "@/app/diary/_components/Diary";
 import { root, search, searchIcon, writeIcon } from "@/app/diary/_components/Diary/style.css";
 import EmptyDiaryList from "@/app/diary/_components/EmptyDiaryList";
-import { DIARY_PAGE_SIZE } from "@/app/diary/constant";
+import { DIARY_PAGE_SIZE } from "@/app/diary/(diary)/my-pet/constant";
 import SearchIconURL from "@/public/icons/search.svg?url";
 import WriteIconURL from "@/public/icons/write.svg?url";
 import { useInfiniteQuery } from "@tanstack/react-query";

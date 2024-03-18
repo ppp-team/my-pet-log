@@ -1,7 +1,7 @@
 import BackHeader from "@/app/_components/BackHeader";
 import EditForm from "@/app/diary/_components/Form/EditForm";
 import { cookies } from "next/headers";
-import { container, root } from "@/app/diary/style.css";
+import { container, root } from "@/app/diary/(diary)/my-pet/style.css";
 
 const EditPage = ({ params: { id } }: { params: { id: string } }) => {
   const diaryId = Number(id);

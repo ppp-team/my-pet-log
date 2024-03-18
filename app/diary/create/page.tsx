@@ -1,6 +1,6 @@
 import CreateForm from "@/app/diary/_components/Form/CreateForm";
 import { cookies } from "next/headers";
-import { container, root } from "@/app/diary/style.css";
+import { container, root } from "@/app/diary/(diary)/my-pet/style.css";
 import BackHeader from "@/app/_components/BackHeader";
 
 const CreatePage = () => {
