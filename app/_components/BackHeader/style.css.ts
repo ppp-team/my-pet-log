@@ -15,11 +15,14 @@ export const header = style({
   alignItems: "center",
 
   borderBottom: "1px solid var(--GrayE2)",
+
+  zIndex: Z_INDEX.Header,
+});
+
+export const title = style({
   fontSize: "1.6rem",
   fontWeight: "500",
   lineHeight: "2.4rem",
-
-  zIndex: Z_INDEX.Header,
 });
 
 export const backIcon = style({

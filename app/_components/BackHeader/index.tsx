@@ -10,7 +10,7 @@ const BackHeader = ({ title, styleTop }: { title: string; styleTop?: string }) =
 
   return (
     <header className={styles.header} style={{ top: styleTop || "5.6rem" }}>
-      {title}
+      <h1 className={styles.title}>{title}</h1>
       <div className={styles.backIcon} onClick={() => router.back()}>
         <Image src={BackIcon} alt="backward icon" width={25} height={25} />
       </div>
