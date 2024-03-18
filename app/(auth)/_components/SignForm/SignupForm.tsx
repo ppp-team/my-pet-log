@@ -32,7 +32,7 @@ const SignUpForm = () => {
     onSuccess: (res) => {
       if (res === 409) return setError("email", { message: ERROR_MESSAGE.emailDuplicate });
       if (res === 500) return showToast("이메일 인증에 실패했습니다.", false);
-      showToast("인증코드를 발송했습니다.", true);
+      showToast("인증번호를 발송했습니다.", true);
       setShowCodeInput(true);
     },
   });
