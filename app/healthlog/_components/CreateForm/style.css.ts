@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 export const container = style({
   width: "100vw",
 
-  margin: "6.7rem 1.6rem",
+  padding: "6.7rem 1.6rem",
 
   display: "flex",
   flexDirection: "column",
@@ -13,7 +13,9 @@ export const container = style({
   "@media": {
     "screen and (min-width: 744px)": {
       maxWidth: "45rem",
-      margin: "10.3rem 14.7rem",
+
+      padding: "10.3rem 0",
+      margin: "0 auto",
     },
   },
 });
