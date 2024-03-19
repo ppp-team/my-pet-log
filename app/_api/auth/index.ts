@@ -115,3 +115,30 @@ export const getRefreshToken = async () => {
     redirect("/login");
   }
 };
+
+export const emailVerifyRequest = async ({ email }: { email: string }) => {
+  try {
+    await instance.post("/auth/emails/verification-requests", {
+      email,
+    });
+
+    return true;
+  } catch (error: any) {
+    console.error(error.response.data.status);
+    return error.response.data.status;
+  }
+};
+
+export const emailVerifyResponse = async ({ email, code }: { email: string; code: string }) => {
+  try {
+    await instance.post("/auth/emails/verifications", {
+      email,
+      code,
+    });
+
+    return true;
+  } catch (error: any) {
+    console.error(error.response.data.status);
+    return error.response.data.status;
+  }
+};

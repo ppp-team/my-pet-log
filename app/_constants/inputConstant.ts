@@ -9,6 +9,7 @@ export const PLACEHOLDER = {
   newPassword: "새 비밀번호 입력",
   confirmNewPassword: "새 비밀번호 확인 입력",
   receivedInvitationCode: "초대 코드 입력",
+  confirmEmail: "인증번호를 입력해주세요.",
 };
 
 export const ERROR_MESSAGE = {

@@ -1,6 +1,6 @@
+import ErrorMessage from "@/app/_components/ErrorMessage";
 import { ChangeEventHandler, FocusEventHandler, HTMLInputTypeAttribute, forwardRef } from "react";
 import * as styles from "./styles.css";
-import ErrorMessage from "@/app/_components/ErrorMessage";
 
 export interface InputProps {
   label: string;
