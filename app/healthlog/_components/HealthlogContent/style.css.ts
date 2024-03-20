@@ -18,7 +18,7 @@ export const calendarBox = style({
   "@media": {
     "screen and (min-width: 744px)": {
       maxWidth: "45rem",
-      height: "37rem",
+      height: "40rem",
     },
   },
 });

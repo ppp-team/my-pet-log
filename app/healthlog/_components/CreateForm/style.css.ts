@@ -12,7 +12,10 @@ export const container = style({
 
   "@media": {
     "screen and (min-width: 744px)": {
-      padding: "10.3rem 14.7rem",
+      maxWidth: "45rem",
+
+      padding: "10.3rem 0",
+      margin: "0 auto",
     },
   },
 });
