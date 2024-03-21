@@ -1,6 +1,5 @@
 "use client";
 import Input from "@/app/(auth)/_components/SignInput/Input";
-import PasswordInput from "@/app/(auth)/_components/SignInput/PasswordInput";
 import SubmitButton from "@/app/(auth)/_components/SubmitButton/index";
 import { postLogin } from "@/app/_api/auth";
 import { EMAIL_RULES, ERROR_MESSAGE, PLACEHOLDER, SIGNIN_PASSWORD_RULES } from "@/app/_constants/inputConstant";
@@ -41,7 +40,7 @@ const SignInForm = () => {
           name="password"
           rules={SIGNIN_PASSWORD_RULES}
           render={({ field, fieldState }) => (
-            <PasswordInput label="비밀번호*" {...field} placeholder={PLACEHOLDER.password} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
+            <Input label="비밀번호*" {...field} type="password" placeholder={PLACEHOLDER.password} hasError={Boolean(fieldState.error)} errorText={fieldState.error?.message} />
           )}
         />
         <div className={styles.buttonWrapper}>

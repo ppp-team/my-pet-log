@@ -38,10 +38,10 @@ export const styledInput = style({
   },
 });
 
-export const emailInput = style([
+export const signUpEmailInput = style([
   styledInput,
   {
-    padding: "1.3rem 15rem 1.3rem 1.6rem",
+    padding: "1.3rem 8rem 1.3rem 1.6rem",
   },
 ]);
 
@@ -50,7 +50,7 @@ export const error = style({
   fontSize: "1.6rem",
 });
 
-export const emailContainer = style({
+export const inputContainer = style({
   position: "relative",
   width: "100%",
 });
@@ -84,3 +84,14 @@ export const emailCodeVerifyButton = style([
     top: "50%",
   },
 ]);
+
+export const passwordInput = style([styledInput, { padding: "1.3rem 4rem 1.3rem 1.6rem" }]);
+
+export const passwordEyeIcon = style({
+  position: "absolute",
+  right: "0.9rem",
+  top: "calc(50% + 0.3rem)",
+  transform: "translateY(-50%)",
+
+  cursor: "pointer",
+});

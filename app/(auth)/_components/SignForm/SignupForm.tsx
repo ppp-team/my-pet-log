@@ -11,16 +11,25 @@ import { ERROR_MESSAGE, PLACEHOLDER, SIGNUP_PASSWORD_RULES } from "@/app/_consta
 import { useModal } from "@/app/_hooks/useModal";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as styles from "./styles.css";
 
 const regex = new RegExp("[a-z0-9]+@[a-z]+.com");
+const EMAIL_CODE_TIME = 600; //10분
+
+const twoDigitNumber = (num: number) => {
+  //숫자 앞에 0을 붙여주는 함수
+  if (num < 10) return `0${num}`;
+  return num;
+};
 
 const SignUpForm = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [isEmailVerify, setIsEmailVerify] = useState(false);
-  const [showCodeInput, setShowCodeInput] = useState(false);
+  const [showEmailCodeInput, setShowEmailCodeInput] = useState(false);
+  const [isEmailVerifyRequestClick, setIsEmailVerifyRequestClick] = useState(false);
+  const [emailCodeTime, setEmailCodeTime] = useState(EMAIL_CODE_TIME);
   const { control, handleSubmit, watch, setError, formState, clearErrors, getValues } = useForm({
     defaultValues: { email: "", password: "", confirmPassword: "", code: "" },
     mode: "onTouched",
@@ -30,10 +39,12 @@ const SignUpForm = () => {
   const emailVerifyRequestMutation = useMutation({
     mutationFn: (email: string) => emailVerifyRequest({ email }),
     onSuccess: (res) => {
+      if (res === 400) return setError("email", { message: "잠시후에 시도해주세요." });
       if (res === 409) return setError("email", { message: ERROR_MESSAGE.emailDuplicate });
       if (res === 500) return showToast("이메일 인증에 실패했습니다.", false);
       showToast("인증번호를 발송했습니다.", true);
-      setShowCodeInput(true);
+      setShowEmailCodeInput(true);
+      setIsEmailVerifyRequestClick(true);
     },
   });
 
@@ -42,10 +53,13 @@ const SignUpForm = () => {
     onSuccess: (res) => {
       if (res === 400) return setError("code", { message: "인증번호가 만료되었습니다." });
       if (res === 404) return setError("code", { message: "인증번호가 일치하지 않습니다." });
-      showToast("인증 되었습니다.", true);
-      setIsEmailVerify(true);
-      clearErrors("email");
-      clearErrors("code");
+      if (res === true) {
+        showToast("인증 되었습니다.", true);
+        setIsEmailVerify(true);
+        clearErrors("email");
+        clearErrors("code");
+      }
+      return setError("code", { message: "잠시후에 시도해주세요." });
     },
   });
 
@@ -61,6 +75,17 @@ const SignUpForm = () => {
   const handleEmailVerifyConfirm = () => {
     emailVerifyMutation.mutate({ email: getValues("email"), code: getValues("code") });
   };
+
+  useEffect(() => {
+    if (!isEmailVerifyRequestClick) return;
+    if (emailCodeTime === 0) {
+      setIsEmailVerifyRequestClick(false);
+      setEmailCodeTime(EMAIL_CODE_TIME);
+      return;
+    }
+    const timerId = setTimeout(() => setEmailCodeTime(emailCodeTime - 1), 1000);
+    return () => clearTimeout(timerId);
+  }, [emailCodeTime, isEmailVerifyRequestClick]);
 
   return (
     <>
@@ -92,21 +117,32 @@ const SignUpForm = () => {
           render={({ field, fieldState }) => (
             <div className={inputStyles.inputBox}>
               <label className={inputStyles.label}>이메일*</label>
-              <div className={inputStyles.emailContainer}>
+              <div className={inputStyles.inputContainer}>
                 <input
                   ref={field.ref}
                   value={field.value}
                   onChange={(e) => {
                     field.onChange(String(e.target.value));
-                    setShowCodeInput(false);
+                    setShowEmailCodeInput(false);
                     setIsEmailVerify(false);
+                    setIsEmailVerifyRequestClick(false);
+                    setEmailCodeTime(EMAIL_CODE_TIME);
                   }}
                   onBlur={field.onBlur}
                   placeholder={PLACEHOLDER.email}
-                  className={`${inputStyles.emailInput} ${fieldState.error && inputStyles.error}`}
+                  className={`${inputStyles.signUpEmailInput} ${fieldState.error && inputStyles.error}`}
                 />
-                <button disabled={!regex.test(watch("email"))} className={inputStyles.emailVerifyRequestButton} type="button" onClick={handleEmailVerifyRequest}>
-                  {showCodeInput ? "재전송" : "인증하기"}
+                <button
+                  disabled={!regex.test(watch("email")) || isEmailVerifyRequestClick}
+                  className={inputStyles.emailVerifyRequestButton}
+                  type="button"
+                  onClick={handleEmailVerifyRequest}
+                >
+                  {isEmailVerifyRequestClick
+                    ? `${twoDigitNumber(Math.floor(emailCodeTime / 60))} : ${twoDigitNumber(emailCodeTime % 60)}`
+                    : showEmailCodeInput
+                      ? "재전송"
+                      : "인증하기"}
                 </button>
               </div>
               {fieldState.error && <ErrorMessage message={fieldState.error.message} />}
@@ -116,12 +152,20 @@ const SignUpForm = () => {
         <Controller
           control={control}
           name="code"
+          rules={{ required: "인증코드를 입력해주세요.", pattern: { value: /^[0-9]{6}/, message: "6자리 숫자를 입력해주세요." } }}
           render={({ field, fieldState }) => (
             <div>
-              {showCodeInput && (
-                <div className={inputStyles.emailContainer}>
-                  <input ref={field.ref} value={field.value} onChange={field.onChange} placeholder={PLACEHOLDER.confirmEmail} className={`${inputStyles.emailInput}`} />
-                  <button className={inputStyles.emailCodeVerifyButton} type="button" onClick={handleEmailVerifyConfirm}>
+              {showEmailCodeInput && (
+                <div className={inputStyles.inputContainer}>
+                  <input
+                    ref={field.ref}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    placeholder={PLACEHOLDER.confirmEmail}
+                    className={`${inputStyles.signUpEmailInput} ${fieldState.error && inputStyles.error}`}
+                  />
+                  <button className={inputStyles.emailCodeVerifyButton} type="button" disabled={fieldState.invalid} onClick={handleEmailVerifyConfirm}>
                     인증확인
                   </button>
                 </div>
@@ -138,8 +182,8 @@ const SignUpForm = () => {
           render={({ field, fieldState }) => (
             <Input
               label="비밀번호*"
-              type="password"
               {...field}
+              type="password"
               placeholder={PLACEHOLDER.signUpPassword}
               hasError={Boolean(fieldState.error)}
               errorText={fieldState.error?.message}
@@ -154,27 +198,24 @@ const SignUpForm = () => {
             required: ERROR_MESSAGE.confirmPasswordRequired,
             validate: {
               isMatch: (value) => {
-                if (value !== watch("password")) {
-                  return ERROR_MESSAGE.confirmPasswordCheck;
-                }
+                if (value !== watch("password")) return ERROR_MESSAGE.confirmPasswordCheck;
                 return true;
               },
             },
           }}
           render={({ field, fieldState }) => (
             <Input
-              label="비밀번호 재확인*"
-              type="password"
+              label="비밀번호 확인*"
               {...field}
+              type="password"
               placeholder={PLACEHOLDER.signUpPassword}
               hasError={Boolean(fieldState.error)}
               errorText={fieldState.error?.message}
             />
           )}
         />
-
         <div className={styles.buttonWrapper}>
-          <SubmitButton disabled={!formState.isValid || !isEmailVerify} type={"회원가입"} />
+          <SubmitButton disabled={!formState.isValid} type={"회원가입"} />
         </div>
       </form>
       {isModalOpen && <ImageModal type={"signup"} onClick={handleCloseModal} onClose={handleCloseModal} />}
