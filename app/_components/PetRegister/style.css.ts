@@ -117,6 +117,7 @@ export const label = style({
 export const input = style({
   padding: "1.3rem 1.8rem",
 
+  width: "100%",
   borderRadius: "10px",
   border: "1.5px solid #e2e2e2",
 
@@ -362,4 +363,31 @@ export const plusMarginWrapper = style({
   display: "flex",
   width: "100%",
   marginTop: "0.6rem",
+});
+
+export const checkPetNameButton = style({
+  position: "absolute",
+  right: "0.9rem",
+  top: "50%",
+  transform: "translateY(-50%)",
+
+  padding: "0.8rem 0.9rem",
+
+  borderRadius: "5px",
+
+  backgroundColor: "var(--LightOrange)",
+  color: "var(--MainOrange)",
+
+  selectors: {
+    "&:disabled": {
+      border: "none",
+      backgroundColor: "var(--GrayB1)",
+      color: "white",
+      cursor: "default",
+    },
+  },
+});
+
+export const nameInputWrapper = style({
+  position: "relative",
 });

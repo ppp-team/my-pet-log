@@ -15,12 +15,14 @@ import OptionalMessage from "./component/OptionalCheck";
 import CloseIcon from "@/public/icons/close.svg?url";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import { usePathname, useRouter } from "next/navigation";
-import { postPet } from "@/app/_api/pets";
+import { checkPetName, postPet } from "@/app/_api/pets";
 import { useModal } from "@/app/_hooks/useModal";
 import ImageModal from "@/app/_components/Modal/ImageModal";
 import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
 import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
+import Loading from "@/app/_components/Loading";
 
 export interface IFormInput {
   petName: string;
@@ -49,6 +51,7 @@ const PetRegister = () => {
   const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
+  const [isPetNameConfirm, setIsPetNameConfirm] = useState(false); //펫 이름 중복확인
 
   const {
     register,
@@ -57,7 +60,9 @@ const PetRegister = () => {
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onSubmit" });
+    clearErrors,
+    setError,
+  } = useForm<IFormInput>({ mode: "onTouched" });
 
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -103,7 +108,7 @@ const PetRegister = () => {
     }
   };
 
-  const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
+  const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "" && isPetNameConfirm;
 
   const handleNextSection = () => {
     if (isSectionValid) {
@@ -122,6 +127,16 @@ const PetRegister = () => {
     setProfileImage(URL.createObjectURL(files[0]));
     setValue("image", files[0]);
   };
+
+  //pet 이름 중복확인
+  const checkPetNameMutation = useMutation({
+    mutationFn: (name: string) => checkPetName({ name }),
+    onSuccess: (res) => {
+      if (!res) return setError("petName", { type: "duplicate", message: "중복된 이름입니다." });
+      setIsPetNameConfirm(true);
+      clearErrors("petName");
+    },
+  });
 
   useEffect(() => {
     if (!watch("image")) {
@@ -182,6 +197,7 @@ const PetRegister = () => {
 
   const section1 = (
     <>
+      {checkPetNameMutation.isPending && <Loading />}
       <div className={styles.profile}>
         <div
           className={styles.image}
@@ -198,8 +214,27 @@ const PetRegister = () => {
 
       {/* 이름 */}
       <label className={styles.label}>이름*</label>
-      <input className={styles.writeInput} {...register("petName", PET_NAME_RULES)} placeholder={PET_PLACEHOLDER.name} />
+      <div className={styles.nameInputWrapper}>
+        <input
+          className={styles.writeInput}
+          {...register("petName", {
+            ...PET_NAME_RULES,
+            validate: {
+              petNameVerify: () => {
+                if (isPetNameConfirm) return true;
+                return "중복확인을 해주세요.";
+              },
+            },
+            onChange: () => setIsPetNameConfirm(false),
+          })}
+          placeholder={PET_PLACEHOLDER.name}
+        />
+        <button disabled={!getValues("petName")} className={styles.checkPetNameButton} type="button" onClick={() => checkPetNameMutation.mutate(getValues("petName"))}>
+          중복확인
+        </button>
+      </div>
       {errors.petName && <ErrorMessage message={errors.petName.message} />}
+      {isPetNameConfirm && <ConfirmMessage message="사용가능한 이름입니다." />}
 
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
@@ -254,7 +289,7 @@ const PetRegister = () => {
         </>
       )}
 
-      <button className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
+      <button type="button" className={styles.button} onClick={handleNextSection} disabled={!isSectionValid}>
         다음
       </button>
     </>

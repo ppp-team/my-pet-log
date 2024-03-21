@@ -12,7 +12,7 @@ export const postPet = async ({ formData }: { formData: FormData }) => {
     // 응답 데이터 반환
     return res.data;
   } catch (error: any) {
-    console.error(error);
+    console.error(error.response.data.message);
     return null;
   }
 };
@@ -81,5 +81,15 @@ export const deletePet = async ({ petId }: { petId: string }) => {
   } catch (error) {
     console.error(error);
     return null;
+  }
+};
+
+export const checkPetName = async ({ name }: { name: string }) => {
+  try {
+    await instance.post(`my/pets/check/name`, { name });
+    return true;
+  } catch (error: any) {
+    console.error(error.response.data);
+    return false;
   }
 };
