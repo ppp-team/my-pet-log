@@ -39,7 +39,10 @@ const SignUpForm = () => {
   const emailVerifyRequestMutation = useMutation({
     mutationFn: (email: string) => emailVerifyRequest({ email }),
     onSuccess: (res) => {
-      if (res === 400) return setError("email", { message: "잠시후에 시도해주세요." });
+      if (res === 400) {
+        setShowEmailCodeInput(true);
+        return setError("email", { message: "이미 발송된 인증번호가 있습니다." });
+      }
       if (res === 409) return setError("email", { message: ERROR_MESSAGE.emailDuplicate });
       if (res === 500) return showToast("이메일 인증에 실패했습니다.", false);
       showToast("인증번호를 발송했습니다.", true);
