@@ -21,6 +21,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import ReplyComponent from "./ReplyComment";
 import * as styles from "./style.css";
 import "./swiper.css";
 
@@ -105,6 +106,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
     setIsKebabOpen(false);
     setNewCommentValue(comment.content.replaceAll("<br>", "\n"));
   };
+
   return (
     <>
       <div className={styles.commentContainer}>
@@ -158,7 +160,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
           )}
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            {/* <button className={styles.recommentButton}>답글</button> */}
+            <button className={styles.recommentButton}>답글</button>
             <button className={`${styles.commentLikeButton} ${comment.isCurrentUserLiked ? styles.LikeIcon : ""}`} onClick={handleCommentLike}>
               <LikeIcon color={comment.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} />
               {comment.likeCount}
@@ -166,6 +168,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
           </div>
         </div>
       </div>
+      {/* {comment.replies && comment.replies.map((reply) => <ReplyComponent key={reply.commentId} reply={reply} />)} */}
       <div>
         {isModalOpen && <Modal text="정말 댓글을 삭제하시겠습니까?" buttonText="삭제" onClick={() => deleteCommentMutation.mutate(comment.commentId)} onClose={closeModalFunc} />}
       </div>
