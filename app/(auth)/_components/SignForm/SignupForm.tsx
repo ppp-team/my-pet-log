@@ -130,6 +130,7 @@ const SignUpForm = () => {
                     setIsEmailVerify(false);
                     setIsEmailVerifyRequestClick(false);
                     setEmailCodeTime(EMAIL_CODE_TIME);
+                    clearErrors("code");
                   }}
                   onBlur={field.onBlur}
                   placeholder={PLACEHOLDER.email}
@@ -155,7 +156,7 @@ const SignUpForm = () => {
         <Controller
           control={control}
           name="code"
-          rules={{ required: "인증코드를 입력해주세요.", pattern: { value: /^[0-9]{6}/, message: "6자리 숫자를 입력해주세요." } }}
+          rules={{ required: "인증코드를 입력해주세요.", pattern: { value: /^[0-9]{6}$/, message: "6자리 숫자를 입력해주세요." } }}
           render={({ field, fieldState }) => (
             <div>
               {showEmailCodeInput && (
