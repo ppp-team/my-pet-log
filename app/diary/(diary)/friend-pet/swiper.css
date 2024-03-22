@@ -1,0 +1,10 @@
+.swiper.friend .swiper-pagination-bullet {
+  background-color: var(--MainOrange);
+}
+
+.swiper.friend .swiper-pagination {
+  width: 100% !important;
+  position: static;
+  transform: unset;
+  margin-top: 1rem;
+}
