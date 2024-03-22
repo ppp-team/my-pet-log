@@ -21,7 +21,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import ReplyComponent from "./ReplyComment";
+import ReComment from "./ReComment";
 import * as styles from "./style.css";
 import "./swiper.css";
 
@@ -168,7 +168,7 @@ const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps)
           </div>
         </div>
       </div>
-      {/* {comment.replies && comment.replies.map((reply) => <ReplyComponent key={reply.commentId} reply={reply} />)} */}
+      <ReComment />
       <div>
         {isModalOpen && <Modal text="정말 댓글을 삭제하시겠습니까?" buttonText="삭제" onClick={() => deleteCommentMutation.mutate(comment.commentId)} onClose={closeModalFunc} />}
       </div>

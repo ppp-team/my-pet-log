@@ -4,6 +4,8 @@ import instance from "@/app/_api/axios";
 import {
   Comment,
   GetCommentsRequest,
+  GetReCommentsRequest,
+  GetReCommentsResponse,
   GetCommentsResponse,
   GetDiaryListRequest,
   GetDiaryListResponse,
@@ -54,6 +56,18 @@ export const getComments = async ({ diaryId, page, size }: GetCommentsRequest): 
   const petId = cookies().get("petId")?.value;
   try {
     const res = await instance.get(`pets/${petId}/diaries/${diaryId}/comments`, { params: { page, size } });
+
+    return res.data;
+  } catch (error: any) {
+    console.error(error.response);
+    return null;
+  }
+};
+
+export const getReComments = async ({ ancestorId }: GetReCommentsRequest): Promise<GetReCommentsResponse | null> => {
+  const petId = cookies().get("petId")?.value;
+  try {
+    const res = await instance.get(`pets/${petId}/diaries/comments/${ancestorId}/recomment`);
 
     return res.data;
   } catch (error: any) {

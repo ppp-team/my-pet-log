@@ -3,7 +3,7 @@ import * as styles from "./style.css";
 import Image from "next/image";
 import LikeIcon from "@/public/icons/like.svg";
 
-const ReplyComponent = ({ reply }) => {
+const ReComment = () => {
   return (
     <div className={styles.replyContainer}>
       <div className={styles.commentHeader}>
@@ -20,4 +20,4 @@ const ReplyComponent = ({ reply }) => {
   );
 };
 
-export default ReplyComponent;
+export default ReComment;
