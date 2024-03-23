@@ -29,21 +29,22 @@ import { UserType } from "@/app/_types/user/types";
 import ImageModal from "@/app/_components/Modal/ImageModal";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
 import Loading from "@/app/_components/Loading";
+import { IFormInput } from "@/app/_components/PetRegister";
 
-export interface IFormInput {
-  petName: string;
-  image: File;
-  type: string;
-  breed: string;
-  gender: string;
-  neutering: boolean | null | string;
-  birthday: string | null;
-  firstMeet: string | null;
-  name: string;
-  weight: number | string | null;
-  registeredNumber: string | null;
-  id: string | number | null;
-}
+// export interface IFormInput {
+//   petName: string;
+//   image: File;
+//   type: string;
+//   breed: string;
+//   gender: string;
+//   neutering: boolean | null | string;
+//   birthday: string | null;
+//   firstMeet: string | null;
+//   name: string;
+//   weight: number | string | null;
+//   registeredNumber: string | null;
+//   id: string | number | null;
+// }
 
 const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const { isModalOpen: isConfirmModalOpen, openModalFunc: openConfirmModalFunc, closeModalFunc: closeConfirmModalFunc } = useModal();

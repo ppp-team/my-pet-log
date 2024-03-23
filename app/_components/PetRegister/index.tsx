@@ -1,28 +1,28 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
-import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTERNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
-import { useState, useEffect, useRef } from "react";
-import * as styles from "./style.css";
-import DefaultImage from "@/public/images/pet-profile-default.svg?url";
-import cameraIcon from "@/public/icons/camera.svg?url";
-import Image from "next/image";
-import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
-import { petOptions } from "@/public/data/petOptions";
-import ErrorMessage from "@/app/_components/ErrorMessage";
-import DropdownIcon from "@/public/icons/drop-down-icon.svg";
-import OptionalMessage from "./component/OptionalCheck";
-import CloseIcon from "@/public/icons/close.svg?url";
-import BackIcon from "@/public/icons/chevron-left.svg?url";
-import { usePathname, useRouter } from "next/navigation";
 import { checkPetName, postPet } from "@/app/_api/pets";
-import { useModal } from "@/app/_hooks/useModal";
+import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
+import ErrorMessage from "@/app/_components/ErrorMessage";
+import Loading from "@/app/_components/Loading";
 import ImageModal from "@/app/_components/Modal/ImageModal";
+import PetWeightInput from "@/app/_components/PetRegister/component/PetWeightInput";
+import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
 import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
 import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
+import { PET_NAME_RULES, PET_PLACEHOLDER, PET_REGISTERNUMBER_RULES } from "@/app/_constants/inputConstant";
+import { useModal } from "@/app/_hooks/useModal";
+import { petOptions } from "@/public/data/petOptions";
+import cameraIcon from "@/public/icons/camera.svg?url";
+import BackIcon from "@/public/icons/chevron-left.svg?url";
+import CloseIcon from "@/public/icons/close.svg?url";
+import DropdownIcon from "@/public/icons/drop-down-icon.svg";
+import DefaultImage from "@/public/images/pet-profile-default.svg?url";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
-import Loading from "@/app/_components/Loading";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as styles from "./style.css";
 
 export interface IFormInput {
   petName: string;
@@ -50,7 +50,6 @@ const PetRegister = () => {
   const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
   const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
-  const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
   const [isPetNameConfirm, setIsPetNameConfirm] = useState(false); //펫 이름 중복확인
 
   const {
@@ -189,12 +188,6 @@ const PetRegister = () => {
     setValue("gender", value);
   };
 
-  //몸무게
-  const clearWeightInput = () => {
-    setValue("weight", null);
-    setIsWeightDisabled((prev) => !prev);
-  };
-
   const section1 = (
     <>
       {checkPetNameMutation.isPending && <Loading />}
@@ -302,7 +295,7 @@ const PetRegister = () => {
       <GenderSelection selectedGender={selectedGender} handleGenderChange={handleGenderChange} />
 
       {/* 중성화 여부 */}
-      <label className={styles.label}>중성화 여부</label>
+      <label className={styles.label}>중성화 여부*</label>
       <NeuteringSelection selectedNeutering={selectedNeutering} handleNeuteringChange={handleNeuteringChange} />
 
       {/* 생일  */}
@@ -315,11 +308,7 @@ const PetRegister = () => {
 
       {/* 몸무게 */}
       <label className={styles.label}>몸무게</label>
-      <input className={styles.writeInput} {...register("weight", PET_WEIGHT_RULES)} placeholder={PET_PLACEHOLDER.weight} disabled={isWeightDisabled} />
-      {errors.weight && <ErrorMessage message={errors.weight.message} />}
-      <div className={styles.plusMarginWrapper}>
-        <OptionalMessage onClearInput={clearWeightInput} message={"모르겠어요"} />
-      </div>
+      <PetWeightInput register={register} setValue={setValue} getValue={getValues} errors={errors} watch={watch} />
 
       {/* 동물등록번호 */}
       <label className={styles.label}>동물등록번호</label>
