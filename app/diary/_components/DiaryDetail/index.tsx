@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteDiary, getComments, getDiary, getReComments, postComment, postDiaryLike } from "@/app/_api/diary";
+import { deleteDiary, getComments, getDiary, postComment, postDiaryLike } from "@/app/_api/diary";
 import { getMe } from "@/app/_api/users";
 import Modal from "@/app/_components/Modal";
 import { showToast } from "@/app/_components/Toast";
@@ -22,7 +22,6 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Comment from "./Comment";
-import ReComment from "./ReComment";
 import * as styles from "./style.css";
 import "./swiper.css";
 
@@ -63,19 +62,12 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
-  // //대댓글 조회
-  // const { data: reComments } = useQuery({
-  //   queryKey: ["reComments", { ancestorId }],
-  //   queryFn: () => getReComments({ ancestorId }),
-  // });
-
   const { targetRef, setTargetActive } = useInfiniteScroll({ callbackFunc: fetchNextPage });
 
   //댓글 생성
   const postCommentMutation = useMutation({
     mutationFn: () => postComment({ diaryId, content: commentValue }),
     onSuccess: (data: CommentType) => {
-      // 여기 타입을 CommentType으로 변경
       const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
       if (!newComments) return;
       newComments?.pages[0]?.content.unshift(data);
@@ -225,16 +217,15 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
 
         <section>
           <div className={styles.commentsCount}>댓글({diary.commentCount})</div>
-          <div>
+          <div className={styles.commentsList}>
             {comments?.pages.map((v, pageNum) =>
               v?.content.map((comment, contentNum) => (
-                <Comment diaryId={diaryId} petId={petId} comment={comment} pageNum={pageNum} contentNum={contentNum} key={comment.commentId} />
+                <Comment comment={comment} diaryId={diaryId} pageNum={pageNum} contentNum={contentNum} petId={petId} commentId={comment.commentId} key={comment.commentId} />
               )),
             )}
             {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
             {!isLoading && hasNextPage && <div ref={targetRef} />}
           </div>
-          {/* <div>{reComments && reComments.map((reComment) => <ReComment key={reComment.commentId} reply={reComment} />)}</div> */}
 
           <div className={styles.commentInputContainer}>
             <Image className={styles.profileImage} src={getImagePath(user.profilePath)} alt="유저 프로필 사진" width={30} height={30} />

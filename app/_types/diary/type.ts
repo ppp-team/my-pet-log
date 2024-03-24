@@ -149,28 +149,32 @@ export interface GetCommentsResponse {
 }
 
 export interface GetReCommentsResponse {
-  commentId: number;
-  content: string;
-  createdAt: string;
-  isCurrentUserLiked: boolean;
-  likeCount: number;
-  writer: {
-    id: string;
-    nickname: string;
-    profilePath: string;
-    isCurrentUser: boolean;
-  };
-  receiver: {
-    id: string;
-    nickname: string;
-    profilePath: string;
-    isCurrentUser: boolean;
-  };
-  taggedUsers: [
+  content: [
     {
-      id: string;
-      nickname: string;
-      isCurrentUser: boolean;
+      commentId: number;
+      content: string;
+      createdAt: string;
+      isCurrentUserLiked: boolean;
+      likeCount: number;
+      writer: {
+        id: string;
+        nickname: string;
+        profilePath: string;
+        isCurrentUser: boolean;
+      };
+      receiver: {
+        id: string;
+        nickname: string;
+        profilePath: string;
+        isCurrentUser: boolean;
+      };
+      taggedUsers: [
+        {
+          id: string;
+          nickname: string;
+          isCurrentUser: boolean;
+        },
+      ];
     },
   ];
 }

@@ -149,7 +149,13 @@ export const kebab = style({
   cursor: "pointer",
 });
 
-export const comments = style({ display: "flex" });
+export const comments = style({
+  display: "flex",
+});
+
+export const commentsList = style({
+  marginBottom: "6rem",
+});
 
 export const commentInputContainer = style({
   display: "flex",
