@@ -1,12 +1,12 @@
 "use client";
 
-import { deleteComment, deleteDiary, getComments, getDiary, postComment, postCommentLike, postDiaryLike, putComment } from "@/app/_api/diary";
+import { deleteDiary, getComments, getDiary, getReComments, postComment, postDiaryLike } from "@/app/_api/diary";
 import { getMe } from "@/app/_api/users";
 import Modal from "@/app/_components/Modal";
 import { showToast } from "@/app/_components/Toast";
 import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
 import { useModal } from "@/app/_hooks/useModal";
-import { Comment, GetCommentsResponse, GetDiaryResponse } from "@/app/_types/diary/type";
+import { CommentType, GetCommentsResponse } from "@/app/_types/diary/type";
 import { UserType } from "@/app/_types/users/types";
 import { getImagePath } from "@/app/_utils/getPersonImagePath";
 import { COMMENT_PAGE_SIZE } from "@/app/diary/(diary)/my-pet/constant";
@@ -21,160 +21,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Comment from "./Comment";
 import ReComment from "./ReComment";
 import * as styles from "./style.css";
 import "./swiper.css";
-
-interface CommentProps {
-  comment: Comment;
-  diaryId: number;
-  pageNum: number;
-  contentNum: number;
-  petId: number;
-}
-
-const Comment = ({ comment, diaryId, pageNum, contentNum, petId }: CommentProps) => {
-  const [isKebabOpen, setIsKebabOpen] = useState(false);
-  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
-  const [isEditing, setIsEditing] = useState(false);
-  const [newCommentValue, setNewCommentValue] = useState("");
-  const queryClient = useQueryClient();
-
-  //댓글 삭제
-  const deleteCommentMutation = useMutation({
-    mutationFn: (commentId: number) => deleteComment({ commentId }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
-      // const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
-      // if (newComments.pages) {
-      //   newComments.pages[pageNum].content.splice(contentNum, 1);
-      //   queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
-      // }
-      showToast("댓글을 삭제했습니다.", true);
-      closeModalFunc();
-
-      const newDiaryData = queryClient.getQueryData<GetDiaryResponse>(["diary", { petId, diaryId }]);
-      if (newDiaryData) {
-        newDiaryData.commentCount = newDiaryData.commentCount - 1;
-        queryClient.setQueryData(["diary", { petId, diaryId }], newDiaryData);
-      }
-    },
-    onError: (e) => {
-      showToast("댓글 삭제에 실패했습니다.", false);
-    },
-  });
-
-  //댓글 수정
-  const putCommentMutation = useMutation({
-    mutationFn: () => putComment({ commentId: comment.commentId, content: newCommentValue }),
-    onSuccess: () => {
-      const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
-      if (newComments.pages) {
-        newComments.pages[pageNum].content[contentNum].content = newCommentValue;
-        queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
-      }
-
-      showToast("댓글을 수정했습니다.", true);
-    },
-    onError: (e) => {
-      showToast("댓글 수정에 실패했습니다.", false);
-    },
-  });
-
-  //댓글 좋아요
-  const postCommentLikeMutation = useMutation({
-    mutationFn: () => postCommentLike({ commentId: comment.commentId }),
-  });
-
-  const handleCommentLike = () => {
-    postCommentLikeMutation.mutate();
-
-    const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
-    if (newComments.pages) {
-      newComments.pages[pageNum].content[contentNum].isCurrentUserLiked = !comment?.isCurrentUserLiked;
-      newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount + 1 : comment.likeCount - 1;
-      queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
-    }
-  };
-
-  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setNewCommentValue(e.target.value);
-  };
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setIsKebabOpen(false);
-    setNewCommentValue(comment.content.replaceAll("<br>", "\n"));
-  };
-
-  return (
-    <>
-      <div className={styles.commentContainer}>
-        <Image className={styles.profileImage} src={getImagePath(comment.writer.profilePath)} alt="유저 프로필 사진" width={30} height={30} />
-        <div className={styles.commentMain}>
-          <div className={styles.commentHeader}>
-            <p style={{ fontSize: "1.4rem", fontWeight: "700" }}>
-              {comment.writer.nickname} <span style={{ color: "var(--GrayA4)", fontWeight: "400" }}>{comment.createdAt}</span>
-            </p>
-            {comment.writer.isCurrentUser && (
-              <div onBlur={() => setIsKebabOpen(false)} tabIndex={1} style={{ position: "relative" }}>
-                <Image src={KebabIcon} alt="kebab icon" width={24} height={24} onClick={() => setIsKebabOpen(!isKebabOpen)} />
-                {isKebabOpen && (
-                  <ul className={styles.commentKebab}>
-                    <li className={styles.kebabList} onClick={handleEditClick}>
-                      수정하기
-                    </li>
-                    <li
-                      className={styles.kebabList}
-                      onClick={() => {
-                        openModalFunc();
-                        setIsKebabOpen(false);
-                      }}
-                    >
-                      삭제하기
-                    </li>
-                  </ul>
-                )}
-              </div>
-            )}
-          </div>
-          {isEditing ? (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setIsEditing(false);
-                if (newCommentValue === comment.content) return; //변경사항이 없으면 리턴
-                putCommentMutation.mutate();
-              }}
-            >
-              <textarea className={styles.commentTextarea} value={newCommentValue} onChange={handleCommentChange} />
-              <button className={styles.commentEditButton} type="submit">
-                저장
-              </button>
-              <button className={styles.commentEditButton} type="button" onClick={() => setIsEditing(false)}>
-                취소
-              </button>
-            </form>
-          ) : (
-            <pre className={styles.commentContent}>{comment.content}</pre>
-          )}
-
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <button className={styles.recommentButton}>답글</button>
-            <button className={`${styles.commentLikeButton} ${comment.isCurrentUserLiked ? styles.LikeIcon : ""}`} onClick={handleCommentLike}>
-              <LikeIcon color={comment.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} />
-              {comment.likeCount}
-            </button>
-          </div>
-        </div>
-      </div>
-      <ReComment />
-      <div>
-        {isModalOpen && <Modal text="정말 댓글을 삭제하시겠습니까?" buttonText="삭제" onClick={() => deleteCommentMutation.mutate(comment.commentId)} onClose={closeModalFunc} />}
-      </div>
-    </>
-  );
-};
 
 const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -213,13 +63,19 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => (lastPage?.last ? undefined : lastPageParam + 1),
   });
 
+  // //대댓글 조회
+  // const { data: reComments } = useQuery({
+  //   queryKey: ["reComments", { ancestorId }],
+  //   queryFn: () => getReComments({ ancestorId }),
+  // });
+
   const { targetRef, setTargetActive } = useInfiniteScroll({ callbackFunc: fetchNextPage });
 
   //댓글 생성
   const postCommentMutation = useMutation({
     mutationFn: () => postComment({ diaryId, content: commentValue }),
-    onSuccess: (data: Comment) => {
-      //invalidate하는 게 아니라 데이터 추가
+    onSuccess: (data: CommentType) => {
+      // 여기 타입을 CommentType으로 변경
       const newComments = queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]);
       if (!newComments) return;
       newComments?.pages[0]?.content.unshift(data);
@@ -277,10 +133,11 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
 
   useEffect(() => {
     setTargetActive((prev) => !prev);
-  }, [comments]);
+  }, [comments, setTargetActive]);
 
   if (!diary) return;
   if (!user) return;
+
   return (
     <>
       <div className={styles.root}>
@@ -377,6 +234,7 @@ const DiaryDetail = ({ petId, diaryId }: { petId: number; diaryId: number }) => 
             {/* 로딩중이 아니고 다음 페이지가 있을 때 무한스크롤됨 */}
             {!isLoading && hasNextPage && <div ref={targetRef} />}
           </div>
+          {/* <div>{reComments && reComments.map((reComment) => <ReComment key={reComment.commentId} reply={reComment} />)}</div> */}
 
           <div className={styles.commentInputContainer}>
             <Image className={styles.profileImage} src={getImagePath(user.profilePath)} alt="유저 프로필 사진" width={30} height={30} />

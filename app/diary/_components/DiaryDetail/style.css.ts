@@ -148,88 +148,8 @@ export const kebab = style({
 
   cursor: "pointer",
 });
+
 export const comments = style({ display: "flex" });
-
-export const commentContainer = style({
-  display: "flex",
-  gap: "0.9rem",
-
-  padding: "1.6rem",
-
-  borderBottom: "1px solid var(--GrayE8)",
-});
-
-export const commentMain = style({
-  width: "100%",
-
-  display: "flex",
-  flexDirection: "column",
-  gap: "0.8rem",
-});
-
-export const commentHeader = style({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-});
-
-export const commentContent = style({
-  fontSize: "1.4rem",
-  lineHeight: "1.8rem",
-
-  whiteSpace: "pre-wrap",
-});
-
-export const commentTextarea = style([
-  commentContent,
-  {
-    width: "100%",
-
-    padding: "0.8rem 1rem",
-
-    borderRadius: "10px",
-    border: "1.5px solid var(--GrayE2)",
-
-    ":focus": {
-      outline: "none",
-      border: "1px solid orange",
-    },
-  },
-]);
-
-export const commentEditButton = style({
-  color: "var(--GrayA4)",
-  fontSize: " 1.3rem",
-  textDecorationLine: "underline",
-
-  marginRight: "0.8rem",
-});
-
-const buttonCommon = {
-  borderRadius: "5px",
-  border: "1px solid var(--GrayE2)",
-
-  color: "var(--Gray81)",
-  fontSize: "1.3rem",
-};
-
-export const recommentButton = style({
-  padding: "0.4rem 1rem",
-
-  vars: buttonCommon,
-});
-
-export const commentLikeButton = style({
-  padding: "0.3rem 0.8rem",
-
-  display: "flex",
-  alignItems: "center",
-  gap: "0.3rem",
-
-  vars: buttonCommon,
-
-  fontSize: "1.4rem",
-});
 
 export const commentInputContainer = style({
   display: "flex",
@@ -276,6 +196,7 @@ export const sendIcon = style({
 
   cursor: "pointer",
 });
+
 export const commonKebab = style({
   width: "11rem",
   padding: "0.4rem 0.5rem",

@@ -26,7 +26,7 @@ export interface Writer {
   profilePath: string;
 }
 
-export interface Comment {
+export interface CommentType {
   commentId: number;
   content: string;
   createdAt: string;
@@ -121,7 +121,7 @@ export interface GetDiaryResponse {
 }
 
 export interface GetCommentsResponse {
-  content: Comment[];
+  content: CommentType[];
 
   pageable: {
     pageNumber: number;
