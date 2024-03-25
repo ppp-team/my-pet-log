@@ -2,8 +2,10 @@
 
 import instance from "@/app/_api/axios";
 import {
-  Comment,
+  CommentType,
   GetCommentsRequest,
+  GetReCommentsRequest,
+  GetReCommentsResponse,
   GetCommentsResponse,
   GetDiaryListRequest,
   GetDiaryListResponse,
@@ -62,6 +64,18 @@ export const getComments = async ({ diaryId, page, size }: GetCommentsRequest): 
   }
 };
 
+export const getReComments = async ({ ancestorId }: GetReCommentsRequest): Promise<GetReCommentsResponse | null> => {
+  const petId = cookies().get("petId")?.value;
+  try {
+    const res = await instance.get(`pets/${petId}/diaries/comments/${ancestorId}/recomment`);
+
+    return res.data;
+  } catch (error: any) {
+    console.error(error.response);
+    return null;
+  }
+};
+
 export const deleteDiary = async ({ diaryId }: { diaryId: number }) => {
   const petId = cookies().get("petId")?.value;
   try {
@@ -76,7 +90,7 @@ export const postDiaryLike = async ({ diaryId }: { diaryId: number }) => {
   await instance.post(`pets/${petId}/diaries/${diaryId}/like`);
 };
 
-export const postComment = async ({ diaryId, content }: PostCommentRequest): Promise<Comment> => {
+export const postComment = async ({ diaryId, content }: PostCommentRequest): Promise<CommentType> => {
   const petId = cookies().get("petId")?.value;
   const res = await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
   return res.data;

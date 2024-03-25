@@ -26,7 +26,7 @@ export interface Writer {
   profilePath: string;
 }
 
-export interface Comment {
+export interface CommentType {
   commentId: number;
   content: string;
   createdAt: string;
@@ -89,6 +89,10 @@ export interface GetCommentsRequest extends GetDiaryListRequest {
   diaryId: number;
 }
 
+export interface GetReCommentsRequest {
+  ancestorId: number;
+}
+
 export interface GetDiaryRequest {
   petId: number;
   diaryId: number;
@@ -117,7 +121,7 @@ export interface GetDiaryResponse {
 }
 
 export interface GetCommentsResponse {
-  content: Comment[];
+  content: CommentType[];
 
   pageable: {
     pageNumber: number;
@@ -142,6 +146,37 @@ export interface GetCommentsResponse {
   first: boolean;
   last: boolean;
   empty: boolean;
+}
+
+export interface GetReCommentsResponse {
+  content: [
+    {
+      commentId: number;
+      content: string;
+      createdAt: string;
+      isCurrentUserLiked: boolean;
+      likeCount: number;
+      writer: {
+        id: string;
+        nickname: string;
+        profilePath: string;
+        isCurrentUser: boolean;
+      };
+      receiver: {
+        id: string;
+        nickname: string;
+        profilePath: string;
+        isCurrentUser: boolean;
+      };
+      taggedUsers: [
+        {
+          id: string;
+          nickname: string;
+          isCurrentUser: boolean;
+        },
+      ];
+    },
+  ];
 }
 
 export interface PostDiaryRequest {
