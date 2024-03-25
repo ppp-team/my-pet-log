@@ -43,21 +43,19 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
   const queryClient = useQueryClient();
 
-  //수정하기
-  const { data: petInfo } = useQuery<PetType>({
+  //정보 불러오기
+  const { data: petInfo, isSuccess: isGetPetSuccess } = useQuery<PetType>({
     queryKey: ["petInfo", petId],
     queryFn: () => getPet(petId),
   });
 
-  const {
-    mutate: putPetMutation,
-    isPending,
-    isSuccess: isPutSuccess,
-  } = useMutation({
+  //수정하기
+  const { mutate: putPetMutation, isPending } = useMutation({
     mutationFn: (formData: FormData) => putPet({ petId: String(petId), formData }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["petInfo", petId] });
       queryClient.invalidateQueries({ queryKey: ["pets"] });
+      openConfirmModalFunc();
     },
     onError: () => {
       showToast("마이펫 수정에 실패했습니다.", false);
@@ -117,10 +115,10 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       type: data.type,
       breed: data.breed,
       gender: data.gender,
-      isNeutered: data.neutering === undefined ? null : data.neutering,
-      birth: data.birthday === "날짜 선택" ? null : data.birthday,
-      firstMeetDate: data.firstMeet === "날짜 선택" ? null : data.firstMeet,
-      weight: data.weight === "" ? null : data.weight,
+      isNeutered: data.neutering === "Y" ? true : false,
+      birth: data.birthday,
+      firstMeetDate: data.firstMeet,
+      weight: data.weight,
       registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
 
@@ -131,7 +129,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     formData.append("petImage", data.image);
 
     putPetMutation(formData);
-    openConfirmModalFunc();
   };
 
   useEffect(() => {
@@ -141,13 +138,13 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       setValue("breed", petInfo.breed);
       setValue("gender", petInfo.gender);
       setValue("neutering", petInfo.isNeutered);
-      setValue("birthday", petInfo.birth === null ? "날짜 선택" : petInfo.birth.slice(0, 10));
-      setValue("firstMeet", petInfo.firstMeetDate === null ? "날짜 선택" : petInfo?.firstMeetDate!.slice(0, 10));
+      setValue("birthday", petInfo.birth ? petInfo.birth.slice(0, 10) : null);
+      setValue("firstMeet", petInfo.firstMeetDate ? petInfo.firstMeetDate!.slice(0, 10) : null);
       setValue("weight", petInfo.weight);
       setValue("registeredNumber", petInfo.registeredNumber);
       setProfileImage(getImagePath(petInfo.petImageUrl));
     }
-  }, [isPutSuccess, petInfo, setValue]);
+  }, [isGetPetSuccess]);
 
   const handleNextSection = () => {
     if (isSectionValid) {

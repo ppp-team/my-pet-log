@@ -12,7 +12,7 @@ export const postPet = async ({ formData }: { formData: FormData }) => {
     // 응답 데이터 반환
     return res.data;
   } catch (error: any) {
-    console.error(error.response.data.message);
+    console.error(error.response.data);
     return null;
   }
 };

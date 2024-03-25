@@ -42,7 +42,7 @@ export interface IFormInput {
 const PetRegister = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [profileImage, setProfileImage] = useState<File | string | null>(DefaultImage);
-  const [section, setSection] = useState(2);
+  const [section, setSection] = useState(1);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
@@ -53,13 +53,13 @@ const PetRegister = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setValue,
     getValues,
     watch,
     clearErrors,
     setError,
-  } = useForm<IFormInput>({ mode: "onTouched" });
+  } = useForm<IFormInput>({ defaultValues: { firstMeet: null, birthday: null, weight: null }, mode: "onTouched" });
 
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -218,7 +218,7 @@ const PetRegister = () => {
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
       <div>
-        <button className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
+        <button type="button" className={`${styles.selectBox} ${typeOpen ? styles.selectBoxOpen : ""}`} onClick={() => setTypeOpen(true)}>
           {selectedType || "타입을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${typeOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
@@ -238,7 +238,7 @@ const PetRegister = () => {
       {/* 품종 */}
       <label className={styles.label}>품종*</label>
       {selectedType !== "기타" && (
-        <button className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
+        <button type="button" className={`${styles.selectBox} ${breedOpen ? styles.selectBoxOpen : ""}`} onClick={() => setBreedOpen(!breedOpen)}>
           {selectedBreed || "품종을 선택하세요"}
           <DropdownIcon className={`${styles.dropdownIcon} ${breedOpen ? styles.dropdownIconOpen : ""}`} />
         </button>
@@ -301,7 +301,7 @@ const PetRegister = () => {
       <input className={styles.writeInput} {...register("registeredNumber", PET_REGISTERNUMBER_RULES)} placeholder={PET_PLACEHOLDER.registeredNumber} />
       {errors.registeredNumber && <ErrorMessage message={errors.registeredNumber.message} />}
 
-      <button type="submit" className={styles.button}>
+      <button type="submit" className={styles.button} disabled={!isValid}>
         작성완료
       </button>
     </>
