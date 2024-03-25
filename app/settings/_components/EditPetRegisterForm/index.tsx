@@ -1,50 +1,35 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
-import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTERNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
-import { useState, useEffect, useRef, Suspense } from "react";
-import * as styles from "./style.css";
-import defaultImage from "@/public/images/pet-profile-default.svg?url";
-import cameraIcon from "@/public/icons/camera.svg?url";
-import Image from "next/image";
-import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
-import { petOptions } from "@/public/data/petOptions";
-import ErrorMessage from "@/app/_components/ErrorMessage";
-import DropdownIcon from "@/public/icons/drop-down-icon.svg";
-import OptionalMessage from "@/app/_components/PetRegister/component/OptionalCheck";
-import CloseIcon from "@/public/icons/close.svg?url";
-import BackIcon from "@/public/icons/chevron-left.svg?url";
-import { useRouter } from "next/navigation";
+import { getGuardians } from "@/app/_api/guardians";
 import { deletePet, getPet, putPet } from "@/app/_api/pets";
-import { useModal } from "@/app/_hooks/useModal";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { PetType } from "@/app/_types/petGroup/types";
+import { getMe } from "@/app/_api/users";
+import ErrorMessage from "@/app/_components/ErrorMessage";
+import Loading from "@/app/_components/Loading";
+import ImageModal from "@/app/_components/Modal/ImageModal";
+import { IFormInput } from "@/app/_components/PetRegister";
+import PetWeightInput from "@/app/_components/PetRegister/component/PetWeightInput";
+import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
 import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
 import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
 import { showToast } from "@/app/_components/Toast";
-import { getGuardians } from "@/app/_api/guardians";
+import { PET_NAME_RULES, PET_PLACEHOLDER, PET_REGISTERNUMBER_RULES } from "@/app/_constants/inputConstant";
+import { useModal } from "@/app/_hooks/useModal";
 import { GuardiansType } from "@/app/_types/guardians/types";
-import { getMe } from "@/app/_api/users";
+import { PetType } from "@/app/_types/petGroup/types";
 import { UserType } from "@/app/_types/user/types";
-import ImageModal from "@/app/_components/Modal/ImageModal";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
-import Loading from "@/app/_components/Loading";
-import { IFormInput } from "@/app/_components/PetRegister";
-
-// export interface IFormInput {
-//   petName: string;
-//   image: File;
-//   type: string;
-//   breed: string;
-//   gender: string;
-//   neutering: boolean | null | string;
-//   birthday: string | null;
-//   firstMeet: string | null;
-//   name: string;
-//   weight: number | string | null;
-//   registeredNumber: string | null;
-//   id: string | number | null;
-// }
+import { petOptions } from "@/public/data/petOptions";
+import cameraIcon from "@/public/icons/camera.svg?url";
+import BackIcon from "@/public/icons/chevron-left.svg?url";
+import CloseIcon from "@/public/icons/close.svg?url";
+import DropdownIcon from "@/public/icons/drop-down-icon.svg";
+import defaultImage from "@/public/images/pet-profile-default.svg?url";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as styles from "./style.css";
 
 const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const { isModalOpen: isConfirmModalOpen, openModalFunc: openConfirmModalFunc, closeModalFunc: closeConfirmModalFunc } = useModal();
@@ -55,9 +40,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
-  const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
-  const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
 
   const queryClient = useQueryClient();
 
@@ -158,7 +141,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       setValue("type", petInfo.type);
       setValue("breed", petInfo.breed);
       setValue("gender", petInfo.gender);
-      setSelectedGender(petInfo.gender);
       setValue("neutering", petInfo.isNeutered === "Y" ? true : false);
       setSelectedNeutering(petInfo.isNeutered === "Y" ? "true" : "false");
       setValue("birthday", petInfo.birth === null ? "날짜 선택" : petInfo.birth.slice(0, 10));
@@ -229,18 +211,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const handleNeuteringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedNeutering(e.target.value);
     setValue("neutering", e.target.value === "true" ? true : e.target.value === "false" ? false : null);
-  };
-
-  //성별 클릭여부
-  const handleGenderChange = (value: "MALE" | "FEMALE") => {
-    setSelectedGender(value);
-    setValue("gender", value);
-  };
-
-  //몸무게
-  const clearWeightInput = () => {
-    setValue("weight", null);
-    setIsWeightDisabled((prev) => !prev);
   };
 
   //삭제하기 버튼 누를시 리더인지 판별
@@ -338,7 +308,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     <>
       {/* 성별 */}
       <label className={styles.label}>성별*</label>
-      <GenderSelection selectedGender={selectedGender} handleGenderChange={handleGenderChange} />
+      <GenderSelection register={register} watch={watch} />
 
       {/* 중성화 여부 */}
       <label className={styles.label}>중성화 여부</label>
@@ -354,11 +324,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {/* 몸무게 */}
       <label className={styles.label}>몸무게</label>
-      <input className={styles.writeInput} {...register("weight", PET_WEIGHT_RULES)} placeholder={PET_PLACEHOLDER.weight} disabled={isWeightDisabled} />
-      {errors.weight && <ErrorMessage message={errors.weight.message} />}
-      <div className={styles.plusMarginWrapper}>
-        <OptionalMessage onClearInput={clearWeightInput} message={"모르겠어요"} />
-      </div>
+      <PetWeightInput register={register} setValue={setValue} getValue={getValues} errors={errors} watch={watch} />
 
       {/* 동물등록번호 */}
       <label className={styles.label}>동물등록번호</label>

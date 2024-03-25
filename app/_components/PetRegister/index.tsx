@@ -42,13 +42,12 @@ export interface IFormInput {
 const PetRegister = () => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
   const [profileImage, setProfileImage] = useState<File | string | null>(DefaultImage);
-  const [section, setSection] = useState(1);
+  const [section, setSection] = useState(2);
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
   const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
   const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
-  const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
   const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isPetNameConfirm, setIsPetNameConfirm] = useState(false); //펫 이름 중복확인
 
@@ -87,7 +86,7 @@ const PetRegister = () => {
       breed: data.breed,
       gender: data.gender,
       isNeutered: data.neutering,
-      birth: data.birthday === "날짜 선택" ? null : data.birthday,
+      birth: data.birthday,
       firstMeetDate: data.firstMeet === "날짜 선택" ? null : data.firstMeet,
       weight: data.weight === "" ? null : data.weight,
       registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
@@ -180,12 +179,6 @@ const PetRegister = () => {
   const handleNeuteringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedNeutering(e.target.value);
     setValue("neutering", e.target.value === "true" ? true : e.target.value === "false" ? false : null);
-  };
-
-  //성별 클릭여부
-  const handleGenderChange = (value: "MALE" | "FEMALE") => {
-    setSelectedGender(value);
-    setValue("gender", value);
   };
 
   const section1 = (
@@ -292,7 +285,7 @@ const PetRegister = () => {
     <>
       {/* 성별 */}
       <label className={styles.label}>성별*</label>
-      <GenderSelection selectedGender={selectedGender} handleGenderChange={handleGenderChange} />
+      <GenderSelection register={register} watch={watch} />
 
       {/* 중성화 여부 */}
       <label className={styles.label}>중성화 여부*</label>
