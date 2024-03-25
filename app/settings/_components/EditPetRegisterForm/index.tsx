@@ -40,7 +40,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
-  const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
 
   const queryClient = useQueryClient();
 
@@ -141,8 +140,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       setValue("type", petInfo.type);
       setValue("breed", petInfo.breed);
       setValue("gender", petInfo.gender);
-      setValue("neutering", petInfo.isNeutered === "Y" ? true : false);
-      setSelectedNeutering(petInfo.isNeutered === "Y" ? "true" : "false");
+      setValue("neutering", petInfo.isNeutered);
       setValue("birthday", petInfo.birth === null ? "날짜 선택" : petInfo.birth.slice(0, 10));
       setValue("firstMeet", petInfo.firstMeetDate === null ? "날짜 선택" : petInfo?.firstMeetDate!.slice(0, 10));
       setValue("weight", petInfo.weight);
@@ -205,12 +203,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const handleBreedClick = (breed: string) => {
     setValue("breed", breed);
     setBreedOpen((prev) => !prev);
-  };
-
-  //중성화
-  const handleNeuteringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedNeutering(e.target.value);
-    setValue("neutering", e.target.value === "true" ? true : e.target.value === "false" ? false : null);
   };
 
   //삭제하기 버튼 누를시 리더인지 판별
@@ -311,8 +303,8 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       <GenderSelection register={register} watch={watch} />
 
       {/* 중성화 여부 */}
-      <label className={styles.label}>중성화 여부</label>
-      <NeuteringSelection selectedNeutering={selectedNeutering} handleNeuteringChange={handleNeuteringChange} />
+      <label className={styles.label}>중성화 여부*</label>
+      <NeuteringSelection register={register} watch={watch} />
 
       {/* 생일  */}
       <label className={styles.label}>생일</label>

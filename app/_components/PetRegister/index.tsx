@@ -30,7 +30,7 @@ export interface IFormInput {
   type: string;
   breed: string;
   gender: "MALE" | "FEMALE";
-  neutering: boolean | null;
+  neutering: "Y" | "N";
   birthday: string | null;
   firstMeet: string | null;
   name: string;
@@ -48,7 +48,6 @@ const PetRegister = () => {
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
   const [selectedType, setSelectedType] = useState(""); //타입 선택 반영
   const [selectedBreed, setSelectedBreed] = useState(""); //품종 선택 반영
-  const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
   const [isPetNameConfirm, setIsPetNameConfirm] = useState(false); //펫 이름 중복확인
 
   const {
@@ -85,10 +84,10 @@ const PetRegister = () => {
       type: data.type,
       breed: data.breed,
       gender: data.gender,
-      isNeutered: data.neutering,
+      isNeutered: data.neutering === "Y" ? true : false,
       birth: data.birthday,
-      firstMeetDate: data.firstMeet === "날짜 선택" ? null : data.firstMeet,
-      weight: data.weight === "" ? null : data.weight,
+      firstMeetDate: data.firstMeet,
+      weight: data.weight,
       registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
 
@@ -173,12 +172,6 @@ const PetRegister = () => {
     setValue("breed", breed);
     setSelectedBreed(breed);
     setBreedOpen((prev) => !prev);
-  };
-
-  //중성화
-  const handleNeuteringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedNeutering(e.target.value);
-    setValue("neutering", e.target.value === "true" ? true : e.target.value === "false" ? false : null);
   };
 
   const section1 = (
@@ -289,7 +282,7 @@ const PetRegister = () => {
 
       {/* 중성화 여부 */}
       <label className={styles.label}>중성화 여부*</label>
-      <NeuteringSelection selectedNeutering={selectedNeutering} handleNeuteringChange={handleNeuteringChange} />
+      <NeuteringSelection register={register} watch={watch} />
 
       {/* 생일  */}
       <label className={styles.label}>생일</label>

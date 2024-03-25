@@ -7,7 +7,7 @@ interface Props {
   watch: UseFormWatch<IFormInput>;
 }
 
-const GenderSelection: React.FC<Props> = ({ register, watch }) => {
+const GenderSelection = ({ register, watch }: Props) => {
   return (
     <div className={styles.radioContainer}>
       <input type="radio" id="MALE" value="MALE" {...register("gender")} style={{ display: "none" }} />
