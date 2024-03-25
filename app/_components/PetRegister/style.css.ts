@@ -391,3 +391,23 @@ export const checkPetNameButton = style({
 export const nameInputWrapper = style({
   position: "relative",
 });
+
+export const deleteButton = style({
+  marginTop: "3.2rem",
+  padding: "0.6rem 1.4rem",
+  borderRadius: "5px",
+  border: "1px solid var(--Gray81)",
+
+  color: "var(--Gray81)",
+
+  fontSize: "1.4rem",
+  fontWeight: 500,
+
+  background: "var(--White)",
+
+  ":hover": {
+    color: "var(--White)",
+    background: "var(--GrayE2)",
+    border: "1px solid var(--GrayE2)",
+  },
+});

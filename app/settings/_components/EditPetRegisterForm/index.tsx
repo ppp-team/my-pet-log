@@ -1,7 +1,7 @@
 "use client";
 
 import { getGuardians } from "@/app/_api/guardians";
-import { deletePet, getPet, putPet } from "@/app/_api/pets";
+import { checkPetName, deletePet, getPet, putPet } from "@/app/_api/pets";
 import { getMe } from "@/app/_api/users";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import Loading from "@/app/_components/Loading";
@@ -29,7 +29,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import * as styles from "./style.css";
+import * as styles from "@/app/_components/PetRegister/style.css";
+import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
 
 const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const { isModalOpen: isConfirmModalOpen, openModalFunc: openConfirmModalFunc, closeModalFunc: closeConfirmModalFunc } = useModal();
@@ -40,6 +41,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
+  const [isPetNameConfirm, setIsPetNameConfirm] = useState<boolean | null>(null); //펫 이름 중복확인
 
   const queryClient = useQueryClient();
 
@@ -101,10 +103,12 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onSubmit" });
+    setError,
+    clearErrors,
+  } = useForm<IFormInput>({ mode: "onTouched" });
 
   //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
-  const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
+  const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "" && (isPetNameConfirm || isPetNameConfirm === null);
 
   const router = useRouter();
 
@@ -131,6 +135,15 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     putPetMutation(formData);
   };
 
+  //pet 이름 중복확인
+  const checkPetNameMutation = useMutation({
+    mutationFn: (name: string) => checkPetName({ name }),
+    onSuccess: (res) => {
+      if (!res) return setError("petName", { type: "duplicate", message: "중복된 이름입니다." });
+      setIsPetNameConfirm(true);
+      clearErrors("petName");
+    },
+  });
   useEffect(() => {
     if (petInfo) {
       setValue("petName", petInfo.name);
@@ -233,8 +246,32 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {/* 이름 */}
       <label className={styles.label}>이름*</label>
-      <input className={styles.writeInput} {...register("petName", PET_NAME_RULES)} placeholder={PET_PLACEHOLDER.name} />
+      <div className={styles.nameInputWrapper}>
+        <input
+          className={styles.writeInput}
+          {...register("petName", {
+            ...PET_NAME_RULES,
+            validate: {
+              petNameVerify: () => {
+                if (isPetNameConfirm) return true;
+                return "중복확인을 해주세요.";
+              },
+            },
+            onChange: () => setIsPetNameConfirm(false),
+          })}
+          placeholder={PET_PLACEHOLDER.name}
+        />
+        <button
+          disabled={!getValues("petName") || isPetNameConfirm === null}
+          className={styles.checkPetNameButton}
+          type="button"
+          onClick={() => checkPetNameMutation.mutate(getValues("petName"))}
+        >
+          중복확인
+        </button>
+      </div>
       {errors.petName && <ErrorMessage message={errors.petName.message} />}
+      {isPetNameConfirm && <ConfirmMessage message="사용가능한 이름입니다." />}
 
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
@@ -321,11 +358,9 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       {errors.registeredNumber && <ErrorMessage message={errors.registeredNumber.message} />}
 
       {/* 삭제하기 버튼 */}
-      <div className={styles.deleteButtonWrapper}>
-        <button type="button" className={styles.deleteButton} onClick={() => handleDelete()}>
-          동물 삭제하기
-        </button>
-      </div>
+      <button type="button" className={styles.deleteButton} onClick={() => handleDelete()}>
+        동물 삭제하기
+      </button>
       <button type="submit" className={styles.button}>
         작성완료
       </button>
