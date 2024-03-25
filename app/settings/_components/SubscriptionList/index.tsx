@@ -3,19 +3,13 @@ import { useModal } from "@/app/_hooks/useModal";
 import Modal from "@/app/_components/Modal";
 import { container, memberlist, profileWrapper, profileImg, nickname, button } from "./style.css";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
 import { showToast } from "@/app/_components/Toast";
-import { getSubscribedPet } from "@/app/_api/subscription";
+import { getSubscribedPet, postPetSubscriptions } from "@/app/_api/subscription";
 import { SubscribedPetType } from "@/app/_types/subscriptions/types";
 import EmptySubscribedPet from "@/app/settings/_components/EmptySubscribedPet";
-
-// const mockSubscriptionList = [
-//   { petId: 46, name: "나는짹짹", profilePath: "PET/2024-02-18/b66403bdc75143cdb63d5d74b7faf6c120240218165405674.jpg" },
-//   { petId: 47, name: "나는앵무", profilePath: "PET/2024-02-18/1be783fb8c9f4ea59648294d53fe486e20240218173225597.jpg" },
-// ];
 
 const SubscriptionList = () => {
   const queryClient = useQueryClient();
@@ -24,27 +18,25 @@ const SubscriptionList = () => {
     queryFn: () => getSubscribedPet(),
   });
 
-  const router = useRouter();
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
-  const [selectedSubscriptionPetId, setSelectedSubscriptionPetId] = useState<string>("");
+  const [selectedSubscriptionPetId, setSelectedSubscriptionPetId] = useState<number | null>(null);
   const [selectedSubscriptionPetName, setSelectedSubscriptionPetName] = useState<string>("");
 
-  // const cancelSubscriptionMutation = useMutation({
-  //   mutationFn: (subscriptionPetId: number) => cancelSubscriptionPet(subscriptionPetId),
+  const cancelSubscriptionMutation = useMutation({
+    mutationFn: (id: number) => postPetSubscriptions(id),
 
-  //   onSuccess: () => {
-  //     showToast("구독이 취소되었습니다", true);
-  //     queryClient.invalidateQueries({ queryKey: ["subscription"] });
-  //   },
-  // });
+    onSuccess: () => {
+      showToast("구독이 취소되었습니다", true);
+      queryClient.invalidateQueries({ queryKey: ["subscribedPet"] });
+    },
+  });
 
   // 구독 취소 버튼 누를 시
   const handleConfirm = () => {
     closeModalFunc();
 
     if (selectedSubscriptionPetId !== null) {
-      console.log("구독취소된다능");
-      // cancelSubscriptionMutation.mutate(selectedSubscriptionPetId);
+      cancelSubscriptionMutation.mutate(selectedSubscriptionPetId);
     }
   };
 

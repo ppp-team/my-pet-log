@@ -16,7 +16,7 @@ export const getSubscriberList = async (petId: number) => {
 };
 
 //구독 및 구독 취소
-export const PostPetSubscriptions = async (petId: number) => {
+export const postPetSubscriptions = async (petId: number) => {
   try {
     const response = await instance.post(`/pets/${petId}/subscriptions`);
     return response.data;

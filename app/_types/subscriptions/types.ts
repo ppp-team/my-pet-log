@@ -7,7 +7,7 @@ export interface SubscriberListType {
 
 //구독중인 펫계정
 export interface SubscribedPetType {
-  id: string;
+  id: number;
   name: string;
   profilePath: string;
 }
