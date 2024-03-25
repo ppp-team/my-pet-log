@@ -3,21 +3,31 @@ import { useModal } from "@/app/_hooks/useModal";
 import Modal from "@/app/_components/Modal";
 import { container, memberlist, profileWrapper, profileImg, nickname, button } from "./style.css";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
 import { showToast } from "@/app/_components/Toast";
+import { getSubscribedPet } from "@/app/_api/subscription";
+import { SubscribedPetType } from "@/app/_types/subscriptions/types";
+import EmptySubscribedPet from "@/app/settings/_components/EmptySubscribedPet";
 
-const mockSubscriptionList = [
-  { petId: 46, name: "나는짹짹", petImageUrl: "PET/2024-02-18/b66403bdc75143cdb63d5d74b7faf6c120240218165405674.jpg" },
-  { petId: 47, name: "나는앵무", petImageUrl: "PET/2024-02-18/1be783fb8c9f4ea59648294d53fe486e20240218173225597.jpg" },
-];
+// const mockSubscriptionList = [
+//   { petId: 46, name: "나는짹짹", profilePath: "PET/2024-02-18/b66403bdc75143cdb63d5d74b7faf6c120240218165405674.jpg" },
+//   { petId: 47, name: "나는앵무", profilePath: "PET/2024-02-18/1be783fb8c9f4ea59648294d53fe486e20240218173225597.jpg" },
+// ];
 
 const SubscriptionList = () => {
-  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
-  const [selectedSubscriptionPetId, setSelectedSubscriptionPetId] = useState<number | null>(null);
-  const [selectedSubscriptionPetName, setSelectedSubscriptionPetName] = useState<string | null>(null);
   const queryClient = useQueryClient();
+  const { data: accountsData } = useQuery<SubscribedPetType[]>({
+    queryKey: ["subscribedPet"],
+    queryFn: () => getSubscribedPet(),
+  });
+
+  const router = useRouter();
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  const [selectedSubscriptionPetId, setSelectedSubscriptionPetId] = useState<string>("");
+  const [selectedSubscriptionPetName, setSelectedSubscriptionPetName] = useState<string>("");
 
   // const cancelSubscriptionMutation = useMutation({
   //   mutationFn: (subscriptionPetId: number) => cancelSubscriptionPet(subscriptionPetId),
@@ -38,19 +48,22 @@ const SubscriptionList = () => {
     }
   };
 
+  //구독중인 계정이 0개일 때
+  if (accountsData?.length === 0) return <EmptySubscribedPet />;
+
   return (
     <>
       <main className={container}>
-        {mockSubscriptionList.map((member) => (
-          <section key={member.petId} className={memberlist}>
+        {accountsData?.map((member) => (
+          <section key={member.id} className={memberlist}>
             <div className={profileWrapper}>
-              <Image className={profileImg} src={getImagePath(member.petImageUrl)} alt="profile icon" width={40} height={40} />
+              <Image className={profileImg} src={getImagePath(member.profilePath)} alt="profile icon" width={40} height={40} />
               <p className={nickname}>{member.name}</p>
             </div>
             <button
               className={button}
               onClick={() => {
-                setSelectedSubscriptionPetId(member.petId);
+                setSelectedSubscriptionPetId(member.id);
                 setSelectedSubscriptionPetName(member.name);
                 openModalFunc();
               }}
