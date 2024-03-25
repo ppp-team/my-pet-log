@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const profileInfo = style({
-  margin: "2rem 2rem 0rem",
+  margin: "2rem 2rem 1rem",
   display: "flex",
   justifyItems: "center",
   alignItems: "center",
@@ -11,4 +11,12 @@ export const profileInfo = style({
 export const text = style({
   fontSize: "1.4rem",
   fontWeight: "600",
+});
+
+export const image = style({
+  width: "100%",
+  height: "35rem",
+
+  backgroundSize: "cover",
+  backgroundPosition: "center",
 });
