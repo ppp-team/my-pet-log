@@ -1,49 +1,36 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
-import { PET_NAME_RULES, PET_WEIGHT_RULES, PET_REGISTERNUMBER_RULES, PET_PLACEHOLDER, PET_GENDER_RULES } from "@/app/_constants/inputConstant";
-import { useState, useEffect, useRef, Suspense } from "react";
-import * as styles from "./style.css";
-import defaultImage from "@/public/images/pet-profile-default.svg?url";
-import cameraIcon from "@/public/icons/camera.svg?url";
-import Image from "next/image";
-import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
-import { petOptions } from "@/public/data/petOptions";
+import { getGuardians } from "@/app/_api/guardians";
+import { checkPetName, deletePet, getPet, putPet } from "@/app/_api/pets";
+import { getMe } from "@/app/_api/users";
 import ErrorMessage from "@/app/_components/ErrorMessage";
-import DropdownIcon from "@/public/icons/drop-down-icon.svg";
-import OptionalMessage from "@/app/_components/PetRegister/component/OptionalCheck";
-import CloseIcon from "@/public/icons/close.svg?url";
-import BackIcon from "@/public/icons/chevron-left.svg?url";
-import { useRouter } from "next/navigation";
-import { deletePet, getPet, putPet } from "@/app/_api/pets";
-import { useModal } from "@/app/_hooks/useModal";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { PetType } from "@/app/_types/petGroup/types";
+import Loading from "@/app/_components/Loading";
+import ImageModal from "@/app/_components/Modal/ImageModal";
+import { IFormInput } from "@/app/_components/PetRegister";
+import PetWeightInput from "@/app/_components/PetRegister/component/PetWeightInput";
+import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
 import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
 import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
 import { showToast } from "@/app/_components/Toast";
-import { getGuardians } from "@/app/_api/guardians";
+import { PET_ERROR_MESSAGE, PET_NAME_RULES, PET_PLACEHOLDER, PET_REGISTERNUMBER_RULES } from "@/app/_constants/inputConstant";
+import { useModal } from "@/app/_hooks/useModal";
 import { GuardiansType } from "@/app/_types/guardians/types";
-import { getMe } from "@/app/_api/users";
+import { PetType } from "@/app/_types/petGroup/types";
 import { UserType } from "@/app/_types/user/types";
-import ImageModal from "@/app/_components/Modal/ImageModal";
 import { getImagePath } from "@/app/_utils/getPetImagePath";
-import Loading from "@/app/_components/Loading";
-
-export interface IFormInput {
-  petName: string;
-  image: File;
-  type: string;
-  breed: string;
-  gender: string;
-  neutering: boolean | null | string;
-  birthday: string | null;
-  firstMeet: string | null;
-  name: string;
-  weight: number | string | null;
-  registeredNumber: string | null;
-  id: string | number | null;
-}
+import { petOptions } from "@/public/data/petOptions";
+import cameraIcon from "@/public/icons/camera.svg?url";
+import BackIcon from "@/public/icons/chevron-left.svg?url";
+import CloseIcon from "@/public/icons/close.svg?url";
+import DropdownIcon from "@/public/icons/drop-down-icon.svg";
+import defaultImage from "@/public/images/pet-profile-default.svg?url";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as styles from "@/app/_components/PetRegister/style.css";
+import ConfirmMessage from "@/app/_components/ConfirmMessage/ConfirmMessage";
 
 const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const { isModalOpen: isConfirmModalOpen, openModalFunc: openConfirmModalFunc, closeModalFunc: closeConfirmModalFunc } = useModal();
@@ -54,27 +41,23 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const [breedOpen, setBreedOpen] = useState(false); //모달상태
   const [typeOpen, setTypeOpen] = useState(false); //모달상태
   const dropdownRef = useRef<HTMLUListElement>(null); //모달 외부 클릭시 닫히도록
-  const [selectedGender, setSelectedGender] = useState<string>(""); //성별 선택 반영
-  const [selectedNeutering, setSelectedNeutering] = useState(""); //중성화 선택 반영
-  const [isWeightDisabled, setIsWeightDisabled] = useState(false); //몸무게 모르겠어요 반영
+  const [isPetNameConfirm, setIsPetNameConfirm] = useState<boolean | null>(null); //펫 이름 중복확인
 
   const queryClient = useQueryClient();
 
-  //수정하기
-  const { data: petInfo } = useQuery<PetType>({
+  //정보 불러오기
+  const { data: petInfo, isSuccess: isGetPetSuccess } = useQuery<PetType>({
     queryKey: ["petInfo", petId],
     queryFn: () => getPet(petId),
   });
 
-  const {
-    mutate: putPetMutation,
-    isPending,
-    isSuccess: isPutSuccess,
-  } = useMutation({
+  //수정하기
+  const { mutate: putPetMutation, isPending } = useMutation({
     mutationFn: (formData: FormData) => putPet({ petId: String(petId), formData }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["petInfo", petId] });
       queryClient.invalidateQueries({ queryKey: ["pets"] });
+      openConfirmModalFunc();
     },
     onError: () => {
       showToast("마이펫 수정에 실패했습니다.", false);
@@ -116,14 +99,16 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setValue,
     getValues,
     watch,
-  } = useForm<IFormInput>({ mode: "onSubmit" });
+    setError,
+    clearErrors,
+  } = useForm<IFormInput>({ mode: "onTouched" });
 
   //section1의 유효성 검사(값이 있는 경우에만 버튼클릭가능)
-  const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "";
+  const isSectionValid = watch("petName") && watch("type") && watch("breed") !== "" && (isPetNameConfirm || isPetNameConfirm === null);
 
   const router = useRouter();
 
@@ -134,10 +119,10 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       type: data.type,
       breed: data.breed,
       gender: data.gender,
-      isNeutered: data.neutering === undefined ? null : data.neutering,
-      birth: data.birthday === "날짜 선택" ? null : data.birthday,
-      firstMeetDate: data.firstMeet === "날짜 선택" ? null : data.firstMeet,
-      weight: data.weight === "" ? null : data.weight,
+      isNeutered: data.neutering === "Y" ? true : false,
+      birth: data.birthday,
+      firstMeetDate: data.firstMeet,
+      weight: data.weight,
       registeredNumber: data.registeredNumber === "" ? null : data.registeredNumber,
     };
 
@@ -148,25 +133,31 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     formData.append("petImage", data.image);
 
     putPetMutation(formData);
-    openConfirmModalFunc();
   };
 
+  //pet 이름 중복확인
+  const checkPetNameMutation = useMutation({
+    mutationFn: (name: string) => checkPetName({ name }),
+    onSuccess: (res) => {
+      if (!res) return setError("petName", { type: "duplicate", message: PET_ERROR_MESSAGE.nameDuplicate });
+      setIsPetNameConfirm(true);
+      clearErrors("petName");
+    },
+  });
   useEffect(() => {
     if (petInfo) {
       setValue("petName", petInfo.name);
       setValue("type", petInfo.type);
       setValue("breed", petInfo.breed);
       setValue("gender", petInfo.gender);
-      setSelectedGender(petInfo.gender);
-      setValue("neutering", petInfo.isNeutered === "Y" ? true : false);
-      setSelectedNeutering(petInfo.isNeutered === "Y" ? "true" : "false");
-      setValue("birthday", petInfo.birth === null ? "날짜 선택" : petInfo.birth.slice(0, 10));
-      setValue("firstMeet", petInfo.firstMeetDate === null ? "날짜 선택" : petInfo?.firstMeetDate!.slice(0, 10));
+      setValue("neutering", petInfo.isNeutered);
+      setValue("birthday", petInfo.birth ? petInfo.birth.slice(0, 10) : null);
+      setValue("firstMeet", petInfo.firstMeetDate ? petInfo.firstMeetDate!.slice(0, 10) : null);
       setValue("weight", petInfo.weight);
       setValue("registeredNumber", petInfo.registeredNumber);
       setProfileImage(getImagePath(petInfo.petImageUrl));
     }
-  }, [isPutSuccess, petInfo, setValue]);
+  }, [isGetPetSuccess]);
 
   const handleNextSection = () => {
     if (isSectionValid) {
@@ -224,24 +215,6 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     setBreedOpen((prev) => !prev);
   };
 
-  //중성화
-  const handleNeuteringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedNeutering(e.target.value);
-    setValue("neutering", e.target.value === "true" ? true : e.target.value === "false" ? false : null);
-  };
-
-  //성별 클릭여부
-  const handleGenderChange = (value: "MALE" | "FEMALE") => {
-    setSelectedGender(value);
-    setValue("gender", value);
-  };
-
-  //몸무게
-  const clearWeightInput = () => {
-    setValue("weight", null);
-    setIsWeightDisabled((prev) => !prev);
-  };
-
   //삭제하기 버튼 누를시 리더인지 판별
   const handleDelete = () => {
     isLeader ? openDeleteModalFunc() : openUnAuthorizedModalFunc();
@@ -273,8 +246,32 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {/* 이름 */}
       <label className={styles.label}>이름*</label>
-      <input className={styles.writeInput} {...register("petName", PET_NAME_RULES)} placeholder={PET_PLACEHOLDER.name} />
+      <div className={styles.nameInputWrapper}>
+        <input
+          className={styles.writeInput}
+          {...register("petName", {
+            ...PET_NAME_RULES,
+            validate: {
+              petNameVerify: () => {
+                if (isPetNameConfirm || isPetNameConfirm === null) return true;
+                return "중복확인을 해주세요.";
+              },
+            },
+            onChange: () => setIsPetNameConfirm(false),
+          })}
+          placeholder={PET_PLACEHOLDER.name}
+        />
+        <button
+          disabled={!getValues("petName") || isPetNameConfirm === null}
+          className={styles.checkPetNameButton}
+          type="button"
+          onClick={() => checkPetNameMutation.mutate(getValues("petName"))}
+        >
+          중복확인
+        </button>
+      </div>
       {errors.petName && <ErrorMessage message={errors.petName.message} />}
+      {isPetNameConfirm && <ConfirmMessage message="사용가능한 이름입니다." />}
 
       {/* 타입 */}
       <label className={styles.label}>타입*</label>
@@ -337,11 +334,11 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
     <>
       {/* 성별 */}
       <label className={styles.label}>성별*</label>
-      <GenderSelection selectedGender={selectedGender} handleGenderChange={handleGenderChange} />
+      <GenderSelection register={register} watch={watch} />
 
       {/* 중성화 여부 */}
-      <label className={styles.label}>중성화 여부</label>
-      <NeuteringSelection selectedNeutering={selectedNeutering} handleNeuteringChange={handleNeuteringChange} />
+      <label className={styles.label}>중성화 여부*</label>
+      <NeuteringSelection register={register} watch={watch} />
 
       {/* 생일  */}
       <label className={styles.label}>생일</label>
@@ -353,11 +350,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
 
       {/* 몸무게 */}
       <label className={styles.label}>몸무게</label>
-      <input className={styles.writeInput} {...register("weight", PET_WEIGHT_RULES)} placeholder={PET_PLACEHOLDER.weight} disabled={isWeightDisabled} />
-      {errors.weight && <ErrorMessage message={errors.weight.message} />}
-      <div className={styles.plusMarginWrapper}>
-        <OptionalMessage onClearInput={clearWeightInput} message={"모르겠어요"} />
-      </div>
+      <PetWeightInput register={register} setValue={setValue} getValue={getValues} errors={errors} watch={watch} />
 
       {/* 동물등록번호 */}
       <label className={styles.label}>동물등록번호</label>
@@ -365,12 +358,13 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       {errors.registeredNumber && <ErrorMessage message={errors.registeredNumber.message} />}
 
       {/* 삭제하기 버튼 */}
-      <div className={styles.deleteButtonWrapper}>
+      <div>
         <button type="button" className={styles.deleteButton} onClick={() => handleDelete()}>
           동물 삭제하기
         </button>
       </div>
-      <button type="submit" className={styles.button}>
+
+      <button type="submit" className={styles.button} disabled={!isValid}>
         작성완료
       </button>
 

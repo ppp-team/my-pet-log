@@ -1,26 +1,24 @@
+import { UseFormRegister, UseFormWatch } from "react-hook-form";
 import * as styles from "./style.css";
+import { IFormInput } from "@/app/_components/PetRegister";
 
 interface Props {
-  selectedNeutering: string;
-  handleNeuteringChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  register: UseFormRegister<IFormInput>;
+  watch: UseFormWatch<IFormInput>;
 }
 
-const NeuteringSelection: React.FC<Props> = ({ selectedNeutering, handleNeuteringChange }) => {
+const NeuteringSelection = ({ register, watch }: Props) => {
   return (
     <div>
       <div className={styles.radioContainer}>
-        <div className={`${styles.leftRadio} ${selectedNeutering === "true" ? styles.leftSelectedBorder : ""}`}>
-          <input type="radio" id="yes" name="neutering" value="true" checked={selectedNeutering === "true"} onChange={handleNeuteringChange} />
-          <label className={`${styles.radioOption} ${selectedNeutering === "true" && styles.leftSelected}`} htmlFor="yes">
-            했어요
-          </label>
-        </div>
-        <div className={`${styles.rightRadio} ${selectedNeutering === "false" ? styles.rightSelectedBorder : ""}`}>
-          <input type="radio" id="no" name="neutering" value="false" checked={selectedNeutering === "false"} onChange={handleNeuteringChange} />
-          <label className={`${styles.radioOption} ${selectedNeutering === "false" && styles.rightSelected}`} htmlFor="no">
-            안했어요
-          </label>
-        </div>
+        <input type="radio" id="Y" value="Y" {...register("neutering", { required: true })} style={{ display: "none" }} />
+        <label className={`${styles.leftRadio} ${watch("neutering") === "Y" && styles.checkedRadio}`} htmlFor="Y">
+          했어요
+        </label>
+        <input type="radio" id="N" value="N" {...register("neutering", { required: true })} style={{ display: "none" }} />
+        <label className={`${styles.rightRadio} ${watch("neutering") === "N" && styles.checkedRadio}`} htmlFor="N">
+          안했어요
+        </label>
       </div>
     </div>
   );

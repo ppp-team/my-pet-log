@@ -1,25 +1,24 @@
+import { IFormInput } from "@/app/_components/PetRegister";
+import { UseFormRegister, UseFormWatch } from "react-hook-form";
 import * as styles from "./style.css";
 
 interface Props {
-  selectedGender: string;
-  handleGenderChange: (value: "MALE" | "FEMALE") => void;
+  register: UseFormRegister<IFormInput>;
+  watch: UseFormWatch<IFormInput>;
 }
 
-const GenderSelection: React.FC<Props> = ({ selectedGender, handleGenderChange }) => {
+const GenderSelection = ({ register, watch }: Props) => {
   return (
     <div className={styles.radioContainer}>
-      <div className={`${styles.leftRadio} ${selectedGender === "MALE" ? styles.leftSelectedBorder : ""}`}>
-        <input type="radio" id="MALE" value="MALE" checked={selectedGender === "MALE"} onChange={() => handleGenderChange("MALE")} />
-        <label className={`${styles.radioOption} ${selectedGender === "MALE" && styles.leftSelected}`} htmlFor="MALE">
-          남
-        </label>
-      </div>
-      <div className={`${styles.rightRadio} ${selectedGender === "FEMALE" ? styles.rightSelectedBorder : ""}`}>
-        <input type="radio" id="FEMALE" value="FEMALE" checked={selectedGender === "FEMALE"} onChange={() => handleGenderChange("FEMALE")} />
-        <label className={`${styles.radioOption} ${selectedGender === "FEMALE" && styles.rightSelected}`} htmlFor="FEMALE">
-          여
-        </label>
-      </div>
+      <input type="radio" id="MALE" value="MALE" {...register("gender", { required: true })} style={{ display: "none" }} />
+      <label htmlFor="MALE" className={`${styles.leftRadio} ${watch("gender") === "MALE" && styles.checkedRadio}`}>
+        남
+      </label>
+
+      <input type="radio" id="FEMALE" value="FEMALE" {...register("gender", { required: true })} style={{ display: "none" }} />
+      <label htmlFor="FEMALE" className={`${styles.rightRadio} ${watch("gender") === "FEMALE" && styles.checkedRadio}`}>
+        여
+      </label>
     </div>
   );
 };

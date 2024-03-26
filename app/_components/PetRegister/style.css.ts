@@ -117,6 +117,7 @@ export const label = style({
 export const input = style({
   padding: "1.3rem 1.8rem",
 
+  width: "100%",
   borderRadius: "10px",
   border: "1.5px solid #e2e2e2",
 
@@ -362,4 +363,51 @@ export const plusMarginWrapper = style({
   display: "flex",
   width: "100%",
   marginTop: "0.6rem",
+});
+
+export const checkPetNameButton = style({
+  position: "absolute",
+  right: "0.9rem",
+  top: "50%",
+  transform: "translateY(-50%)",
+
+  padding: "0.8rem 0.9rem",
+
+  borderRadius: "5px",
+
+  backgroundColor: "var(--LightOrange)",
+  color: "var(--MainOrange)",
+
+  selectors: {
+    "&:disabled": {
+      border: "none",
+      backgroundColor: "var(--GrayB1)",
+      color: "white",
+      cursor: "default",
+    },
+  },
+});
+
+export const nameInputWrapper = style({
+  position: "relative",
+});
+
+export const deleteButton = style({
+  marginTop: "3.2rem",
+  padding: "0.6rem 1.4rem",
+  borderRadius: "5px",
+  border: "1px solid var(--Gray81)",
+
+  color: "var(--Gray81)",
+
+  fontSize: "1.4rem",
+  fontWeight: 500,
+
+  background: "var(--White)",
+
+  ":hover": {
+    color: "var(--White)",
+    background: "var(--GrayE2)",
+    border: "1px solid var(--GrayE2)",
+  },
 });

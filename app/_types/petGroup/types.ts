@@ -7,7 +7,7 @@ export interface PetType {
   name: string;
   type: string;
   breed: string; // 품종
-  gender: string;
+  gender: "MALE" | "FEMALE";
   isNeutered: "Y" | "N";
   birth: string; //태어난
   weight: string;
