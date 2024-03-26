@@ -99,14 +99,8 @@ export const PET_PLACEHOLDER = {
 
 export const PET_ERROR_MESSAGE = {
   nameRequired: "이름 입력은 필수입니다.",
-  nameDuplicate: "이미 사용중인 닉네임입니다.",
-  nameInvalid: "올바른 이름을 입력해주세요.",
-
-  typeRequired: "타입을 선택해주세요!",
-
-  breedRequired: "품종을 선택해주세요!",
-
-  genderRequired: "성별을 선택해주세요!",
+  nameDuplicate: "이미 사용중인 이름입니다.",
+  nameInvalid: "10자 이내로 작성해주세요.",
 
   weightInvalid: "소수점 두자리 이하의 숫자만 입력할 수 있습니다.",
 
@@ -125,9 +119,9 @@ export const PET_REGISTERNUMBER_RULES = {
   },
 };
 
-export const PET_GENDER_RULES = {
-  required: PET_ERROR_MESSAGE.genderRequired,
-};
+// export const PET_GENDER_RULES = {
+//   required: PET_ERROR_MESSAGE.genderRequired,
+// };
 
 export const PET_WEIGHT_RULES = {
   pattern: {

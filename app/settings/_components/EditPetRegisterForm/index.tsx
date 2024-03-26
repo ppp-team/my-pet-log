@@ -12,7 +12,7 @@ import PetDateInput from "@/app/_components/PetRegister/component/PetdateInput";
 import GenderSelection from "@/app/_components/PetRegister/component/RadioInput/GenderRadio";
 import NeuteringSelection from "@/app/_components/PetRegister/component/RadioInput/NeuteringRadio";
 import { showToast } from "@/app/_components/Toast";
-import { PET_NAME_RULES, PET_PLACEHOLDER, PET_REGISTERNUMBER_RULES } from "@/app/_constants/inputConstant";
+import { PET_ERROR_MESSAGE, PET_NAME_RULES, PET_PLACEHOLDER, PET_REGISTERNUMBER_RULES } from "@/app/_constants/inputConstant";
 import { useModal } from "@/app/_hooks/useModal";
 import { GuardiansType } from "@/app/_types/guardians/types";
 import { PetType } from "@/app/_types/petGroup/types";
@@ -139,7 +139,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const checkPetNameMutation = useMutation({
     mutationFn: (name: string) => checkPetName({ name }),
     onSuccess: (res) => {
-      if (!res) return setError("petName", { type: "duplicate", message: "중복된 이름입니다." });
+      if (!res) return setError("petName", { type: "duplicate", message: PET_ERROR_MESSAGE.nameDuplicate });
       setIsPetNameConfirm(true);
       clearErrors("petName");
     },
