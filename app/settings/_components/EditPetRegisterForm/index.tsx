@@ -99,7 +99,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setValue,
     getValues,
     watch,
@@ -253,7 +253,7 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
             ...PET_NAME_RULES,
             validate: {
               petNameVerify: () => {
-                if (isPetNameConfirm) return true;
+                if (isPetNameConfirm || isPetNameConfirm === null) return true;
                 return "중복확인을 해주세요.";
               },
             },
@@ -358,10 +358,13 @@ const EditPetRegisterForm = ({ petId }: { petId: number }) => {
       {errors.registeredNumber && <ErrorMessage message={errors.registeredNumber.message} />}
 
       {/* 삭제하기 버튼 */}
-      <button type="button" className={styles.deleteButton} onClick={() => handleDelete()}>
-        동물 삭제하기
-      </button>
-      <button type="submit" className={styles.button}>
+      <div>
+        <button type="button" className={styles.deleteButton} onClick={() => handleDelete()}>
+          동물 삭제하기
+        </button>
+      </div>
+
+      <button type="submit" className={styles.button} disabled={!isValid}>
         작성완료
       </button>
 
