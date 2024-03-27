@@ -11,6 +11,7 @@ import {
   GetDiaryListResponse,
   GetDiaryResponse,
   PostCommentRequest,
+  PostReCommentRequest,
   PostDiaryVideoResponse,
   PutCommentRequest,
   getSearchDiaryRequest,
@@ -89,9 +90,15 @@ export const postDiaryLike = async ({ diaryId }: { diaryId: number }) => {
   await instance.post(`pets/${petId}/diaries/${diaryId}/like`);
 };
 
-export const postComment = async ({ diaryId, content }: PostCommentRequest): Promise<CommentType> => {
+export const postComment = async ({ diaryId, content, taggedUserIds }: PostCommentRequest): Promise<CommentType> => {
   const petId = cookies().get("petId")?.value;
-  const res = await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
+  const res = await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content, taggedUserIds });
+  return res.data;
+};
+
+export const postReComment = async ({ commentId, content, taggedUserIds }: PostReCommentRequest): Promise<GetReCommentsResponse> => {
+  const petId = cookies().get("petId")?.value;
+  const res = await instance.post(`pets/${petId}/diaries/comments/${commentId}/recomment`, { content, taggedUserIds });
   return res.data;
 };
 
