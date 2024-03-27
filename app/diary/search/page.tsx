@@ -1,8 +1,9 @@
 "use client";
-import { getSearchDiary } from "@/app/_api/diary";
+import { getSearchDiary, getSearchTerms } from "@/app/_api/diary";
+import Spinner from "@/app/_components/Spinner";
 import { useInfiniteScroll } from "@/app/_hooks/useInfiniteScroll";
+import { DIARY_SEARCH_PAGE_SIZE } from "@/app/diary/(diary)/my-pet/constant";
 import { Diaries } from "@/app/diary/_components/Diary";
-import { DIARY_SEARCH_PAGE_SIZE, RECOMMEND_KEYWORD } from "@/app/diary/(diary)/my-pet/constant";
 import BackIcon from "@/public/icons/chevron-left.svg?url";
 import SearchIconURL from "@/public/icons/search.svg?url";
 import NoResultImage from "@/public/images/no-search-result.png";
@@ -13,7 +14,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import * as styles from "./style.css";
-import Spinner from "@/app/_components/Spinner";
 
 const NoResult = () => {
   return (
@@ -25,9 +25,19 @@ const NoResult = () => {
 };
 
 const SearchIntro = () => {
+  const [keyword, setKeyword] = useState([]);
+
+  useEffect(() => {
+    const loadKeyword = async () => {
+      const res = await getSearchTerms();
+      setKeyword(res.terms);
+    };
+    loadKeyword();
+  }, []);
+
   return (
     <div className={styles.searchIntroWrapper}>
-      {RECOMMEND_KEYWORD.map((keyword, idx) => {
+      {keyword?.map((keyword, idx) => {
         return (
           <Link href={`/diary/search?keyword=${keyword}`} replace={true} key={idx} className={styles.recommendKey}>
             <div>{keyword}</div>

@@ -131,3 +131,14 @@ export const postDiaryVideo = async ({ formData }: { formData: FormData }): Prom
   const res = await instance.post(`/videos?domain=DIARY`, formData, { headers: { "Content-Type": "multipart/form-data" } });
   return res.data;
 };
+
+export const getSearchTerms = async () => {
+  try {
+    const petId = cookies().get("petId")?.value;
+    const res = await instance.get(`pets/${petId}/diaries/search/terms`);
+
+    return res.data;
+  } catch (error: any) {
+    console.error(error.response.data);
+  }
+};
