@@ -68,7 +68,6 @@ export const getReComments = async ({ ancestorId }: GetReCommentsRequest): Promi
   const petId = cookies().get("petId")?.value;
   try {
     const res = await instance.get(`pets/${petId}/diaries/comments/${ancestorId}/recomment`);
-
     return res.data;
   } catch (error: any) {
     console.error(error.response);
