@@ -193,6 +193,13 @@ export interface PostDiaryRequest {
 export interface PostCommentRequest {
   diaryId: number;
   content: string;
+  taggedUserIds?: string[];
+}
+
+export interface PostReCommentRequest {
+  commentId: number;
+  content: string;
+  taggedUserIds?: string[];
 }
 
 export interface PutCommentRequest {

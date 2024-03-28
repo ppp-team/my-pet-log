@@ -11,6 +11,7 @@ import {
   GetDiaryListResponse,
   GetDiaryResponse,
   PostCommentRequest,
+  PostReCommentRequest,
   PostDiaryVideoResponse,
   PutCommentRequest,
   getSearchDiaryRequest,
@@ -68,7 +69,6 @@ export const getReComments = async ({ ancestorId }: GetReCommentsRequest): Promi
   const petId = cookies().get("petId")?.value;
   try {
     const res = await instance.get(`pets/${petId}/diaries/comments/${ancestorId}/recomment`);
-
     return res.data;
   } catch (error: any) {
     console.error(error.response);
@@ -93,6 +93,12 @@ export const postDiaryLike = async ({ diaryId }: { diaryId: number }) => {
 export const postComment = async ({ diaryId, content }: PostCommentRequest): Promise<CommentType> => {
   const petId = cookies().get("petId")?.value;
   const res = await instance.post(`pets/${petId}/diaries/${diaryId}/comments`, { content });
+  return res.data;
+};
+
+export const postReComment = async ({ commentId, content, taggedUserIds }: PostReCommentRequest): Promise<GetReCommentsResponse> => {
+  const petId = cookies().get("petId")?.value;
+  const res = await instance.post(`pets/${petId}/diaries/comments/${commentId}/recomment`, { content, taggedUserIds });
   return res.data;
 };
 

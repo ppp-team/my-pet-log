@@ -1,86 +1,81 @@
-import { getImagePath } from "@/app/_utils/getPersonImagePath";
-import { GetReCommentsResponse } from "@/app/_types/diary/type";
-import KebabIcon from "@/public/icons/kebab.svg?url";
-import LikeIcon from "@/public/icons/like.svg";
-import Image from "next/image";
+import { deleteComment, postCommentLike, putComment } from "@/app/_api/diary";
 import Modal from "@/app/_components/Modal";
 import { showToast } from "@/app/_components/Toast";
 import { useModal } from "@/app/_hooks/useModal";
+import { getImagePath } from "@/app/_utils/getPersonImagePath";
+import KebabIcon from "@/public/icons/kebab.svg?url";
+import LikeIcon from "@/public/icons/like.svg";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import * as styles from "./style.css";
 
-type ReplyType = GetReCommentsResponse["content"][number];
-
 interface ReCommentProps {
-  reply: ReplyType;
+  reply: {
+    commentId: number;
+    content: string;
+    createdAt: string;
+    likeCount: number;
+    isCurrentUserLiked: boolean;
+    writer: {
+      id: string;
+      nickname: string;
+      profilePath: string;
+      isCurrentUser: boolean;
+    };
+  };
+  ancestorId: number;
 }
 
-const ReComment = ({ reply }: ReCommentProps) => {
-  const [isKebabOpen, setIsKebabOpen] = useState(false);
+const ReComment = ({ reply, ancestorId }: ReCommentProps) => {
   const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
+  const [isKebabOpen, setIsKebabOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [newCommentValue, setNewCommentValue] = useState("");
+  const queryClient = useQueryClient();
 
-  // //대댓글 삭제
-  // const deleteCommentMutation = useMutation({
-  //   mutationFn: (commentId: number) => deleteComment({ commentId }),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["comments", { petId, diaryId }] });
-  //     showToast("댓글을 삭제했습니다.", true);
-  //     closeModalFunc();
+  const deleteReCommentMutation = useMutation({
+    mutationFn: () => deleteComment({ commentId: reply.commentId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reComments", { ancestorId }] });
+      showToast("대댓글을 삭제했습니다.", true);
+      closeModalFunc();
+    },
+    onError: () => {
+      showToast("대댓글 삭제에 실패했습니다.", false);
+    },
+  });
 
-  //     const newDiaryData = queryClient.getQueryData<GetDiaryResponse>(["diary", { petId, diaryId }]);
-  //     if (newDiaryData) {
-  //       newDiaryData.commentCount = newDiaryData.commentCount - 1;
-  //       queryClient.setQueryData(["diary", { petId, diaryId }], newDiaryData);
-  //     }
-  //   },
-  //   onError: () => {
-  //     showToast("댓글 삭제에 실패했습니다.", false);
-  //   },
-  // });
+  const putReCommentMutation = useMutation({
+    mutationFn: () => putComment({ commentId: reply.commentId, content: newCommentValue }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reComments", { ancestorId }] });
+      showToast("대댓글을 수정했습니다.", true);
+      setIsEditing(false);
+    },
+    onError: () => {
+      showToast("대댓글 수정에 실패했습니다.", false);
+    },
+  });
 
-  // //대댓글 수정
-  // const putCommentMutation = useMutation({
-  //   mutationFn: () => putComment({ commentId: comment.commentId, content: newCommentValue }),
-  //   onSuccess: () => {
-  //     const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
-  //     if (newComments.pages) {
-  //       newComments.pages[pageNum].content[contentNum].content = newCommentValue;
-  //       queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
-  //     }
-
-  //     showToast("댓글을 수정했습니다.", true);
-  //   },
-  //   onError: () => {
-  //     showToast("댓글 수정에 실패했습니다.", false);
-  //   },
-  // });
-
-  // //대댓글 좋아요
-  // const postCommentLikeMutation = useMutation({
-  //   mutationFn: () => postCommentLike({ commentId: comment.commentId }),
-  // });
-
-  // const handleCommentLike = () => {
-  //   postCommentLikeMutation.mutate();
-
-  //   const newComments = { ...queryClient.getQueryData<InfiniteData<GetCommentsResponse>>(["comments", { petId, diaryId }]) };
-  //   if (newComments.pages) {
-  //     newComments.pages[pageNum].content[contentNum].isCurrentUserLiked = !comment?.isCurrentUserLiked;
-  //     newComments.pages[pageNum].content[contentNum].likeCount = comment?.isCurrentUserLiked ? comment.likeCount + 1 : comment.likeCount - 1;
-  //     queryClient.setQueryData(["comments", { petId, diaryId }], newComments);
-  //   }
-  // };
-
-  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setNewCommentValue(e.target.value);
-  };
+  const postReCommentLikeMutation = useMutation({
+    mutationFn: () => postCommentLike({ commentId: reply.commentId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reComments", { ancestorId }] });
+    },
+    onError: () => {
+      showToast("대댓글 좋아요 실패", false);
+    },
+  });
 
   const handleEditClick = () => {
     setIsEditing(true);
     setIsKebabOpen(false);
-    setNewCommentValue(reply.content.replaceAll("<br>", "\n"));
+    setNewCommentValue(reply.content);
+  };
+
+  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewCommentValue(e.target.value);
   };
 
   return (
@@ -117,9 +112,8 @@ const ReComment = ({ reply }: ReCommentProps) => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              setIsEditing(false);
               if (newCommentValue === reply.content) return;
-              putCommentMutation.mutate();
+              putReCommentMutation.mutate();
             }}
           >
             <textarea className={styles.commentTextarea} value={newCommentValue} onChange={handleCommentChange} />
@@ -134,14 +128,14 @@ const ReComment = ({ reply }: ReCommentProps) => {
           <pre className={styles.commentContent}>{reply.content}</pre>
         )}
 
-        {/* <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button className={styles.recommentButton}>답글</button>
-          <button className={`${styles.commentLikeButton} ${reply.isCurrentUserLiked ? styles.LikeIcon : ""}`} onClick={handleCommentLike}>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button className={`${styles.commentLikeButton} ${reply.isCurrentUserLiked ? styles.LikeIcon : ""}`} onClick={() => postReCommentLikeMutation.mutate()}>
             <LikeIcon color={reply.isCurrentUserLiked ? "var(--MainOrange)" : "var(--Gray81)"} />
             {reply.likeCount}
           </button>
-        </div> */}
+        </div>
       </div>
+      {isModalOpen && <Modal text="정말 대댓글을 삭제하시겠습니까?" buttonText="삭제" onClick={() => deleteReCommentMutation.mutate()} onClose={closeModalFunc} />}
     </div>
   );
 };
