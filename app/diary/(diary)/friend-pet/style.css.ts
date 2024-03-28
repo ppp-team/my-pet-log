@@ -72,7 +72,7 @@ export const date = style({
 });
 
 export const additionalContent = style({
-  transition: "all 2.1s ease-in-out",
+  transition: "all 2s ease-in-out",
   maxHeight: "0",
   overflow: "hidden",
   visibility: "hidden",
@@ -81,4 +81,14 @@ export const additionalContent = style({
 export const showAdditionalContent = style({
   maxHeight: "100vh",
   visibility: "visible",
+});
+
+export const commentContainer = style({
+  width: "100%",
+  height: "100%",
+
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+
+  backgroundColor: "var(--White)",
 });
