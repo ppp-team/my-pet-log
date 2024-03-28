@@ -8,9 +8,11 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import "./swiper.css";
-import HeartIcon from "@/public/icons/hearticon.svg";
-import ChatIcon from "@/public/icons/chat.svg";
+import HeartIcon from "@/public/icons/heart-icon.svg";
+import ChatIcon from "@/public/icons/chat-icon.svg";
 import { useState } from "react";
+import { useModal } from "@/app/_hooks/useModal";
+import CommentModalContainer from "@/app/diary/_components/CommentModalContainer";
 
 const mock = {
   name: "은행이",
@@ -54,6 +56,7 @@ const FriendPetDiaryPage = () => {
   const lines = mock.description.split("\n");
   const firstLine = lines[0];
   const additionalLines = lines.slice(1).join("\n");
+  const { isModalOpen, openModalFunc, closeModalFunc } = useModal();
 
   return (
     <>
@@ -81,7 +84,7 @@ const FriendPetDiaryPage = () => {
       <HeartIcon className={styles.icon} />
       <ChatIcon className={styles.icon} />
       <section className={styles.greatChat}>
-        <span className={styles.greatText}>좋아요 {mock.great}개</span>
+        <button className={styles.greatText}>좋아요 {mock.great}개</button>
         <div className={styles.nameTitle}>
           {mock.name} <span className={styles.title}>{mock.title}</span>
         </div>
@@ -100,9 +103,16 @@ const FriendPetDiaryPage = () => {
             ))}
           </div>
         </section>
-        <div className={styles.comment}>댓글 {mock.commentNum}개 모두 보기</div>
+        <div className={styles.comment} onClick={openModalFunc}>
+          댓글 {mock.commentNum}개 모두 보기
+        </div>
         <div className={styles.date}>{mock.date}</div>
       </section>
+      {isModalOpen && (
+        <CommentModalContainer>
+          <div className={styles.commentContainer}>댓글창임</div>
+        </CommentModalContainer>
+      )}
     </>
   );
 };
